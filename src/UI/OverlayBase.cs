@@ -15,15 +15,11 @@ namespace Maquina.UI
             : base(sceneManager, sceneName)
         {
             ParentScene = parentScene;
-            // FIXME: CA2214: Do not call overridable methods in constructors
-            LoadContent();
         }
 
         protected OverlayBase(SceneManager sceneManager, string sceneName)
             : base(sceneManager, sceneName)
         {
-            // FIXME: CA2214: Do not call overridable methods in constructors
-            LoadContent();
         }
 
         public override void LoadContent()

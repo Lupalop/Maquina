@@ -23,7 +23,7 @@ namespace Maquina.UI
             this.SpriteBatch = spriteBatch;
             this.Fonts = fonts;
             this.Songs = songs;
-            this.Overlays = new Dictionary<string, SceneBase>();
+            this.Overlays = new SceneDictionary<string>();
             this.LocaleManager = localeManager;
         }
 
@@ -57,13 +57,12 @@ namespace Maquina.UI
 
         public Game Game { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
-        // List of loaded Fonts
+        // Container of loaded Fonts
         public Dictionary<string, SpriteFont> Fonts { get; private set; }
-        // List of loaded Songs
+        // Container of loaded Songs
         public Dictionary<string, Song> Songs { get; private set; }
-        // List of loaded overlay scenes
-        public Dictionary<string, SceneBase> Overlays { get; private set; }
-        // Locale Manager
+        // Container of loaded overlay scenes
+        public SceneDictionary<string> Overlays { get; private set; }
         public LocaleManager LocaleManager { get; private set; }
 
         public KeyboardState KeyboardState { get; set; }
@@ -133,10 +132,7 @@ namespace Maquina.UI
             if (disposing)
             {
                 _currentScene.Unload();
-                foreach (SceneBase item in Overlays.Values)
-                {
-                    item.Unload();
-                }
+                Overlays.Clear();
             }
         }
     }
