@@ -27,33 +27,62 @@ namespace Maquina.UI
             this.LocaleManager = localeManager;
         }
 
-        private SceneBase _currentScene;
-        public SceneBase CurrentScene
+        public SceneBase CurrentScene { get; protected set; }
+        private SceneBase _storedScene;
+        public SceneBase StoredScene
         {
             get
             {
-                return _currentScene;
+                return _storedScene;
             }
             set
             {
-#if DEBUG
-                Console.WriteLine("Switching to scene: {0}", value.SceneName);
-#endif
-                // Unload previous scene
-                if (_currentScene != null)
-                    _currentScene.Unload();
-                // TODO: ALLOW LOAD CONTENT TO BE ON DEMAND
+                // Preload content
                 value.LoadContent();
-                // Load delayed content
-                value.DelayLoadContent();
-                // Set current state to given scene
-                _currentScene = value;
-                // Show a fade effect to hide first frame misposition
-                string overlayKey = String.Format("fade-{0}", value);
-                if (!Overlays.ContainsKey(overlayKey))
-                    Overlays.Add(overlayKey, new Scenes.FadeOverlay(this, overlayKey));
+                _storedScene = value;
             }
         }
+
+        public void SwitchToScene(SceneBase scene, bool shouldLoadContent = true)
+        {
+#if DEBUG
+            Console.WriteLine("Switching to scene: {0}", scene.SceneName);
+#endif
+            if (scene == null)
+            {
+#if DEBUG
+                Console.WriteLine("Switching to given scene failed!");
+#endif
+                return;
+            }
+            // Unload previous scene
+            if (CurrentScene != null)
+                CurrentScene.Unload();
+            // Check if load content should still be called
+            if (shouldLoadContent)
+            {
+                scene.LoadContent();
+            }
+            // Load delayed content
+            scene.DelayLoadContent();
+            // Set current state to given scene
+            CurrentScene = scene;
+            // Show a fade effect to hide first frame misposition
+            string overlayKey = String.Format("fade-{0}", scene);
+            if (!Overlays.ContainsKey(overlayKey))
+                Overlays.Add(overlayKey, new Scenes.FadeOverlay(this, overlayKey));
+        }
+
+        public bool SwitchToStoredScene()
+        {
+            if (StoredScene == null)
+            {
+                return false;
+            }
+            SwitchToScene(StoredScene, false);
+            return true;
+        }
+        
 
         public Game Game { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
@@ -131,7 +160,7 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                _currentScene.Unload();
+                CurrentScene.Unload();
                 Overlays.Clear();
             }
         }
