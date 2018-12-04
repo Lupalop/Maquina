@@ -14,27 +14,12 @@ namespace Maquina
         public const double Version = 0.01;
         // XML Files
         public const string ResourceXml = "resources.xml";
-        public const string LevelXml = "level{0}.xml";
         public const string PreferencesXml = "preferences.xml";
         public const string LocaleDefinitionXml = "locale.xml";
         // Resources
         public const string ContentRootDirectory = "Content";
         public const string LocalesDirectory = "locales";
         public const string DefaultLocale = "en-US";
-        public static string CreateRelativeLocation(string[] files)
-        {
-            StringBuilder c = new StringBuilder();
-            for (int i = 0; i < files.Length; i++)
-            {
-                if (i == files.Length - 1)
-                {
-                    c.Append(files[i]);
-                    continue;
-                }
-                c.Append(files[i] + "\\");
-            }
-            return c.ToString();
-        }
         // Engine Startup
         public static Action RunGame { get; set; }
         public static void StartEngine(string[] args)

@@ -27,11 +27,11 @@ namespace Maquina.Resources
             get
             {
                 List<LocaleDefinition> CreatedList = new List<LocaleDefinition>();
-                IEnumerable<string> Directories = Directory.EnumerateDirectories(Platform.CreateRelativeLocation(
+                IEnumerable<string> Directories = Directory.EnumerateDirectories(Utils.CreateLocation(
                     new string[] { Platform.ContentRootDirectory, Platform.LocalesDirectory }));
                 foreach (var item in Directories)
                 {
-                    string LocaleDefLocation = Platform.CreateRelativeLocation(
+                    string LocaleDefLocation = Utils.CreateLocation(
                         new string[] { item, Platform.LocaleDefinitionXml });
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
@@ -56,7 +56,7 @@ namespace Maquina.Resources
             {
                 // Load the string bundle
                 StringBundle StringBundle = StrbContentManager.LoadContent(
-                    Platform.CreateRelativeLocation(new string[] {
+                    Utils.CreateLocation(new string[] {
                         Platform.ContentRootDirectory, Platform.LocalesDirectory,
                         CurrentLocale.LanguageCode, value + ".xml"
                     }));
