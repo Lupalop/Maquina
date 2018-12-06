@@ -30,11 +30,10 @@ namespace Maquina.UI.Scenes
                     {
                         Vector2 MousePosition = MouseState.Position.ToVector2();
                         GenericElement Mouse = Objects["Mouse"];
-                        if ((MousePosition.X < 0 || MousePosition.X > Game.GraphicsDevice.Viewport.Bounds.Right - Mouse.Dimensions.X) ||
-                            (MousePosition.Y < 0 || MousePosition.Y > Game.GraphicsDevice.Viewport.Bounds.Bottom - Mouse.Dimensions.Y))
-                            return;
-                        
-                        Mouse.Location = MousePosition;
+
+                        Mouse.Location = new Vector2(
+                            MathHelper.Clamp(MousePosition.X, 0, Game.GraphicsDevice.Viewport.Bounds.Right - Mouse.Dimensions.X), 
+                            MathHelper.Clamp(MousePosition.Y, 0, Game.GraphicsDevice.Viewport.Bounds.Bottom - Mouse.Dimensions.Y));
                         Bounds = Mouse.Bounds;
 
                         Mouse.CurrentFrame = 0;
