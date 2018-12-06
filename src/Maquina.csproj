@@ -44,7 +44,7 @@
     <Compile Include="Objects\IElement.cs" />
     <Compile Include="Objects\GuiElement.cs" />
     <Compile Include="Resources\ContentManager.cs" />
-    <Compile Include="Resources\ContentBase.cs" />
+    <Compile Include="Resources\IContent.cs" />
     <Compile Include="Resources\ContentTypes.cs" />
     <Compile Include="Resources\LocaleManager.cs" />
     <Compile Include="UI.Controls\Image.cs" />

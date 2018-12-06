@@ -13,8 +13,8 @@ using Microsoft.Xna.Framework;
 namespace Maquina.Resources
 {
     // <Identifier>
-    // Base content class
-    public class ContentBase
+    // Content interface
+    public interface IContent
     {
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +14,7 @@ namespace Maquina.Resources
     // <Content>
     // Used for loading primary content resources
     [XmlRoot("Content")]
-    public class ResourceContent : ContentBase
+    public class ResourceContent : IContent
     {
         // key, resource location
         public List<FontParameters> Fonts { get; set; }
@@ -18,6 +22,7 @@ namespace Maquina.Resources
         public List<ResourceParameters> SFX { get; set; }
         public List<ResourceParameters> Textures { get; set; }
     }
+
     public class FontParameters : ResourceParameters
     {
         [XmlAttribute]
@@ -35,7 +40,7 @@ namespace Maquina.Resources
     
     // <LocaleDefinition>
     [XmlRoot("LocaleDefinition")]
-    public class LocaleDefinition : ContentBase
+    public class LocaleDefinition : IContent
     {
         public string LanguageName { get; set; }
         public string LanguageCode { get; set; }
@@ -45,7 +50,7 @@ namespace Maquina.Resources
     // <StringBundle>
     // Used for loading localized string resources
     [XmlRoot("StringBundle")]
-    public class StringBundle : ContentBase
+    public class StringBundle : IContent
     {
         public List<StringParameters> Strings { get; set; }
     }
