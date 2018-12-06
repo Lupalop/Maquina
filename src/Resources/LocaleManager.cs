@@ -36,7 +36,7 @@ namespace Maquina.Resources
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {
-                        CreatedList.Add(LdefContentManager.LoadContent(LocaleDefLocation));
+                        CreatedList.Add(LdefContentManager.Initialize(LocaleDefLocation));
                     }
                 }
                 return CreatedList;
@@ -55,7 +55,7 @@ namespace Maquina.Resources
             set
             {
                 // Load the string bundle
-                StringBundle StringBundle = StrbContentManager.LoadContent(
+                StringBundle StringBundle = StrbContentManager.Initialize(
                     Utils.CreateLocation(new string[] {
                         Platform.ContentRootDirectory, Platform.LocalesDirectory,
                         CurrentLocale.LanguageCode, value + ".xml"
