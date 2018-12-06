@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Timers;
 using Maquina.UI.Controls;
 
 namespace Maquina.UI.Scenes
@@ -29,7 +28,6 @@ namespace Maquina.UI.Scenes
             this.FadeSpeed = 0.1f;
         }
 
-        private Timer Fader;
         private float Opacity = 1f;
         private string OverlayKey;
         private Texture2D FadeBackground;
@@ -80,6 +78,8 @@ namespace Maquina.UI.Scenes
 
         public override void Update(GameTime gameTime)
         {
+            Opacity -= FadeSpeed;
+
             base.Update(gameTime);
             base.UpdateObjects(gameTime, Objects);
 
@@ -88,19 +88,6 @@ namespace Maquina.UI.Scenes
             {
                 SceneManager.Overlays.Remove(OverlayKey);
             }
-        }
-
-        public override void DelayLoadContent()
-        {
-            Fader = new Timer(10) { Enabled = true, AutoReset = true };
-            Fader.Elapsed += delegate { Opacity -= FadeSpeed; };
-            base.DelayLoadContent();
-        }
-
-        public override void Unload()
-        {
-            Fader.Dispose();
-            base.Unload();
         }
 
         public void Dispose()
