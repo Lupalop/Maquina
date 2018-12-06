@@ -110,6 +110,12 @@ namespace Maquina.UI
                     MediaPlayer.IsRepeating = isRepeating;
                 }
             }
+#if DEBUG
+            else
+            {
+                Console.WriteLine(String.Format("SceneManager: Song '{0}' not found!", songName));
+            }
+#endif
         }
         public void PlaySong(string songName)
         {
