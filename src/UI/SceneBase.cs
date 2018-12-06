@@ -101,16 +101,21 @@ namespace Maquina.UI
         {
             return GetAllObjectsHeightFromArray(objects);
         }
-        private static int GetAllObjectsHeightFromArray(GenericElement[] objs)
+        private static int GetAllObjectsHeightFromArray(GenericElement[] objects)
         {
             int ObjectsHeight = 0;
             // Draw objects in the Object array
-            for (int i = 0; i < objs.Length; i++)
+            for (int i = 0; i < objects.Length; i++)
             {
-                GuiElement Object = (GuiElement)objs[i];
-                if (objs[i] is GuiElement && Object.ControlAlignment == ControlAlignment.Center)
+                if (!(objects[i] is GuiElement))
                 {
-                    ObjectsHeight += objs[i].Bounds.Height;
+                    continue;
+                }
+
+                GuiElement Object = (GuiElement)objects[i];
+                if (Object.ControlAlignment == ControlAlignment.Center)
+                {
+                    ObjectsHeight += objects[i].Bounds.Height;
                 }
             }
             return ObjectsHeight;
