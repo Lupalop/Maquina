@@ -21,8 +21,56 @@ namespace Maquina.Resources
         public List<ResourceParameters> BGM { get; set; }
         public List<ResourceParameters> SFX { get; set; }
         public List<ResourceParameters> Textures { get; set; }
-    }
 
+        public object LoadContent(ResourceType resourceType, Game game)
+        {
+            switch (resourceType)
+            {
+                case ResourceType.Fonts:
+                    Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
+                    for (int i = 0; i < Fonts.Count; i++)
+                    {
+                        FontParameters item = Fonts[i];
+                        fonts[item.Name] = game.Content.Load<SpriteFont>(item.Location);
+                        fonts[item.Name].Spacing = item.Spacing;
+                        fonts[item.Name].LineSpacing = item.LineSpacing;
+                    }
+                    return fonts;
+                case ResourceType.BGM:
+                    Dictionary<string, Song> songs = new Dictionary<string, Song>();
+                    for (int i = 0; i < BGM.Count; i++)
+                    {
+                        ResourceParameters item = BGM[i];
+                        songs[item.Name] = game.Content.Load<Song>(item.Location);
+                    }
+                    return songs;
+                case ResourceType.SFX:
+                    Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
+                    for (int i = 0; i < SFX.Count; i++)
+                    {
+                        ResourceParameters item = SFX[i];
+                        sounds[item.Name] = game.Content.Load<SoundEffect>(item.Location);
+                    }
+                    return sounds;
+                case ResourceType.Textures:
+                    Dictionary<string, Texture2D> tex = new Dictionary<string, Texture2D>();
+                    for (int i = 0; i < Textures.Count; i++)
+                    {
+                        ResourceParameters item = Textures[i];
+                        tex[item.Name] = game.Content.Load<Texture2D>(item.Location);
+                    }
+                    return tex;
+            }
+            return null;
+        }
+    }
+    public enum ResourceType
+    {
+        Fonts,
+        BGM,
+        SFX,
+        Textures
+    }
     public class FontParameters : ResourceParameters
     {
         [XmlAttribute]
