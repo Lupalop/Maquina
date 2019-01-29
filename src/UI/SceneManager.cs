@@ -60,9 +60,7 @@ namespace Maquina.UI
                 CurrentScene.Unload();
             // Check if load content should still be called
             if (shouldLoadContent)
-            {
                 scene.LoadContent();
-            }
             // Load delayed content
             scene.DelayLoadContent();
             // Set current state to given scene
