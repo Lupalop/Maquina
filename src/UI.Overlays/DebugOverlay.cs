@@ -44,13 +44,13 @@ namespace Maquina.UI.Scenes
         public override void Update(GameTime gameTime)
         {
             // FPS Counter
-            if (KeyboardState.IsKeyDown(Keys.F2))
+            if (InputManager.KeyPressed(Keys.F2))
                 isCounterVisible[0] = !isCounterVisible[0];
-            if (KeyboardState.IsKeyDown(Keys.F10))
+            if (InputManager.KeyPressed(Keys.F10))
                 isCounterVisible[1] = !isCounterVisible[1];
-            if (KeyboardState.IsKeyDown(Keys.F11))
+            if (InputManager.KeyPressed(Keys.F11))
                 isCounterVisible[2] = !isCounterVisible[2];
-            if (KeyboardState.IsKeyDown(Keys.F12))
+            if (InputManager.KeyPressed(Keys.F12))
                 isCounterVisible[3] = !isCounterVisible[3];
 
 

@@ -23,12 +23,12 @@ namespace Maquina.UI.Scenes
                     Graphic = mouseSprite,
                     SpriteType = SpriteType.Static,
                     ControlAlignment = ControlAlignment.Fixed,
-                    Location = MouseState.Position.ToVector2(),
+                    Location = InputManager.MouseState.Position.ToVector2(),
                     Rows = 1,
                     Columns = 2,
                     OnUpdate = () =>
                     {
-                        Vector2 MousePosition = MouseState.Position.ToVector2();
+                        Vector2 MousePosition = InputManager.MouseState.Position.ToVector2();
                         GenericElement Mouse = Objects["Mouse"];
 
                         Mouse.Location = new Vector2(
@@ -38,7 +38,7 @@ namespace Maquina.UI.Scenes
 
                         Mouse.CurrentFrame = 0;
                         // Change state when selected
-                        if ((MouseState.LeftButton == ButtonState.Pressed || MouseState.RightButton == ButtonState.Pressed))
+                        if ((InputManager.MouseState.LeftButton == ButtonState.Pressed || InputManager.MouseState.RightButton == ButtonState.Pressed))
                         {
                             Mouse.CurrentFrame = 1;
                         }
