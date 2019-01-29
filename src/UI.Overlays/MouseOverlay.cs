@@ -38,7 +38,9 @@ namespace Maquina.UI.Scenes
 
                         Mouse.CurrentFrame = 0;
                         // Change state when selected
-                        if ((InputManager.MouseState.LeftButton == ButtonState.Pressed || InputManager.MouseState.RightButton == ButtonState.Pressed))
+                        if ((InputManager.MouseState.LeftButton == ButtonState.Pressed ||
+                            InputManager.MouseState.RightButton == ButtonState.Pressed) &&
+                            InputManager.ShouldAcceptInput)
                         {
                             Mouse.CurrentFrame = 1;
                         }

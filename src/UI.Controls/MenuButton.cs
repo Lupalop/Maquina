@@ -73,7 +73,7 @@ namespace Maquina.UI.Controls
             CurrentFrame = 0;
 
             // Don't respond to any event if button is disabled
-            if (!Disabled)
+            if (!Disabled && SceneManager.InputManager.ShouldAcceptInput)
             {
                 // If mouse is on top of the button
                 if (Bounds.Contains(MouseOverlay.Bounds.Location) && SpriteType != SpriteType.None)
