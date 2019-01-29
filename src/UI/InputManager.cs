@@ -43,23 +43,6 @@ namespace Maquina.UI
             return KeyboardState.IsKeyUp(key);
         }
 
-        public void UpdateScene(SceneBase scene)
-        {
-            if (scene != null)
-            {
-                //
-                scene.PreviousGamepadState = PreviousGamepadState;
-                scene.PreviousKeyboardState = PreviousKeyboardState;
-                scene.PreviousMouseState = PreviousMouseState;
-                scene.PreviousTouchState = PreviousTouchState;
-                //
-                scene.KeyboardState = KeyboardState;
-                scene.GamepadState = GamepadState;
-                scene.MouseState = MouseState;
-                scene.TouchState = TouchState;
-            }
-        }
-
         public void UpdateInput()
         {
             //

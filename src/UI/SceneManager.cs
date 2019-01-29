@@ -133,13 +133,13 @@ namespace Maquina.UI
         {
             CurrentScene.Update(gameTime);
             InputManager.UpdateInput();
-            InputManager.UpdateScene(CurrentScene);
+            CurrentScene.InputManager = InputManager;
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
                 SceneBase scb = Overlays[Overlays.Keys.ToList()[i]];
                 scb.Update(gameTime);
-                InputManager.UpdateScene(scb);
+                scb.InputManager = InputManager;
             }
         }
 

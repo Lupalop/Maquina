@@ -25,6 +25,7 @@ namespace Maquina.UI
             this.SceneName = sceneName;
             // Assign values to important variables
             this.SceneManager = sceneManager;
+            InputManager = sceneManager.InputManager;
             Game = sceneManager.Game;
             SpriteBatch = sceneManager.SpriteBatch;
             Fonts = sceneManager.Fonts;
@@ -35,6 +36,7 @@ namespace Maquina.UI
         }
 
         public SceneManager SceneManager { get; private set; }
+        public InputManager InputManager { get; set; }
         public Game Game { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
         public Dictionary<string, SpriteFont> Fonts { get; set; }
@@ -42,17 +44,6 @@ namespace Maquina.UI
         public string SceneName { get; private set; }
 
         public Vector2 ScreenCenter { get; private set; }
-
-        //
-        public KeyboardState PreviousKeyboardState { get; set; }
-        public GamePadState PreviousGamepadState { get; set; }
-        public MouseState PreviousMouseState { get; set; }
-        public TouchPanelState PreviousTouchState { get; set; }
-        //
-        public KeyboardState KeyboardState { get; set; }
-        public GamePadState GamepadState { get; set; }
-        public MouseState MouseState { get; set; }
-        public TouchPanelState TouchState { get; set; }
 
         public virtual void LoadContent()
         {
