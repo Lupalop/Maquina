@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 namespace Maquina.UI
 {
     // TODO: Implement basic layout engine (allowing object groups inside object groups and more...)
-    // TODO: Record previous input state
     public abstract class SceneBase
     {
         public SceneBase(SceneManager sceneManager, string sceneName = "Untitled Scene")
@@ -44,6 +43,12 @@ namespace Maquina.UI
 
         public Vector2 ScreenCenter { get; private set; }
 
+        //
+        public KeyboardState PreviousKeyboardState { get; set; }
+        public GamePadState PreviousGamepadState { get; set; }
+        public MouseState PreviousMouseState { get; set; }
+        public TouchPanelState PreviousTouchState { get; set; }
+        //
         public KeyboardState KeyboardState { get; set; }
         public GamePadState GamepadState { get; set; }
         public MouseState MouseState { get; set; }
@@ -198,7 +203,6 @@ namespace Maquina.UI
             }
             IsDistanceCalculated = true;
         }
-
         private bool IsDistanceCalculated = false;
         private bool IsFirstUpdateDone = false;
     }

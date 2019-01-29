@@ -18,7 +18,7 @@ namespace Maquina.UI.Controls
             : base (objectName)
         {
             this.SceneManager = sceneManager;
-            MouseState = sceneManager.MouseState;
+            MouseState = sceneManager.InputManager.MouseState;
             MouseOverlay = (MouseOverlay)sceneManager.Overlays["mouse"];
             // Default MB graphic
             Graphic = sceneManager.Game.Content.Load<Texture2D>("menuBG");
@@ -69,7 +69,7 @@ namespace Maquina.UI.Controls
                 Vector2 TextLength = Font.MeasureString(Text);
                 GraphicCenter = new Vector2(Location.X + (Bounds.Width / 2) - TextLength.X / 2, Location.Y + Bounds.Height / 4);
             }
-            MouseState = SceneManager.MouseState;
+            MouseState = SceneManager.InputManager.MouseState;
             CurrentFrame = 0;
 
             // Don't respond to any event if button is disabled

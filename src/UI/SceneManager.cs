@@ -17,7 +17,8 @@ namespace Maquina.UI
     {
         public SceneManager(Game game,
             SpriteBatch spriteBatch, Dictionary<string, SpriteFont> fonts,
-            Dictionary<string, Song> songs, LocaleManager localeManager)
+            Dictionary<string, Song> songs, LocaleManager localeManager,
+            InputManager inputManager)
         {
             this.Game = game;
             this.SpriteBatch = spriteBatch;
@@ -25,6 +26,7 @@ namespace Maquina.UI
             this.Songs = songs;
             this.Overlays = new SceneDictionary<string>();
             this.LocaleManager = localeManager;
+            this.InputManager = inputManager;
         }
 
         public SceneBase CurrentScene { get; protected set; }
@@ -91,11 +93,8 @@ namespace Maquina.UI
         // Container of loaded overlay scenes
         public SceneDictionary<string> Overlays { get; private set; }
         public LocaleManager LocaleManager { get; private set; }
-
-        public KeyboardState KeyboardState { get; set; }
-        public GamePadState GamepadState { get; set; }
-        public MouseState MouseState { get; set; }
-        public TouchPanelState TouchState { get; set; }
+        // Input
+        public InputManager InputManager { get; private set; }
 
         public void PlaySong(string songName, bool isRepeating = true)
         {
@@ -133,24 +132,14 @@ namespace Maquina.UI
         public void Update(GameTime gameTime)
         {
             CurrentScene.Update(gameTime);
-            UpdateKeys(CurrentScene);
+            InputManager.UpdateInput();
+            InputManager.UpdateScene(CurrentScene);
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
                 SceneBase scb = Overlays[Overlays.Keys.ToList()[i]];
                 scb.Update(gameTime);
-                UpdateKeys(scb);
-            }
-        }
-
-        public void UpdateKeys(SceneBase scene)
-        {
-            if (scene != null)
-            {
-                scene.KeyboardState = KeyboardState;
-                scene.GamepadState = GamepadState;
-                scene.MouseState = MouseState;
-                scene.TouchState = TouchState;
+                InputManager.UpdateScene(scb);
             }
         }
 

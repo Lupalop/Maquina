@@ -73,6 +73,7 @@
     <Compile Include="UI.Overlays\DebugOverlay.cs" />
     <Compile Include="UI.Overlays\FadeOverlay.cs" />
     <Compile Include="UI.Overlays\MouseOverlay.cs" />
+    <Compile Include="UI\InputManager.cs" />
     <Compile Include="UI\OverlayBase.cs" />
     <Compile Include="UI\SceneBase.cs" />
     <Compile Include="UI\SceneDictionary.cs" />
