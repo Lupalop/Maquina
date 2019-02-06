@@ -41,6 +41,7 @@ namespace Maquina.UI
         // Determine if input should be accepted
         public bool ShouldAcceptInput { get; set; }
 
+        // Keyboard
         public bool KeyPressed(Keys key)
         {
             if (!ShouldAcceptInput)
@@ -58,6 +59,27 @@ namespace Maquina.UI
             if (!ShouldAcceptInput)
                 return false;
             return KeyboardState.IsKeyUp(key);
+        }
+
+        // Mouse
+        public bool MousePressed(MouseButton mb)
+        {
+            if (!ShouldAcceptInput)
+                return false;
+            switch (mb)
+            {
+                case MouseButton.Left:
+                    return MouseState.LeftButton == ButtonState.Pressed && PreviousMouseState.LeftButton == ButtonState.Released;
+                case MouseButton.Middle:
+                    return MouseState.MiddleButton == ButtonState.Pressed && PreviousMouseState.MiddleButton == ButtonState.Released;
+                case MouseButton.Right:
+                    return MouseState.RightButton == ButtonState.Pressed && PreviousMouseState.RightButton == ButtonState.Released;
+                case MouseButton.XButton1:
+                    return MouseState.XButton1 == ButtonState.Pressed && PreviousMouseState.XButton1 == ButtonState.Released;
+                case MouseButton.XButton2:
+                    return MouseState.XButton2 == ButtonState.Pressed && PreviousMouseState.XButton2 == ButtonState.Released;
+            }
+            return false;
         }
 
         public void UpdateInput()
