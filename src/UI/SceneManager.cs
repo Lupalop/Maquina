@@ -67,7 +67,7 @@ namespace Maquina.UI
             scene.DelayLoadContent();
             // Set current state to given scene
             CurrentScene = scene;
-            // Show a fade effect to hide first frame misposition
+            // Show a fade effect when switching
             string overlayKey = String.Format("fade-{0}", scene);
             if (!Overlays.ContainsKey(overlayKey))
                 Overlays.Add(overlayKey, new Scenes.FadeOverlay(this, overlayKey));

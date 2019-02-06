@@ -24,6 +24,8 @@ namespace Maquina.Objects
             TotalFrames = 0;
             SpriteType = SpriteType.None;
             GraphicEffects = SpriteEffects.None;
+            OnUpdate = new Action(delegate {});
+            OnDraw = new Action(delegate {});
         }
 
         // Basic Properties
@@ -87,16 +89,6 @@ namespace Maquina.Objects
         {
             if (Graphic != null)
             {
-                if (SpriteType != SpriteType.None)
-                {
-                    int width = Graphic.Width / Columns;
-                    int height = Graphic.Height / Rows;
-                    int row = (int)((float)CurrentFrame / (float)Columns);
-                    int column = CurrentFrame % Columns;
-
-                    DestinationRectangle = new Rectangle((int)Location.X, (int)Location.Y, width, height);
-                    SourceRectangle = new Rectangle(width * column, height * row, width, height);
-                }
                 if (DestinationRectangle != Rectangle.Empty)
                 {
                     if (SourceRectangle != Rectangle.Empty)
@@ -132,8 +124,27 @@ namespace Maquina.Objects
                     CurrentFrame = 0;
             }
 
+            UpdatePoints();
+
+            if (OnUpdate != null)
+                OnUpdate();
+        }
+
+        public virtual void UpdatePoints()
+        {
             if (Graphic != null)
             {
+                if (SpriteType != SpriteType.None)
+                {
+                    int width = Graphic.Width / Columns;
+                    int height = Graphic.Height / Rows;
+                    int row = (int)((float)CurrentFrame / (float)Columns);
+                    int column = CurrentFrame % Columns;
+
+                    DestinationRectangle = new Rectangle((int)Location.X, (int)Location.Y, width, height);
+                    SourceRectangle = new Rectangle(width * column, height * row, width, height);
+                }
+
                 if (SourceRectangle != Rectangle.Empty)
                 {
                     Dimensions = new Vector2(SourceRectangle.Width * Scale, SourceRectangle.Height * Scale);
@@ -146,9 +157,6 @@ namespace Maquina.Objects
 
             // Stripping the decimal parts of the vectors are intentional
             Bounds = new Rectangle(Location.ToPoint(), Dimensions.ToPoint());
-
-            if (OnUpdate != null)
-                OnUpdate();
         }
 
         public void Dispose()

@@ -97,12 +97,15 @@ namespace Maquina.UI
         {
             return GetAllObjectsHeightFromArray(objects);
         }
-        private static int GetAllObjectsHeightFromArray(GenericElement[] objects)
+        private int GetAllObjectsHeightFromArray(GenericElement[] objects)
         {
             int ObjectsHeight = 0;
-            // Draw objects in the Object array
+
             for (int i = 0; i < objects.Length; i++)
             {
+                objects[i].UpdatePoints();
+                objects[i].OnUpdate();
+
                 if (!(objects[i] is GuiElement))
                 {
                     continue;
@@ -131,7 +134,7 @@ namespace Maquina.UI
         }
         private void DrawObjectsFromArray(GameTime gameTime, GenericElement[] objs)
         {
-            if (IsDistanceCalculated && IsFirstUpdateDone)
+            if (IsFirstUpdateDone)
             {
                 // Draw objects in the Object array
                 for (int i = 0; i < objs.Length; i++)
@@ -189,12 +192,9 @@ namespace Maquina.UI
                         ModifiedObject.Location = new Vector2(ScreenCenter.X, distanceFromTop);
                     }
                 }
-
                 ModifiedObject.Update(gameTime);
             }
-            IsDistanceCalculated = true;
         }
-        private bool IsDistanceCalculated = false;
         private bool IsFirstUpdateDone = false;
     }
 }

@@ -47,6 +47,7 @@ namespace Maquina.UI.Controls
                 SpriteBatch.DrawString(Font, Text, GraphicCenter, Tint, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
         }
 
+        private Vector2 dimensions;
         public override Vector2 Dimensions
         {
             get
@@ -55,7 +56,11 @@ namespace Maquina.UI.Controls
                 {
                     return Font.MeasureString(Text);
                 }
-                return base.Dimensions;
+                return dimensions;
+            }
+            set
+            {
+                dimensions = value;
             }
         }
 
@@ -64,11 +69,6 @@ namespace Maquina.UI.Controls
         public override void Update(GameTime gameTime)
         {
             // TODO: Support touch events (I don't have a real touch device unfortunately)
-            if (Text != null)
-            {
-                Vector2 TextLength = Font.MeasureString(Text);
-                GraphicCenter = new Vector2(Location.X + (Bounds.Width / 2) - TextLength.X / 2, Location.Y + Bounds.Height / 4);
-            }
             MouseState = SceneManager.InputManager.MouseState;
             CurrentFrame = 0;
 
@@ -123,6 +123,16 @@ namespace Maquina.UI.Controls
             }
 
             base.Update(gameTime);
+        }
+
+        public override void UpdatePoints()
+        {
+            base.UpdatePoints();
+            if (Text != null)
+            {
+                Vector2 TextLength = Font.MeasureString(Text);
+                GraphicCenter = new Vector2(Location.X + (Bounds.Width / 2) - TextLength.X / 2, Location.Y + Bounds.Height / 4);
+            }
         }
     }
 }
