@@ -59,6 +59,10 @@ namespace Maquina.UI.Scenes
             if (InputManager.KeyPressed(Keys.F8))
                 Platform.GlobalScale -= 0.1f;
 
+            // Refresh Scene (similar to a browser)
+            if (InputManager.KeyPressed(Keys.F5))
+                SceneManager.SwitchToScene(SceneManager.CurrentScene, true);
+
             elapsedTime += gameTime.ElapsedGameTime;
 
             if (elapsedTime > TimeSpan.FromSeconds(1))
