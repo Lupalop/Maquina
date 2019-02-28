@@ -54,7 +54,8 @@ namespace Maquina.UI.Controls
             {
                 if (Text != null && Graphic == null)
                 {
-                    return Font.MeasureString(Text);
+                    Vector2 CurrentDimensions = Font.MeasureString(Text);
+                    return new Vector2(CurrentDimensions.X * Scale, CurrentDimensions.Y * Scale);
                 }
                 return dimensions;
             }
@@ -131,7 +132,8 @@ namespace Maquina.UI.Controls
             if (Text != null)
             {
                 Vector2 TextLength = Font.MeasureString(Text);
-                GraphicCenter = new Vector2(Location.X + (Bounds.Width / 2) - TextLength.X / 2, Location.Y + Bounds.Height / 4);
+                Vector2 NewTextLength = new Vector2(TextLength.X * Scale, TextLength.Y * Scale);
+                GraphicCenter = new Vector2(Location.X + (Bounds.Width / 2) - NewTextLength.X / 2, Location.Y + Bounds.Height / 4);
             }
         }
     }

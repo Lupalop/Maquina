@@ -18,7 +18,7 @@ namespace Maquina.Objects
         {
             Name = name;
             Tint = Color.White;
-            Scale = 1f;
+            Scale = Platform.GlobalScale;
             MessageHolder = new Collection<object>();
             CurrentFrame = 0;
             TotalFrames = 0;
@@ -141,7 +141,7 @@ namespace Maquina.Objects
                     int row = (int)((float)CurrentFrame / (float)Columns);
                     int column = CurrentFrame % Columns;
 
-                    DestinationRectangle = new Rectangle((int)Location.X, (int)Location.Y, width, height);
+                    DestinationRectangle = new Rectangle((int)Location.X, (int)Location.Y, (int)(width * Scale), (int)(height * Scale));
                     SourceRectangle = new Rectangle(width * column, height * row, width, height);
                 }
 

@@ -33,7 +33,8 @@ namespace Maquina.UI.Controls
         {
             get
             {
-                return Font.MeasureString(Text);
+                Vector2 CurrentDimensions = Font.MeasureString(Text);
+                return new Vector2(CurrentDimensions.X * Scale, CurrentDimensions.Y * Scale);
             }
         }
 

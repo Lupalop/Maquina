@@ -27,6 +27,7 @@ namespace Maquina
         public const string ContentRootDirectory = "Content";
         public const string LocalesDirectory = "locales";
         public const string DefaultLocale = "en-US";
+        public static float GlobalScale = 1f;
         // Engine Startup
         public static Action RunGame { get; set; }
         public static void StartEngine(string[] args)
