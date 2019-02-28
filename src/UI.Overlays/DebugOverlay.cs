@@ -53,6 +53,11 @@ namespace Maquina.UI.Scenes
             if (InputManager.KeyPressed(Keys.F12))
                 isCounterVisible[3] = !isCounterVisible[3];
 
+            // Scale controls
+            if (InputManager.KeyPressed(Keys.F9))
+                Platform.GlobalScale += 0.1f;
+            if (InputManager.KeyPressed(Keys.F8))
+                Platform.GlobalScale -= 0.1f;
 
             elapsedTime += gameTime.ElapsedGameTime;
 
