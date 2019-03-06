@@ -10,18 +10,27 @@ namespace Maquina.Resources
 {
     public class LocaleManager
     {
-        public LocaleManager()
+        public LocaleManager(PreferencesManager preferencesManager)
         {
             LdefContentManager = new ContentManager<LocaleDefinition>();
             StrbContentManager = new ContentManager<StringBundle>();
             Strings = new Dictionary<string, string>();
-            // TODO: Hack while we don't have a working preferences system
-            CurrentLocale = new LocaleDefinition() { LanguageCode = "en-US" };
+
+            // Attempt to get language code from preferences
+            string PrefLanguageCode = preferencesManager.GetCharPref("app.locale");
+            // If empty, use platform default
+            if (PrefLanguageCode == "")
+                PrefLanguageCode = Platform.DefaultLocale;
+
+            CurrentLocale = new LocaleDefinition() { LanguageCode = PrefLanguageCode };
         }
 
+        // Content Managers
         private ContentManager<LocaleDefinition> LdefContentManager;
         private ContentManager<StringBundle> StrbContentManager;
 
+        // Locale Definitions
+        public LocaleDefinition CurrentLocale { get; set; }
         public List<LocaleDefinition> GetAvailableLocales
         {
             get
@@ -43,8 +52,7 @@ namespace Maquina.Resources
             }
         }
 
-        public LocaleDefinition CurrentLocale { get; set; }
-
+        // String Bundles
         private string _stringBundleName;
         public string StringBundleName
         {
@@ -71,6 +79,8 @@ namespace Maquina.Resources
                 _stringBundleName = value;
             }
         }
+
+        // Strings
         public Dictionary<string, string> Strings { get; set; }
 
     }
