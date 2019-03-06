@@ -35,7 +35,7 @@ namespace Maquina.UI.Scenes
                             MathHelper.Clamp(MousePosition.X, 0, Game.GraphicsDevice.Viewport.Bounds.Right - Mouse.Dimensions.X), 
                             MathHelper.Clamp(MousePosition.Y, 0, Game.GraphicsDevice.Viewport.Bounds.Bottom - Mouse.Dimensions.Y));
                         Bounds = Mouse.Bounds;
-
+                        Mouse.Scale = Platform.GlobalScale;
                         Mouse.CurrentFrame = 0;
                         // Change state when selected
                         if ((InputManager.MouseState.LeftButton == ButtonState.Pressed ||
