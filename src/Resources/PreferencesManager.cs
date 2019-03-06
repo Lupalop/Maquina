@@ -12,12 +12,13 @@ namespace Maquina.Resources
     {
         public PreferencesManager()
         {
+            DefaultPreferences = new XElement("preferences");
             Filename = Platform.PreferencesXml;
         }
 
         public XElement Preferences { get; set; }
 
-        private XElement defaultPreferences = new XElement("preferences");
+        private XElement defaultPreferences;
         public XElement DefaultPreferences
         {
             get { return defaultPreferences; }
