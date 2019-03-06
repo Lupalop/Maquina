@@ -36,12 +36,11 @@ namespace Maquina.Resources
             get
             {
                 List<LocaleDefinition> CreatedList = new List<LocaleDefinition>();
-                IEnumerable<string> Directories = Directory.EnumerateDirectories(Utils.CreateLocation(
-                    new string[] { Platform.ContentRootDirectory, Platform.LocalesDirectory }));
+                IEnumerable<string> Directories = Directory.EnumerateDirectories(
+                        Path.Combine(Platform.ContentRootDirectory, Platform.LocalesDirectory));
                 foreach (var item in Directories)
                 {
-                    string LocaleDefLocation = Utils.CreateLocation(
-                        new string[] { item, Platform.LocaleDefinitionXml });
+                    string LocaleDefLocation = Path.Combine(item, Platform.LocaleDefinitionXml);
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {
@@ -64,10 +63,9 @@ namespace Maquina.Resources
             {
                 // Load the string bundle
                 StringBundle StringBundle = StrbContentManager.Initialize(
-                    Utils.CreateLocation(new string[] {
-                        Platform.ContentRootDirectory, Platform.LocalesDirectory,
+                    Path.Combine(Platform.ContentRootDirectory, Platform.LocalesDirectory,
                         CurrentLocale.LanguageCode, value + ".xml"
-                    }));
+                    ));
                 // Clear dictionary content (in cases where we're reused)
                 Strings.Clear();
                 // Place all items into strings dictionary
