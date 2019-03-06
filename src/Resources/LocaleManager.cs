@@ -12,22 +12,19 @@ namespace Maquina.Resources
     {
         public LocaleManager(PreferencesManager preferencesManager)
         {
-            LdefContentManager = new ContentManager<LocaleDefinition>();
-            StrbContentManager = new ContentManager<StringBundle>();
+            LocaleDefinitionContent = new ContentManager<LocaleDefinition>();
+            StringBundleContent = new ContentManager<StringBundle>();
             Strings = new Dictionary<string, string>();
 
             // Attempt to get language code from preferences
-            string PrefLanguageCode = preferencesManager.GetCharPref("app.locale");
-            // If empty, use platform default
-            if (PrefLanguageCode == "")
-                PrefLanguageCode = Platform.DefaultLocale;
+            string PrefLanguageCode = preferencesManager.GetCharPref("app.locale", Platform.DefaultLocale);
 
             CurrentLocale = new LocaleDefinition() { LanguageCode = PrefLanguageCode };
         }
 
         // Content Managers
-        private ContentManager<LocaleDefinition> LdefContentManager;
-        private ContentManager<StringBundle> StrbContentManager;
+        private ContentManager<LocaleDefinition> LocaleDefinitionContent;
+        private ContentManager<StringBundle> StringBundleContent;
 
         // Locale Definitions
         public LocaleDefinition CurrentLocale { get; set; }
@@ -44,7 +41,7 @@ namespace Maquina.Resources
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {
-                        CreatedList.Add(LdefContentManager.Initialize(LocaleDefLocation));
+                        CreatedList.Add(LocaleDefinitionContent.Initialize(LocaleDefLocation));
                     }
                 }
                 return CreatedList;
@@ -62,7 +59,7 @@ namespace Maquina.Resources
             set
             {
                 // Load the string bundle
-                StringBundle StringBundle = StrbContentManager.Initialize(
+                StringBundle StringBundle = StringBundleContent.Initialize(
                     Path.Combine(Platform.ContentRootDirectory, Platform.LocalesDirectory,
                         CurrentLocale.LanguageCode, value + ".xml"
                     ));
