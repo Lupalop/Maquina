@@ -28,18 +28,15 @@ namespace Maquina.UI.Scenes
                     Columns = 2,
                     OnUpdate = () =>
                     {
-                        Vector2 MousePosition = InputManager.MouseState.Position.ToVector2();
                         GenericElement Mouse = Objects["Mouse"];
 
-                        Mouse.Location = new Vector2(
-                            MathHelper.Clamp(MousePosition.X, 0, Game.GraphicsDevice.Viewport.Bounds.Right - Mouse.Dimensions.X), 
-                            MathHelper.Clamp(MousePosition.Y, 0, Game.GraphicsDevice.Viewport.Bounds.Bottom - Mouse.Dimensions.Y));
-                        Bounds = Mouse.Bounds;
+                        Mouse.Location = InputManager.MousePosition.ToVector2();
                         Mouse.Scale = Platform.GlobalScale;
                         Mouse.CurrentFrame = 0;
                         // Change state when selected
-                        if ((InputManager.MouseState.LeftButton == ButtonState.Pressed ||
-                            InputManager.MouseState.RightButton == ButtonState.Pressed) &&
+                        if ((InputManager.MouseDown(MouseButton.Left) ||
+                             InputManager.MouseDown(MouseButton.Right) ||
+                             InputManager.MouseDown(MouseButton.Middle)) &&
                             InputManager.ShouldAcceptInput)
                         {
                             Mouse.CurrentFrame = 1;
@@ -48,8 +45,6 @@ namespace Maquina.UI.Scenes
                 }}
             };
         }
-
-        public Rectangle Bounds { get; set; }
 
         public override void Draw(GameTime gameTime)
         {

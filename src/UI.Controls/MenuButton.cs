@@ -19,7 +19,6 @@ namespace Maquina.UI.Controls
         {
             this.SceneManager = sceneManager;
             InputManager = sceneManager.InputManager;
-            MouseOverlay = (MouseOverlay)sceneManager.Overlays["mouse"];
             // Default MB graphic
             Graphic = sceneManager.Game.Content.Load<Texture2D>("menuBG");
             Font = sceneManager.Fonts["default"];
@@ -32,7 +31,6 @@ namespace Maquina.UI.Controls
         // Fields
         private SceneManager SceneManager;
         private InputManager InputManager;
-        private MouseOverlay MouseOverlay;
         private Vector2 GraphicCenter;
         // Properties
         public SpriteFont Font { get; set; }
@@ -74,7 +72,7 @@ namespace Maquina.UI.Controls
             CurrentFrame = 0;
 
             // Don't respond to any event if button is disabled
-            if (!Disabled && InputManager.ShouldAcceptInput && Bounds.Contains(MouseOverlay.Bounds.Location))
+            if (!Disabled && InputManager.ShouldAcceptInput && Bounds.Contains(InputManager.MousePosition))
             {
                 // If mouse is on top of the button
                 if (SpriteType != SpriteType.None)
