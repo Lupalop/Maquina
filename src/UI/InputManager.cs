@@ -125,6 +125,8 @@ namespace Maquina.UI
             return false;
         }
 
+        public Point MousePosition { get; set; }
+
         public void UpdateInput()
         {
             //
@@ -137,6 +139,10 @@ namespace Maquina.UI
             KeyboardState = Keyboard.GetState();
             MouseState = Mouse.GetState();
             TouchState = TouchPanel.GetState(game.Window);
+            //
+            MousePosition = new Point(
+                MathHelper.Clamp(MouseState.Position.X, 0, game.GraphicsDevice.Viewport.Bounds.Right),
+                MathHelper.Clamp(MouseState.Position.Y, 0, game.GraphicsDevice.Viewport.Bounds.Bottom));
         }
     }
 }
