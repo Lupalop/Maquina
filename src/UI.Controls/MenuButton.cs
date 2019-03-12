@@ -18,7 +18,7 @@ namespace Maquina.UI.Controls
             : base (objectName)
         {
             this.SceneManager = sceneManager;
-            MouseState = sceneManager.InputManager.MouseState;
+            InputManager = sceneManager.InputManager;
             MouseOverlay = (MouseOverlay)sceneManager.Overlays["mouse"];
             // Default MB graphic
             Graphic = sceneManager.Game.Content.Load<Texture2D>("menuBG");
@@ -29,12 +29,14 @@ namespace Maquina.UI.Controls
             ClickSound = sceneManager.Game.Content.Load<SoundEffect>("sfx/click");
         }
 
+        // Fields
         private SceneManager SceneManager;
-        public Vector2 GraphicCenter { get; set; }
+        private InputManager InputManager;
+        private MouseOverlay MouseOverlay;
+        private Vector2 GraphicCenter;
+        // Properties
         public SpriteFont Font { get; set; }
         public string Text { get; set; }
-        public MouseState MouseState { get; set; }
-        public MouseOverlay MouseOverlay { get; set; }
         public Action LeftClickAction { get; set; }
         public Action RightClickAction { get; set; }
         public bool Disabled { get; set; }
@@ -44,7 +46,9 @@ namespace Maquina.UI.Controls
         {
             base.Draw(gameTime);
             if (Text != null)
+            {
                 SpriteBatch.DrawString(Font, Text, GraphicCenter, Tint, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
+            }
         }
 
         private Vector2 dimensions;
@@ -65,61 +69,39 @@ namespace Maquina.UI.Controls
             }
         }
 
-        bool LeftClickFired;
-        bool RightClickFired;
         public override void Update(GameTime gameTime)
         {
-            // TODO: Support touch events (I don't have a real touch device unfortunately)
-            MouseState = SceneManager.InputManager.MouseState;
             CurrentFrame = 0;
 
             // Don't respond to any event if button is disabled
-            if (!Disabled && SceneManager.InputManager.ShouldAcceptInput)
+            if (!Disabled && InputManager.ShouldAcceptInput && Bounds.Contains(MouseOverlay.Bounds.Location))
             {
                 // If mouse is on top of the button
-                if (Bounds.Contains(MouseOverlay.Bounds.Location) && SpriteType != SpriteType.None)
+                if (SpriteType != SpriteType.None)
                 {
                     CurrentFrame = 1;
                 }
 
                 // If the button was clicked
-                if ((MouseState.LeftButton == ButtonState.Pressed ||
-                     MouseState.RightButton == ButtonState.Pressed ||
-                     MouseState.MiddleButton == ButtonState.Pressed) && Bounds.Contains(MouseOverlay.Bounds.Location) && SpriteType != SpriteType.None)
+                if ((InputManager.MousePressed(MouseButton.Left) ||
+                     InputManager.MousePressed(MouseButton.Right) ||
+                     InputManager.MousePressed(MouseButton.Middle)) && SpriteType != SpriteType.None)
                 {
                     CurrentFrame = 2;
                 }
-
+                
                 // Left Mouse Button Click Action
-                if (LeftClickAction != null)
+                if (LeftClickAction != null && InputManager.MousePressed(MouseButton.Left))
                 {
-                    if (MouseState.LeftButton == ButtonState.Pressed && Bounds.Contains(MouseOverlay.Bounds.Location))
-                        LeftClickFired = true;
-                    if (MouseState.LeftButton == ButtonState.Pressed && !Bounds.Contains(MouseOverlay.Bounds.Location))
-                        LeftClickFired = false;
-                    if (MouseState.LeftButton == ButtonState.Released && LeftClickFired)
-                    {
-                        LeftClickAction.Invoke();
-                        ClickSound.Play();
-                        // In order to prevent the action from being fired again
-                        LeftClickFired = false;
-                    }
+                    LeftClickAction.Invoke();
+                    ClickSound.Play();
                 }
 
                 // Right Mouse Button Click Action
-                if (RightClickAction != null)
+                if (RightClickAction != null && InputManager.MousePressed(MouseButton.Right))
                 {
-                    if (MouseState.RightButton == ButtonState.Pressed && Bounds.Contains(MouseOverlay.Bounds.Location))
-                        RightClickFired = true;
-                    if (MouseState.RightButton == ButtonState.Pressed && !Bounds.Contains(MouseOverlay.Bounds.Location))
-                        RightClickFired = false;
-                    if (MouseState.RightButton == ButtonState.Released && RightClickFired)
-                    {
-                        RightClickAction.Invoke();
-                        ClickSound.Play();
-                        // In order to prevent the action from being fired again
-                        RightClickFired = false;
-                    }
+                    RightClickAction.Invoke();
+                    ClickSound.Play();
                 }
             }
 
