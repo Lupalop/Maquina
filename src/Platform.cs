@@ -32,7 +32,6 @@ namespace Maquina
         public static Action RunGame { get; set; }
         public static void StartEngine(string[] args)
         {
-#if DEBUG
             if (args != null)
             {
                 // Enumerate passed arguments
@@ -40,12 +39,11 @@ namespace Maquina
                 {
                     switch (arg.ToLower())
                     {
-                        case "--v":
-                            VerboseOutput = true;
-                            break;
+#if HAS_CONSOLE
                         case "--pfr":
                             PromptForRestart = true;
                             break;
+#endif
                         default:
                             // Ignore other arguments passed
                             break;
@@ -53,15 +51,16 @@ namespace Maquina
                 }
             }
 
+#if HAS_CONSOLE
             WriteHeader();
 #endif
 
             RunGame();
 
-#if DEBUG
+#if HAS_CONSOLE
             while (PromptForRestart)
             {
-                Console.WriteLine("Restart game? Y = Yes, Other keys = No");
+                Console.WriteLine("Restart? Y = Yes, Other keys = No");
                 if (Console.ReadKey(true).Key == ConsoleKey.Y)
                 {
                     WriteHeader();
@@ -72,20 +71,19 @@ namespace Maquina
             }
 #endif
         }
-#if DEBUG
+
+#if HAS_CONSOLE
         private static void WriteHeader()
         {
             Console.Clear();
-            Console.Title = String.Format("{0} Debug Console", Platform.Name);
+            Console.Title = String.Format("{0} Console", Platform.Name);
             Console.WriteLine("/*");
-            Console.WriteLine(" * {0} Game Engine", Platform.Name);
-            Console.WriteLine(" * Version {0}, built on {1}", new object[] { Platform.Version, Platform.BuildDate });
-            Console.WriteLine(" * Developer Console");
+            Console.WriteLine(" * {0} Developer Console", Platform.Name);
+            Console.WriteLine(" * Version {0}, built on {1}", Platform.Version, Platform.BuildDate);
             Console.WriteLine(" */");
             Console.WriteLine();
         }
 
-        public static bool VerboseOutput { get; private set; }
         public static bool PromptForRestart { get; private set; }
 #endif
     }

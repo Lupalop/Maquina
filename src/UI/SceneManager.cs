@@ -47,12 +47,12 @@ namespace Maquina.UI
 
         public void SwitchToScene(SceneBase scene, bool shouldLoadContent = true)
         {
-#if DEBUG
+#if HAS_CONSOLE && LOG_GENERAL
             Console.WriteLine("Switching to scene: {0}", scene.SceneName);
 #endif
             if (scene == null)
             {
-#if DEBUG
+#if HAS_CONSOLE && LOG_GENERAL
                 Console.WriteLine("Switching to given scene failed!");
 #endif
                 return;
@@ -107,7 +107,7 @@ namespace Maquina.UI
                     MediaPlayer.IsRepeating = isRepeating;
                 }
             }
-#if DEBUG
+#if HAS_CONSOLE && LOG_GENERAL
             else
             {
                 Console.WriteLine(String.Format("SceneManager: Song '{0}' not found!", songName));

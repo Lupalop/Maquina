@@ -47,32 +47,22 @@ namespace Maquina.UI
 
         public virtual void LoadContent()
         {
-#if DEBUG
+#if HAS_CONSOLE && LOG_VERBOSE
             Console.WriteLine("Loading content in: {0}", SceneName);
 #endif
         }
 
         public virtual void DelayLoadContent()
         {
-#if DEBUG
+#if HAS_CONSOLE && LOG_VERBOSE
             Console.WriteLine("Loading delayed content in: {0}", SceneName);
 #endif
         }
 
-        public virtual void Draw(GameTime gameTime)
-        {
-#if DEBUG
-            if (Platform.VerboseOutput)
-                Console.WriteLine("Drawing from scene: {0}", SceneName);
-#endif
-        }
+        public virtual void Draw(GameTime gameTime) { }
 
         public virtual void Update(GameTime gameTime)
         {
-#if DEBUG
-            if (Platform.VerboseOutput)
-                Console.WriteLine("Updating from scene: {0}", SceneName);
-#endif
             ScreenCenter = Game.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
             if (!IsFirstUpdateDone)
                 IsFirstUpdateDone = true;
@@ -80,7 +70,7 @@ namespace Maquina.UI
 
         public virtual void Unload()
         {
-#if DEBUG
+#if HAS_CONSOLE && LOG_VERBOSE
             Console.WriteLine("Unloading from scene: {0}", SceneName);
 #endif
         }
