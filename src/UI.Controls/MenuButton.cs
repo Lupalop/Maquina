@@ -67,39 +67,61 @@ namespace Maquina.UI.Controls
             }
         }
 
+        bool LeftClickFired;
+        bool RightClickFired;
         public override void Update(GameTime gameTime)
         {
             CurrentFrame = 0;
 
             // Don't respond to any event if button is disabled
-            if (!Disabled && InputManager.ShouldAcceptInput && Bounds.Contains(InputManager.MousePosition))
+            if (!Disabled && InputManager.ShouldAcceptInput)
             {
                 // If mouse is on top of the button
-                if (SpriteType != SpriteType.None)
+                if (Bounds.Contains(InputManager.MousePosition) && SpriteType != SpriteType.None)
                 {
                     CurrentFrame = 1;
                 }
 
                 // If the button was clicked
-                if ((InputManager.MousePressed(MouseButton.Left) ||
-                     InputManager.MousePressed(MouseButton.Right) ||
-                     InputManager.MousePressed(MouseButton.Middle)) && SpriteType != SpriteType.None)
+                if ((InputManager.MouseDown(MouseButton.Left) ||
+                     InputManager.MouseDown(MouseButton.Right) ||
+                     InputManager.MouseDown(MouseButton.Middle)) &&
+                     Bounds.Contains(InputManager.MousePosition) &&
+                     SpriteType != SpriteType.None)
                 {
                     CurrentFrame = 2;
                 }
-                
+
                 // Left Mouse Button Click Action
-                if (LeftClickAction != null && InputManager.MousePressed(MouseButton.Left))
+                if (LeftClickAction != null)
                 {
-                    LeftClickAction.Invoke();
-                    ClickSound.Play();
+                    if (InputManager.MouseDown(MouseButton.Left) && Bounds.Contains(InputManager.MousePosition))
+                        LeftClickFired = true;
+                    if (InputManager.MouseDown(MouseButton.Left) && !Bounds.Contains(InputManager.MousePosition))
+                        LeftClickFired = false;
+                    if (InputManager.MouseUp(MouseButton.Left) && LeftClickFired)
+                    {
+                        LeftClickAction.Invoke();
+                        ClickSound.Play();
+                        // In order to prevent the action from being fired again
+                        LeftClickFired = false;
+                    }
                 }
 
                 // Right Mouse Button Click Action
-                if (RightClickAction != null && InputManager.MousePressed(MouseButton.Right))
+                if (RightClickAction != null)
                 {
-                    RightClickAction.Invoke();
-                    ClickSound.Play();
+                    if (InputManager.MouseDown(MouseButton.Right) && Bounds.Contains(InputManager.MousePosition))
+                        RightClickFired = true;
+                    if (InputManager.MouseDown(MouseButton.Right) && !Bounds.Contains(InputManager.MousePosition))
+                        RightClickFired = false;
+                    if (InputManager.MouseUp(MouseButton.Right) && RightClickFired)
+                    {
+                        RightClickAction.Invoke();
+                        ClickSound.Play();
+                        // In order to prevent the action from being fired again
+                        RightClickFired = false;
+                    }
                 }
             }
 
