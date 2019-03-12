@@ -10,16 +10,13 @@ namespace Maquina.Resources
 {
     public class LocaleManager
     {
-        public LocaleManager(PreferencesManager preferencesManager)
+        public LocaleManager(string prefLanguageCode)
         {
             LocaleDefinitionContent = new ContentManager<LocaleDefinition>();
             StringBundleContent = new ContentManager<StringBundle>();
             Strings = new Dictionary<string, string>();
 
-            // Attempt to get language code from preferences
-            string PrefLanguageCode = preferencesManager.GetCharPref("app.locale", Platform.DefaultLocale);
-
-            CurrentLocale = new LocaleDefinition() { LanguageCode = PrefLanguageCode };
+            CurrentLocale = new LocaleDefinition() { LanguageCode = prefLanguageCode };
         }
 
         // Content Managers
