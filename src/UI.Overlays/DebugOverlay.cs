@@ -130,8 +130,7 @@ namespace Maquina.UI.Scenes
             }
             if (isCounterVisible[3])
             {
-                Vector2 msLoc = SceneManager.Overlays["mouse"].Objects["Mouse"].Location;
-                SpriteBatch.DrawString(Fonts["o-default"], mouseCoordinates, new Vector2(msLoc.X, msLoc.Y + 15), Color.White);
+                SpriteBatch.DrawString(Fonts["o-default"], mouseCoordinates, new Vector2(0, 0), Color.White);
             }
             SpriteBatch.End();
         }
