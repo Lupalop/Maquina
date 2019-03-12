@@ -17,17 +17,25 @@ namespace Maquina.UI
     {
         public SceneManager(Game game,
             SpriteBatch spriteBatch, Dictionary<string, SpriteFont> fonts,
-            Dictionary<string, Song> songs, LocaleManager localeManager,
-            InputManager inputManager)
+            AudioManager audioManager, LocaleManager localeManager, InputManager inputManager)
         {
             this.Game = game;
             this.SpriteBatch = spriteBatch;
             this.Fonts = fonts;
-            this.Songs = songs;
             this.Overlays = new SceneDictionary<string>();
+            this.Audio = audioManager;
             this.LocaleManager = localeManager;
             this.InputManager = inputManager;
         }
+
+        public Game Game { get; private set; }
+        public SpriteBatch SpriteBatch { get; private set; }
+
+        public Dictionary<string, SpriteFont> Fonts { get; private set; }
+        public SceneDictionary<string> Overlays { get; private set; }
+        public LocaleManager LocaleManager { get; private set; }
+        public InputManager InputManager { get; private set; }
+        public AudioManager Audio { get; private set; }
 
         public SceneBase CurrentScene { get; protected set; }
         private SceneBase _storedScene;
@@ -72,7 +80,6 @@ namespace Maquina.UI
             if (!Overlays.ContainsKey(overlayKey))
                 Overlays.Add(overlayKey, new Scenes.FadeOverlay(this, overlayKey));
         }
-
         public bool SwitchToStoredScene()
         {
             if (StoredScene == null)
@@ -81,42 +88,6 @@ namespace Maquina.UI
             }
             SwitchToScene(StoredScene, false);
             return true;
-        }
-        
-
-        public Game Game { get; private set; }
-        public SpriteBatch SpriteBatch { get; private set; }
-        // Container of loaded Fonts
-        public Dictionary<string, SpriteFont> Fonts { get; private set; }
-        // Container of loaded Songs
-        public Dictionary<string, Song> Songs { get; private set; }
-        // Container of loaded overlay scenes
-        public SceneDictionary<string> Overlays { get; private set; }
-        public LocaleManager LocaleManager { get; private set; }
-        // Input
-        public InputManager InputManager { get; private set; }
-
-        public void PlaySong(string songName, bool isRepeating = true)
-        {
-            if (Songs.ContainsKey(songName))
-            {
-                Song song = Songs[songName];
-                if (MediaPlayer.Queue.ActiveSong != song)
-                {
-                    MediaPlayer.Play(song);
-                    MediaPlayer.IsRepeating = isRepeating;
-                }
-            }
-#if HAS_CONSOLE && LOG_GENERAL
-            else
-            {
-                Console.WriteLine(String.Format("SceneManager: Song '{0}' not found!", songName));
-            }
-#endif
-        }
-        public void PlaySong(string songName)
-        {
-            PlaySong(songName, true);
         }
 
         public void Draw(GameTime gameTime)

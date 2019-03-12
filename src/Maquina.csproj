@@ -63,6 +63,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Objects\IElement.cs" />
     <Compile Include="Objects\GuiElement.cs" />
+    <Compile Include="Resources\AudioManager.cs" />
     <Compile Include="Resources\ContentManager.cs" />
     <Compile Include="Resources\IContent.cs" />
     <Compile Include="Resources\ContentTypes.cs" />
