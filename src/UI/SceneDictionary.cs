@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
+    [Serializable]
     public class SceneDictionary<T> : Dictionary<T, SceneBase>
     {
+        public SceneDictionary() : base(0, null) { }
+        protected SceneDictionary(SerializationInfo info, StreamingContext context) : base(info, context) { }
         public new void Add(T key, SceneBase scene)
         {
             // Load content when scene is added
