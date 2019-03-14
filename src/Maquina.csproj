@@ -65,7 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enumerations.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Objects\IElement.cs" />
     <Compile Include="Objects\GuiElement.cs" />
     <Compile Include="Resources\AudioManager.cs" />
