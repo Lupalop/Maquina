@@ -23,7 +23,7 @@ namespace Maquina.UI
             this.SpriteBatch = spriteBatch;
             this.Fonts = fonts;
             this.Overlays = new SceneDictionary<string>();
-            this.Audio = audioManager;
+            this.AudioManager = audioManager;
             this.LocaleManager = localeManager;
             this.InputManager = inputManager;
         }
@@ -35,7 +35,7 @@ namespace Maquina.UI
         public SceneDictionary<string> Overlays { get; private set; }
         public LocaleManager LocaleManager { get; private set; }
         public InputManager InputManager { get; private set; }
-        public AudioManager Audio { get; private set; }
+        public AudioManager AudioManager { get; private set; }
 
         public SceneBase CurrentScene { get; protected set; }
         private SceneBase _storedScene;

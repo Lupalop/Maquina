@@ -32,7 +32,7 @@ namespace Maquina.Resources
 #if HAS_CONSOLE && LOG_GENERAL
             else
             {
-                Console.WriteLine(String.Format("SceneManager: Song '{0}' not found!", songName));
+                Console.WriteLine(String.Format("AudioManager: Song '{0}' not found!", songName));
             }
 #endif
         }
