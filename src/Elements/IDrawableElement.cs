@@ -3,14 +3,10 @@ using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Maquina.Objects
+namespace Maquina.Elements
 {
-    public interface IElement : IDisposable
+    public interface IDrawableElement
     {
-        // Basic properties
-        string Name { get; set; }
-        Collection<object> MessageHolder { get; set; }
-
         // Graphics
         Texture2D Graphic { get; set; }
         Vector2 Location { get; set; }
@@ -27,27 +23,13 @@ namespace Maquina.Objects
         Rectangle Bounds { get; set; }
         SpriteBatch SpriteBatch { get; set; }
 
-        // Update and draw events (essential to removing individual update commands from scenes)
-        Action OnDraw { get; set; }
-        Action OnUpdate { get; set; }
-
         // For animated sprites
         SpriteType SpriteType { get; set; }
         int Rows { get; set; }
         int Columns { get; set; }
 
+        // Draw action
+        Action OnDraw { get; set; }
         void Draw(GameTime gameTime);
-        void Update(GameTime gameTime);
-    }
-
-    public interface IUIElement : IElement, IDisposable
-    {
-        ControlAlignment ControlAlignment { get; set; }
-    }
-
-    public interface IGameElement : IElement, IDisposable
-    {
-        bool CampaignOnlyObject { get; set; }
-        bool EditorVisibility { get; set; }
     }
 }

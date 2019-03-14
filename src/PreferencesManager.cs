@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
 
-namespace Maquina.Resources
+namespace Maquina
 {
     public class PreferencesManager
     {

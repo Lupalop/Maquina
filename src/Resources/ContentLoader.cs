@@ -8,12 +8,12 @@ using System.Xml.Serialization;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
-using Maquina.Objects;
+using Maquina.Elements;
 
 namespace Maquina.Resources
 {
     // Wrapper around for XmlHelper
-    public class ContentManager<T>
+    public class ContentLoader<T>
     {
         // Accessor methods
         public T Content { get; set; }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.Resources
+namespace Maquina
 {
     public class AudioManager
     {
@@ -32,7 +32,7 @@ namespace Maquina.Resources
 #if HAS_CONSOLE && LOG_GENERAL
             else
             {
-                Console.WriteLine(String.Format("AudioManager: Song '{0}' not found!", songName));
+                Console.WriteLine(String.Format("Audio Manager: Song '{0}' not found!", songName));
             }
 #endif
         }

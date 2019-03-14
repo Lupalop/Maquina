@@ -7,14 +7,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Maquina.Objects;
+using Maquina.Elements;
 using System.Diagnostics.CodeAnalysis;
 
 /*
  * Adapted from Progressbar Game Component
  * 2009 Luke Rymarz, www.lukerymarz.com
  */
-namespace Maquina.UI.Controls
+namespace Maquina.UI
 {
     /// <summary>
     /// This is a game component that implements IDisposable and inherits from GenericElement.

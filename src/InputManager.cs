@@ -9,8 +9,9 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 
-namespace Maquina.UI
+namespace Maquina
 {
+    public enum MouseButton { Left, Middle, Right, XButton1, XButton2 };
     public class InputManager
     {
         public InputManager(Game game)

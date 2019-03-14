@@ -22,7 +22,7 @@ namespace Maquina.Resources
         public List<ResourceParameters> SFX { get; set; }
         public List<ResourceParameters> Textures { get; set; }
 
-        public object LoadContent(ResourceType resourceType, Game game)
+        public object Load(ResourceType resourceType, Game game)
         {
             switch (resourceType)
             {

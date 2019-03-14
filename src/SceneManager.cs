@@ -10,8 +10,9 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 using System.Globalization;
 using Maquina.Resources;
+using Maquina.UI;
 
-namespace Maquina.UI
+namespace Maquina
 {
     public class SceneManager : IDisposable
     {
@@ -78,7 +79,7 @@ namespace Maquina.UI
             // Show a fade effect when switching
             string overlayKey = String.Format("fade-{0}", scene);
             if (!Overlays.ContainsKey(overlayKey))
-                Overlays.Add(overlayKey, new Scenes.FadeOverlay(this, overlayKey));
+                Overlays.Add(overlayKey, new FadeOverlay(this, overlayKey));
         }
         public bool SwitchToStoredScene()
         {

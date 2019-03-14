@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Maquina.Objects;
-using Maquina.UI.Controls;
+using Maquina.Elements;
 using System.Collections.ObjectModel;
 
 namespace Maquina.UI

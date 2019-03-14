@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.UI.Controls;
+using Maquina.Elements;
 
-namespace Maquina.UI.Scenes
+namespace Maquina.UI
 {
     public class FadeOverlay : OverlayBase, IDisposable
     {
@@ -50,7 +50,7 @@ namespace Maquina.UI.Scenes
 
         public override void LoadContent()
         {
-            Objects = new Dictionary<string, Objects.GenericElement> {
+            Objects = new Dictionary<string, GenericElement> {
                 { "Background", new Image("Background")
                 {
                     DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height),

@@ -6,12 +6,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.ObjectModel;
 
-namespace Maquina.Objects
+namespace Maquina.Elements
 {
-    /// <summary>
-    /// Base object class where every drawable object inherits its properties
-    /// </summary>
-    public abstract class GenericElement : IElement, IDisposable
+    public enum SpriteType { Static, Animated, None };
+    public abstract class GenericElement : IBaseElement, IDrawableElement, IDisposable
     {
         // Constructor
         protected GenericElement(string name)
@@ -30,6 +28,10 @@ namespace Maquina.Objects
 
         // Basic Properties
         public string Name { get; set; }
+        public virtual string ID
+        {
+            get { return "GENERIC_BASE"; }
+        }
         public Collection<object> MessageHolder { get; set; }
 
         // Graphics

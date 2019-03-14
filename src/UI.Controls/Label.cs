@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Objects;
-using Maquina.UI.Scenes;
+using Maquina.Elements;
 
-namespace Maquina.UI.Controls
+namespace Maquina.UI
 {
     public class Label : GuiElement
     {

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Objects;
-using Maquina.UI.Controls;
+using Maquina.Elements;
 
-namespace Maquina.UI.Scenes
+namespace Maquina.UI
 {
     public class MouseOverlay : OverlayBase {
     

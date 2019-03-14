@@ -5,23 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Maquina.Resources;
 
-namespace Maquina.Resources
+namespace Maquina
 {
     public class LocaleManager
     {
         public LocaleManager(string prefLanguageCode)
         {
-            LocaleDefinitionContent = new ContentManager<LocaleDefinition>();
-            StringBundleContent = new ContentManager<StringBundle>();
+            LocaleDefinitionContent = new ContentLoader<LocaleDefinition>();
+            StringBundleContent = new ContentLoader<StringBundle>();
             Strings = new Dictionary<string, string>();
 
             CurrentLocale = new LocaleDefinition() { LanguageCode = prefLanguageCode };
         }
 
         // Content Managers
-        private ContentManager<LocaleDefinition> LocaleDefinitionContent;
-        private ContentManager<StringBundle> StringBundleContent;
+        private ContentLoader<LocaleDefinition> LocaleDefinitionContent;
+        private ContentLoader<StringBundle> StringBundleContent;
 
         // Locale Definitions
         public LocaleDefinition CurrentLocale { get; set; }

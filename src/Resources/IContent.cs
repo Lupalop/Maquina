@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
-using Maquina.Objects;
+using Maquina.Elements;
 using Microsoft.Xna.Framework;
 
 namespace Maquina.Resources

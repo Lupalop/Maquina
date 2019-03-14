@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.Objects
+namespace Maquina.Elements
 {
-    public class GuiElement : GenericElement, IUIElement
+    public enum ControlAlignment { Left, Center, Right, Fixed };
+    public abstract class GuiElement : GenericElement
     {
         // Constructor
         protected GuiElement(string name) : base (name)
@@ -15,6 +16,10 @@ namespace Maquina.Objects
         }
 
         public ControlAlignment ControlAlignment { get; set; }
+        public override string ID
+        {
+            get { return "GENERIC_GUI"; }
+        }
 
         protected override void Dispose(bool disposing)
         {
