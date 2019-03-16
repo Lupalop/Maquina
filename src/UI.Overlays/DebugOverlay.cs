@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Maquina.UI.Scenes
+namespace Maquina.UI
 {
     public class DebugOverlay : OverlayBase
     {
@@ -21,7 +21,7 @@ namespace Maquina.UI.Scenes
         string sceneCurrentHeader = "\nCurrent Scene: {0}";
         string sceneOverlayHeader = "\nOverlay Scenes ({0}):\n";
         string sceneOverlayList = "";
-        string sceneObjectHeader = "\nObjects in Current Scene ({0}):\n";
+        string sceneObjectHeader = "\nElements in Current Scene ({0}):\n";
         string sceneObjectList;
 
         // Mouse Coords
@@ -96,8 +96,13 @@ namespace Maquina.UI.Scenes
                 for (int i = 0; i < SceneManager.CurrentScene.Objects.Count; i++)
                 {
                     List<string> keyList = SceneManager.CurrentScene.Objects.Keys.ToList();
-                    sceneObjectList += String.Format("Key {0}: {2}, Object Name: {1}, Location: {3} \n",
-                        new object[] { i, SceneManager.CurrentScene.Objects[keyList[i]].Name, keyList[i], SceneManager.CurrentScene.Objects[keyList[i]].Location.ToString() });
+                    sceneObjectList += String.Format(
+                        "Key {0}: {1}, ID: {2}, Name: {3}, Location: {4} \n",
+                        i,
+                        keyList[i],
+                        SceneManager.CurrentScene.Objects[keyList[i]].ID,
+                        SceneManager.CurrentScene.Objects[keyList[i]].Name,
+                        SceneManager.CurrentScene.Objects[keyList[i]].Location.ToString());
                 }
             }
         }
