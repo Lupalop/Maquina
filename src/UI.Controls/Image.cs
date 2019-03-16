@@ -14,5 +14,9 @@ namespace Maquina.UI
     {
         // GenericElement provides everything needed for an image, except that it is abstract...
         public Image(string objectName) : base(objectName) { }
+        public override string ID
+        {
+            get { return "GUI_IMAGE"; }
+        }
     }
 }

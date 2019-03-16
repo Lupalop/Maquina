@@ -39,6 +39,11 @@ namespace Maquina.UI
         public bool Disabled { get; set; }
         public SoundEffect ClickSound { get; set; }
 
+        public override string ID
+        {
+            get { return "GUI_MENUBUTTON"; }
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);

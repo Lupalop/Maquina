@@ -21,6 +21,10 @@ namespace Maquina.UI
         public Vector2 GraphicCenter { get; set; }
         public SpriteFont Font { get; set; }
         public string Text { get; set; }
+        public override string ID
+        {
+            get { return "GUI_LABEL"; }
+        }
 
         public override void Draw(GameTime gameTime)
         {

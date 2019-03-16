@@ -420,5 +420,10 @@ namespace Maquina.UI
                 backgroundTexture.Dispose();
             }
         }
+
+        public override string ID
+        {
+            get { return "GUI_PROGRESSBAR"; }
+        }
     }
 }
