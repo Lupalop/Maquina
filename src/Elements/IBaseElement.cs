@@ -10,8 +10,6 @@ namespace Maquina.Elements
         // Basic properties
         string Name { get; set; }
         string ID { get; }
-        // TODO: Remove in the future. Must be moved to app code.
-        Collection<object> MessageHolder { get; set; }
 
         // Update action
         Action OnUpdate { get; set; }

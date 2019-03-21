@@ -17,7 +17,6 @@ namespace Maquina.Elements
             Name = name;
             Tint = Color.White;
             Scale = Platform.GlobalScale;
-            MessageHolder = new Collection<object>();
             CurrentFrame = 0;
             TotalFrames = 0;
             SpriteType = SpriteType.None;
@@ -32,7 +31,6 @@ namespace Maquina.Elements
         {
             get { return "GENERIC_BASE"; }
         }
-        public Collection<object> MessageHolder { get; set; }
 
         // Graphics
         public Texture2D Graphic { get; set; }
