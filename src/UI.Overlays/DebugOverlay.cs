@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Maquina.Elements;
 
 namespace Maquina.UI
 {
@@ -92,19 +93,38 @@ namespace Maquina.UI
             // List objects loaded
             if (isCounterVisible[1])
             {
-                sceneObjectList = "";
-                for (int i = 0; i < SceneManager.CurrentScene.Objects.Count; i++)
+                sceneObjectList = ListElementsFromDictionary(SceneManager.CurrentScene.Objects);
+            }
+        }
+
+        public string ListElementsFromDictionary(Dictionary<string, GenericElement> elements, bool isContainer = false)
+        {
+            List<string> keyList = elements.Keys.ToList();
+            string list = "";
+            if (isContainer)
+            {
+                list += "== START CONTAINER ELEMENTS ==\n";
+            }
+            for (int i = 0; i < elements.Count; i++)
+            {
+                list += String.Format(
+                    "Key {0}: {1}, ID: {2}, Name: {3}, Location: {4} \n",
+                    i,
+                    keyList[i],
+                    elements[keyList[i]].ID,
+                    elements[keyList[i]].Name,
+                    elements[keyList[i]].Location.ToString());
+                if (elements[keyList[i]].ID == "GUI_CONTAINER")
                 {
-                    List<string> keyList = SceneManager.CurrentScene.Objects.Keys.ToList();
-                    sceneObjectList += String.Format(
-                        "Key {0}: {1}, ID: {2}, Name: {3}, Location: {4} \n",
-                        i,
-                        keyList[i],
-                        SceneManager.CurrentScene.Objects[keyList[i]].ID,
-                        SceneManager.CurrentScene.Objects[keyList[i]].Name,
-                        SceneManager.CurrentScene.Objects[keyList[i]].Location.ToString());
+                    ElementContainer container = (ElementContainer)elements[keyList[i]];
+                    list += ListElementsFromDictionary(container.Children, true);
                 }
             }
+            if (isContainer)
+            {
+                list += "== END CONTAINER ELEMENTS ==\n";
+            }
+            return list;
         }
 
         public override void Draw(GameTime gameTime)
