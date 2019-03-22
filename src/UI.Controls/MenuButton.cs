@@ -24,6 +24,7 @@ namespace Maquina.UI
             Rows = 1;
             Columns = 3;
             ClickSound = sceneManager.Game.Content.Load<SoundEffect>("sfx/click");
+            IconAlignment = ControlAlignment.Center;
         }
 
         // Fields
@@ -36,6 +37,9 @@ namespace Maquina.UI
         public Action RightClickAction { get; set; }
         public bool Disabled { get; set; }
         public SoundEffect ClickSound { get; set; }
+        public Texture2D Icon { get; set; }
+        public ControlAlignment IconAlignment { get; set; }
+        public Vector2 IconLocation { get; set; }
 
         public override string ID
         {
@@ -48,6 +52,10 @@ namespace Maquina.UI
             if (Text != null)
             {
                 SpriteBatch.DrawString(Font, Text, GraphicCenter, Tint, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
+            }
+            if (Icon != null)
+            {
+                SpriteBatch.Draw(Icon, IconLocation, null, Tint, 0f, Vector2.Zero, Scale, SpriteEffects.None, 1f);
             }
         }
 
@@ -138,6 +146,27 @@ namespace Maquina.UI
                 Vector2 TextLength = Font.MeasureString(Text);
                 Vector2 NewTextLength = new Vector2(TextLength.X * Scale, TextLength.Y * Scale);
                 GraphicCenter = new Vector2(Location.X + (Bounds.Width / 2) - NewTextLength.X / 2, Location.Y + Bounds.Height / 4);
+            }
+
+            if (Icon != null)
+            {
+                switch (IconAlignment)
+                {
+                    case ControlAlignment.Left:
+                        IconLocation = new Vector2(Location.X,
+                            Location.Y + (Bounds.Height / 2) - (Icon.Bounds.Height / 2));
+                        break;
+                    case ControlAlignment.Center:
+                        IconLocation = new Vector2(Location.X + (Bounds.Width / 2) - (Icon.Bounds.Width / 2),
+                            Location.Y + (Bounds.Height / 2) - (Icon.Bounds.Height / 2));
+                        break;
+                    case ControlAlignment.Right:
+                        IconLocation = new Vector2(Location.X + Bounds.Width - Icon.Bounds.Width,
+                            Location.Y + (Bounds.Height / 2) - (Icon.Bounds.Height / 2));
+                        break;
+                    case ControlAlignment.Fixed:
+                        return;
+                }
             }
         }
     }
