@@ -12,7 +12,6 @@ using System.Collections.ObjectModel;
 
 namespace Maquina.UI
 {
-    // TODO: Implement basic layout engine (allowing object groups inside object groups and more...)
     public abstract class SceneBase
     {
         public SceneBase(SceneManager sceneManager, string sceneName = "Untitled Scene")
@@ -158,7 +157,7 @@ namespace Maquina.UI
         private void UpdateObjectsFromArray(GameTime gameTime, GenericElement[] objects)
         {
             int distanceFromTop = (int)(ScreenCenter.Y - (GetAllObjectsHeight(objects) / 2));
-            // Dynamically compute for spacing between *centered* objects
+
             for (int i = 0; i < objects.Length; i++)
             {
                 GenericElement Object = objects[i];
@@ -182,6 +181,13 @@ namespace Maquina.UI
                         ModifiedObject.Location = new Vector2(ScreenCenter.X, distanceFromTop);
                     }
                 }
+
+                if (ModifiedObject.ControlAlignment == ControlAlignment.Left ||
+                    ModifiedObject.ControlAlignment == ControlAlignment.Right)
+                {
+                    throw new NotImplementedException();
+                }
+
                 ModifiedObject.Update(gameTime);
             }
         }
