@@ -40,8 +40,8 @@ namespace Maquina.Elements
 
         public override void Update(GameTime gameTime)
         {
-            int DistanceFromLeft = (int)Location.X;
-            int DistanceFromTop = (int)Location.Y;
+            float DistanceFromLeft = Location.X;
+            float DistanceFromTop = Location.Y;
 
             foreach (GenericElement element in Children.Values)
             {
