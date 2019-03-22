@@ -16,7 +16,6 @@ namespace Maquina.UI
         public MenuButton(string objectName, SceneManager sceneManager)
             : base (objectName)
         {
-            this.SceneManager = sceneManager;
             InputManager = sceneManager.InputManager;
             // Default MB graphic
             Graphic = sceneManager.Game.Content.Load<Texture2D>("menuBG");
@@ -28,7 +27,6 @@ namespace Maquina.UI
         }
 
         // Fields
-        private SceneManager SceneManager;
         private InputManager InputManager;
         private Vector2 GraphicCenter;
         // Properties
