@@ -89,7 +89,14 @@ namespace Maquina.Elements
 
             foreach (GenericElement element in Children.Values)
             {
-                ComputedWidth += element.Bounds.Width;
+                if (ContainerAlignment == ContainerAlignment.Horizontal)
+                {
+                    ComputedWidth += element.Bounds.Width;
+                }
+                else if (element.Bounds.Width > ComputedWidth)
+                {
+                    ComputedWidth = element.Bounds.Width;
+                }
                 if ((element.Bounds.Height > ComputedHeight) ||
                     ContainerAlignment == ContainerAlignment.Vertical)
                 {
