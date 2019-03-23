@@ -108,12 +108,12 @@ namespace Maquina.UI
             for (int i = 0; i < elements.Count; i++)
             {
                 list += String.Format(
-                    "Key {0}: {1}, ID: {2}, Name: {3}, Location: {4} \n",
+                    "Key {0}: {1}, ID: {2}, Name: {3}, Bounds: {4} \n",
                     i,
                     keyList[i],
                     elements[keyList[i]].ID,
                     elements[keyList[i]].Name,
-                    elements[keyList[i]].Location.ToString());
+                    elements[keyList[i]].Bounds.ToString());
                 if (elements[keyList[i]].ID == "GUI_CONTAINER")
                 {
                     ElementContainer container = (ElementContainer)elements[keyList[i]];
