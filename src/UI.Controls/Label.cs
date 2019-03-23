@@ -18,7 +18,6 @@ namespace Maquina.UI
             Text = "";
         }
 
-        public Vector2 GraphicCenter { get; set; }
         public SpriteFont Font { get; set; }
         public string Text { get; set; }
         public override string ID
@@ -28,7 +27,7 @@ namespace Maquina.UI
 
         public override void Draw(GameTime gameTime)
         {
-            SpriteBatch.DrawString(Font, Text, GraphicCenter, Tint, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
+            SpriteBatch.DrawString(Font, Text, Location, Tint, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
             base.Draw(gameTime);
         }
 
@@ -43,7 +42,6 @@ namespace Maquina.UI
 
         public override void Update(GameTime gameTime)
         {
-            GraphicCenter = new Vector2(Location.X, Location.Y);
             base.Update(gameTime);
         }
     }
