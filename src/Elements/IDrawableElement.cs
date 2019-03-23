@@ -18,6 +18,7 @@ namespace Maquina.Elements
         Rectangle DestinationRectangle { get; set; }
         Rectangle SourceRectangle { get; set; }
         SpriteEffects GraphicEffects { get; set; }
+        float LayerDepth { get; set; }
 
         // Graphic (references)
         Rectangle Bounds { get; set; }

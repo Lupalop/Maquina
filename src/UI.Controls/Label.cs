@@ -27,7 +27,7 @@ namespace Maquina.UI
 
         public override void Draw(GameTime gameTime)
         {
-            SpriteBatch.DrawString(Font, Text, Location, Tint, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
+            SpriteBatch.DrawString(Font, Text, Location, Tint, Rotation, RotationOrigin, Scale, GraphicEffects, LayerDepth);
             base.Draw(gameTime);
         }
 

@@ -57,14 +57,15 @@ namespace Maquina.UI
             base.Draw(gameTime);
             if (Text != null)
             {
-                SpriteBatch.DrawString(Font, Text, TextLocation, Tint, 0f, Vector2.Zero, Scale, SpriteEffects.None, 1f);
+                SpriteBatch.DrawString(Font, Text, TextLocation, Tint, Rotation, RotationOrigin, Scale, GraphicEffects, LayerDepth - 0.1f);
             }
             if (Icon != null)
             {
-                SpriteBatch.Draw(Icon, IconLocation, null, Tint, 0f, Vector2.Zero, Scale, SpriteEffects.None, 1f);
+                SpriteBatch.Draw(Icon, IconLocation, null, Tint, Rotation, RotationOrigin, Scale, SpriteEffects.None, LayerDepth - 0.1f);
             }
             if (Tooltip != null)
             {
+                // Tooltips 'probably' don't need rotation
                 SpriteBatch.DrawString(TooltipFont, Tooltip, TooltipLocation, TooltipOpacity, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0);
             }
         }

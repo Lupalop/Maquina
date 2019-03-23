@@ -23,6 +23,7 @@ namespace Maquina.Elements
             GraphicEffects = SpriteEffects.None;
             OnUpdate = new Action(delegate {});
             OnDraw = new Action(delegate {});
+            LayerDepth = 1f;
         }
 
         // Basic Properties
@@ -43,6 +44,7 @@ namespace Maquina.Elements
         public Rectangle DestinationRectangle { get; set; }
         public Rectangle SourceRectangle { get; set; }
         public SpriteEffects GraphicEffects { get; set; }
+        public float LayerDepth { get; set; }
 
         // Update and draw events (essential to removing individual update commands from scenes)
         public Action OnUpdate { get; set; }
@@ -92,26 +94,44 @@ namespace Maquina.Elements
                 if (DestinationRectangle != Rectangle.Empty)
                 {
                     if (SourceRectangle != Rectangle.Empty)
-                        SpriteBatch.Draw(Graphic, DestinationRectangle, SourceRectangle, Tint, Rotation, RotationOrigin, GraphicEffects, 1f);
+                    {
+                        SpriteBatch.Draw(Graphic, DestinationRectangle,
+                            SourceRectangle, Tint,
+                            Rotation, RotationOrigin,
+                            GraphicEffects, LayerDepth);
+                    }
                     else
-                        SpriteBatch.Draw(Graphic, DestinationRectangle, null, Tint, Rotation, RotationOrigin, GraphicEffects, 1f);
-                    return;
+                    {
+                        SpriteBatch.Draw(Graphic, DestinationRectangle,
+                            null, Tint,
+                            Rotation, RotationOrigin,
+                            GraphicEffects, LayerDepth);
+                    }
                 }
                 else if (Rotation != 0 || Scale != 0)
                 {
                     if (SourceRectangle != Rectangle.Empty)
-                        SpriteBatch.Draw(Graphic, Location, SourceRectangle, Tint, Rotation, RotationOrigin, Scale, GraphicEffects, 1f);
+                    {
+                        SpriteBatch.Draw(Graphic, Location,
+                            SourceRectangle, Tint,
+                            Rotation, RotationOrigin,
+                            Scale, GraphicEffects, LayerDepth);
+                    }
                     else
-                        SpriteBatch.Draw(Graphic, Location, null, Tint, Rotation, RotationOrigin, Scale, GraphicEffects, 1f);
-                    return;
+                    {
+                        SpriteBatch.Draw(Graphic, Location,
+                            null, Tint,
+                            Rotation, RotationOrigin,
+                            Scale, GraphicEffects, LayerDepth);
+                    }
                 }
                 else
                 {
                     SpriteBatch.Draw(Graphic, Bounds, Tint);
                 }
             }
-            if (OnDraw != null)
-                OnDraw();
+
+            OnDraw();
         }
 
         public virtual void Update(GameTime gameTime)
@@ -119,15 +139,18 @@ namespace Maquina.Elements
             if (SpriteType != SpriteType.None)
             {
                 if (SpriteType == SpriteType.Animated)
+                {
                     CurrentFrame++;
+                }
                 if (CurrentFrame == TotalFrames)
+                {
                     CurrentFrame = 0;
+                }
             }
 
             UpdatePoints();
 
-            if (OnUpdate != null)
-                OnUpdate();
+            OnUpdate();
         }
 
         public virtual void UpdatePoints()
@@ -141,17 +164,26 @@ namespace Maquina.Elements
                     int row = (int)((float)CurrentFrame / (float)Columns);
                     int column = CurrentFrame % Columns;
 
-                    DestinationRectangle = new Rectangle((int)Location.X, (int)Location.Y, (int)(width * Scale), (int)(height * Scale));
-                    SourceRectangle = new Rectangle(width * column, height * row, width, height);
+                    DestinationRectangle = new Rectangle(
+                        (int)Location.X, (int)Location.Y,
+                        (int)(width * Scale), (int)(height * Scale));
+                    SourceRectangle = new Rectangle(
+                        width * column,
+                        height * row,
+                        width, height);
                 }
 
                 if (SourceRectangle != Rectangle.Empty)
                 {
-                    Dimensions = new Vector2(SourceRectangle.Width * Scale, SourceRectangle.Height * Scale);
+                    Dimensions = new Vector2(
+                        SourceRectangle.Width * Scale,
+                        SourceRectangle.Height * Scale);
                 }
                 else
                 {
-                    Dimensions = new Vector2(Graphic.Width * Scale, Graphic.Height * Scale);
+                    Dimensions = new Vector2(
+                        Graphic.Width * Scale,
+                        Graphic.Height * Scale);
                 }
             }
 
