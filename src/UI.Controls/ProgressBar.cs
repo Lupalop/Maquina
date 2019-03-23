@@ -389,24 +389,22 @@ namespace Maquina.UI
         public override void Draw(GameTime gameTime)
         {
             // draw the outer border
-            SpriteBatch.Draw(outerTexture, m_borderOuterRect, Color.White);
+            SpriteBatch.Draw(outerTexture, m_borderOuterRect, null, Tint, Rotation, RotationOrigin, GraphicEffects, LayerDepth);
             // draw the inner border
-            SpriteBatch.Draw(innerTexture, m_borderInnerRect, Color.White);
+            SpriteBatch.Draw(innerTexture, m_borderInnerRect, null, Tint, Rotation, RotationOrigin, GraphicEffects, LayerDepth);
             // draw the background color
-            SpriteBatch.Draw(backgroundTexture, m_backgroundRect, Color.White);
+            SpriteBatch.Draw(backgroundTexture, m_backgroundRect, null, Tint, Rotation, RotationOrigin, GraphicEffects, LayerDepth);
             // draw the progress
-            SpriteBatch.Draw(fillTexture, m_fillRect, Color.White);
+            SpriteBatch.Draw(fillTexture, m_fillRect, null, Tint, Rotation, RotationOrigin, GraphicEffects, LayerDepth);
 
-            if (OnDraw != null)
-                OnDraw.Invoke();
+            OnDraw();
         }
 
         public override void Update(GameTime gameTime)
         {
             Bounds = m_borderOuterRect;
 
-            if (OnUpdate != null)
-                OnUpdate.Invoke();
+            OnUpdate();
         }
 
         protected override void Dispose(bool disposing)
