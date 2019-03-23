@@ -10,8 +10,8 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class MouseOverlay : OverlayBase {
-    
+    public class MouseOverlay : OverlayBase
+    {
         public MouseOverlay(SceneManager sceneManager, Texture2D mouseSprite)
             : base(sceneManager, "Mouse Overlay")
         {
