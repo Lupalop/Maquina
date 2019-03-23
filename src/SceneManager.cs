@@ -81,6 +81,7 @@ namespace Maquina
             if (!Overlays.ContainsKey(overlayKey))
                 Overlays.Add(overlayKey, new FadeOverlay(this, overlayKey));
         }
+
         public bool SwitchToStoredScene()
         {
             if (StoredScene == null)
@@ -89,6 +90,17 @@ namespace Maquina
             }
             SwitchToScene(StoredScene, false);
             return true;
+        }
+
+        public void TryRemoveOverlays(string name)
+        {
+            for (int i = 0; i < Overlays.Keys.Count; i++)
+            {
+                if (Overlays.Keys.ElementAt(i).Contains(name))
+                {
+                    Overlays.Remove(Overlays.Keys.ElementAt(i));
+                }
+            }
         }
 
         public void Draw(GameTime gameTime)
