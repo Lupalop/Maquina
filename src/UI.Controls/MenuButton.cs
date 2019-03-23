@@ -20,16 +20,20 @@ namespace Maquina.UI
             // Default MB graphic
             Graphic = sceneManager.Game.Content.Load<Texture2D>("menuBG");
             Font = sceneManager.Fonts["default"];
+            TooltipFont = sceneManager.Fonts["o-default_m"];
             SpriteType = SpriteType.Static;
             Rows = 1;
             Columns = 3;
             ClickSound = sceneManager.Game.Content.Load<SoundEffect>("sfx/click");
             IconAlignment = ControlAlignment.Center;
+            TooltipOpacity = Color.Transparent;
         }
 
         // Fields
         private InputManager InputManager;
-        private Vector2 GraphicCenter;
+        private Vector2 TextLocation;
+        private Vector2 TooltipLocation;
+        private Color TooltipOpacity;
         // Properties
         public SpriteFont Font { get; set; }
         public string Text { get; set; }
@@ -40,6 +44,8 @@ namespace Maquina.UI
         public Texture2D Icon { get; set; }
         public ControlAlignment IconAlignment { get; set; }
         public Vector2 IconLocation { get; set; }
+        public string Tooltip { get; set; }
+        public SpriteFont TooltipFont { get; set; }
 
         public override string ID
         {
@@ -51,11 +57,15 @@ namespace Maquina.UI
             base.Draw(gameTime);
             if (Text != null)
             {
-                SpriteBatch.DrawString(Font, Text, GraphicCenter, Tint, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
+                SpriteBatch.DrawString(Font, Text, TextLocation, Tint, 0f, Vector2.Zero, Scale, SpriteEffects.None, 1f);
             }
             if (Icon != null)
             {
                 SpriteBatch.Draw(Icon, IconLocation, null, Tint, 0f, Vector2.Zero, Scale, SpriteEffects.None, 1f);
+            }
+            if (Tooltip != null)
+            {
+                SpriteBatch.DrawString(TooltipFont, Tooltip, TooltipLocation, TooltipOpacity, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0);
             }
         }
 
@@ -90,6 +100,16 @@ namespace Maquina.UI
                 if (Bounds.Contains(InputManager.MousePosition) && SpriteType != SpriteType.None)
                 {
                     CurrentFrame = 1;
+                    if (Tooltip != null)
+                    {
+                        Vector2 MousePosition = InputManager.MousePosition.ToVector2();
+                        TooltipLocation = new Vector2(MousePosition.X + 20, MousePosition.Y + 5);
+                        TooltipOpacity = Color.White;
+                    }
+                }
+                else
+                {
+                    TooltipOpacity = Color.Transparent;
                 }
 
                 // If the button was clicked
@@ -145,7 +165,7 @@ namespace Maquina.UI
             {
                 Vector2 TextLength = Font.MeasureString(Text);
                 Vector2 NewTextLength = new Vector2(TextLength.X * Scale, TextLength.Y * Scale);
-                GraphicCenter = new Vector2(Location.X + (Bounds.Width / 2) - NewTextLength.X / 2, Location.Y + Bounds.Height / 4);
+                TextLocation = new Vector2(Location.X + (Bounds.Width / 2) - NewTextLength.X / 2, Location.Y + Bounds.Height / 4);
             }
 
             if (Icon != null)
