@@ -90,7 +90,11 @@ namespace Maquina.Elements
             foreach (GenericElement element in Children.Values)
             {
                 ComputedWidth += element.Bounds.Width;
-                ComputedHeight += element.Bounds.Height;
+                if ((element.Bounds.Height > ComputedHeight) ||
+                    ContainerAlignment == ContainerAlignment.Vertical)
+                {
+                    ComputedHeight += element.Bounds.Height;
+                }
             }
 
             Dimensions = new Vector2(ComputedWidth, ComputedHeight);
