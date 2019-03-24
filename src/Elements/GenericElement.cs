@@ -24,6 +24,7 @@ namespace Maquina.Elements
             OnUpdate = new Action(delegate {});
             OnDraw = new Action(delegate {});
             LayerDepth = 1f;
+            SpriteBatch = Global.SpriteBatch;
         }
 
         // Basic Properties

@@ -18,7 +18,6 @@ namespace Maquina.UI
             Objects = new Dictionary<string, GenericElement> {
                 { "Mouse", new Image("mouse")
                 {
-                    SpriteBatch = this.SpriteBatch, 
                     Graphic = mouseSprite,
                     SpriteType = SpriteType.Static,
                     ControlAlignment = ControlAlignment.Fixed,

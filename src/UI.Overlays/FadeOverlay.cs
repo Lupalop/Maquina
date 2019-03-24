@@ -56,7 +56,6 @@ namespace Maquina.UI
                     DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height),
                     ControlAlignment = ControlAlignment.Fixed,
                     Tint = FadeColor * Opacity,
-                    SpriteBatch = this.SpriteBatch,
                     OnUpdate = () => {
                         Image BG = (Image)Objects["Background"];
                         BG.Graphic = FadeBackground;
