@@ -10,6 +10,10 @@ namespace Maquina
 {
     public static class Platform
     {
+        static Platform()
+        {
+            GlobalScale = 1f;
+        }
         private static Version _version = Assembly.GetExecutingAssembly().GetName().Version;
         private static DateTime _buildDate = new DateTime(2000, 1, 1)
             .AddDays(_version.Build)
@@ -27,7 +31,7 @@ namespace Maquina
         public static readonly string ContentRootDirectory = "Content";
         public static readonly string LocalesDirectory = "locales";
         public static readonly string DefaultLocale = "en-US";
-        //
-        public static float GlobalScale = 1f;
+        // Properties
+        public static float GlobalScale { get; set; }
     }
 }
