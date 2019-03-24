@@ -12,8 +12,7 @@ namespace Maquina.UI
 {
     public class Label : GuiElement
     {
-        public Label(string objectName)
-            : base (objectName)
+        public Label(string objectName) : base (objectName)
         {
             Text = "";
         }
