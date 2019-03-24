@@ -14,31 +14,29 @@ namespace Maquina.UI
 {
     public abstract class SceneBase
     {
-        public SceneBase(SceneManager sceneManager, string sceneName = "Untitled Scene")
+        public SceneBase(string sceneName = "Untitled Scene")
         {
-            if (sceneManager == null)
-            {
-                throw new ArgumentNullException();
-            }
             // Scene name assignment
             this.SceneName = sceneName;
-            // Assign values to important variables
-            this.SceneManager = sceneManager;
-            InputManager = sceneManager.InputManager;
-            Game = sceneManager.Game;
-            SpriteBatch = sceneManager.SpriteBatch;
-            Fonts = sceneManager.Fonts;
+            // Create local references to global properties
+            SceneManager = Global.SceneManager;
+            InputManager = Global.InputManager;
+            Game = Global.Game;
+            SpriteBatch = Global.SpriteBatch;
+            Fonts = Global.Fonts;
+            // 
             Objects = new Dictionary<string, GenericElement>();
             ScreenCenter = Game.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
             // Layout stuff
             ObjectSpacing = 5;
         }
 
-        public SceneManager SceneManager { get; private set; }
-        public InputManager InputManager { get; set; }
-        public Game Game { get; private set; }
-        public SpriteBatch SpriteBatch { get; private set; }
-        public Dictionary<string, SpriteFont> Fonts { get; set; }
+        protected SceneManager SceneManager { get; private set; }
+        protected InputManager InputManager { get; private set; }
+        protected Game Game { get; private set; }
+        protected SpriteBatch SpriteBatch { get; private set; }
+        protected Dictionary<string, SpriteFont> Fonts { get; private set; }
+
         public Dictionary<string, GenericElement> Objects { get; set; }
         public string SceneName { get; private set; }
 

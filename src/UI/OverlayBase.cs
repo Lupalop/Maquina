@@ -10,15 +10,10 @@ namespace Maquina.UI
 {
     public abstract class OverlayBase : SceneBase
     {
-        protected OverlayBase(SceneManager sceneManager, string sceneName, SceneBase parentScene)
-            : base(sceneManager, sceneName)
+        protected OverlayBase(string sceneName, SceneBase parentScene = null)
+            : base(sceneName)
         {
             ParentScene = parentScene;
-        }
-
-        protected OverlayBase(SceneManager sceneManager, string sceneName)
-            : base(sceneManager, sceneName)
-        {
         }
 
         public override void LoadContent()

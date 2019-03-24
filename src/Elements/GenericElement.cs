@@ -16,7 +16,7 @@ namespace Maquina.Elements
         {
             Name = name;
             Tint = Color.White;
-            Scale = Platform.GlobalScale;
+            Scale = Global.Scale;
             CurrentFrame = 0;
             TotalFrames = 0;
             SpriteType = SpriteType.None;

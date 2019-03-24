@@ -32,10 +32,10 @@ namespace Maquina
             {
                 List<LocaleDefinition> CreatedList = new List<LocaleDefinition>();
                 IEnumerable<string> Directories = Directory.EnumerateDirectories(
-                        Path.Combine(Platform.ContentRootDirectory, Platform.LocalesDirectory));
+                        Path.Combine(Global.ContentRootDirectory, Global.LocalesDirectory));
                 foreach (var item in Directories)
                 {
-                    string LocaleDefLocation = Path.Combine(item, Platform.LocaleDefinitionXml);
+                    string LocaleDefLocation = Path.Combine(item, Global.LocaleDefinitionXml);
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {
@@ -58,7 +58,7 @@ namespace Maquina
             {
                 // Load the string bundle
                 StringBundle StringBundle = StringBundleContent.Initialize(
-                    Path.Combine(Platform.ContentRootDirectory, Platform.LocalesDirectory,
+                    Path.Combine(Global.ContentRootDirectory, Global.LocalesDirectory,
                         CurrentLocale.LanguageCode, value + ".xml"
                     ));
                 // Clear dictionary content (in cases where we're reused)
@@ -75,6 +75,5 @@ namespace Maquina
 
         // Strings
         public Dictionary<string, string> Strings { get; set; }
-
     }
 }

@@ -91,7 +91,7 @@ namespace Maquina.UI
                 {
                     m_borderColorOuter = value;
                     outerData[0] = m_borderColorOuter;
-                    outerTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+                    outerTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
                     outerTexture.SetData(outerData);
                 }
             }
@@ -128,7 +128,7 @@ namespace Maquina.UI
                 {
                     m_borderColorInner = value;
                     innerData[0] = m_borderColorInner;
-                    innerTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+                    innerTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
                     innerTexture.SetData(innerData);
                 }
             }
@@ -165,7 +165,7 @@ namespace Maquina.UI
                     m_fillColor = value;
                     fillData[0] = m_fillColor;
                     fillTexture.Dispose();
-                    fillTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+                    fillTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
                     fillTexture.SetData(fillData);
                 }
             }
@@ -186,7 +186,7 @@ namespace Maquina.UI
                 {
                     m_backgroundColor = value;
                     backgroundData[0] = m_backgroundColor;
-                    backgroundTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+                    backgroundTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
                     backgroundTexture.SetData(backgroundData);
                 }
             }
@@ -242,8 +242,6 @@ namespace Maquina.UI
 
         protected BarOrientation m_orientation;
 
-        protected SceneManager sceneManager;
-
         #endregion
 
         /// <summary>
@@ -251,10 +249,9 @@ namespace Maquina.UI
         /// </summary>
         /// <exFonts name="game">Your game.  Most likely, "this"</exFonts>
         /// <exFonts name="rect">The rectangle you wish the progress bar to occupy (includes borders).</exFonts>
-        public ProgressBar(string ObjectName, Rectangle rect, SceneManager sceneManager)
+        public ProgressBar(string ObjectName, Rectangle rect)
             : base (ObjectName)
         {
-            this.sceneManager = sceneManager;
             m_borderOuterRect = rect;
             m_orientation = BarOrientation.HORIZONTAL_LR;
 
@@ -266,10 +263,10 @@ namespace Maquina.UI
         /// </summary>
         /// <exFonts name="rect">The rectangle you wish the progress bar to occupy (includes borders).</exFonts>
         /// <exFonts name="Orientation">The Orientation of the progress bar.</exFonts>
-        public ProgressBar(string ObjectName, Rectangle rect, BarOrientation orientation, SceneManager sceneManager)
+        public ProgressBar(string ObjectName, Rectangle rect,
+            BarOrientation orientation)
             : base (ObjectName)
         {
-            this.sceneManager = sceneManager;
             m_borderOuterRect = rect;
             m_orientation = orientation;
 
@@ -284,10 +281,10 @@ namespace Maquina.UI
         /// <exFonts name="y">Y-position of the top left corner of the progress bar.</exFonts>
         /// <exFonts name="width">Width of the progress bar.</exFonts>
         /// <exFonts name="height">Height of the progress bar.</exFonts>
-        public ProgressBar(string ObjectName, Int32 x, Int32 y, Int32 width, Int32 height, SceneManager sceneManager)
+        public ProgressBar(string ObjectName, Int32 x, Int32 y, Int32 width,
+            Int32 height)
             : base (ObjectName)
         {
-            this.sceneManager = sceneManager;
             m_borderOuterRect = new Rectangle(x, y, width, height);
             m_orientation = BarOrientation.HORIZONTAL_LR;
 
@@ -302,10 +299,10 @@ namespace Maquina.UI
         /// <exFonts name="width">Width of the progress bar.</exFonts>
         /// <exFonts name="height">Height of the progress bar.</exFonts>
         /// <exFonts name="Orientation">The Orientation of the progress bar.</exFonts>
-        public ProgressBar(string ObjectName, Int32 x, Int32 y, Int32 width, Int32 height, BarOrientation orientation, SceneManager sceneManager)
+        public ProgressBar(string ObjectName, Int32 x, Int32 y, Int32 width,
+            Int32 height, BarOrientation orientation)
             : base (ObjectName)
         {
-            this.sceneManager = sceneManager;
             m_borderOuterRect = new Rectangle(x, y, width, height);
             m_orientation = orientation;
 
@@ -318,10 +315,10 @@ namespace Maquina.UI
         public void Initialize()
         {
             // create some textures.  These will actually be overwritten when colors are set below.
-            outerTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            innerTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            backgroundTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            fillTexture = new Texture2D(sceneManager.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            outerTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            innerTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            backgroundTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            fillTexture = new Texture2D(Global.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 
             // initialize data arrays for building textures
             outerData = new Color[1];

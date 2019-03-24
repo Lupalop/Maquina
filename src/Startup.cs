@@ -52,10 +52,10 @@ namespace Maquina
         private static void WriteHeader()
         {
             Console.Clear();
-            Console.Title = String.Format("{0} Console", Platform.Name);
+            Console.Title = String.Format("{0} Console", Global.Name);
             Console.WriteLine("/*");
-            Console.WriteLine(" * {0} Developer Console", Platform.Name);
-            Console.WriteLine(" * API Version {0}, built on {1}", Platform.APIVersion, Platform.BuildDate);
+            Console.WriteLine(" * {0} Developer Console", Global.Name);
+            Console.WriteLine(" * API Version {0}, built on {1}", Global.APIVersion, Global.BuildDate);
             Console.WriteLine(" */");
             Console.WriteLine();
         }

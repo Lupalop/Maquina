@@ -16,27 +16,12 @@ namespace Maquina
 {
     public class SceneManager : IDisposable
     {
-        public SceneManager(Game game,
-            SpriteBatch spriteBatch, Dictionary<string, SpriteFont> fonts,
-            AudioManager audioManager, LocaleManager localeManager, InputManager inputManager)
+        public SceneManager()
         {
-            this.Game = game;
-            this.SpriteBatch = spriteBatch;
-            this.Fonts = fonts;
             this.Overlays = new SceneDictionary<string>();
-            this.AudioManager = audioManager;
-            this.LocaleManager = localeManager;
-            this.InputManager = inputManager;
         }
 
-        public Game Game { get; private set; }
-        public SpriteBatch SpriteBatch { get; private set; }
-
-        public Dictionary<string, SpriteFont> Fonts { get; private set; }
         public SceneDictionary<string> Overlays { get; private set; }
-        public LocaleManager LocaleManager { get; private set; }
-        public InputManager InputManager { get; private set; }
-        public AudioManager AudioManager { get; private set; }
 
         public SceneBase CurrentScene { get; protected set; }
         private SceneBase _storedScene;
@@ -79,7 +64,7 @@ namespace Maquina
             // Show a fade effect when switching
             string overlayKey = String.Format("fade-{0}", scene);
             if (!Overlays.ContainsKey(overlayKey))
-                Overlays.Add(overlayKey, new FadeOverlay(this, overlayKey));
+                Overlays.Add(overlayKey, new FadeOverlay(overlayKey));
         }
 
         public bool SwitchToStoredScene()
@@ -116,14 +101,12 @@ namespace Maquina
         public void Update(GameTime gameTime)
         {
             CurrentScene.Update(gameTime);
-            InputManager.UpdateInput();
-            CurrentScene.InputManager = InputManager;
+            Global.InputManager.UpdateInput();
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
                 SceneBase scb = Overlays[Overlays.Keys.ToList()[i]];
                 scb.Update(gameTime);
-                scb.InputManager = InputManager;
             }
         }
 
