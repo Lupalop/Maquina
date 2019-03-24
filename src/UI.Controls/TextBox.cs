@@ -13,8 +13,7 @@ namespace Maquina.UI
 {
     public class TextBox : GuiElement
     {
-        public TextBox(string objectName, SceneManager sceneManager)
-            : base (objectName)
+        public TextBox(string objectName) : base (objectName)
         {
             InputManager = Global.InputManager;
             // Default TB graphic

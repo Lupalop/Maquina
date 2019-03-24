@@ -13,8 +13,7 @@ namespace Maquina.UI
 {
     public class MenuButton : GuiElement
     {
-        public MenuButton(string objectName, SceneManager sceneManager)
-            : base (objectName)
+        public MenuButton(string objectName) : base (objectName)
         {
             InputManager = Global.InputManager;
             // Default MB graphic
