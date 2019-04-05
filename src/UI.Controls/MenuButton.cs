@@ -98,9 +98,12 @@ namespace Maquina.UI
             if (!Disabled && InputManager.ShouldAcceptInput)
             {
                 // If mouse is on top of the button
-                if (Bounds.Contains(InputManager.MousePosition) && SpriteType != SpriteType.None)
+                if (Bounds.Contains(InputManager.MousePosition))
                 {
-                    CurrentFrame = 1;
+                    if (SpriteType != SpriteType.None)
+                    {
+                        CurrentFrame = 1;
+                    }
                     if (Tooltip != null)
                     {
                         Vector2 MousePosition = InputManager.MousePosition.ToVector2();
