@@ -35,7 +35,9 @@ namespace Maquina.Elements
             }
 
             if (OnDraw != null)
-                OnDraw();
+            {
+                OnDraw(this);
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -79,7 +81,9 @@ namespace Maquina.Elements
             UpdatePoints();
 
             if (OnUpdate != null)
-                OnUpdate();
+            {
+                OnUpdate(this);
+            }
         }
 
         public override void UpdatePoints()

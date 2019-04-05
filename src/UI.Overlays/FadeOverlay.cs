@@ -57,11 +57,10 @@ namespace Maquina.UI
                     ControlAlignment = ControlAlignment.Fixed,
                     Tint = FadeColor * Opacity,
                     SpriteBatch = this.SpriteBatch,
-                    OnUpdate = () => {
-                        Image BG = (Image)Objects["Background"];
-                        BG.Graphic = FadeBackground;
-                        BG.DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);
-                        BG.Tint = FadeColor * Opacity;
+                    OnUpdate = (element) => {
+                        element.Graphic = FadeBackground;
+                        element.DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);
+                        element.Tint = FadeColor * Opacity;
                     }
                 }}
             };

@@ -397,14 +397,19 @@ namespace Maquina.UI
             // draw the progress
             SpriteBatch.Draw(fillTexture, m_fillRect, null, Tint, Rotation, RotationOrigin, GraphicEffects, LayerDepth);
 
-            OnDraw();
+            if (OnDraw != null)
+            {
+                OnDraw(this);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
             Bounds = m_borderOuterRect;
-
-            OnUpdate();
+            if (OnUpdate != null)
+            {
+                OnUpdate(this);
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -16,13 +16,11 @@ namespace Maquina.Elements
         {
             Name = name;
             Tint = Color.White;
-            Scale = Platform.GlobalScale;
+            Scale = 1f;
             CurrentFrame = 0;
             TotalFrames = 0;
             SpriteType = SpriteType.None;
             GraphicEffects = SpriteEffects.None;
-            OnUpdate = new Action(delegate {});
-            OnDraw = new Action(delegate {});
             LayerDepth = 1f;
         }
 
@@ -46,9 +44,10 @@ namespace Maquina.Elements
         public SpriteEffects GraphicEffects { get; set; }
         public float LayerDepth { get; set; }
 
+
         // Update and draw events (essential to removing individual update commands from scenes)
-        public Action OnUpdate { get; set; }
-        public Action OnDraw { get; set; }
+        public Action<GenericElement> OnUpdate { get; set; }
+        public Action<GenericElement> OnDraw { get; set; }
 
         // For Animated Sprites
         public SpriteType SpriteType { get; set; }
@@ -131,7 +130,10 @@ namespace Maquina.Elements
                 }
             }
 
-            OnDraw();
+            if (OnDraw != null)
+            {
+                OnDraw(this);
+            }
         }
 
         public virtual void Update(GameTime gameTime)
@@ -150,7 +152,10 @@ namespace Maquina.Elements
 
             UpdatePoints();
 
-            OnUpdate();
+            if (OnUpdate != null)
+            {
+                OnUpdate(this);
+            }
         }
 
         public virtual void UpdatePoints()

@@ -25,20 +25,18 @@ namespace Maquina.UI
                     Location = InputManager.MouseState.Position.ToVector2(),
                     Rows = 1,
                     Columns = 2,
-                    OnUpdate = () =>
+                    OnUpdate = (element) =>
                     {
-                        GenericElement Mouse = Objects["Mouse"];
-
-                        Mouse.Location = InputManager.MousePosition.ToVector2();
-                        Mouse.Scale = Platform.GlobalScale;
-                        Mouse.CurrentFrame = 0;
+                        element.Location = InputManager.MousePosition.ToVector2();
+                        element.Scale = Platform.GlobalScale;
+                        element.CurrentFrame = 0;
                         // Change state when selected
                         if ((InputManager.MouseDown(MouseButton.Left) ||
                              InputManager.MouseDown(MouseButton.Right) ||
                              InputManager.MouseDown(MouseButton.Middle)) &&
                             InputManager.ShouldAcceptInput)
                         {
-                            Mouse.CurrentFrame = 1;
+                            element.CurrentFrame = 1;
                         }
                     }
                 }}

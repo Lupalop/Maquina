@@ -12,7 +12,6 @@ namespace Maquina.Elements
         string ID { get; }
 
         // Update action
-        Action OnUpdate { get; set; }
         void Update(GameTime gameTime);
     }
 }

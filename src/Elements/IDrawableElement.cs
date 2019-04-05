@@ -30,7 +30,6 @@ namespace Maquina.Elements
         int Columns { get; set; }
 
         // Draw action
-        Action OnDraw { get; set; }
         void Draw(GameTime gameTime);
     }
 }

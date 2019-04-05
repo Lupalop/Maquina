@@ -92,12 +92,15 @@ namespace Maquina.UI
 
             for (int i = 0; i < objects.Length; i++)
             {
-                objects[i].UpdatePoints();
-                objects[i].OnUpdate();
-
-                if (!(objects[i] is GuiElement))
+                if (!(objects[i] is GuiElement) || objects[i] == null)
                 {
                     continue;
+                }
+
+                objects[i].UpdatePoints();
+                if (objects[i].OnUpdate != null)
+                {
+                    objects[i].OnUpdate(objects[i]);
                 }
 
                 GuiElement Object = (GuiElement)objects[i];
