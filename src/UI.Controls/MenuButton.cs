@@ -65,7 +65,7 @@ namespace Maquina.UI
             if (Tooltip != null)
             {
                 // Tooltips 'probably' don't need rotation
-                SpriteBatch.DrawString(TooltipFont, Tooltip, TooltipLocation, TooltipOpacity, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0);
+                SpriteBatch.DrawString(TooltipFont, Tooltip, TooltipLocation, TooltipOpacity, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
             }
         }
 
