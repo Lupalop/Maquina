@@ -72,66 +72,51 @@ namespace Maquina.UI
 #endif
         }
 
-        public virtual int GetAllObjectsHeight(Dictionary<string, GenericElement> objects)
+        public virtual int GetAllObjectsHeight(IDictionary<string, GenericElement> objects)
         {
-            return GetAllObjectsHeightFromArray(objects.Values.ToArray<GenericElement>());
+            return GetAllObjectsHeight(objects.Values);
         }
-        public virtual int GetAllObjectsHeight(Collection<GenericElement> objects)
-        {
-            return GetAllObjectsHeightFromArray(objects.ToArray<GenericElement>());
-        }
-        public virtual int GetAllObjectsHeight(GenericElement[] objects)
-        {
-            return GetAllObjectsHeightFromArray(objects);
-        }
-        private int GetAllObjectsHeightFromArray(GenericElement[] objects)
+        public virtual int GetAllObjectsHeight(IEnumerable<GenericElement> objects)
         {
             int ObjectsHeight = 0;
 
-            for (int i = 0; i < objects.Length; i++)
+            for (int i = 0; i < objects.Count(); i++)
             {
-                if (!(objects[i] is GuiElement) || objects[i] == null)
+                var currentObject = objects.ElementAt(i);
+                if (!(currentObject is GuiElement) || currentObject == null)
                 {
                     continue;
                 }
 
-                objects[i].UpdatePoints();
-                if (objects[i].OnUpdate != null)
+                currentObject.UpdatePoints();
+                if (currentObject.OnUpdate != null)
                 {
-                    objects[i].OnUpdate(objects[i]);
+                    currentObject.OnUpdate(currentObject);
                 }
 
-                GuiElement Object = (GuiElement)objects[i];
+                GuiElement Object = (GuiElement)currentObject;
                 if (Object.ControlAlignment == ControlAlignment.Center)
                 {
-                    ObjectsHeight += objects[i].Bounds.Height;
+                    ObjectsHeight += currentObject.Bounds.Height;
                 }
             }
             return ObjectsHeight;
         }
 
-        public virtual void DrawObjects(GameTime gameTime, Dictionary<string, GenericElement> objects)
+        public virtual void DrawObjects(GameTime gameTime, IDictionary<string, GenericElement> objects)
         {
-            DrawObjectsFromArray(gameTime, objects.Values.ToArray<GenericElement>());
+            DrawObjects(gameTime, objects.Values);
         }
-        public virtual void DrawObjects(GameTime gameTime, Collection<GenericElement> objects)
-        {
-            DrawObjectsFromArray(gameTime, objects.ToArray<GenericElement>());
-        }
-        public virtual void DrawObjects(GameTime gameTime, GenericElement[] objects)
-        {
-            DrawObjectsFromArray(gameTime, objects);
-        }
-        private void DrawObjectsFromArray(GameTime gameTime, GenericElement[] objs)
+        public virtual void DrawObjects(GameTime gameTime, IEnumerable<GenericElement> objects)
         {
             if (IsFirstUpdateDone)
             {
                 // Draw objects in the Object array
-                for (int i = 0; i < objs.Length; i++)
+                for (int i = 0; i < objects.Count(); i++)
                 {
                     try
                     {
-                        objs[i].Draw(gameTime);
+                        objects.ElementAt(i).Draw(gameTime);
                     }
                     catch (NullReferenceException)
                     { 
@@ -141,27 +126,18 @@ namespace Maquina.UI
             }
         }
 
-        public virtual void UpdateObjects(GameTime gameTime, Dictionary<string, GenericElement> objects)
+        public virtual void UpdateObjects(GameTime gameTime, IDictionary<string, GenericElement> objects)
         {
-            UpdateObjectsFromArray(gameTime, objects.Values.ToArray<GenericElement>());
+            UpdateObjects(gameTime, objects.Values);
         }
-        public virtual void UpdateObjects(GameTime gameTime, Collection<GenericElement> objects)
-        {
-            UpdateObjectsFromArray(gameTime, objects.ToArray<GenericElement>());
-        }
-        public virtual void UpdateObjects(GameTime gameTime, GenericElement[] objects)
-        {
-            UpdateObjectsFromArray(gameTime, objects);
-        }
-
         public int ObjectSpacing { get; set; }
-        private void UpdateObjectsFromArray(GameTime gameTime, GenericElement[] objects)
+        public virtual void UpdateObjects(GameTime gameTime, IEnumerable<GenericElement> objects)
         {
             int distanceFromTop = (int)(ScreenCenter.Y - (GetAllObjectsHeight(objects) / 2));
 
-            for (int i = 0; i < objects.Length; i++)
+            for (int i = 0; i < objects.Count(); i++)
             {
-                GenericElement Object = objects[i];
+                GenericElement Object = objects.ElementAt(i);
                 if (!(Object is GuiElement))
                 {
                     Object.Update(gameTime);
