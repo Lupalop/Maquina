@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.ObjectModel;
+using System.Timers;
 
 namespace Maquina.Elements
 {
@@ -23,6 +24,21 @@ namespace Maquina.Elements
             GraphicEffects = SpriteEffects.None;
             LayerDepth = 1f;
             SpriteBatch = Global.SpriteBatch;
+            FrameSwitchTimer = new Timer()
+            {
+                AutoReset = true,
+                Enabled = true
+            };
+            FrameSwitchInterval = 100;
+            FrameSwitchTimer.Elapsed += FrameSwitchTimer_Elapsed;
+        }
+
+        void FrameSwitchTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (SpriteType == SpriteType.Animated)
+            {
+                CurrentFrame++;
+            }
         }
 
         // Basic Properties
@@ -45,6 +61,20 @@ namespace Maquina.Elements
         public SpriteEffects GraphicEffects { get; set; }
         public float LayerDepth { get; set; }
 
+        private Timer FrameSwitchTimer;
+        private int frameSwitchInterval;
+        public int FrameSwitchInterval
+        {
+            get
+            {
+                return frameSwitchInterval;
+            }
+            set
+            {
+                FrameSwitchTimer.Interval = value;
+                frameSwitchInterval = value;
+            }
+        }
 
         // Update and draw events (essential to removing individual update commands from scenes)
         public Action<GenericElement> OnUpdate { get; set; }
@@ -139,16 +169,9 @@ namespace Maquina.Elements
 
         public virtual void Update(GameTime gameTime)
         {
-            if (SpriteType != SpriteType.None)
+            if (SpriteType != SpriteType.None && CurrentFrame == TotalFrames)
             {
-                if (SpriteType == SpriteType.Animated)
-                {
-                    CurrentFrame++;
-                }
-                if (CurrentFrame == TotalFrames)
-                {
-                    CurrentFrame = 0;
-                }
+                CurrentFrame = 0;
             }
 
             UpdatePoints();
@@ -208,6 +231,7 @@ namespace Maquina.Elements
             if (disposing)
             {
                 Graphic.Dispose();
+                FrameSwitchTimer.Dispose();
             }
         }
     }
