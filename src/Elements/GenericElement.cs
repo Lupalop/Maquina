@@ -55,7 +55,6 @@ namespace Maquina.Elements
         public Color Tint { get; set; }
         public float Rotation { get; set; }
         public Vector2 RotationOrigin { get; set; }
-        public float Scale { get; set; }
         public Rectangle DestinationRectangle { get; set; }
         public Rectangle SourceRectangle { get; set; }
         public SpriteEffects GraphicEffects { get; set; }
@@ -73,6 +72,19 @@ namespace Maquina.Elements
             {
                 FrameSwitchTimer.Interval = value;
                 frameSwitchInterval = value;
+            }
+        }
+
+        private float scale;
+        public float Scale
+        {
+            get
+            {
+                return scale * Global.Scale;
+            }
+            set
+            {
+                scale = value;
             }
         }
 
