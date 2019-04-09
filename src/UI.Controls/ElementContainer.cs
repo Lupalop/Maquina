@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
+    // TODO: Implement columns and rows
     public class ElementContainer : GuiElement
     {
         public ElementContainer(string name) : base(name)
@@ -47,7 +48,6 @@ namespace Maquina.Elements
 
             foreach (GenericElement element in Children.Values)
             {
-                // TODO: Add considerations for other control alignments
                 if (ContainerAlignment == ContainerAlignment.Horizontal)
                 {
                     if (element.Graphic != null || element.Dimensions != null)
@@ -75,6 +75,58 @@ namespace Maquina.Elements
                     }
                 }
 
+                // TODO: Add considerations for other control alignments
+                if (element is GuiElement)
+                {
+                    GuiElement newElement = (GuiElement)element;
+                    if (ContainerAlignment == ContainerAlignment.Vertical)
+                    {
+                        switch (newElement.ControlAlignment)
+                        {
+                            case ControlAlignment.Left:
+                                break;
+                            case ControlAlignment.Center:
+                                if (newElement.Graphic != null || newElement.Dimensions != null)
+                                {
+                                    newElement.Location = new Vector2(this.Bounds.Center.X - (newElement.Bounds.Width / 2), newElement.Location.Y);
+                                }
+                                else
+                                {
+                                    newElement.Location = new Vector2(this.Bounds.Center.X, newElement.Location.Y);
+                                }
+                                break;
+                            case ControlAlignment.Right:
+                                break;
+                            case ControlAlignment.Fixed:
+                            default:
+                                break;
+                        }
+                    }
+                    if (ContainerAlignment == ContainerAlignment.Horizontal)
+                    {
+                        switch (newElement.ControlAlignment)
+                        {
+                            case ControlAlignment.Left:
+                                break;
+                            case ControlAlignment.Center:
+                                if (newElement.Graphic != null || newElement.Dimensions != null)
+                                {
+                                    newElement.Location = new Vector2(newElement.Location.X, this.Bounds.Center.Y - (newElement.Bounds.Height / 2));
+                                }
+                                else
+                                {
+                                    newElement.Location = new Vector2(newElement.Location.X, this.Bounds.Center.Y);
+                                }
+                                break;
+                            case ControlAlignment.Right:
+                                break;
+                            case ControlAlignment.Fixed:
+                            default:
+                                break;
+                        }
+                    }
+                }
+
                 element.Update(gameTime);
             }
 
@@ -96,15 +148,19 @@ namespace Maquina.Elements
                 if (ContainerAlignment == ContainerAlignment.Horizontal)
                 {
                     ComputedWidth += element.Bounds.Width;
+                    if (element.Bounds.Height > ComputedHeight)
+                    {
+                        ComputedHeight = element.Bounds.Height;
+                    }
                 }
-                else if (element.Bounds.Width > ComputedWidth)
-                {
-                    ComputedWidth = element.Bounds.Width;
-                }
-                if ((element.Bounds.Height > ComputedHeight) ||
-                    ContainerAlignment == ContainerAlignment.Vertical)
+
+                if (ContainerAlignment == ContainerAlignment.Vertical)
                 {
                     ComputedHeight += element.Bounds.Height;
+                    if (element.Bounds.Width > ComputedWidth)
+                    {
+                        ComputedWidth = element.Bounds.Width;
+                    }
                 }
             }
 
