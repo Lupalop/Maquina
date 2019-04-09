@@ -15,6 +15,7 @@ namespace Maquina.UI
         public Label(string objectName) : base (objectName)
         {
             Text = "";
+            Font = Global.Fonts["default"];
         }
 
         public SpriteFont Font { get; set; }
