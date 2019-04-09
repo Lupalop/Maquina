@@ -28,8 +28,7 @@ namespace Maquina.UI
         // Mouse Coords
         string mouseCoordinates;
 
-        public DebugOverlay(SceneManager sceneManager)
-            : base(sceneManager, "Debug Overlay")
+        public DebugOverlay() : base("Debug Overlay")
         {
             // Listen to window focus events
             Game.Activated += delegate
@@ -56,9 +55,9 @@ namespace Maquina.UI
 
             // Scale controls
             if (InputManager.KeyPressed(Keys.F9))
-                Platform.GlobalScale += 0.1f;
+                Global.Scale += 0.1f;
             if (InputManager.KeyPressed(Keys.F8))
-                Platform.GlobalScale -= 0.1f;
+                Global.Scale -= 0.1f;
 
             // Refresh Scene (similar to a browser)
             if (InputManager.KeyPressed(Keys.F5))

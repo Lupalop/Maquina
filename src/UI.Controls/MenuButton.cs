@@ -13,18 +13,17 @@ namespace Maquina.UI
 {
     public class MenuButton : GuiElement
     {
-        public MenuButton(string objectName, SceneManager sceneManager)
-            : base (objectName)
+        public MenuButton(string objectName) : base (objectName)
         {
-            InputManager = sceneManager.InputManager;
+            InputManager = Global.InputManager;
             // Default MB graphic
-            Graphic = sceneManager.Game.Content.Load<Texture2D>("menuBG");
-            Font = sceneManager.Fonts["default"];
-            TooltipFont = sceneManager.Fonts["o-default_m"];
+            Graphic = Global.Game.Content.Load<Texture2D>("menuBG");
+            Font = Global.Fonts["default"];
+            TooltipFont = Global.Fonts["o-default_m"];
             SpriteType = SpriteType.Static;
             Rows = 1;
             Columns = 3;
-            ClickSound = sceneManager.Game.Content.Load<SoundEffect>("sfx/click");
+            ClickSound = Global.Game.Content.Load<SoundEffect>("sfx/click");
             IconAlignment = ControlAlignment.Center;
             TooltipOpacity = Color.Transparent;
         }

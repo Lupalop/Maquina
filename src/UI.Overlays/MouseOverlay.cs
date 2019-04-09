@@ -12,13 +12,12 @@ namespace Maquina.UI
 {
     public class MouseOverlay : OverlayBase
     {
-        public MouseOverlay(SceneManager sceneManager, Texture2D mouseSprite)
-            : base(sceneManager, "Mouse Overlay")
+        public MouseOverlay(Texture2D mouseSprite)
+            : base("Mouse Overlay")
         {
             Objects = new Dictionary<string, GenericElement> {
                 { "Mouse", new Image("mouse")
                 {
-                    SpriteBatch = this.SpriteBatch, 
                     Graphic = mouseSprite,
                     SpriteType = SpriteType.Static,
                     ControlAlignment = ControlAlignment.Fixed,
@@ -28,7 +27,7 @@ namespace Maquina.UI
                     OnUpdate = (element) =>
                     {
                         element.Location = InputManager.MousePosition.ToVector2();
-                        element.Scale = Platform.GlobalScale;
+                        element.Scale = Global.Scale;
                         element.CurrentFrame = 0;
                         // Change state when selected
                         if ((InputManager.MouseDown(MouseButton.Left) ||

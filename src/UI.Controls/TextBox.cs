@@ -13,17 +13,16 @@ namespace Maquina.UI
 {
     public class TextBox : GuiElement
     {
-        public TextBox(string objectName, SceneManager sceneManager)
-            : base (objectName)
+        public TextBox(string objectName) : base (objectName)
         {
-            InputManager = sceneManager.InputManager;
+            InputManager = Global.InputManager;
             // Default TB graphic
-            Graphic = sceneManager.Game.Content.Load<Texture2D>("textbox");
-            Font = sceneManager.Fonts["o-default_m"];
-            TooltipFont = sceneManager.Fonts["o-default_m"];
+            Graphic = Global.Game.Content.Load<Texture2D>("textbox");
+            Font = Global.Fonts["o-default_m"];
+            TooltipFont = Global.Fonts["o-default_m"];
             IconAlignment = ControlAlignment.Center;
             TooltipOpacity = Color.Transparent;
-            sceneManager.Game.Window.TextInput += Window_TextInput;
+            Global.Game.Window.TextInput += Window_TextInput;
             Text = "";
             MaxInput = 30;
             OnInput = delegate { };

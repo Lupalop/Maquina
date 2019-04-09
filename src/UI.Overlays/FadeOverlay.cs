@@ -12,16 +12,16 @@ namespace Maquina.UI
 {
     public class FadeOverlay : OverlayBase, IDisposable
     {
-        public FadeOverlay(SceneManager sceneManager, string overlayKey)
-            : base(sceneManager, "Fade Overlay")
+        public FadeOverlay(string overlayKey)
+            : base("Fade Overlay")
         {
             this.OverlayKey = overlayKey;
             this.FadeColor = Color.Black;
             this.FadeSpeed = 0.1f;
         }
 
-        public FadeOverlay(SceneManager sceneManager, string overlayKey, Color fadeColor)
-            : base(sceneManager, "Fade Overlay")
+        public FadeOverlay(string overlayKey, Color fadeColor)
+            : base("Fade Overlay")
         {
             this.OverlayKey = overlayKey;
             this.FadeColor = fadeColor;
@@ -56,7 +56,6 @@ namespace Maquina.UI
                     DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height),
                     ControlAlignment = ControlAlignment.Fixed,
                     Tint = FadeColor * Opacity,
-                    SpriteBatch = this.SpriteBatch,
                     OnUpdate = (element) => {
                         element.Graphic = FadeBackground;
                         element.DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);

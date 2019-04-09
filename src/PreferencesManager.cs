@@ -13,7 +13,7 @@ namespace Maquina
         public PreferencesManager()
         {
             DefaultPreferences = new XElement("preferences");
-            Filename = Platform.PreferencesXml;
+            Filename = Global.PreferencesXml;
         }
 
         public XElement Preferences { get; set; }

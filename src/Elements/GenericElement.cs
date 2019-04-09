@@ -16,12 +16,13 @@ namespace Maquina.Elements
         {
             Name = name;
             Tint = Color.White;
-            Scale = 1f;
+            Scale = Global.Scale;
             CurrentFrame = 0;
             TotalFrames = 0;
             SpriteType = SpriteType.None;
             GraphicEffects = SpriteEffects.None;
             LayerDepth = 1f;
+            SpriteBatch = Global.SpriteBatch;
         }
 
         // Basic Properties
