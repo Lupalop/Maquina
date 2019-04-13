@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.ObjectModel;
-using System.Timers;
 
 namespace Maquina.Elements
 {
     public enum SpriteType { Static, Animated, None };
-    public abstract class GenericElement : IBaseElement, IDrawableElement, IDisposable
+    public abstract class GenericElement : IBaseElement, IDrawableElement, IDisposable 
     {
         // Constructor
         protected GenericElement(string name)
@@ -27,13 +26,13 @@ namespace Maquina.Elements
             FrameSwitchTimer = new Timer()
             {
                 AutoReset = true,
-                Enabled = true
+                Enabled = true,
+                Interval = 100
             };
-            FrameSwitchInterval = 100;
             FrameSwitchTimer.Elapsed += FrameSwitchTimer_Elapsed;
         }
 
-        void FrameSwitchTimer_Elapsed(object sender, ElapsedEventArgs e)
+        void FrameSwitchTimer_Elapsed(object sender, EventArgs e)
         {
             if (SpriteType == SpriteType.Animated)
             {
@@ -243,7 +242,7 @@ namespace Maquina.Elements
             if (disposing)
             {
                 Graphic.Dispose();
-                FrameSwitchTimer.Dispose();
+                FrameSwitchTimer.Close();
             }
         }
     }
