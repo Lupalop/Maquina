@@ -17,7 +17,7 @@ namespace Maquina.UI
         {
             InputManager = Global.InputManager;
             // Default TB graphic
-            Graphic = Global.Game.Content.Load<Texture2D>("textbox");
+            Graphic = Global.Textures["textbox-default"];
             Font = Global.Fonts["o-default_m"];
             TooltipFont = Global.Fonts["o-default_m"];
             IconAlignment = ControlAlignment.Center;

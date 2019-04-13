@@ -17,13 +17,13 @@ namespace Maquina.UI
         {
             InputManager = Global.InputManager;
             // Default MB graphic
-            Graphic = Global.Game.Content.Load<Texture2D>("menuBG");
+            Graphic = Global.Textures["button-default"];
             Font = Global.Fonts["default"];
             TooltipFont = Global.Fonts["o-default_m"];
             SpriteType = SpriteType.Static;
             Rows = 1;
             Columns = 3;
-            ClickSound = Global.Game.Content.Load<SoundEffect>("sfx/click");
+            ClickSound = Global.SFX["click_default"];
             IconAlignment = ControlAlignment.Center;
             TooltipOpacity = Color.Transparent;
         }

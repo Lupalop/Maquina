@@ -10,19 +10,11 @@ namespace Maquina
 {
     public class AudioManager
     {
-        public AudioManager()
-        {
-            this.Songs = new Dictionary<string,Song>();
-        }
-
-        // Properties
-        public Dictionary<string, Song> Songs { get; set; }
-
         public void PlaySong(string songName, bool isRepeating = true)
         {
-            if (Songs.ContainsKey(songName))
+            if (Global.BGM.ContainsKey(songName))
             {
-                Song song = Songs[songName];
+                Song song = Global.BGM[songName];
                 if (MediaPlayer.Queue.ActiveSong != song)
                 {
                     MediaPlayer.Play(song);

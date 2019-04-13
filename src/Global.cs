@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,6 +25,7 @@ namespace Maquina
 
             Scale = 1f;
             Fonts = new Dictionary<string, SpriteFont>();
+            BGM = new Dictionary<string, Song>();
         }
 
         private static Version _version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -34,7 +37,7 @@ namespace Maquina
         public static readonly string Name = "Maquina";
         public static readonly string BuildDate = String.Format("{0} {1}",
             _buildDate.ToShortDateString(), _buildDate.ToShortTimeString());
-        public static readonly int  APIVersion = 0;
+        public static readonly int APIVersion = 0;
 
         // Resources
         public static string ResourceXml { get; set; }
@@ -47,6 +50,9 @@ namespace Maquina
         // App-wide properties
         public static float Scale { get; set; }
         public static Dictionary<string, SpriteFont> Fonts { get; set; }
+        public static Dictionary<string, Song> BGM { get; set; }
+        public static Dictionary<string, SoundEffect> SFX { get; set; }
+        public static Dictionary<string, Texture2D> Textures { get; set; }
         public static SpriteBatch SpriteBatch { get; set; }
         public static Game Game { get; set; }
 
