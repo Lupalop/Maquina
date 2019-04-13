@@ -20,6 +20,7 @@ namespace Maquina.Elements
         public Dictionary<string, GenericElement> Children { get; set; }
         public ContainerAlignment ContainerAlignment { get; set; }
         public int ElementSpacing { get; set; }
+        private bool IsFirstUpdateDone = false;
 
         // Element ID
         public override string ID
@@ -30,6 +31,11 @@ namespace Maquina.Elements
         // Override methods
         public override void Draw(GameTime gameTime)
         {
+            if (!IsFirstUpdateDone)
+            {
+                return;
+            }
+
             foreach (GenericElement element in Children.Values)
             {
                 element.Draw(gameTime);
@@ -135,6 +141,10 @@ namespace Maquina.Elements
             if (OnUpdate != null)
             {
                 OnUpdate(this);
+            }
+            if (!IsFirstUpdateDone)
+            {
+                IsFirstUpdateDone = true;
             }
         }
 
