@@ -19,6 +19,7 @@ namespace Maquina
         public SceneManager()
         {
             this.Overlays = new SceneDictionary<string>();
+            CurrentScene = new EmptyScene();
         }
 
         public SceneDictionary<string> Overlays { get; private set; }
