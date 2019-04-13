@@ -14,21 +14,19 @@ namespace Maquina
     public enum MouseButton { Left, Middle, Right, XButton1, XButton2 };
     public class InputManager
     {
-        public InputManager(Game game)
+        public InputManager()
         {
-            this.game = game;
-            game.Activated += delegate
+            Global.Game.Activated += delegate
             {
                 ShouldAcceptInput = true;
             };
-            game.Deactivated += delegate
+            Global.Game.Deactivated += delegate
             {
                 ShouldAcceptInput = false;
             };
             ShouldAcceptInput = true;
         }
 
-        private Game game;
         // Previous state
         public KeyboardState PreviousKeyboardState { get; private set; }
         public GamePadState PreviousGamepadState { get; private set; }
@@ -139,11 +137,11 @@ namespace Maquina
             GamepadState = GamePad.GetState(PlayerIndex.One);
             KeyboardState = Keyboard.GetState();
             MouseState = Mouse.GetState();
-            TouchState = TouchPanel.GetState(game.Window);
+            TouchState = TouchPanel.GetState(Global.Game.Window);
             //
             MousePosition = new Point(
-                MathHelper.Clamp(MouseState.Position.X, 0, game.GraphicsDevice.Viewport.Bounds.Right),
-                MathHelper.Clamp(MouseState.Position.Y, 0, game.GraphicsDevice.Viewport.Bounds.Bottom));
+                MathHelper.Clamp(MouseState.Position.X, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Right),
+                MathHelper.Clamp(MouseState.Position.Y, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Bottom));
         }
 
         public static List<Keys> ReservedKeys = new List<Keys>()
