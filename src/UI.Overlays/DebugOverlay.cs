@@ -9,7 +9,7 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class DebugOverlay : OverlayBase
+    public class DebugOverlay : Overlay
     {
         // FPS+O Counter
         bool[] isCounterVisible = new bool[4];

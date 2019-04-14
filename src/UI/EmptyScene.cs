@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class EmptyScene : SceneBase
+    public class EmptyScene : Scene
     {
         public EmptyScene() : base() { }
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)

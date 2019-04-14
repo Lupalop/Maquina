@@ -10,7 +10,7 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class FadeOverlay : OverlayBase, IDisposable
+    public class FadeOverlay : Overlay, IDisposable
     {
         public FadeOverlay(string overlayKey)
             : base("Fade Overlay")

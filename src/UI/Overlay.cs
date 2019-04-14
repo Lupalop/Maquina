@@ -8,9 +8,9 @@ using System.Collections.ObjectModel;
 
 namespace Maquina.UI
 {
-    public abstract class OverlayBase : SceneBase
+    public abstract class Overlay : Scene
     {
-        protected OverlayBase(string sceneName, SceneBase parentScene = null)
+        protected Overlay(string sceneName, Scene parentScene = null)
             : base(sceneName)
         {
             ParentScene = parentScene;
@@ -22,7 +22,7 @@ namespace Maquina.UI
             DelayLoadContent();
         }
 
-        public SceneBase ParentScene { get; set; }
+        public Scene ParentScene { get; set; }
 
         public virtual void DisableAllMenuButtons(Dictionary<string, GenericElement> objects)
         {

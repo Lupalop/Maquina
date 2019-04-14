@@ -12,9 +12,9 @@ using System.Collections.ObjectModel;
 
 namespace Maquina.UI
 {
-    public abstract class SceneBase
+    public abstract class Scene
     {
-        public SceneBase(string sceneName = "Untitled Scene")
+        public Scene(string sceneName = "Untitled Scene")
         {
             // Scene name assignment
             this.SceneName = sceneName;

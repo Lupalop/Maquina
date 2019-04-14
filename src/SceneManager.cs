@@ -18,7 +18,7 @@ namespace Maquina
     {
         public SceneManager()
         {
-            Overlays = new EventDictionary<string, SceneBase>();
+            Overlays = new EventDictionary<string, Scene>();
             Overlays.ItemAdded += Overlays_ItemAdded;
             Overlays.ItemRemoved += Overlays_ItemRemoved;
             Overlays.DictionaryCleared += Overlays_DictionaryCleared;
@@ -28,13 +28,13 @@ namespace Maquina
         private void Overlays_DictionaryCleared()
         {
             // Unload content of every scene
-            foreach (SceneBase scene in Overlays.Values)
+            foreach (Scene scene in Overlays.Values)
             {
                 scene.Unload();
             }
         }
 
-        private void Overlays_ItemAdded(string key, SceneBase scene)
+        private void Overlays_ItemAdded(string key, Scene scene)
         {
             if (Overlays.ContainsKey(key))
             {
@@ -47,7 +47,7 @@ namespace Maquina
             scene.LoadContent();
         }
 
-        private void Overlays_ItemRemoved(string key, SceneBase scene)
+        private void Overlays_ItemRemoved(string key, Scene scene)
         {
             if (!Overlays.ContainsKey(key))
             {
@@ -60,11 +60,11 @@ namespace Maquina
             scene.Unload();
         }
 
-        public EventDictionary<string, SceneBase> Overlays { get; private set; }
+        public EventDictionary<string, Scene> Overlays { get; private set; }
 
-        public SceneBase CurrentScene { get; protected set; }
-        private SceneBase _storedScene;
-        public SceneBase StoredScene
+        public Scene CurrentScene { get; protected set; }
+        private Scene _storedScene;
+        public Scene StoredScene
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Maquina
             }
         }
 
-        public void SwitchToScene(SceneBase scene, bool shouldLoadContent = true)
+        public void SwitchToScene(Scene scene, bool shouldLoadContent = true)
         {
 #if HAS_CONSOLE && LOG_GENERAL
             Console.WriteLine("Switching to scene: {0}", scene.SceneName);
@@ -150,7 +150,7 @@ namespace Maquina
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                SceneBase scb = Overlays[Overlays.Keys.ToList()[i]];
+                Scene scb = Overlays[Overlays.Keys.ToList()[i]];
                 scb.Update(gameTime);
             }
         }

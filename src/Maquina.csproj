@@ -88,8 +88,8 @@
     <Compile Include="UI.Overlays\MouseOverlay.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="UI\EmptyScene.cs" />
-    <Compile Include="UI\OverlayBase.cs" />
-    <Compile Include="UI\SceneBase.cs" />
+    <Compile Include="UI\Overlay.cs" />
+    <Compile Include="UI\Scene.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Elements\GenericElement.cs" />
     <Compile Include="Global.cs" />
