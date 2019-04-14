@@ -13,12 +13,12 @@ namespace Maquina.Elements
         public ElementContainer(string name) : base(name)
         {
             Children = new EventDictionary<string, GenericElement>();
-            ContainerAlignment = ContainerAlignment.Vertical;
+            Orientation = Orientation.Vertical;
         }
 
         // Properties
         public EventDictionary<string, GenericElement> Children { get; set; }
-        public ContainerAlignment ContainerAlignment { get; set; }
+        public Orientation Orientation { get; set; }
         public int ElementSpacing { get; set; }
         private bool IsFirstUpdateDone = false;
 
@@ -54,7 +54,7 @@ namespace Maquina.Elements
 
             foreach (GenericElement element in Children.Values)
             {
-                if (ContainerAlignment == ContainerAlignment.Horizontal)
+                if (Orientation == Orientation.Horizontal)
                 {
                     if (element.Graphic != null || element.Dimensions != null)
                     {
@@ -85,7 +85,7 @@ namespace Maquina.Elements
                 if (element is GuiElement)
                 {
                     GuiElement newElement = (GuiElement)element;
-                    if (ContainerAlignment == ContainerAlignment.Vertical)
+                    if (Orientation == Orientation.Vertical)
                     {
                         switch (newElement.ControlAlignment)
                         {
@@ -108,7 +108,7 @@ namespace Maquina.Elements
                                 break;
                         }
                     }
-                    if (ContainerAlignment == ContainerAlignment.Horizontal)
+                    if (Orientation == Orientation.Horizontal)
                     {
                         switch (newElement.ControlAlignment)
                         {
@@ -155,7 +155,7 @@ namespace Maquina.Elements
 
             foreach (GenericElement element in Children.Values)
             {
-                if (ContainerAlignment == ContainerAlignment.Horizontal)
+                if (Orientation == Orientation.Horizontal)
                 {
                     ComputedWidth += element.Bounds.Width;
                     if (element.Bounds.Height > ComputedHeight)
@@ -164,7 +164,7 @@ namespace Maquina.Elements
                     }
                 }
 
-                if (ContainerAlignment == ContainerAlignment.Vertical)
+                if (Orientation == Orientation.Vertical)
                 {
                     ComputedHeight += element.Bounds.Height;
                     if (element.Bounds.Width > ComputedWidth)
@@ -179,7 +179,7 @@ namespace Maquina.Elements
         }
     }
 
-    public enum ContainerAlignment
+    public enum Orientation
     {
         Horizontal,
         Vertical
