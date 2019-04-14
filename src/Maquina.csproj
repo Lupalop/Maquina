@@ -68,6 +68,7 @@
     <Compile Include="Elements\GuiElement.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Elements\IDrawableElement.cs" />
+    <Compile Include="EventDictionary.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="TimerManager.cs" />
     <Compile Include="UI.Controls\TextBox.cs" />
@@ -89,7 +90,6 @@
     <Compile Include="UI\EmptyScene.cs" />
     <Compile Include="UI\OverlayBase.cs" />
     <Compile Include="UI\SceneBase.cs" />
-    <Compile Include="UI\SceneDictionary.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Elements\GenericElement.cs" />
     <Compile Include="Global.cs" />

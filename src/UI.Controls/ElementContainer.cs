@@ -12,12 +12,12 @@ namespace Maquina.Elements
     {
         public ElementContainer(string name) : base(name)
         {
-            Children = new Dictionary<string, GenericElement>();
+            Children = new EventDictionary<string, GenericElement>();
             ContainerAlignment = ContainerAlignment.Vertical;
         }
 
         // Properties
-        public Dictionary<string, GenericElement> Children { get; set; }
+        public EventDictionary<string, GenericElement> Children { get; set; }
         public ContainerAlignment ContainerAlignment { get; set; }
         public int ElementSpacing { get; set; }
         private bool IsFirstUpdateDone = false;

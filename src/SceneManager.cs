@@ -18,11 +18,49 @@ namespace Maquina
     {
         public SceneManager()
         {
-            this.Overlays = new SceneDictionary<string>();
+            Overlays = new EventDictionary<string, SceneBase>();
+            Overlays.ItemAdded += Overlays_ItemAdded;
+            Overlays.ItemRemoved += Overlays_ItemRemoved;
+            Overlays.DictionaryCleared += Overlays_DictionaryCleared;
             CurrentScene = new EmptyScene();
         }
 
-        public SceneDictionary<string> Overlays { get; private set; }
+        private void Overlays_DictionaryCleared()
+        {
+            // Unload content of every scene
+            foreach (SceneBase scene in Overlays.Values)
+            {
+                scene.Unload();
+            }
+        }
+
+        private void Overlays_ItemAdded(string key, SceneBase scene)
+        {
+            if (Overlays.ContainsKey(key))
+            {
+#if HAS_CONSOLE
+                Console.WriteLine("A scene with the same key already exists.");
+#endif
+                return;
+            }
+            // Load content when scene is added
+            scene.LoadContent();
+        }
+
+        private void Overlays_ItemRemoved(string key, SceneBase scene)
+        {
+            if (!Overlays.ContainsKey(key))
+            {
+#if HAS_CONSOLE
+                Console.WriteLine(String.Format("Attempting to remove a non-existent scene: {0}", key));
+#endif
+                return;
+            }
+            // Unload content when scene is removed
+            scene.Unload();
+        }
+
+        public EventDictionary<string, SceneBase> Overlays { get; private set; }
 
         public SceneBase CurrentScene { get; protected set; }
         private SceneBase _storedScene;
@@ -54,10 +92,14 @@ namespace Maquina
             }
             // Unload previous scene
             if (CurrentScene != null)
+            {
                 CurrentScene.Unload();
+            }
             // Check if load content should still be called
             if (shouldLoadContent)
+            {
                 scene.LoadContent();
+            }
             // Load delayed content
             scene.DelayLoadContent();
             // Set current state to given scene
@@ -65,7 +107,9 @@ namespace Maquina
             // Show a fade effect when switching
             string overlayKey = String.Format("fade-{0}", scene);
             if (!Overlays.ContainsKey(overlayKey))
+            {
                 Overlays.Add(overlayKey, new FadeOverlay(overlayKey));
+            }
         }
 
         public bool SwitchToStoredScene()
