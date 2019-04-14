@@ -22,45 +22,30 @@ namespace Maquina
         public event Action<TKey, TValue> ItemRemoved;
         public event Action DictionaryCleared;
 
-        public void OnItemAdded(TKey key, TValue value)
+        public new void Add(TKey key, TValue value)
         {
             if (ItemAdded != null)
             {
                 ItemAdded(key, value);
             }
-        }
-
-        public void OnItemRemoved(TKey key, TValue value)
-        {
-            if (ItemRemoved != null)
-            {
-                ItemRemoved(key, value);
-            }
-        }
-
-        public void OnDictionaryCleared()
-        {
-            if (DictionaryCleared != null)
-            {
-                DictionaryCleared();
-            }
-        }
-
-        public new void Add(TKey key, TValue value)
-        {
-            OnItemAdded(key, value);
             base.Add(key, value);
         }
 
         public new bool Remove(TKey key)
         {
-            OnItemRemoved(key, base[key]);
+            if (ItemRemoved != null)
+            {
+                ItemRemoved(key, base[key]);
+            }
             return base.Remove(key);
         }
 
         public new void Clear()
         {
-            OnDictionaryCleared();
+            if (DictionaryCleared != null)
+            {
+                DictionaryCleared();
+            }
             base.Clear();
         }
     }
