@@ -39,6 +39,7 @@ namespace Maquina
             while (PromptForRestart)
             {
                 Console.WriteLine("Restart? Y = Yes, Other keys = No");
+                GC.Collect();
                 if (Console.ReadKey(true).Key == ConsoleKey.Y)
                 {
                     WriteHeader();
