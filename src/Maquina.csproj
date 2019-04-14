@@ -79,6 +79,7 @@
     <Compile Include="LocaleManager.cs" />
     <Compile Include="PreferencesManager.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UI.Controls\Throbber.cs" />
     <Compile Include="UI.Controls\Image.cs" />
     <Compile Include="UI.Controls\Label.cs" />
     <Compile Include="UI.Controls\MenuButton.cs" />
