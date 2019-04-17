@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    public enum ControlAlignment { Left, Center, Right, Fixed };
     public abstract class GuiElement : GenericElement
     {
         // Constructor

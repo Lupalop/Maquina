@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Maquina.Elements;
 
-namespace Maquina.Elements
+namespace Maquina.UI
 {
     // TODO: Implement columns and rows
     public class ElementContainer : GuiElement
@@ -177,11 +178,5 @@ namespace Maquina.Elements
             Dimensions = new Vector2(ComputedWidth, ComputedHeight);
             Bounds = new Rectangle(Location.ToPoint(), Dimensions.ToPoint());
         }
-    }
-
-    public enum Orientation
-    {
-        Horizontal,
-        Vertical
     }
 }

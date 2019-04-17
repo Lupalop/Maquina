@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 
 namespace Maquina.Elements
 {
-    public enum SpriteType { Static, Animated, None };
     public abstract class GenericElement : IBaseElement, IDrawableElement, IDisposable 
     {
         // Constructor
