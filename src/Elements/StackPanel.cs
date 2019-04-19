@@ -13,12 +13,13 @@ namespace Maquina.Elements
         {
             Children = new EventDictionary<string, GenericElement>();
             Orientation = Orientation.Vertical;
+            ElementMargin = new Region();
         }
 
         // Properties
         public EventDictionary<string, GenericElement> Children { get; set; }
         public Orientation Orientation { get; set; }
-        public int ElementSpacing { get; set; }
+        public Region ElementMargin { get; set; }
         private bool IsFirstUpdateDone = false;
 
         // Element ID
@@ -58,21 +59,23 @@ namespace Maquina.Elements
                     if (element.Graphic != null || element.Dimensions != null)
                     {
                         element.Location = new Vector2(DistanceFromLeft, Location.Y);
+                        DistanceFromLeft += ElementMargin.Left;
                         DistanceFromLeft += element.Bounds.Width;
-                        DistanceFromLeft += ElementSpacing;
+                        DistanceFromLeft += ElementMargin.Right;
                     }
                     else
                     {
                         element.Location = new Vector2(DistanceFromLeft, Location.Y);
                     }
                 }
-                else
+                if (Orientation == Orientation.Vertical)
                 {
                     if (element.Graphic != null || element.Dimensions != null)
                     {
                         element.Location = new Vector2(Location.X, DistanceFromTop);
+                        DistanceFromTop += ElementMargin.Top;
                         DistanceFromTop += element.Bounds.Height;
-                        DistanceFromTop += ElementSpacing;
+                        DistanceFromTop += ElementMargin.Bottom;
                     }
                     else
                     {
@@ -156,7 +159,9 @@ namespace Maquina.Elements
             {
                 if (Orientation == Orientation.Horizontal)
                 {
+                    ComputedWidth += ElementMargin.Left;
                     ComputedWidth += element.Bounds.Width;
+                    ComputedWidth += ElementMargin.Right;
                     if (element.Bounds.Height > ComputedHeight)
                     {
                         ComputedHeight = element.Bounds.Height;
@@ -165,7 +170,9 @@ namespace Maquina.Elements
 
                 if (Orientation == Orientation.Vertical)
                 {
+                    ComputedHeight += ElementMargin.Top;
                     ComputedHeight += element.Bounds.Height;
+                    ComputedHeight += ElementMargin.Bottom;
                     if (element.Bounds.Width > ComputedWidth)
                     {
                         ComputedWidth = element.Bounds.Width;
