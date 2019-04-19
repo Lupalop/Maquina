@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.UI
+namespace Maquina.Elements
 {
     public enum Orientation
     {
