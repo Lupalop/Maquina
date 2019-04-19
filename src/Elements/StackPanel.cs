@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    public class StackPanel : GenericElement, IContainer
+    public class StackPanel : GuiElement, IContainer
     {
         public StackPanel(string name) : base(name)
         {
