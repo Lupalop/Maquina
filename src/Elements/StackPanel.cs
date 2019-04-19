@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Maquina.Elements;
 
-namespace Maquina.UI
+namespace Maquina.Elements
 {
-    // TODO: Implement columns and rows
-    public class ElementContainer : GuiElement
+    public class StackPanel : GenericElement, IContainer
     {
-        public ElementContainer(string name) : base(name)
+        public StackPanel(string name) : base(name)
         {
             Children = new EventDictionary<string, GenericElement>();
             Orientation = Orientation.Vertical;
@@ -26,7 +24,7 @@ namespace Maquina.UI
         // Element ID
         public override string ID
         {
-            get { return "GUI_CONTAINER"; }
+            get { return "GENERIC_STACKPANEL"; }
         }
 
         // Override methods
