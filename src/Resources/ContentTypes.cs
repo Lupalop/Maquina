@@ -64,13 +64,6 @@ namespace Maquina.Resources
             return null;
         }
     }
-    public enum ResourceType
-    {
-        Fonts,
-        BGM,
-        SFX,
-        Textures
-    }
     public class FontParameters : ResourceParameters
     {
         [XmlAttribute]
