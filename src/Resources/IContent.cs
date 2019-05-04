@@ -12,8 +12,6 @@ using Microsoft.Xna.Framework;
 
 namespace Maquina.Resources
 {
-    // <Identifier>
-    // Content interface
     public interface IContent
     {
     }
