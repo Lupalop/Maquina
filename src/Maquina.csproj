@@ -73,6 +73,7 @@
     <Compile Include="Elements\IDrawableElement.cs" />
     <Compile Include="Elements\SpriteType.cs" />
     <Compile Include="EventDictionary.cs" />
+    <Compile Include="MaquinaGame.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="Resources\LocaleDefinition.cs" />
