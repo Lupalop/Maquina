@@ -16,7 +16,7 @@ namespace Maquina
     {
         static Global()
         {
-            ResourceXml = "resources.xml";
+            ResourceXml = "platformresources.xml";
             PreferencesXml = "preferences.xml";
             LocaleDefinitionXml = "locale.xml";
             ContentRootDirectory = "Content";
