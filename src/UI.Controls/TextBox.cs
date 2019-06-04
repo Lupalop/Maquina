@@ -90,6 +90,12 @@ namespace Maquina.UI
         private void Window_TextInput(object sender, TextInputEventArgs e)
         {
             OnInput();
+            // TODO: Concept of focus
+            if (e.Key == Keys.Back && Text.Length > 0)
+            {
+                Text = Text.Remove(MathHelper.Clamp(Text.Length - 1, 0, Int32.MaxValue), 1);
+                return;
+            }
             if (InputManager.ReservedKeys.Contains(e.Key) || Text.Length > MaxInput)
             {
                 return;
@@ -117,12 +123,6 @@ namespace Maquina.UI
                 else
                 {
                     TooltipOpacity = Color.Transparent;
-                }
-
-                // TODO: Concept of focus
-                if (InputManager.KeyPressed(Keys.Back) && Text.Length > 0)
-                {
-                    Text = Text.Remove(MathHelper.Clamp(Text.Length - 1, 0, Int32.MaxValue), 1);
                 }
             }
 
