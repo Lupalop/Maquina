@@ -64,6 +64,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="Elements\ControlAlignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />
     <Compile Include="Elements\GuiElement.cs" />
@@ -74,7 +75,12 @@
     <Compile Include="EventDictionary.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />
+    <Compile Include="Resources\LocaleDefinition.cs" />
+    <Compile Include="Resources\ResourceContent.cs" />
+    <Compile Include="Resources\ResourceParameters.cs" />
     <Compile Include="Resources\ResourceType.cs" />
+    <Compile Include="Resources\StringBundle.cs" />
+    <Compile Include="Resources\StringParameters.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="TimerManager.cs" />
     <Compile Include="Elements\Orientation.cs" />
@@ -82,7 +88,7 @@
     <Compile Include="Elements\StackPanel.cs" />
     <Compile Include="Resources\ContentLoader.cs" />
     <Compile Include="Resources\IContent.cs" />
-    <Compile Include="Resources\ContentTypes.cs" />
+    <Compile Include="Resources\FontParameters.cs" />
     <Compile Include="LocaleManager.cs" />
     <Compile Include="PreferencesManager.cs" />
     <Compile Include="Startup.cs" />
