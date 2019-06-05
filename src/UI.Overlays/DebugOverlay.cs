@@ -12,7 +12,7 @@ namespace Maquina.UI
     public class DebugOverlay : Overlay
     {
         // FPS+O Counter
-        bool[] isCounterVisible = new bool[4];
+        bool[] isCounterVisible = new bool[5];
         int frameRate = 0;
         int frameCounter = 0;
         TimeSpan elapsedTime = TimeSpan.Zero;
@@ -24,6 +24,8 @@ namespace Maquina.UI
         string sceneOverlayList = "";
         string sceneObjectHeader = "\nElements in Current Scene ({0}):\n";
         string sceneObjectList;
+        string globalTimerHeader = "\nRegistered Timers:\n";
+        string globalTimerList;
 
         // Mouse Coords
         string mouseCoordinates;
@@ -52,6 +54,8 @@ namespace Maquina.UI
                 isCounterVisible[2] = !isCounterVisible[2];
             if (InputManager.KeyPressed(Keys.F12))
                 isCounterVisible[3] = !isCounterVisible[3];
+            if (InputManager.KeyPressed(Keys.F7))
+                isCounterVisible[4] = !isCounterVisible[4];
 
             // Scale controls
             if (InputManager.KeyPressed(Keys.F9))
@@ -86,13 +90,24 @@ namespace Maquina.UI
                 {
                     List<string> keyList = SceneManager.Overlays.Keys.ToList();
                     sceneOverlayList += String.Format("Key {0}: {2}, Scene Name: {1} \n",
-                        new object[] { i, SceneManager.Overlays[keyList[i]].SceneName, keyList[i] });
+                        i, SceneManager.Overlays[keyList[i]].SceneName, keyList[i]);
                 }
             }
             // List objects loaded
             if (isCounterVisible[1])
             {
                 sceneObjectList = ListElementsFromDictionary(SceneManager.CurrentScene.Objects);
+            }
+            // List timers
+            if (isCounterVisible[4])
+            {
+                globalTimerList = "";
+                for (int i = 0; i < TimerManager.Timers.Count; i++)
+                {
+                    globalTimerList += String.Format("Timer {0}: AutoReset-{1}, Enabled-{2}, Interval-{3} \n",
+                        i, TimerManager.Timers[i].AutoReset, TimerManager.Timers[i].Enabled,
+                        TimerManager.Timers[i].Interval);
+                }
             }
         }
 
@@ -132,6 +147,17 @@ namespace Maquina.UI
             frameCounter++;
 
             SpriteBatch.Begin();
+            if (isCounterVisible[0])
+            {
+                string dbCounter = string.Format("FPS: {0}, Memory: {1}, Overlay scenes: {2}", frameRate, GC.GetTotalMemory(false), SceneManager.Overlays.Count);
+                SpriteBatch.DrawString(Fonts["o-default"], dbCounter, new Vector2(0, 0), Color.White);
+            }
+            if (isCounterVisible[1])
+            {
+                string objectInfo = string.Format(sceneObjectHeader, SceneManager.CurrentScene.Objects.Count) +
+                                    sceneObjectList;
+                SpriteBatch.DrawString(Fonts["o-default"], objectInfo, new Vector2(0, 0), Color.White);
+            }
             if (isCounterVisible[2])
             {
                 string sceneManagerInfo = sceneInfoHeader + 
@@ -140,21 +166,14 @@ namespace Maquina.UI
                     sceneOverlayList;
                 SpriteBatch.DrawString(Fonts["o-default"], sceneManagerInfo, new Vector2(0, 0), Color.White);
             }
-            if (isCounterVisible[1])
-            {
-                string objectInfo = string.Format(sceneObjectHeader, SceneManager.CurrentScene.Objects.Count) +
-                                    sceneObjectList;
-                SpriteBatch.DrawString(Fonts["o-default"], objectInfo, new Vector2(0, 0), Color.White);
-            }
-
-            if (isCounterVisible[0])
-            {
-                string dbCounter = string.Format("FPS: {0}, Memory: {1}, Overlay scenes: {2}", frameRate, GC.GetTotalMemory(false), SceneManager.Overlays.Count);
-                SpriteBatch.DrawString(Fonts["o-default"], dbCounter, new Vector2(0, 0), Color.White);
-            }
             if (isCounterVisible[3])
             {
                 SpriteBatch.DrawString(Fonts["o-default"], mouseCoordinates, new Vector2(0, 0), Color.White);
+            }
+            if (isCounterVisible[4])
+            {
+                string timerManagerInfo = globalTimerHeader + globalTimerList;
+                SpriteBatch.DrawString(Fonts["o-default"], timerManagerInfo, new Vector2(0, 0), Color.White);
             }
             SpriteBatch.End();
         }
