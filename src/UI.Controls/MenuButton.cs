@@ -29,7 +29,7 @@ namespace Maquina.UI
         }
 
         // Fields
-        private InputManager InputManager;
+        protected InputManager InputManager;
         private Vector2 TextLocation;
         private Vector2 TooltipLocation;
         private Color TooltipOpacity;
