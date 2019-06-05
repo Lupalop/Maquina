@@ -64,7 +64,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DictionaryExtensions.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="Elements\ControlAlignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />
     <Compile Include="Elements\GuiElement.cs" />

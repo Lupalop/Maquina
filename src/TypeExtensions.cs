@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Maquina
 {
-    public static class DictionaryExtensions
+    public static class TypeExtensions
     {
         public static Dictionary<TKey, TValue> MergeWith<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionaryA,
@@ -24,6 +25,10 @@ namespace Maquina
             return dictionaryA.Concat(dictionaryB)
                     .GroupBy(e => e.Key)
                     .ToDictionary(g => g.Key, g => g.Last().Value);
+        }
+        public static Vector2 Truncate(this Vector2 vector)
+        {
+            return new Vector2((int)vector.X, (int)vector.Y);
         }
     }
 }
