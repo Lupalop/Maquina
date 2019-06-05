@@ -24,7 +24,7 @@ namespace Maquina.UI
             Rows = 1;
             Columns = 3;
             ClickSound = Global.SFX["click_default"];
-            IconAlignment = ControlAlignment.Center;
+            IconAlignment = Alignment.Center;
             TooltipOpacity = Color.Transparent;
         }
 
@@ -41,7 +41,7 @@ namespace Maquina.UI
         public bool Disabled { get; set; }
         public SoundEffect ClickSound { get; set; }
         public Texture2D Icon { get; set; }
-        public ControlAlignment IconAlignment { get; set; }
+        public Alignment IconAlignment { get; set; }
         public Vector2 IconLocation { get; set; }
         public string Tooltip { get; set; }
         public SpriteFont TooltipFont { get; set; }
@@ -177,19 +177,19 @@ namespace Maquina.UI
                 Vector2 NewIconBounds = new Vector2(Icon.Bounds.Width * Scale, Icon.Bounds.Height * Scale);
                 switch (IconAlignment)
                 {
-                    case ControlAlignment.Left:
+                    case Alignment.Left:
                         IconLocation = new Vector2(Location.X,
                             Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
                         break;
-                    case ControlAlignment.Center:
+                    case Alignment.Center:
                         IconLocation = new Vector2(Location.X + (Bounds.Width / 2) - (NewIconBounds.X / 2),
                             Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
                         break;
-                    case ControlAlignment.Right:
+                    case Alignment.Right:
                         IconLocation = new Vector2(Location.X + Bounds.Width - NewIconBounds.X,
                             Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
                         break;
-                    case ControlAlignment.Fixed:
+                    case Alignment.Fixed:
                         return;
                 }
             }

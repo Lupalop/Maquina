@@ -11,10 +11,10 @@ namespace Maquina.Elements
         // Constructor
         protected GuiElement(string name) : base (name)
         {
-            ControlAlignment = ControlAlignment.Center;
+            ControlAlignment = Alignment.Center;
         }
 
-        public ControlAlignment ControlAlignment { get; set; }
+        public Alignment ControlAlignment { get; set; }
         public override string ID
         {
             get { return "GENERIC_GUI"; }

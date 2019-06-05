@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    public enum ControlAlignment
+    public enum Alignment
     {
         Left,
         Center,

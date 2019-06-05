@@ -108,7 +108,7 @@ namespace Maquina.UI
                 }
 
                 GuiElement Object = (GuiElement)currentObject;
-                if (Object.ControlAlignment == ControlAlignment.Center)
+                if (Object.ControlAlignment == Alignment.Center)
                 {
                     ObjectsHeight += currentObject.Bounds.Height;
                 }
@@ -158,7 +158,7 @@ namespace Maquina.UI
                 }
 
                 var ModifiedObject = (GuiElement)Object;
-                if (ModifiedObject.ControlAlignment == ControlAlignment.Center)
+                if (ModifiedObject.ControlAlignment == Alignment.Center)
                 {
                     if (ModifiedObject.Graphic != null || ModifiedObject.Dimensions != null)
                     {
@@ -172,8 +172,8 @@ namespace Maquina.UI
                     }
                 }
 
-                if (ModifiedObject.ControlAlignment == ControlAlignment.Left ||
-                    ModifiedObject.ControlAlignment == ControlAlignment.Right)
+                if (ModifiedObject.ControlAlignment == Alignment.Left ||
+                    ModifiedObject.ControlAlignment == Alignment.Right)
                 {
                     throw new NotImplementedException();
                 }

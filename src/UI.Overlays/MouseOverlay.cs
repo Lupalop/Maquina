@@ -20,7 +20,7 @@ namespace Maquina.UI
                 {
                     Graphic = mouseSprite,
                     SpriteType = SpriteType.Static,
-                    ControlAlignment = ControlAlignment.Fixed,
+                    ControlAlignment = Alignment.Fixed,
                     Location = InputManager.MouseState.Position.ToVector2(),
                     Rows = 1,
                     Columns = 2,

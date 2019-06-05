@@ -54,7 +54,7 @@ namespace Maquina.UI
                 { "Background", new Image("Background")
                 {
                     DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height),
-                    ControlAlignment = ControlAlignment.Fixed,
+                    ControlAlignment = Alignment.Fixed,
                     Tint = FadeColor * Opacity,
                     OnUpdate = (element) => {
                         element.Graphic = FadeBackground;

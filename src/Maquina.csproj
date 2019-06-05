@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TypeExtensions.cs" />
-    <Compile Include="Elements\ControlAlignment.cs" />
+    <Compile Include="Elements\Alignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />
     <Compile Include="Elements\GuiElement.cs" />
     <Compile Include="AudioManager.cs" />

@@ -91,9 +91,9 @@ namespace Maquina.Elements
                     {
                         switch (newElement.ControlAlignment)
                         {
-                            case ControlAlignment.Left:
+                            case Alignment.Left:
                                 break;
-                            case ControlAlignment.Center:
+                            case Alignment.Center:
                                 if (newElement.Graphic != null || newElement.Dimensions != null)
                                 {
                                     newElement.Location = new Vector2(this.Bounds.Center.X - (newElement.Bounds.Width / 2), newElement.Location.Y);
@@ -103,9 +103,9 @@ namespace Maquina.Elements
                                     newElement.Location = new Vector2(this.Bounds.Center.X, newElement.Location.Y);
                                 }
                                 break;
-                            case ControlAlignment.Right:
+                            case Alignment.Right:
                                 break;
-                            case ControlAlignment.Fixed:
+                            case Alignment.Fixed:
                             default:
                                 break;
                         }
@@ -114,9 +114,9 @@ namespace Maquina.Elements
                     {
                         switch (newElement.ControlAlignment)
                         {
-                            case ControlAlignment.Left:
+                            case Alignment.Left:
                                 break;
-                            case ControlAlignment.Center:
+                            case Alignment.Center:
                                 if (newElement.Graphic != null || newElement.Dimensions != null)
                                 {
                                     newElement.Location = new Vector2(newElement.Location.X, this.Bounds.Center.Y - (newElement.Bounds.Height / 2));
@@ -126,9 +126,9 @@ namespace Maquina.Elements
                                     newElement.Location = new Vector2(newElement.Location.X, this.Bounds.Center.Y);
                                 }
                                 break;
-                            case ControlAlignment.Right:
+                            case Alignment.Right:
                                 break;
-                            case ControlAlignment.Fixed:
+                            case Alignment.Fixed:
                             default:
                                 break;
                         }
