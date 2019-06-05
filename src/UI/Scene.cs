@@ -70,6 +70,19 @@ namespace Maquina.UI
 #if HAS_CONSOLE && LOG_VERBOSE
             Console.WriteLine("Unloading from scene: {0}", SceneName);
 #endif
+            DisposeObjects(Objects);
+        }
+
+        public virtual void DisposeObjects(IDictionary<string, GenericElement> objects)
+        {
+            DisposeObjects(objects.Values);
+        }
+        public virtual void DisposeObjects(IEnumerable<GenericElement> objects)
+        {
+            for (int i = 0; i < objects.Count(); i++)
+            {
+                objects.ElementAt(i).Dispose();
+            }
         }
 
         public virtual int GetAllObjectsHeight(IDictionary<string, GenericElement> objects)
