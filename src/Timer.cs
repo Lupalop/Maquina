@@ -43,7 +43,6 @@ namespace Maquina
                 throw new ArgumentException();
             }
             Interval = interval;
-            TimerManager.Add(this);
         }
 
         /// <summary>
