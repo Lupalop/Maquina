@@ -22,13 +22,6 @@ namespace Maquina.Elements
             GraphicEffects = SpriteEffects.None;
             LayerDepth = 1f;
             SpriteBatch = Global.SpriteBatch;
-            FrameSwitchTimer = new Timer()
-            {
-                AutoReset = true,
-                Enabled = true,
-                Interval = 100
-            };
-            FrameSwitchTimer.Elapsed += FrameSwitchTimer_Elapsed;
         }
 
         void FrameSwitchTimer_Elapsed(object sender, EventArgs e)
@@ -91,7 +84,36 @@ namespace Maquina.Elements
         public Action<GenericElement> OnDraw { get; set; }
 
         // For Animated Sprites
-        public SpriteType SpriteType { get; set; }
+        private SpriteType spriteType;
+        public SpriteType SpriteType
+        {
+            get
+            {
+                return spriteType;
+            }
+            set
+            {
+                spriteType = value;
+                // Create a frame switch timer if using an animated sprite
+                if (value == SpriteType.Animated)
+                {
+                    FrameSwitchTimer = new Timer()
+                    {
+                        AutoReset = true,
+                        Enabled = true,
+                        Interval = 100
+                    };
+                    FrameSwitchTimer.Elapsed += FrameSwitchTimer_Elapsed;
+                    return;
+                }
+                // Dispose the timer if present
+                if (FrameSwitchTimer != null)
+                {
+                    FrameSwitchTimer.Close();
+                    FrameSwitchTimer = null;
+                }
+            }
+        }
 
         private int rows;
         public int Rows
@@ -238,7 +260,7 @@ namespace Maquina.Elements
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && FrameSwitchTimer != null)
             {
                 Graphic.Dispose();
                 FrameSwitchTimer.Close();
