@@ -262,7 +262,6 @@ namespace Maquina.Elements
         {
             if (disposing && FrameSwitchTimer != null)
             {
-                Graphic.Dispose();
                 FrameSwitchTimer.Close();
             }
         }
