@@ -168,7 +168,8 @@ namespace Maquina.UI
             {
                 Vector2 TextLength = Font.MeasureString(Text);
                 Vector2 NewTextLength = new Vector2(TextLength.X * Scale, TextLength.Y * Scale);
-                TextLocation = new Vector2(Location.X + (Bounds.Width / 2) - NewTextLength.X / 2, Location.Y + Bounds.Height / 4);
+                TextLocation = new Vector2(Location.X + (Bounds.Width / 2) - (NewTextLength.X / 2),
+                    Location.Y + (Bounds.Height / 2) - (NewTextLength.Y / 2));
             }
 
             if (Icon != null)
@@ -192,6 +193,9 @@ namespace Maquina.UI
                         return;
                 }
             }
+
+            TextLocation = TextLocation.Truncate();
+            IconLocation = IconLocation.Truncate();
         }
     }
 }
