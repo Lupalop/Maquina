@@ -173,19 +173,20 @@ namespace Maquina.UI
 
             if (Icon != null)
             {
+                Vector2 NewIconBounds = new Vector2(Icon.Bounds.Width * Scale, Icon.Bounds.Height * Scale);
                 switch (IconAlignment)
                 {
                     case ControlAlignment.Left:
                         IconLocation = new Vector2(Location.X,
-                            Location.Y + (Bounds.Height / 2) - (Icon.Bounds.Height / 2));
+                            Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
                         break;
                     case ControlAlignment.Center:
-                        IconLocation = new Vector2(Location.X + (Bounds.Width / 2) - (Icon.Bounds.Width / 2),
-                            Location.Y + (Bounds.Height / 2) - (Icon.Bounds.Height / 2));
+                        IconLocation = new Vector2(Location.X + (Bounds.Width / 2) - (NewIconBounds.X / 2),
+                            Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
                         break;
                     case ControlAlignment.Right:
-                        IconLocation = new Vector2(Location.X + Bounds.Width - Icon.Bounds.Width,
-                            Location.Y + (Bounds.Height / 2) - (Icon.Bounds.Height / 2));
+                        IconLocation = new Vector2(Location.X + Bounds.Width - NewIconBounds.X,
+                            Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
                         break;
                     case ControlAlignment.Fixed:
                         return;
