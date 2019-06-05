@@ -19,10 +19,5 @@ namespace Maquina.Elements
         {
             get { return "GENERIC_GUI"; }
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
     }
 }
