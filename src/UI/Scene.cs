@@ -26,7 +26,6 @@ namespace Maquina.UI
             Fonts = Global.Fonts;
             // 
             Objects = new Dictionary<string, GenericElement>();
-            ScreenCenter = Game.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
             // Layout stuff
             ObjectSpacing = 5;
         }
@@ -40,7 +39,13 @@ namespace Maquina.UI
         public Dictionary<string, GenericElement> Objects { get; set; }
         public string SceneName { get; private set; }
 
-        public Vector2 ScreenCenter { get; private set; }
+        public Point ScreenCenter
+        {
+            get
+            {
+                return Game.GraphicsDevice.Viewport.Bounds.Center;
+            }
+        }
 
         public virtual void LoadContent()
         {
@@ -60,7 +65,6 @@ namespace Maquina.UI
 
         public virtual void Update(GameTime gameTime)
         {
-            ScreenCenter = Game.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
             if (!IsFirstUpdateDone)
                 IsFirstUpdateDone = true;
         }

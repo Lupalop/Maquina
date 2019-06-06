@@ -10,7 +10,7 @@ namespace Maquina.UI
     public class EmptyScene : Scene
     {
         public EmptyScene() : base() { }
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             Game.GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
