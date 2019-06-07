@@ -24,6 +24,13 @@ namespace Maquina
 
         public new void Add(TKey key, TValue value)
         {
+            if (ContainsKey(key))
+            {
+#if HAS_CONSOLE
+                Console.WriteLine("An item with the same key has already been added.");
+#endif
+                return;
+            }
             if (ItemAdded != null)
             {
                 ItemAdded(key, value);
@@ -33,6 +40,13 @@ namespace Maquina
 
         public new bool Remove(TKey key)
         {
+            if (!ContainsKey(key))
+            {
+#if HAS_CONSOLE
+                Console.WriteLine(String.Format("Attempting to remove a non-existent item: {0}", key));
+#endif
+                return false;
+            }
             if (ItemRemoved != null)
             {
                 ItemRemoved(key, base[key]);

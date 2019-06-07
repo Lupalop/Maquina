@@ -25,6 +25,18 @@ namespace Maquina
             CurrentScene = new EmptyScene();
         }
 
+        private void Overlays_ItemAdded(string key, Scene scene)
+        {
+            // Load content when scene is added
+            scene.LoadContent();
+        }
+
+        private void Overlays_ItemRemoved(string key, Scene scene)
+        {
+            // Unload content when scene is removed
+            scene.Unload();
+        }
+
         private void Overlays_DictionaryCleared()
         {
             // Unload content of every scene
@@ -32,32 +44,6 @@ namespace Maquina
             {
                 scene.Unload();
             }
-        }
-
-        private void Overlays_ItemAdded(string key, Scene scene)
-        {
-            if (Overlays.ContainsKey(key))
-            {
-#if HAS_CONSOLE
-                Console.WriteLine("A scene with the same key already exists.");
-#endif
-                return;
-            }
-            // Load content when scene is added
-            scene.LoadContent();
-        }
-
-        private void Overlays_ItemRemoved(string key, Scene scene)
-        {
-            if (!Overlays.ContainsKey(key))
-            {
-#if HAS_CONSOLE
-                Console.WriteLine(String.Format("Attempting to remove a non-existent scene: {0}", key));
-#endif
-                return;
-            }
-            // Unload content when scene is removed
-            scene.Unload();
         }
 
         public EventDictionary<string, Scene> Overlays { get; private set; }
