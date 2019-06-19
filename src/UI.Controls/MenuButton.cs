@@ -105,8 +105,9 @@ namespace Maquina.UI
                     }
                     if (Tooltip != null)
                     {
-                        Vector2 MousePosition = InputManager.MousePosition.ToVector2();
-                        TooltipLocation = new Vector2(MousePosition.X + 20, MousePosition.Y + 5);
+                        TooltipLocation = new Vector2(
+                            InputManager.MousePosition.X + 20,
+                            InputManager.MousePosition.Y + 5);
                         TooltipOpacity = Color.White;
                     }
                 }
