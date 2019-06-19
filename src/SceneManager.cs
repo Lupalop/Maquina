@@ -125,7 +125,7 @@ namespace Maquina
             // If there are Overlays, call their draw method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Overlays[Overlays.Keys.ToList()[i]].Draw(gameTime);
+                Overlays[Overlays.Keys.ElementAt(i)].Draw(gameTime);
             }
         }
 
@@ -136,8 +136,7 @@ namespace Maquina
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Scene scb = Overlays[Overlays.Keys.ToList()[i]];
-                scb.Update(gameTime);
+                Overlays[Overlays.Keys.ElementAt(i)].Update(gameTime);
             }
         }
 
