@@ -123,7 +123,9 @@ namespace Maquina
             return false;
         }
 
-        public Point MousePosition { get; set; }
+        public Vector2 MousePosition { get; set; }
+        public Vector2 PreviousMousePosition { get; set; }
+        public Vector2 MousePositionDifference { get; set; }
 
         public void UpdateInput()
         {
@@ -138,9 +140,13 @@ namespace Maquina
             MouseState = Mouse.GetState();
             TouchState = TouchPanel.GetState(Global.Game.Window);
             //
-            MousePosition = new Point(
+            PreviousMousePosition = MousePosition;
+            //
+            MousePosition = new Vector2(
                 MathHelper.Clamp(MouseState.Position.X, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Right),
                 MathHelper.Clamp(MouseState.Position.Y, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Bottom));
+            //
+            MousePositionDifference = MousePosition - PreviousMousePosition;
         }
 
         public static List<Keys> ReservedKeys = new List<Keys>()
