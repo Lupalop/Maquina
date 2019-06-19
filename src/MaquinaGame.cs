@@ -155,6 +155,7 @@ namespace Maquina
         {
             SceneManager.Update(gameTime);
             TimerManager.Update(gameTime);
+            SoftwareMouse.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -166,6 +167,7 @@ namespace Maquina
         protected override void Draw(GameTime gameTime)
         {
             SceneManager.Draw(gameTime);
+            SoftwareMouse.Draw(gameTime);
             base.Draw(gameTime);
         }
     }
