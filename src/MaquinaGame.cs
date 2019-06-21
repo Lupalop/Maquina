@@ -153,6 +153,7 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            InputManager.UpdateInput();
             SceneManager.Update(gameTime);
             TimerManager.Update(gameTime);
             SoftwareMouse.Update(gameTime);

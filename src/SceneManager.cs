@@ -132,7 +132,6 @@ namespace Maquina
         public void Update(GameTime gameTime)
         {
             CurrentScene.Update(gameTime);
-            Global.InputManager.UpdateInput();
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
