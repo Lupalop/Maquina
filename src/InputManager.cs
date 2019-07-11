@@ -127,7 +127,7 @@ namespace Maquina
         public Point PreviousMousePosition { get; set; }
         public Point MousePositionDifference { get; set; }
 
-        public void UpdateInput()
+        public void Update()
         {
             //
             PreviousGamepadState = GamepadState;

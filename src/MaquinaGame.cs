@@ -159,7 +159,7 @@ namespace Maquina
         protected override void Update(GameTime gameTime)
         {
             DisplayManager.Update();
-            InputManager.UpdateInput();
+            InputManager.Update();
             SceneManager.Update(gameTime);
             TimerManager.Update(gameTime);
             SoftwareMouse.Update(gameTime);
