@@ -8,12 +8,14 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Maquina Game Engine")]
 [assembly: AssemblyProduct("Maquina Game Engine")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
+#if DEBUG
+[assembly: AssemblyConfiguration("DEBUG")]
+#else
+[assembly: AssemblyConfiguration("RELEASE")]
+#endif
 [assembly: AssemblyCompany("Produksiyong Lúpalop")]
-[assembly: AssemblyCopyright("Copyright © Produksiyong Lúpalop 2018")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyCopyright("Copyright © 2018-2019 Produksiyong Lúpalop")]
+[assembly: AssemblyTrademark("No trademarks registered")]
 [assembly: CLSCompliant(true)]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -35,4 +37,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
