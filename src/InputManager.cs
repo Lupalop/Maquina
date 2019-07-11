@@ -123,9 +123,9 @@ namespace Maquina
             return false;
         }
 
-        public Vector2 MousePosition { get; set; }
-        public Vector2 PreviousMousePosition { get; set; }
-        public Vector2 MousePositionDifference { get; set; }
+        public Point MousePosition { get; set; }
+        public Point PreviousMousePosition { get; set; }
+        public Point MousePositionDifference { get; set; }
 
         public void UpdateInput()
         {
@@ -142,7 +142,7 @@ namespace Maquina
             //
             PreviousMousePosition = MousePosition;
             //
-            MousePosition = new Vector2(
+            MousePosition = new Point(
                 MathHelper.Clamp(MouseState.Position.X, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Right),
                 MathHelper.Clamp(MouseState.Position.Y, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Bottom));
             //
