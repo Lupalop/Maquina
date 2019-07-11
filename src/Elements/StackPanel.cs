@@ -14,7 +14,7 @@ namespace Maquina.Elements
         public StackPanel(string name) : base(name)
         {
             Background = new Sprite();
-            Children = new EventDictionary<string, BaseElement>();
+            Children = new ObservableDictionary<string, BaseElement>();
             Orientation = Orientation.Vertical;
             ElementMargin = new Region();
             OverrideContainerHeight = false;
@@ -24,7 +24,7 @@ namespace Maquina.Elements
 
         private bool IsFirstUpdateDone = false;
         // General
-        public EventDictionary<string, BaseElement> Children { get; set; }
+        public ObservableDictionary<string, BaseElement> Children { get; set; }
         public Orientation Orientation { get; set; }
         public Region ElementMargin { get; set; }
         public override string Id

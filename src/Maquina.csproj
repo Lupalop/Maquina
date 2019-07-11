@@ -77,7 +77,7 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="Elements\IContainer.cs" />
     <Compile Include="Elements\SpriteType.cs" />
-    <Compile Include="EventDictionary.cs" />
+    <Compile Include="ObservableDictionary.cs" />
     <Compile Include="MaquinaGame.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />

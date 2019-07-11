@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 namespace Maquina
 {
     [Serializable]
-    public class EventDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>
     {
-        public EventDictionary() : base() { }
-        public EventDictionary(IDictionary<TKey, TValue> dictionary) : base(dictionary) { }
-        public EventDictionary(IEqualityComparer<TKey> comparer) : base(comparer) { }
-        public EventDictionary(int capacity) : base(capacity) { }
-        public EventDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer) : base(dictionary, comparer) { }
-        public EventDictionary(int capacity, IEqualityComparer<TKey> comparer) : base(capacity, comparer) { }
-        protected EventDictionary(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public ObservableDictionary() : base() { }
+        public ObservableDictionary(IDictionary<TKey, TValue> dictionary) : base(dictionary) { }
+        public ObservableDictionary(IEqualityComparer<TKey> comparer) : base(comparer) { }
+        public ObservableDictionary(int capacity) : base(capacity) { }
+        public ObservableDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer) : base(dictionary, comparer) { }
+        public ObservableDictionary(int capacity, IEqualityComparer<TKey> comparer) : base(capacity, comparer) { }
+        protected ObservableDictionary(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
         public event Action<TKey, TValue> ItemAdded;
         public event Action<TKey, TValue> ItemRemoved;

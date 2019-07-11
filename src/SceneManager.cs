@@ -18,7 +18,7 @@ namespace Maquina
     {
         public SceneManager()
         {
-            Overlays = new EventDictionary<string, Scene>();
+            Overlays = new ObservableDictionary<string, Scene>();
             Overlays.ItemAdded += Overlays_ItemAdded;
             Overlays.ItemRemoved += Overlays_ItemRemoved;
             Overlays.DictionaryCleared += Overlays_DictionaryCleared;
@@ -46,7 +46,7 @@ namespace Maquina
             }
         }
 
-        public EventDictionary<string, Scene> Overlays { get; private set; }
+        public ObservableDictionary<string, Scene> Overlays { get; private set; }
 
         public Scene CurrentScene { get; protected set; }
         private Scene _storedScene;

@@ -9,7 +9,7 @@ namespace Maquina.Elements
 {
     public interface IContainer
     {
-        EventDictionary<string, BaseElement> Children { get; set; }
+        ObservableDictionary<string, BaseElement> Children { get; set; }
         Orientation Orientation { get; set; }
         Region ElementMargin { get; set; }
     }
