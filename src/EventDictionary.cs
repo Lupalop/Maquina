@@ -21,6 +21,12 @@ namespace Maquina
         public event Action<TKey, TValue> ItemAdded;
         public event Action<TKey, TValue> ItemRemoved;
         public event Action DictionaryCleared;
+        public event Action CollectionModified;
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+        }
 
         public new void Add(TKey key, TValue value)
         {
@@ -34,6 +40,10 @@ namespace Maquina
             if (ItemAdded != null)
             {
                 ItemAdded(key, value);
+            }
+            if (CollectionModified != null)
+            {
+                CollectionModified();
             }
             base.Add(key, value);
         }
@@ -51,6 +61,10 @@ namespace Maquina
             {
                 ItemRemoved(key, base[key]);
             }
+            if (CollectionModified != null)
+            {
+                CollectionModified();
+            }
             return base.Remove(key);
         }
 
@@ -59,6 +73,10 @@ namespace Maquina
             if (DictionaryCleared != null)
             {
                 DictionaryCleared();
+            }
+            if (CollectionModified != null)
+            {
+                CollectionModified();
             }
             base.Clear();
         }
