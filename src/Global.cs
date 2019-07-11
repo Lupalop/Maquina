@@ -29,14 +29,14 @@ namespace Maquina
         }
 
         private static Version _version = Assembly.GetExecutingAssembly().GetName().Version;
-        private static DateTime _buildDate = new DateTime(2000, 1, 1)
+        public static DateTime BuildDateTime = new DateTime(2000, 1, 1)
             .AddDays(_version.Build)
             .AddSeconds(_version.Revision * 2);
 
         // General Information
         public static readonly string Name = "Maquina";
-        public static readonly string BuildDate = String.Format("{0} {1}",
-            _buildDate.ToShortDateString(), _buildDate.ToShortTimeString());
+        public static readonly string BuildId = String.Format("{0} {1}",
+            BuildDateTime.ToShortDateString(), BuildDateTime.ToShortTimeString());
         public static readonly int APIVersion = 0;
 
         // Resources
