@@ -14,17 +14,14 @@ namespace Maquina
 #if HAS_CONSOLE
             if (args != null)
             {
-                // Enumerate passed arguments
                 foreach (string arg in args)
                 {
                     switch (arg.ToLower())
                     {
-
                         case "--pfr":
                             PromptForRestart = true;
                             break;
                         default:
-                            // Ignore other arguments passed
                             break;
                     }
                 }
@@ -53,11 +50,10 @@ namespace Maquina
         private static void WriteHeader()
         {
             Console.Clear();
-            Console.Title = String.Format("{0} Console", Global.Name);
-            Console.WriteLine("/*");
-            Console.WriteLine(" * {0} Developer Console", Global.Name);
-            Console.WriteLine(" * API Version {0}, built on {1}", Global.APIVersion, Global.BuildDate);
-            Console.WriteLine(" */");
+            string consoleName = String.Format("{0} Developer Console", Global.Name);
+            Console.Title = consoleName;
+            Console.WriteLine(consoleName);
+            Console.WriteLine("API Version: {0} | Build identifier: {1}", Global.APIVersion, Global.BuildId);
             Console.WriteLine();
         }
 
