@@ -23,7 +23,7 @@ namespace Maquina.UI
 
         public Scene ParentScene { get; set; }
 
-        public virtual void DisableAllMenuButtons(Dictionary<string, BaseElement> objects)
+        public virtual void DisableAllMenuButtons(IDictionary<string, BaseElement> objects)
         {
             if (objects != null)
                 DisableAllMenuButtonsFromArray(objects.Values.ToArray<BaseElement>());
