@@ -61,6 +61,7 @@ namespace Maquina
         public static AudioManager AudioManager { get; set; }
         public static InputManager InputManager { get; set; }
         public static LocaleManager LocaleManager { get; set; }
+        public static DisplayManager DisplayManager { get; set; }
         public static PreferencesManager PreferencesManager { get; set; }
     }
 }

@@ -24,7 +24,9 @@ namespace Maquina
         protected InputManager InputManager;
         protected PreferencesManager PreferencesManager;
         protected AudioManager AudioManager;
+        protected DisplayManager DisplayManager;
 
+        // TODO: move this to display manager
         protected int LastWindowWidth;
         protected int LastWindowHeight;
 
@@ -51,12 +53,14 @@ namespace Maquina
             InputManager = new InputManager();
             AudioManager = new AudioManager();
             SceneManager = new SceneManager();
+            DisplayManager = new DisplayManager();
 
             Global.PreferencesManager = PreferencesManager;
             Global.LocaleManager = LocaleManager;
             Global.InputManager = InputManager;
             Global.AudioManager = AudioManager;
             Global.SceneManager = SceneManager;
+            Global.DisplayManager = DisplayManager;
 
             // Window
             IsMouseVisible = PreferencesManager.GetBoolPref("app.window.useNativeCursor", false);
@@ -77,6 +81,7 @@ namespace Maquina
             Graphics.HardwareModeSwitch = !PreferencesManager.GetBoolPref("app.window.fullscreen.borderless", false);
 #endif
 
+            // TODO: move to display manager
             // Identify if we should go fullscreen
             if (PreferencesManager.GetBoolPref("app.window.fullscreen", false))
             {
@@ -128,7 +133,7 @@ namespace Maquina
 #if HAS_CONSOLE && LOG_GENERAL
             Console.WriteLine("Unloading game content");
 #endif
-
+            // TODO: move to display manager
             PreferencesManager.SetBoolPref("app.window.fullscreen", Graphics.IsFullScreen);
             // Save window dimensions if not in fullscreen
             if (!Graphics.IsFullScreen)
@@ -153,6 +158,7 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            DisplayManager.Update();
             InputManager.UpdateInput();
             SceneManager.Update(gameTime);
             TimerManager.Update(gameTime);
