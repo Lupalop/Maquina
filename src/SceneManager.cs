@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Globalization;
 using Maquina.Resources;
 using Maquina.UI;
+using System.Collections.Specialized;
 
 namespace Maquina
 {
@@ -19,30 +20,42 @@ namespace Maquina
         public SceneManager()
         {
             Overlays = new ObservableDictionary<string, Scene>();
-            Overlays.ItemAdded += Overlays_ItemAdded;
-            Overlays.ItemRemoved += Overlays_ItemRemoved;
-            Overlays.DictionaryCleared += Overlays_DictionaryCleared;
+            Overlays.CollectionChanged += Overlays_CollectionChanged;
             CurrentScene = new EmptyScene();
         }
 
-        private void Overlays_ItemAdded(string key, Scene scene)
+        void Overlays_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            // Load content when scene is added
-            scene.LoadContent();
-        }
-
-        private void Overlays_ItemRemoved(string key, Scene scene)
-        {
-            // Unload content when scene is removed
-            scene.Unload();
-        }
-
-        private void Overlays_DictionaryCleared()
-        {
-            // Unload content of every scene
-            foreach (Scene scene in Overlays.Values)
+            Scene newScene = null;
+            Scene oldScene = null;
+            
+            if (e.NewItems != null)
             {
-                scene.Unload();
+                newScene = (Scene)e.NewItems[0];
+            }
+            if (e.OldItems != null)
+            {
+                oldScene = (Scene)e.OldItems[0];
+            }
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    newScene.LoadContent();
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    oldScene.Unload();
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    oldScene.Unload();
+                    newScene.LoadContent();
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    foreach (Scene scene in Overlays.Values)
+                    {
+                        scene.Unload();
+                    }
+                    break;
             }
         }
 

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Maquina.Elements
             Orientation = Orientation.Vertical;
             ElementMargin = new Region();
             OverrideContainerHeight = false;
-            Children.CollectionModified += Children_CollectionModified;
+            Children.CollectionChanged += Children_CollectionChanged;
             DestinationRectangleChanged += StackPanel_DestinationRectangleChanged;
         }
 
@@ -167,7 +168,7 @@ namespace Maquina.Elements
         }
 
         // Listeners
-        private void Children_CollectionModified()
+        private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             UpdatePoints();
         }

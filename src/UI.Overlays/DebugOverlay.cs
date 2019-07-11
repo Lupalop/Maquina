@@ -107,7 +107,7 @@ namespace Maquina.UI
             }
         }
 
-        public string ListElementsFromDictionary(Dictionary<string, BaseElement> elements, bool isContainer = false)
+        public string ListElementsFromDictionary(IDictionary<string, BaseElement> elements, bool isContainer = false)
         {
             List<string> keyList = elements.Keys.ToList();
             string list = "";
