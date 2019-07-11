@@ -86,8 +86,6 @@ namespace Maquina
             {
                 scene.LoadContent();
             }
-            // Load delayed content
-            scene.DelayLoadContent();
             // Set current state to given scene
             CurrentScene = scene;
             // Show a fade effect when switching

@@ -16,45 +16,48 @@ namespace Maquina.UI
         public TextBox(string objectName) : base (objectName)
         {
             // Default TB graphic
-            Graphic = Global.Textures["textbox-default"];
-            Font = Global.Fonts["o-default_m"];
+            MenuBackground = Global.Textures["textbox-default"];
+            MenuFont = Global.Fonts["o-default_m"];
             TooltipFont = Global.Fonts["o-default_m"];
-            SpriteType = SpriteType.None;
+            MenuBackgroundSpriteType = SpriteType.None;
 
             Global.Game.Window.TextInput += Window_TextInput;
-            Text = "";
+            MenuLabel = "";
             MaxInput = 30;
-            OnInput = delegate { };
         }
 
         // Properties
         public int MaxInput { get; set; }
 
-        public Action OnInput { get; set; }
+        // Element events
+        public event Action OnInput;
 
-        public override string ID
+        public override string Id
         {
             get { return "GUI_TEXTBOX"; }
         }
 
         private void Window_TextInput(object sender, TextInputEventArgs e)
         {
-            OnInput();
+            if (OnInput != null)
+            {
+                OnInput();
+            }
             if (Disabled && !InputManager.ShouldAcceptInput)
             {
                 return;
             }
             // TODO: Concept of focus
-            if (e.Key == Keys.Back && Text.Length > 0)
+            if (e.Key == Keys.Back && MenuLabel.Length > 0)
             {
-                Text = Text.Remove(MathHelper.Clamp(Text.Length - 1, 0, Int32.MaxValue), 1);
+                MenuLabel = MenuLabel.Remove(MathHelper.Clamp(MenuLabel.Length - 1, 0, Int32.MaxValue), 1);
                 return;
             }
-            if (InputManager.ReservedKeys.Contains(e.Key) || Text.Length > MaxInput)
+            if (InputManager.ReservedKeys.Contains(e.Key) || MenuLabel.Length > MaxInput)
             {
                 return;
             }
-            Text += e.Character;
+            MenuLabel += e.Character;
         }
     }
 }

@@ -16,126 +16,246 @@ namespace Maquina.UI
         public MenuButton(string objectName) : base (objectName)
         {
             InputManager = Global.InputManager;
-            // Default MB graphic
-            Graphic = Global.Textures["button-default"];
-            Font = Global.Fonts["default"];
+
+            Background = new Sprite()
+            {
+                SpriteType = SpriteType.Static,
+                Rows = 1,
+                Columns = 3
+            };
+            Icon = new Sprite();
+            Label = new TextSprite();
+            Tooltip = new TextSprite()
+            {
+                Tint = Color.Transparent,
+                IgnoreGlobalScale = true
+            };
+
+            Background.SizeChanged += Background_SizeChanged;
+            Label.SizeChanged += Label_SizeChanged;
+            Icon.SizeChanged += Icon_SizeChanged;
+            this.LocationChanged += MenuButton_LocationChanged;
+            IgnoreGlobalScaleChanged += MenuButton_IgnoreGlobalScaleChanged;
+
             TooltipFont = Global.Fonts["o-default_m"];
-            SpriteType = SpriteType.Static;
-            Rows = 1;
-            Columns = 3;
+            MenuBackground = Global.Textures["button-default"];
             ClickSound = Global.SFX["click_default"];
             IconAlignment = Alignment.Center;
-            TooltipOpacity = Color.Transparent;
         }
 
-        // Fields
+        // General
         protected InputManager InputManager;
-        private Vector2 TextLocation;
-        private Vector2 TooltipLocation;
-        private Color TooltipOpacity;
-        // Properties
-        public SpriteFont Font { get; set; }
-        public string Text { get; set; }
-        public Action LeftClickAction { get; set; }
-        public Action RightClickAction { get; set; }
-        public bool Disabled { get; set; }
-        public SoundEffect ClickSound { get; set; }
-        public Texture2D Icon { get; set; }
-        public Alignment IconAlignment { get; set; }
-        public Vector2 IconLocation { get; set; }
-        public string Tooltip { get; set; }
-        public SpriteFont TooltipFont { get; set; }
-
-        public override string ID
+        public override string Id
         {
             get { return "GUI_MENUBUTTON"; }
         }
+        
+        // Child elements
+        public Sprite Background { get; set; }
+        public Sprite Icon { get; set; }
+        public TextSprite Label { get; set; }
+        public TextSprite Tooltip { get; set; }
 
-        public override void Draw(GameTime gameTime)
+        // Element events
+        public event Action OnLeftClick;
+        public event Action OnRightClick;
+
+        // Properties
+        public bool Disabled { get; set; }
+        public SoundEffect ClickSound { get; set; }
+        public Alignment IconAlignment { get; set; }
+        
+        // Aliases
+        // Child 1: Background
+        public Texture2D MenuBackground
         {
-            base.Draw(gameTime);
-            if (Text != null)
+            get { return Background.Graphic; }
+            set { Background.Graphic = value; }
+        }
+        public Color MenuBackgroundTint
+        {
+            get { return Background.Tint; }
+            set { Background.Tint = value; }
+        }
+        public Point MenuBackgroundTable
+        {
+            get { return Background.Table; }
+            set { Background.Table = value; }
+        }
+        public SpriteType MenuBackgroundSpriteType
+        {
+            get { return Background.SpriteType; }
+            set { Background.SpriteType = value; }
+        }
+        // Child 2: Label
+        public SpriteFont MenuFont
+        {
+            get { return Label.Font; }
+            set { Label.Font = value; }
+        }
+        public string MenuLabel
+        {
+            get { return Label.Label; }
+            set { Label.Label = value; }
+        }
+        public Color MenuLabelTint
+        {
+            get { return Label.Tint; }
+            set { Label.Tint = value; }
+        }
+        // Child 3: Icon
+        public Texture2D MenuIcon
+        {
+            get { return Icon.Graphic; }
+            set { Icon.Graphic = value; }
+        }
+        public Color MenuIconTint
+        {
+            get { return Icon.Tint; }
+            set { Icon.Tint = value; }
+        }
+        public Point MenuIconTable
+        {
+            get { return Icon.Table; }
+            set { Icon.Table = value; }
+        }
+        public SpriteType MenuIconSpriteType
+        {
+            get { return Icon.SpriteType; }
+            set { Icon.SpriteType = value; }
+        }
+        // Child 4: Tooltip
+        public string TooltipText
+        {
+            get { return Tooltip.Label; }
+            set { Tooltip.Label = value; }
+        }
+        public SpriteFont TooltipFont
+        {
+            get { return Tooltip.Font; }
+            set { Tooltip.Font = value; }
+        }
+        // Common properties
+        private Color tint;
+        public Color Tint
+        {
+            get { return tint; }
+            set
             {
-                SpriteBatch.DrawString(Font, Text, TextLocation, Tint, Rotation, RotationOrigin, Scale, GraphicEffects, LayerDepth - 0.1f);
+                tint = value;
+                Background.Tint = value;
+                Label.Tint = value;
+                Icon.Tint = value;
             }
-            if (Icon != null)
+        }
+        private float rotation;
+        public float Rotation
+        {
+            get { return rotation; }
+            set
             {
-                SpriteBatch.Draw(Icon, IconLocation, null, Tint, Rotation, RotationOrigin, Scale, SpriteEffects.None, LayerDepth - 0.1f);
+                rotation = value;
+                Background.Rotation = value;
+                Label.Rotation = value;
+                Icon.Rotation = value;
             }
-            if (Tooltip != null)
+        }
+        private Vector2 rotationOrigin;
+        public Vector2 RotationOrigin
+        {
+            get { return rotationOrigin; }
+            set
             {
-                // Tooltips 'probably' don't need rotation
-                SpriteBatch.DrawString(TooltipFont, Tooltip, TooltipLocation, TooltipOpacity, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                rotationOrigin = value;
+                Background.RotationOrigin = value;
+                Label.RotationOrigin = value;
+                Icon.RotationOrigin = value;
+            }
+        }
+        private SpriteEffects spriteEffects;
+        public SpriteEffects SpriteEffects
+        {
+            get { return spriteEffects; }
+            set
+            {
+                spriteEffects = value;
+                Background.SpriteEffects = value;
+                Label.SpriteEffects = value;
+                Icon.SpriteEffects = value;
             }
         }
 
-        private Vector2 dimensions;
-        public override Vector2 Dimensions
+        // Draw and update methods
+        public override void Draw(GameTime gameTime)
         {
-            get
+            if (Background != null && MenuBackground != null)
             {
-                if (Text != null && Graphic == null)
-                {
-                    Vector2 CurrentDimensions = Font.MeasureString(Text);
-                    return new Vector2(CurrentDimensions.X * Scale, CurrentDimensions.Y * Scale);
-                }
-                return dimensions;
+                Background.Draw(gameTime);
             }
-            set
+            if (Label != null)
             {
-                dimensions = value;
+                Label.Draw(gameTime);
             }
+            if (Icon != null && MenuIcon != null)
+            {
+                Icon.Draw(gameTime);
+            }
+            if (Tooltip != null)
+            {
+                Tooltip.Draw(gameTime);
+            }
+            base.Draw(gameTime);
         }
 
         bool LeftClickFired;
         bool RightClickFired;
         public override void Update(GameTime gameTime)
         {
-            CurrentFrame = 0;
+            Background.CurrentFrame = 0;
 
             // Don't respond to any event if button is disabled
             if (!Disabled && InputManager.ShouldAcceptInput)
             {
                 // If mouse is on top of the button
-                if (Bounds.Contains(InputManager.MousePosition))
+                if (ActualBounds.Contains(InputManager.MousePosition))
                 {
-                    if (SpriteType != SpriteType.None)
+                    if (Background.SpriteType != SpriteType.None)
                     {
-                        CurrentFrame = 1;
+                        Background.CurrentFrame = 1;
                     }
                     if (Tooltip != null)
                     {
-                        TooltipLocation = new Vector2(
+                        Tooltip.Location = new Point(
                             InputManager.MousePosition.X + 20,
                             InputManager.MousePosition.Y + 5);
-                        TooltipOpacity = Color.White;
+                        Tooltip.Tint = Color.White;
                     }
                 }
                 else
                 {
-                    TooltipOpacity = Color.Transparent;
+                    Tooltip.Tint = Color.Transparent;
                 }
 
                 // If the button was clicked
                 if ((InputManager.MouseDown(MouseButton.Left) ||
                      InputManager.MouseDown(MouseButton.Right) ||
                      InputManager.MouseDown(MouseButton.Middle)) &&
-                     Bounds.Contains(InputManager.MousePosition) &&
-                     SpriteType != SpriteType.None)
+                     ActualBounds.Contains(InputManager.MousePosition) &&
+                     Background.SpriteType != SpriteType.None)
                 {
-                    CurrentFrame = 2;
+                    Background.CurrentFrame = 2;
                 }
 
                 // Left Mouse Button Click Action
-                if (LeftClickAction != null)
+                if (OnLeftClick != null)
                 {
-                    if (InputManager.MouseDown(MouseButton.Left) && Bounds.Contains(InputManager.MousePosition))
+                    if (InputManager.MouseDown(MouseButton.Left) && ActualBounds.Contains(InputManager.MousePosition))
                         LeftClickFired = true;
-                    if (InputManager.MouseDown(MouseButton.Left) && !Bounds.Contains(InputManager.MousePosition))
+                    if (InputManager.MouseDown(MouseButton.Left) && !ActualBounds.Contains(InputManager.MousePosition))
                         LeftClickFired = false;
                     if (InputManager.MouseUp(MouseButton.Left) && LeftClickFired)
                     {
-                        LeftClickAction.Invoke();
+                        OnLeftClick.Invoke();
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
                         LeftClickFired = false;
@@ -143,15 +263,15 @@ namespace Maquina.UI
                 }
 
                 // Right Mouse Button Click Action
-                if (RightClickAction != null)
+                if (OnRightClick != null)
                 {
-                    if (InputManager.MouseDown(MouseButton.Right) && Bounds.Contains(InputManager.MousePosition))
+                    if (InputManager.MouseDown(MouseButton.Right) && ActualBounds.Contains(InputManager.MousePosition))
                         RightClickFired = true;
-                    if (InputManager.MouseDown(MouseButton.Right) && !Bounds.Contains(InputManager.MousePosition))
+                    if (InputManager.MouseDown(MouseButton.Right) && !ActualBounds.Contains(InputManager.MousePosition))
                         RightClickFired = false;
                     if (InputManager.MouseUp(MouseButton.Right) && RightClickFired)
                     {
-                        RightClickAction.Invoke();
+                        OnRightClick.Invoke();
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
                         RightClickFired = false;
@@ -159,44 +279,100 @@ namespace Maquina.UI
                 }
             }
 
-            base.Update(gameTime);
-        }
-
-        public override void UpdatePoints()
-        {
-            base.UpdatePoints();
-            if (Text != null)
+            if (Background != null)
             {
-                Vector2 TextLength = Font.MeasureString(Text);
-                Vector2 NewTextLength = new Vector2(TextLength.X * Scale, TextLength.Y * Scale);
-                TextLocation = new Vector2(Location.X + (Bounds.Width / 2) - (NewTextLength.X / 2),
-                    Location.Y + (Bounds.Height / 2) - (NewTextLength.Y / 2));
+                Background.Update(gameTime);
             }
-
+            if (Label != null)
+            {
+                Label.Update(gameTime);
+            }
             if (Icon != null)
             {
-                Vector2 NewIconBounds = new Vector2(Icon.Bounds.Width * Scale, Icon.Bounds.Height * Scale);
+                Icon.Update(gameTime);
+            }
+            if (Tooltip != null)
+            {
+                Tooltip.Update(gameTime);
+            }
+
+            base.Update(gameTime);
+        }
+        
+        // Listeners
+        private void MenuButton_LocationChanged(Point location)
+        {
+            if (Background != null)
+            {
+                Background.Location = Location;
+            }
+            RecalculateLabelLocation();
+            RecalculateIconLocation();
+        }
+        private void Icon_SizeChanged(Point value)
+        {
+            RecalculateIconLocation();
+        }
+        private void Label_SizeChanged(Point value)
+        {
+            if (Background == null || Background.Graphic == null)
+            {
+                Size = value;
+            }
+            RecalculateLabelLocation();
+        }
+        private void Background_SizeChanged(Point value)
+        {
+            Size = Background.Size;
+        }
+        private void MenuButton_IgnoreGlobalScaleChanged(bool value)
+        {
+            Background.IgnoreGlobalScale = value;
+            Icon.IgnoreGlobalScale = value;
+            Label.IgnoreGlobalScale = value;
+        }
+
+        // Misc
+        private void RecalculateLabelLocation()
+        {
+            if (Label != null)
+            {
+                Label.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Label.ActualSize.X / 2),
+                    Location.Y + (ActualBounds.Height / 2) - (Label.ActualSize.Y / 2));
+            }
+        }
+        private void RecalculateIconLocation()
+        {
+            if (Icon != null)
+            {
                 switch (IconAlignment)
                 {
                     case Alignment.Left:
-                        IconLocation = new Vector2(Location.X,
-                            Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
+                        Icon.Location = new Point(Location.X,
+                            Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
                         break;
                     case Alignment.Center:
-                        IconLocation = new Vector2(Location.X + (Bounds.Width / 2) - (NewIconBounds.X / 2),
-                            Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
+                        Icon.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Icon.ActualSize.X / 2),
+                            Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
                         break;
                     case Alignment.Right:
-                        IconLocation = new Vector2(Location.X + Bounds.Width - NewIconBounds.X,
-                            Location.Y + (Bounds.Height / 2) - (NewIconBounds.Y / 2));
+                        Icon.Location = new Point(Location.X + ActualBounds.Width - Icon.ActualSize.X,
+                            Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
                         break;
                     case Alignment.Fixed:
                         return;
                 }
             }
+        }
 
-            TextLocation = TextLocation.Truncate();
-            IconLocation = IconLocation.Truncate();
+        // IDisposable implementation
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Background.Dispose();
+                Icon.Dispose();
+            }
         }
     }
 }

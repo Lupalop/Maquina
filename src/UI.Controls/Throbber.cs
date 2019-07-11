@@ -8,22 +8,34 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class Throbber : GuiElement
+    public class Throbber : Image
     {
         public Throbber(string objectName) : base(objectName)
         {
+            IsSpinning = true;
             Graphic = Global.Textures["throbber-default"];
-            OnUpdate = (element) =>
+            OnUpdate += (element) =>
             {
-                element.RotationOrigin = new Vector2(element.Graphic.Width / 2, element.Graphic.Height / 2);
-                element.Location = new Vector2(element.Location.X + (element.Bounds.Width / 2), element.Location.Y + (element.Bounds.Height / 2));
-                element.Rotation += .05f;
+                if (!IsSpinning)
+                    return;
+
+                Image img = (Image)element;
+                Sprite bg = img.Background;
+                bg.RotationOrigin = new Vector2(
+                    element.ActualSize.X / 2,
+                    element.ActualSize.Y / 2);
+                element.Location = new Point(
+                    element.Location.X + (element.ActualSize.X / 2),
+                    element.Location.Y + (element.ActualSize.Y / 2));
+                bg.Rotation += .05f;
             };
         }
 
-        public override string ID
+        // General
+        public override string Id
         {
             get { return "GUI_THROBBER"; }
         }
+        public bool IsSpinning { get; set; }
     }
 }

@@ -17,46 +17,36 @@ namespace Maquina.UI
             MouseElement = new Image("mouse")
             {
                 SpriteType = SpriteType.Static,
-                ControlAlignment = Alignment.Fixed,
                 Rows = 1,
                 Columns = 2,
-                OnUpdate = (element) =>
+            };
+            MouseElement.OnUpdate += (elem) =>
+            {
+                Image element = (Image)elem;
+                element.Location = Global.InputManager.MousePosition;
+                element.Background.CurrentFrame = 0;
+
+                // Change state when selected
+                if (Global.InputManager.MouseDown(MouseButton.Left) ||
+                    Global.InputManager.MouseDown(MouseButton.Right) ||
+                    Global.InputManager.MouseDown(MouseButton.Middle))
                 {
-                    element.Location = Global.InputManager.MousePosition;
-                    element.Scale = Global.Scale;
-                    element.CurrentFrame = 0;
-                    // Change state when selected
-                    if ((Global.InputManager.MouseDown(MouseButton.Left) ||
-                            Global.InputManager.MouseDown(MouseButton.Right) ||
-                            Global.InputManager.MouseDown(MouseButton.Middle)) &&
-                        Global.InputManager.ShouldAcceptInput)
-                    {
-                        element.CurrentFrame = 1;
-                    }
+                    element.Background.CurrentFrame = 1;
                 }
             };
         }
 
         public static Image MouseElement;
-        
         public static Texture2D MouseSprite
         {
-            get
-            {
-                return MouseElement.Graphic;
-            }
-            set
-            {
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine("Mouse: sprite changed");
-#endif
-                MouseElement.Graphic = value;
-            }
+            get { return MouseElement.Graphic; }
+            set { MouseElement.Graphic = value; }
         }
+        public static BlendState BlendState { get; set; }
 
         public static void Draw(GameTime gameTime)
         {
-            Global.SpriteBatch.Begin();
+            Global.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
             MouseElement.Draw(gameTime);
             Global.SpriteBatch.End();
         }

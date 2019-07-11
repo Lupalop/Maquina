@@ -19,25 +19,24 @@ namespace Maquina.UI
         public override void LoadContent()
         {
             base.LoadContent();
-            DelayLoadContent();
         }
 
         public Scene ParentScene { get; set; }
 
-        public virtual void DisableAllMenuButtons(Dictionary<string, GenericElement> objects)
+        public virtual void DisableAllMenuButtons(Dictionary<string, BaseElement> objects)
         {
             if (objects != null)
-                DisableAllMenuButtonsFromArray(objects.Values.ToArray<GenericElement>());
+                DisableAllMenuButtonsFromArray(objects.Values.ToArray<BaseElement>());
         }
-        public virtual void DisableAllMenuButtons(Collection<GenericElement> objects)
+        public virtual void DisableAllMenuButtons(Collection<BaseElement> objects)
         {
-            DisableAllMenuButtonsFromArray(objects.ToArray<GenericElement>());
+            DisableAllMenuButtonsFromArray(objects.ToArray<BaseElement>());
         }
-        public virtual void DisableAllMenuButtons(GenericElement[] objects)
+        public virtual void DisableAllMenuButtons(BaseElement[] objects)
         {
             DisableAllMenuButtonsFromArray(objects);
         }
-        private static void DisableAllMenuButtonsFromArray(GenericElement[] objects)
+        private static void DisableAllMenuButtonsFromArray(BaseElement[] objects)
         {
             for (int i = 0; i < objects.Length; i++)
             {
@@ -51,7 +50,7 @@ namespace Maquina.UI
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
-            if (ParentScene != null) DisableAllMenuButtons(ParentScene.Objects);
+            if (ParentScene != null) DisableAllMenuButtons(ParentScene.Elements);
         }
     }
 }

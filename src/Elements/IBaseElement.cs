@@ -7,11 +7,10 @@ namespace Maquina.Elements
 {
     public interface IBaseElement : IDisposable
     {
-        // Basic properties
         string Name { get; set; }
-        string ID { get; }
+        string Id { get; }
 
-        // Update action
         void Update(GameTime gameTime);
+        void Draw(GameTime gameTime);
     }
 }

@@ -25,9 +25,15 @@ namespace Maquina.UI
             SpriteBatch = Global.SpriteBatch;
             Fonts = Global.Fonts;
             // 
-            Objects = new Dictionary<string, GenericElement>();
+            Elements = new Dictionary<string, BaseElement>();
             // Layout stuff
-            ObjectSpacing = 5;
+            ElementSpacing = 5;
+            IsFirstUpdateDone = false;
+        }
+
+        private void DisplayManager_ResolutionChanged(Rectangle obj)
+        {
+            UpdateLayout(Elements);
         }
 
         protected SceneManager SceneManager { get; private set; }
@@ -36,29 +42,34 @@ namespace Maquina.UI
         protected SpriteBatch SpriteBatch { get; private set; }
         protected Dictionary<string, SpriteFont> Fonts { get; private set; }
 
-        public Dictionary<string, GenericElement> Objects { get; set; }
+        public Dictionary<string, BaseElement> Elements { get; set; }
         public string SceneName { get; private set; }
+        private bool IsFirstUpdateDone;
+
+        public event EventHandler LoadContentFinished;
+        public event EventHandler UnloadFinished;
 
         public Point ScreenCenter
         {
             get
             {
-                return Game.GraphicsDevice.Viewport.Bounds.Center;
+                return Global.DisplayManager.WindowBounds.Center;
             }
         }
 
         public virtual void LoadContent()
         {
 #if HAS_CONSOLE && LOG_VERBOSE
-            Console.WriteLine("Loading content in: {0}", SceneName);
+            Console.WriteLine("Finished loading content from: {0}", SceneName);
 #endif
-        }
-
-        public virtual void DelayLoadContent()
-        {
-#if HAS_CONSOLE && LOG_VERBOSE
-            Console.WriteLine("Loading delayed content in: {0}", SceneName);
-#endif
+            if (LoadContentFinished != null)
+            {
+                LoadContentFinished(this, EventArgs.Empty);
+            }
+            // Listen to resolution change events in order to update layout when needed
+            Global.DisplayManager.ResolutionChanged += DisplayManager_ResolutionChanged;
+            // Update layout after all elements were loaded
+            UpdateLayout(Elements);
         }
 
         public virtual void Draw(GameTime gameTime) { }
@@ -66,22 +77,28 @@ namespace Maquina.UI
         public virtual void Update(GameTime gameTime)
         {
             if (!IsFirstUpdateDone)
+            {
                 IsFirstUpdateDone = true;
+            }
         }
 
         public virtual void Unload()
         {
+            DisposeElements(Elements);
 #if HAS_CONSOLE && LOG_VERBOSE
-            Console.WriteLine("Unloading from scene: {0}", SceneName);
+            Console.WriteLine("Unloaded content from scene: {0}", SceneName);
 #endif
-            DisposeObjects(Objects);
+            if (UnloadFinished != null)
+            {
+                UnloadFinished(this, EventArgs.Empty);
+            }
         }
 
-        public virtual void DisposeObjects(IDictionary<string, GenericElement> objects)
+        public virtual void DisposeElements(IDictionary<string, BaseElement> objects)
         {
-            DisposeObjects(objects.Values);
+            DisposeElements(objects.Values);
         }
-        public virtual void DisposeObjects(IEnumerable<GenericElement> objects)
+        public virtual void DisposeElements(IEnumerable<BaseElement> objects)
         {
             for (int i = 0; i < objects.Count(); i++)
             {
@@ -89,13 +106,13 @@ namespace Maquina.UI
             }
         }
 
-        public virtual int GetAllObjectsHeight(IDictionary<string, GenericElement> objects)
+        public virtual int TotalElementHeight(IDictionary<string, BaseElement> objects)
         {
-            return GetAllObjectsHeight(objects.Values);
+            return TotalElementHeight(objects.Values);
         }
-        public virtual int GetAllObjectsHeight(IEnumerable<GenericElement> objects)
+        public virtual int TotalElementHeight(IEnumerable<BaseElement> objects)
         {
-            int ObjectsHeight = 0;
+            int totalElementHeight = 0;
 
             for (int i = 0; i < objects.Count(); i++)
             {
@@ -105,86 +122,95 @@ namespace Maquina.UI
                     continue;
                 }
 
-                currentObject.UpdatePoints();
-                if (currentObject.OnUpdate != null)
-                {
-                    currentObject.OnUpdate(currentObject);
-                }
-
                 GuiElement Object = (GuiElement)currentObject;
                 if (Object.ControlAlignment == Alignment.Center)
                 {
-                    ObjectsHeight += currentObject.Bounds.Height;
+                    totalElementHeight += currentObject.ActualBounds.Height;
                 }
             }
-            return ObjectsHeight;
+            return totalElementHeight;
         }
 
-        public virtual void DrawObjects(GameTime gameTime, IDictionary<string, GenericElement> objects)
+        public virtual void DrawElements(GameTime gameTime, IDictionary<string, BaseElement> objects)
         {
-            DrawObjects(gameTime, objects.Values);
+            DrawElements(gameTime, objects.Values);
         }
-        public virtual void DrawObjects(GameTime gameTime, IEnumerable<GenericElement> objects)
+        public virtual void DrawElements(GameTime gameTime, IEnumerable<BaseElement> objects)
         {
-            if (IsFirstUpdateDone)
+            if (!IsFirstUpdateDone)
             {
-                // Draw objects in the Object array
-                for (int i = 0; i < objects.Count(); i++)
+                return;
+            }
+            // Draw objects in the element array
+            for (int i = 0; i < objects.Count(); i++)
+            {
+                try
                 {
-                    try
-                    {
-                        objects.ElementAt(i).Draw(gameTime);
-                    }
-                    catch (NullReferenceException)
-                    { 
-                        // Suppress errors
-                    }
+                    objects.ElementAt(i).Draw(gameTime);
+                }
+                catch (NullReferenceException)
+                { 
+                    // Suppress errors
                 }
             }
         }
 
-        public virtual void UpdateObjects(GameTime gameTime, IDictionary<string, GenericElement> objects)
+        public virtual void UpdateObjects(GameTime gameTime, IDictionary<string, BaseElement> objects)
         {
             UpdateObjects(gameTime, objects.Values);
         }
-        public int ObjectSpacing { get; set; }
-        public virtual void UpdateObjects(GameTime gameTime, IEnumerable<GenericElement> objects)
+        public int ElementSpacing { get; set; }
+        public virtual void UpdateObjects(GameTime gameTime, IEnumerable<BaseElement> objects)
         {
-            int distanceFromTop = (int)(ScreenCenter.Y - (GetAllObjectsHeight(objects) / 2));
-
             for (int i = 0; i < objects.Count(); i++)
             {
-                GenericElement Object = objects.ElementAt(i);
-                if (!(Object is GuiElement))
+                BaseElement element = objects.ElementAt(i);
+                element.Update(gameTime);
+            }
+        }
+
+        public virtual void UpdateLayout(IDictionary<string, BaseElement> objects)
+        {
+            UpdateLayout(objects.Values);
+        }
+        public virtual void UpdateLayout(IEnumerable<BaseElement> objects)
+        {
+            int distanceFromTop = ScreenCenter.Y - (int)(TotalElementHeight(objects) / 2);
+            for (int i = 0; i < objects.Count(); i++)
+            {
+                BaseElement element = objects.ElementAt(i);
+                if (!(element is GuiElement))
                 {
-                    Object.Update(gameTime);
                     continue;
                 }
 
-                var ModifiedObject = (GuiElement)Object;
-                if (ModifiedObject.ControlAlignment == Alignment.Center)
+                var modifiedElement = (GuiElement)element;
+                if (modifiedElement.ControlAlignment == Alignment.Center)
                 {
-                    if (ModifiedObject.Graphic != null || ModifiedObject.Dimensions != null)
+                    if (modifiedElement.Size != null)
                     {
-                        ModifiedObject.Location = new Vector2(ScreenCenter.X - (Object.Bounds.Width / 2), distanceFromTop);
-                        distanceFromTop += Object.Bounds.Height;
-                        distanceFromTop += ObjectSpacing;
+                        modifiedElement.Location = new Point(
+                            ScreenCenter.X - (element.ActualBounds.Width / 2),
+                            distanceFromTop);
+                        distanceFromTop += element.ActualBounds.Height;
+                        distanceFromTop += ElementSpacing;
                     }
                     else
                     {
-                        ModifiedObject.Location = new Vector2(ScreenCenter.X, distanceFromTop);
+                        modifiedElement.Location = new Point(ScreenCenter.X, distanceFromTop);
                     }
                 }
 
-                if (ModifiedObject.ControlAlignment == Alignment.Left ||
-                    ModifiedObject.ControlAlignment == Alignment.Right)
+                if (modifiedElement.ControlAlignment == Alignment.Left ||
+                    modifiedElement.ControlAlignment == Alignment.Right)
                 {
+                    // TODO: Implement left and right control alignments
                     throw new NotImplementedException();
                 }
-
-                ModifiedObject.Update(gameTime);
             }
+#if HAS_CONSOLE && LOG_GENERAL
+            Console.WriteLine(String.Format("Updated scene layout: {0}", SceneName));
+#endif
         }
-        private bool IsFirstUpdateDone = false;
     }
 }

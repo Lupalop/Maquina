@@ -50,19 +50,20 @@ namespace Maquina.UI
 
         public override void LoadContent()
         {
-            Objects = new Dictionary<string, GenericElement> {
-                { "Background", new Image("Background")
-                {
-                    DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height),
-                    ControlAlignment = Alignment.Fixed,
-                    Tint = FadeColor * Opacity,
-                    OnUpdate = (element) => {
-                        element.Graphic = FadeBackground;
-                        element.DestinationRectangle = new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);
-                        element.Tint = FadeColor * Opacity;
-                    }
-                }}
+            Image Background = new Image("Background")
+            {
+                ControlAlignment = Alignment.Fixed,
+                IgnoreGlobalScale = true,
             };
+            Background.OnUpdate += (elem) =>
+            {
+                Image element = (Image)elem;
+                element.Graphic = FadeBackground;
+                element.Background.DestinationRectangle = Game.GraphicsDevice.Viewport.Bounds;
+                element.Background.Tint = FadeColor * Opacity;
+            };
+            Elements.Add(Background.Name, Background);
+
             base.LoadContent();
         }
 
@@ -70,7 +71,7 @@ namespace Maquina.UI
         {
             SpriteBatch.Begin();
             base.Draw(gameTime);
-            base.DrawObjects(gameTime, Objects);
+            base.DrawElements(gameTime, Elements);
             SpriteBatch.End();
         }
 
@@ -79,7 +80,7 @@ namespace Maquina.UI
             Opacity -= FadeSpeed;
 
             base.Update(gameTime);
-            base.UpdateObjects(gameTime, Objects);
+            base.UpdateObjects(gameTime, Elements);
 
             // Remove overlay when opacity below 0
             if (Opacity <= 0f)

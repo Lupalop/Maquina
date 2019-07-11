@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,28 +8,46 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
+    // FIXME: Derive from BaseElement when custom properties are implemented
     public class StackPanel : GuiElement, IContainer
     {
         public StackPanel(string name) : base(name)
         {
-            Children = new EventDictionary<string, GenericElement>();
+            Background = new Sprite();
+            Children = new EventDictionary<string, BaseElement>();
             Orientation = Orientation.Vertical;
             ElementMargin = new Region();
+            OverrideContainerHeight = false;
+            Children.CollectionModified += Children_CollectionModified;
+            DestinationRectangleChanged += StackPanel_DestinationRectangleChanged;
         }
 
-        // Properties
-        public EventDictionary<string, GenericElement> Children { get; set; }
+        private bool IsFirstUpdateDone = false;
+        // General
+        public EventDictionary<string, BaseElement> Children { get; set; }
         public Orientation Orientation { get; set; }
         public Region ElementMargin { get; set; }
-        private bool IsFirstUpdateDone = false;
-
-        // Element ID
-        public override string ID
+        public override string Id
         {
             get { return "GENERIC_STACKPANEL"; }
         }
 
-        // Override methods
+        // Child elements
+        public Sprite Background { get; set; }
+
+        // Alias
+        public Texture2D ContainerBackground
+        {
+            get { return Background.Graphic; }
+            set { Background.Graphic = value; }
+        }
+
+        // This flag prevents automatic updating of the container size
+        // based on the elements inside it.
+        // Useful when you want to use a custom width/height for the control.
+        public bool OverrideContainerHeight { get; set; }
+
+        // Draw and update methods
         public override void Draw(GameTime gameTime)
         {
             if (!IsFirstUpdateDone)
@@ -36,51 +55,49 @@ namespace Maquina.Elements
                 return;
             }
 
-            foreach (GenericElement element in Children.Values)
+            foreach (BaseElement element in Children.Values)
             {
                 element.Draw(gameTime);
             }
 
-            if (OnDraw != null)
-            {
-                OnDraw(this);
-            }
+            base.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
-            float DistanceFromLeft = Location.X;
-            float DistanceFromTop = Location.Y;
+            int DistanceFromLeft = Location.X;
+            int DistanceFromTop = Location.Y;
 
-            foreach (GenericElement element in Children.Values)
+            foreach (BaseElement element in Children.Values)
             {
-                if (Orientation == Orientation.Horizontal)
+                switch (Orientation)
                 {
-                    if (element.Graphic != null || element.Dimensions != null)
-                    {
-                        element.Location = new Vector2(DistanceFromLeft, Location.Y);
-                        DistanceFromLeft += ElementMargin.Left;
-                        DistanceFromLeft += element.Bounds.Width;
-                        DistanceFromLeft += ElementMargin.Right;
-                    }
-                    else
-                    {
-                        element.Location = new Vector2(DistanceFromLeft, Location.Y);
-                    }
-                }
-                if (Orientation == Orientation.Vertical)
-                {
-                    if (element.Graphic != null || element.Dimensions != null)
-                    {
-                        element.Location = new Vector2(Location.X, DistanceFromTop);
-                        DistanceFromTop += ElementMargin.Top;
-                        DistanceFromTop += element.Bounds.Height;
-                        DistanceFromTop += ElementMargin.Bottom;
-                    }
-                    else
-                    {
-                        element.Location = new Vector2(Location.X, DistanceFromTop);
-                    }
+                    case Orientation.Horizontal:
+                        if (element.Size != null)
+                        {
+                            element.Location = new Point(DistanceFromLeft, Location.Y);
+                            DistanceFromLeft += ElementMargin.Left;
+                            DistanceFromLeft += element.ActualBounds.Width;
+                            DistanceFromLeft += ElementMargin.Right;
+                        }
+                        else
+                        {
+                            element.Location = new Point(DistanceFromLeft, Location.Y);
+                        }
+                        break;
+                    case Orientation.Vertical:
+                        if (element.Size != null)
+                        {
+                            element.Location = new Point(Location.X, DistanceFromTop);
+                            DistanceFromTop += ElementMargin.Top;
+                            DistanceFromTop += element.ActualBounds.Height;
+                            DistanceFromTop += ElementMargin.Bottom;
+                        }
+                        else
+                        {
+                            element.Location = new Point(Location.X, DistanceFromTop);
+                        }
+                        break;
                 }
 
                 // TODO: Add considerations for other control alignments
@@ -94,19 +111,21 @@ namespace Maquina.Elements
                             case Alignment.Left:
                                 break;
                             case Alignment.Center:
-                                if (newElement.Graphic != null || newElement.Dimensions != null)
+                                if (newElement.Size != null)
                                 {
-                                    newElement.Location = new Vector2(this.Bounds.Center.X - (newElement.Bounds.Width / 2), newElement.Location.Y);
+                                    newElement.Location = new Point(
+                                        ActualBounds.Center.X -
+                                        (newElement.ActualBounds.Width / 2),
+                                        newElement.Location.Y);
+                                    return;
                                 }
-                                else
-                                {
-                                    newElement.Location = new Vector2(this.Bounds.Center.X, newElement.Location.Y);
-                                }
+                                newElement.Location = new Point(
+                                    ActualBounds.Center.X,
+                                    newElement.Location.Y);
                                 break;
                             case Alignment.Right:
                                 break;
                             case Alignment.Fixed:
-                            default:
                                 break;
                         }
                     }
@@ -117,19 +136,20 @@ namespace Maquina.Elements
                             case Alignment.Left:
                                 break;
                             case Alignment.Center:
-                                if (newElement.Graphic != null || newElement.Dimensions != null)
+                                if (newElement.Size != null)
                                 {
-                                    newElement.Location = new Vector2(newElement.Location.X, this.Bounds.Center.Y - (newElement.Bounds.Height / 2));
+                                    newElement.Location = new Point(
+                                        newElement.Location.X,
+                                        ActualBounds.Center.Y -
+                                        (newElement.ActualBounds.Height / 2));
                                 }
-                                else
-                                {
-                                    newElement.Location = new Vector2(newElement.Location.X, this.Bounds.Center.Y);
-                                }
+                                newElement.Location = new Point(
+                                    newElement.Location.X,
+                                    ActualBounds.Center.Y);
                                 break;
                             case Alignment.Right:
                                 break;
                             case Alignment.Fixed:
-                            default:
                                 break;
                         }
                     }
@@ -138,24 +158,35 @@ namespace Maquina.Elements
                 element.Update(gameTime);
             }
 
-            UpdatePoints();
+            base.Update(gameTime);
 
-            if (OnUpdate != null)
-            {
-                OnUpdate(this);
-            }
             if (!IsFirstUpdateDone)
             {
                 IsFirstUpdateDone = true;
             }
         }
 
-        public override void UpdatePoints()
+        // Listeners
+        private void Children_CollectionModified()
         {
-            float ComputedWidth = 0;
-            float ComputedHeight = 0;
+            UpdatePoints();
+        }
+        private void StackPanel_DestinationRectangleChanged(Rectangle obj)
+        {
+            UpdatePoints();
+        }
 
-            foreach (GenericElement element in Children.Values)
+        public void UpdatePoints()
+        {
+            if (OverrideContainerHeight)
+            {
+                return;
+            }
+
+            int ComputedWidth = 0;
+            int ComputedHeight = 0;
+
+            foreach (BaseElement element in Children.Values)
             {
                 if (Orientation == Orientation.Horizontal)
                 {
@@ -180,8 +211,7 @@ namespace Maquina.Elements
                 }
             }
 
-            Dimensions = new Vector2(ComputedWidth, ComputedHeight);
-            Bounds = new Rectangle(Location.ToPoint(), Dimensions.ToPoint());
+            Size = new Point(ComputedWidth, ComputedHeight);
         }
     }
 }
