@@ -65,13 +65,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Elements\BarSprite.cs" />
+    <Compile Include="Elements\ISprite.cs" />
+    <Compile Include="Elements\Sprite.cs" />
+    <Compile Include="Elements\TextSprite.cs" />
+    <Compile Include="DisplayManager.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Elements\Alignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />
     <Compile Include="Elements\GuiElement.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Elements\IContainer.cs" />
-    <Compile Include="Elements\IDrawableElement.cs" />
     <Compile Include="Elements\SpriteType.cs" />
     <Compile Include="EventDictionary.cs" />
     <Compile Include="MaquinaGame.cs" />
@@ -107,7 +111,7 @@
     <Compile Include="UI\Overlay.cs" />
     <Compile Include="UI\Scene.cs" />
     <Compile Include="SceneManager.cs" />
-    <Compile Include="Elements\GenericElement.cs" />
+    <Compile Include="Elements\BaseElement.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
