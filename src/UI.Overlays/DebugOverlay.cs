@@ -63,10 +63,6 @@ namespace Maquina.UI
             if (InputManager.KeyPressed(Keys.F8))
                 Global.Scale -= 0.1f;
 
-            // Refresh Scene (similar to a browser)
-            if (InputManager.KeyPressed(Keys.F5))
-                SceneManager.SwitchToScene(SceneManager.CurrentScene, true);
-
             elapsedTime += gameTime.ElapsedGameTime;
 
             if (elapsedTime > TimeSpan.FromSeconds(1))
@@ -79,7 +75,7 @@ namespace Maquina.UI
             // List mouse coordinates
             if (isCounterVisible[3])
             {
-                mouseCoordinates = SceneManager.Overlays["mouse"].Objects["Mouse"].Location.ToString();
+                mouseCoordinates = InputManager.MousePosition.ToString();
             }
 
             // List Overlays currently loaded
@@ -96,7 +92,7 @@ namespace Maquina.UI
             // List objects loaded
             if (isCounterVisible[1])
             {
-                sceneObjectList = ListElementsFromDictionary(SceneManager.CurrentScene.Objects);
+                sceneObjectList = ListElementsFromDictionary(SceneManager.CurrentScene.Elements);
             }
             // List timers
             if (isCounterVisible[4])
@@ -111,7 +107,7 @@ namespace Maquina.UI
             }
         }
 
-        public string ListElementsFromDictionary(Dictionary<string, GenericElement> elements, bool isContainer = false)
+        public string ListElementsFromDictionary(Dictionary<string, BaseElement> elements, bool isContainer = false)
         {
             List<string> keyList = elements.Keys.ToList();
             string list = "";
@@ -125,9 +121,9 @@ namespace Maquina.UI
                     "Key {0}: {1}, ID: {2}, Name: {3}, Bounds: {4} \n",
                     i,
                     keyList[i],
-                    elements[keyList[i]].ID,
+                    elements[keyList[i]].Id,
                     elements[keyList[i]].Name,
-                    elements[keyList[i]].Bounds.ToString());
+                    elements[keyList[i]].ActualBounds.ToString());
                 if (elements[keyList[i]] is IContainer)
                 {
                     IContainer container = (IContainer)elements[keyList[i]];
@@ -154,7 +150,7 @@ namespace Maquina.UI
             }
             if (isCounterVisible[1])
             {
-                string objectInfo = string.Format(sceneObjectHeader, SceneManager.CurrentScene.Objects.Count) +
+                string objectInfo = string.Format(sceneObjectHeader, SceneManager.CurrentScene.Elements.Count) +
                                     sceneObjectList;
                 SpriteBatch.DrawString(Fonts["o-default"], objectInfo, new Vector2(0, 0), Color.White);
             }
