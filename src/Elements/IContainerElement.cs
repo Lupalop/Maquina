@@ -9,6 +9,6 @@ namespace Maquina.Elements
 {
     public interface IContainerElement
     {
-        IDictionary<string, BaseElement> Children { get; set; }
+        ObservableDictionary<string, BaseElement> Children { get; set; }
     }
 }

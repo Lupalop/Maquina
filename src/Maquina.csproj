@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\BarSprite.cs" />
+    <Compile Include="Elements\ContainerElement.cs" />
     <Compile Include="Elements\ElementChangedEvent.cs" />
     <Compile Include="Elements\ISprite.cs" />
     <Compile Include="Elements\Sprite.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Elements\IBaseElement.cs" />
     <Compile Include="Elements\GuiElement.cs" />
     <Compile Include="AudioManager.cs" />
-    <Compile Include="Elements\IContainer.cs" />
+    <Compile Include="Elements\IContainerElement.cs" />
     <Compile Include="Elements\SpriteType.cs" />
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="MaquinaGame.cs" />
