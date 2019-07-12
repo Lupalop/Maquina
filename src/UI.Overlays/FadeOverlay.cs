@@ -80,7 +80,7 @@ namespace Maquina.UI
             Opacity -= FadeSpeed;
 
             base.Update(gameTime);
-            base.UpdateObjects(gameTime, Elements);
+            base.UpdateElements(gameTime, Elements);
 
             // Remove overlay when opacity below 0
             if (Opacity <= 0f)

@@ -89,7 +89,7 @@ namespace Maquina.UI
                         i, SceneManager.Overlays[keyList[i]].SceneName, keyList[i]);
                 }
             }
-            // List objects loaded
+            // List elements loaded
             if (isCounterVisible[1])
             {
                 sceneObjectList = ListElementsFromDictionary(SceneManager.CurrentScene.Elements);

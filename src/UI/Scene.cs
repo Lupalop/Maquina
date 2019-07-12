@@ -141,7 +141,7 @@ namespace Maquina.UI
             {
                 return;
             }
-            // Draw objects in the element array
+            // Draw elements in the element array
             for (int i = 0; i < objects.Count(); i++)
             {
                 try
@@ -155,30 +155,30 @@ namespace Maquina.UI
             }
         }
 
-        public virtual void UpdateObjects(GameTime gameTime, IDictionary<string, BaseElement> objects)
+        public virtual void UpdateElements(GameTime gameTime, IDictionary<string, BaseElement> elements)
         {
-            UpdateObjects(gameTime, objects.Values);
+            UpdateElements(gameTime, elements.Values);
         }
         public int ElementSpacing { get; set; }
-        public virtual void UpdateObjects(GameTime gameTime, IEnumerable<BaseElement> objects)
+        public virtual void UpdateElements(GameTime gameTime, IEnumerable<BaseElement> elements)
         {
-            for (int i = 0; i < objects.Count(); i++)
+            for (int i = 0; i < elements.Count(); i++)
             {
-                BaseElement element = objects.ElementAt(i);
+                BaseElement element = elements.ElementAt(i);
                 element.Update(gameTime);
             }
         }
 
-        public virtual void UpdateLayout(IDictionary<string, BaseElement> objects)
+        public virtual void UpdateLayout(IDictionary<string, BaseElement> elements)
         {
-            UpdateLayout(objects.Values);
+            UpdateLayout(elements.Values);
         }
-        public virtual void UpdateLayout(IEnumerable<BaseElement> objects)
+        public virtual void UpdateLayout(IEnumerable<BaseElement> elements)
         {
-            int distanceFromTop = ScreenCenter.Y - (int)(TotalElementHeight(objects) / 2);
-            for (int i = 0; i < objects.Count(); i++)
+            int distanceFromTop = ScreenCenter.Y - (int)(TotalElementHeight(elements) / 2);
+            for (int i = 0; i < elements.Count(); i++)
             {
-                BaseElement element = objects.ElementAt(i);
+                BaseElement element = elements.ElementAt(i);
                 if (!(element is GuiElement))
                 {
                     continue;
