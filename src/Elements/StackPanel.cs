@@ -18,7 +18,7 @@ namespace Maquina.Elements
             Children = new ObservableDictionary<string, BaseElement>();
             Orientation = Orientation.Vertical;
             ElementMargin = new Region();
-            OverrideContainerHeight = false;
+            OverrideContainerSize = false;
             Children.CollectionChanged += Children_CollectionChanged;
             ElementChanged += StackPanel_ElementChanged;
         }
@@ -46,7 +46,7 @@ namespace Maquina.Elements
         // This flag prevents automatic updating of the container size
         // based on the elements inside it.
         // Useful when you want to use a custom width/height for the control.
-        public bool OverrideContainerHeight { get; set; }
+        public bool OverrideContainerSize { get; set; }
 
         // Draw and update methods
         public override void Draw(GameTime gameTime)
@@ -65,6 +65,32 @@ namespace Maquina.Elements
         }
 
         public override void Update(GameTime gameTime)
+        {
+            foreach (BaseElement element in Children.Values)
+            {
+                element.Update(gameTime);
+            }
+
+            if (!IsFirstUpdateDone)
+            {
+                UpdateLayout();
+                IsFirstUpdateDone = true;
+            }
+
+            base.Update(gameTime);
+        }
+
+        // Listeners
+        private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UpdateLayout();
+        }
+        private void StackPanel_ElementChanged(object sender, ElementChangedEventArgs e)
+        {
+            UpdateLayout();
+        }
+
+        public void UpdateLayout()
         {
             int DistanceFromLeft = Location.X;
             int DistanceFromTop = Location.Y;
@@ -155,31 +181,11 @@ namespace Maquina.Elements
                         }
                     }
                 }
-
-                element.Update(gameTime);
             }
 
-            base.Update(gameTime);
-
-            if (!IsFirstUpdateDone)
-            {
-                IsFirstUpdateDone = true;
-            }
-        }
-
-        // Listeners
-        private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            UpdatePoints();
-        }
-        private void StackPanel_ElementChanged(object sender, ElementChangedEventArgs e)
-        {
-            UpdatePoints();
-        }
-
-        public void UpdatePoints()
-        {
-            if (OverrideContainerHeight)
+            // Don't continue on recomputing container width/height
+            // if this flag is true
+            if (OverrideContainerSize)
             {
                 return;
             }
