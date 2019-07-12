@@ -55,7 +55,7 @@ namespace Maquina.UI
                 ControlAlignment = Alignment.Fixed,
                 IgnoreGlobalScale = true,
             };
-            Background.OnUpdate += (elem) =>
+            Background.ElementUpdated += (elem) =>
             {
                 Image element = (Image)elem;
                 element.Graphic = FadeBackground;

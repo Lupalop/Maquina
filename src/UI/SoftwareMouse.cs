@@ -20,7 +20,7 @@ namespace Maquina.UI
                 Rows = 1,
                 Columns = 2,
             };
-            MouseElement.OnUpdate += (elem) =>
+            MouseElement.ElementUpdated += (elem) =>
             {
                 Image element = (Image)elem;
                 element.Location = Global.InputManager.MousePosition;

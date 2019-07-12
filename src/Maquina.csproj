@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\BarSprite.cs" />
+    <Compile Include="Elements\ElementChangedEvent.cs" />
     <Compile Include="Elements\ISprite.cs" />
     <Compile Include="Elements\Sprite.cs" />
     <Compile Include="Elements\TextSprite.cs" />

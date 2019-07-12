@@ -20,7 +20,7 @@ namespace Maquina.Elements
             ElementMargin = new Region();
             OverrideContainerHeight = false;
             Children.CollectionChanged += Children_CollectionChanged;
-            DestinationRectangleChanged += StackPanel_DestinationRectangleChanged;
+            ElementChanged += StackPanel_ElementChanged;
         }
 
         private bool IsFirstUpdateDone = false;
@@ -172,7 +172,7 @@ namespace Maquina.Elements
         {
             UpdatePoints();
         }
-        private void StackPanel_DestinationRectangleChanged(Rectangle obj)
+        private void StackPanel_ElementChanged(object sender, ElementChangedEventArgs e)
         {
             UpdatePoints();
         }

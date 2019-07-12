@@ -14,7 +14,7 @@ namespace Maquina.UI
         {
             IsSpinning = true;
             Graphic = Global.Textures["throbber-default"];
-            OnUpdate += (element) =>
+            ElementUpdated += (element) =>
             {
                 if (!IsSpinning)
                     return;

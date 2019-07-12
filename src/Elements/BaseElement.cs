@@ -32,10 +32,7 @@ namespace Maquina.Elements
             set
             {
                 scale = value;
-                if (ScaleChanged != null)
-                {
-                    ScaleChanged(value);
-                }
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Scale, value));
             }
         }
         // Scale adjusted for global scale
@@ -58,10 +55,7 @@ namespace Maquina.Elements
             set
             {
                 ignoreGlobalScale = value;
-                if (IgnoreGlobalScaleChanged != null)
-                {
-                    IgnoreGlobalScaleChanged(value);
-                }
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.IgnoreGlobalScale, value));
             }
         }
 
@@ -74,10 +68,7 @@ namespace Maquina.Elements
             {
                 Location = value.Location;
                 Size = value.Size;
-                if (DestinationRectangleChanged != null)
-                {
-                    DestinationRectangleChanged(value);
-                }
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle, value));
             }
         }
         // Destination rectangle adjusted for scale
@@ -100,10 +91,7 @@ namespace Maquina.Elements
                     return;
                 }
                 location = value;
-                if (LocationChanged != null)
-                {
-                    LocationChanged(value);
-                }
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Location, value, Point.Zero));
             }
         }
 
@@ -119,10 +107,7 @@ namespace Maquina.Elements
                     return;
                 }
                 size = value;
-                if (SizeChanged != null)
-                {
-                    SizeChanged(value);
-                }
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Size, Point.Zero, value));
             }
         }
         // Size adjusted for scale
@@ -137,29 +122,49 @@ namespace Maquina.Elements
         }
 
         // Element events
-        public event Action<Rectangle> DestinationRectangleChanged;
-        public event Action<Point> LocationChanged;
-        public event Action<Point> SizeChanged;
-        public event Action<float> ScaleChanged;
-        public event Action<bool> IgnoreGlobalScaleChanged;
-        public event Action<BaseElement> OnUpdate;
-        public event Action<BaseElement> OnDraw;
+        public event ElementChangedEventHandler ElementChanged;
+        public event Action<BaseElement> ElementUpdated;
+        public event Action<BaseElement> ElementDrawn;
+
+        private void OnElementUpdated()
+        {
+            if (ElementUpdated != null)
+            {
+                ElementUpdated(this);
+            }
+        }
+
+        private void OnElementDrawn()
+        {
+            if (ElementDrawn != null)
+            {
+                ElementDrawn(this);
+            }
+        }
+
+        private void OnElementChanged(ElementChangedEventArgs e)
+        {
+            if (ElementChanged != null)
+            {
+#if HAS_CONSOLE && LOG_GENERAL
+                if (this.Name != "mouse")
+                {
+                    Console.WriteLine("Element updated: " + this.Name + this.Id + e.Property.ToString());
+                }
+#endif
+                ElementChanged(this, e);
+            }
+        }
 
         // Update and draw methods
         public virtual void Update(GameTime gameTime)
         {
-            if (OnUpdate != null)
-            {
-                OnUpdate(this);
-            }
+            OnElementUpdated();
         }
 
         public virtual void Draw(GameTime gameTime)
         {
-            if (OnDraw != null)
-            {
-                OnDraw(this);
-            }
+            OnElementDrawn();
         }
 
         // IDisposable implementation

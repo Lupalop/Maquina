@@ -16,8 +16,7 @@ namespace Maquina.UI
         {
             Child = new TextSprite();
             Child.SizeChanged += Child_SizeChanged;
-            this.LocationChanged += Label_LocationChanged;
-            IgnoreGlobalScaleChanged += Label_IgnoreGlobalScaleChanged;
+            ElementChanged += Label_ElementChanged;
             Text = "";
         }
 
@@ -86,17 +85,23 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Label_LocationChanged(Point value)
-        {
-            Child.Location = Location;
-        }
         private void Child_SizeChanged(Point value)
         {
             Size = Child.Size;
         }
-        private void Label_IgnoreGlobalScaleChanged(bool value)
+        private void Label_ElementChanged(object sender, ElementChangedEventArgs e)
         {
-            Child.IgnoreGlobalScale = value;
+            switch (e.Property)
+            {
+                case ElementChangedProperty.Location:
+                    Child.Location = Location;
+                    break;
+                case ElementChangedProperty.IgnoreGlobalScale:
+                    Child.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

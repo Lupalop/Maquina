@@ -31,11 +31,12 @@ namespace Maquina.UI
                 IgnoreGlobalScale = true
             };
 
+            // Child
             Background.SizeChanged += Background_SizeChanged;
             Label.SizeChanged += Label_SizeChanged;
             Icon.SizeChanged += Icon_SizeChanged;
-            this.LocationChanged += MenuButton_LocationChanged;
-            IgnoreGlobalScaleChanged += MenuButton_IgnoreGlobalScaleChanged;
+            // Parent
+            ElementChanged += MenuButton_ElementChanged;
 
             TooltipFont = Global.Fonts["o-default_m"];
             MenuBackground = Global.Textures["button-default"];
@@ -300,14 +301,26 @@ namespace Maquina.UI
         }
         
         // Listeners
-        private void MenuButton_LocationChanged(Point location)
+        private void MenuButton_ElementChanged(object sender, ElementChangedEventArgs e)
         {
-            if (Background != null)
+            switch (e.Property)
             {
-                Background.Location = Location;
+                case ElementChangedProperty.Location:
+                    if (Background != null)
+                    {
+                        Background.Location = Location;
+                    }
+                    RecalculateLabelLocation();
+                    RecalculateIconLocation();
+                    break;
+                case ElementChangedProperty.IgnoreGlobalScale:
+                    Background.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    Icon.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    Label.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    break;
+                default:
+                    break;
             }
-            RecalculateLabelLocation();
-            RecalculateIconLocation();
         }
         private void Icon_SizeChanged(Point value)
         {
@@ -324,12 +337,6 @@ namespace Maquina.UI
         private void Background_SizeChanged(Point value)
         {
             Size = Background.Size;
-        }
-        private void MenuButton_IgnoreGlobalScaleChanged(bool value)
-        {
-            Background.IgnoreGlobalScale = value;
-            Icon.IgnoreGlobalScale = value;
-            Label.IgnoreGlobalScale = value;
         }
 
         // Misc

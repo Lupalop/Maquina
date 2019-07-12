@@ -16,8 +16,7 @@ namespace Maquina.UI
         {
             Background = new Sprite();
             Background.SizeChanged += Background_SizeChanged;
-            this.LocationChanged += Image_LocationChanged;
-            IgnoreGlobalScaleChanged += Image_IgnoreGlobalScaleChanged;
+            ElementChanged += Image_ElementChanged;
         }
 
         // General
@@ -100,17 +99,23 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Image_LocationChanged(Point value)
-        {
-            Background.Location = Location;
-        }
         private void Background_SizeChanged(Point value)
         {
             Size = Background.Size;
         }
-        private void Image_IgnoreGlobalScaleChanged(bool value)
+        private void Image_ElementChanged(object sender, ElementChangedEventArgs e)
         {
-            Background.IgnoreGlobalScale = value;
+            switch (e.Property)
+            {
+                case ElementChangedProperty.Location:
+                    Background.Location = Location;
+                    break;
+                case ElementChangedProperty.IgnoreGlobalScale:
+                    Background.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
