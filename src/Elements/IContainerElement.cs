@@ -10,7 +10,5 @@ namespace Maquina.Elements
     public interface IContainerElement
     {
         IDictionary<string, BaseElement> Children { get; set; }
-        Orientation Orientation { get; set; }
-        Region ElementMargin { get; set; }
     }
 }
