@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    public interface IContainer
+    public interface IContainerElement
     {
-        ObservableDictionary<string, BaseElement> Children { get; set; }
+        IDictionary<string, BaseElement> Children { get; set; }
         Orientation Orientation { get; set; }
         Region ElementMargin { get; set; }
     }

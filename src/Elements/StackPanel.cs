@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    // FIXME: Derive from BaseElement when custom properties are implemented
-    public class StackPanel : GuiElement, IContainer
+    public class StackPanel : BaseElement, IContainerElement
     {
         public StackPanel(string name) : base(name)
         {

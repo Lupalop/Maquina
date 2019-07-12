@@ -124,9 +124,9 @@ namespace Maquina.UI
                     elements[keyList[i]].Id,
                     elements[keyList[i]].Name,
                     elements[keyList[i]].ActualBounds.ToString());
-                if (elements[keyList[i]] is IContainer)
+                if (elements[keyList[i]] is IContainerElement)
                 {
-                    IContainer container = (IContainer)elements[keyList[i]];
+                    IContainerElement container = (IContainerElement)elements[keyList[i]];
                     list += ListElementsFromDictionary(container.Children, true);
                 }
             }
