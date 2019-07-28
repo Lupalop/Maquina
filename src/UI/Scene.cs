@@ -46,7 +46,16 @@ namespace Maquina.UI
         protected SpriteBatch SpriteBatch { get; private set; }
         protected Dictionary<string, SpriteFont> Fonts { get; private set; }
 
-        public IDictionary<string, BaseElement> Elements { get; set; }
+        private IDictionary<string, BaseElement> elements;
+        public IDictionary<string, BaseElement> Elements
+        {
+            get { return elements; }
+            set
+            {
+                elements = value;
+                UpdateLayout(Elements);
+            }
+        }
         public string SceneName { get; private set; }
         private bool IsFirstUpdateDone;
 

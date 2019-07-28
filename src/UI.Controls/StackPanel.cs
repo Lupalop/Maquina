@@ -24,7 +24,17 @@ namespace Maquina.Elements
         }
 
         // General
-        public ObservableDictionary<string, BaseElement> Children { get; set; }
+        private ObservableDictionary<string, BaseElement> children;
+        public ObservableDictionary<string, BaseElement> Children
+        {
+            get { return children; }
+            set
+            {
+                children = value;
+                UpdateSize();
+                UpdateLayout();
+            }
+        }
         private Orientation orientation;
         public Orientation Orientation
         {
