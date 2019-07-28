@@ -149,6 +149,51 @@ namespace Maquina.UI
         }
         public virtual void UpdateLayout(IEnumerable<BaseElement> elements)
         {
+            for (int i = 0; i < elements.Count(); i++)
+            {
+                BaseElement element = elements.ElementAt(i);
+
+                // Recurse if element is a container
+                if (element is IContainerElement)
+                {
+                    IContainerElement container = (IContainerElement)element;
+                    UpdateLayout(container.Children);
+                }
+
+                // Ignore non-UI elements
+                if (element is GuiElement)
+                {
+                    GuiElement modifiedElement = (GuiElement)element;
+                    
+                    // Ignore elements that are not requesting auto position
+                    if (!modifiedElement.AutoPosition)
+                    {
+                        return;
+                    }
+
+                    switch (modifiedElement.ControlAlignment)
+                    {
+                        case Alignment.Left:
+                            modifiedElement.Location = new Point(WindowBounds.Left, WindowBounds.Center.Y);
+                            break;
+                        case Alignment.Center:
+                            if (element.ActualBounds.Width != 0 || element.ActualBounds.Height != 0)
+                            {
+                                modifiedElement.Location = new Point(
+                                    WindowBounds.Center.X - (element.ActualBounds.Width / 2),
+                                    WindowBounds.Center.Y - (element.ActualBounds.Height / 2));
+                            }
+                            break;
+                        case Alignment.Right:
+                            modifiedElement.Location = new Point(
+                                WindowBounds.Right - element.ActualBounds.Width,
+                                WindowBounds.Center.Y);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
 #if HAS_CONSOLE && LOG_GENERAL
             Console.WriteLine(String.Format("Updated scene layout: {0}", SceneName));
 #endif
