@@ -27,7 +27,6 @@ namespace Maquina.UI
             // 
             Elements = new Dictionary<string, BaseElement>();
             // Layout stuff
-            ElementSpacing = 5;
             IsFirstUpdateDone = false;
         }
 
@@ -107,31 +106,6 @@ namespace Maquina.UI
             }
         }
 
-        public virtual int TotalElementHeight(IDictionary<string, BaseElement> objects)
-        {
-            return TotalElementHeight(objects.Values);
-        }
-        public virtual int TotalElementHeight(IEnumerable<BaseElement> objects)
-        {
-            int totalElementHeight = 0;
-
-            for (int i = 0; i < objects.Count(); i++)
-            {
-                var currentObject = objects.ElementAt(i);
-                if (!(currentObject is GuiElement) || currentObject == null)
-                {
-                    continue;
-                }
-
-                GuiElement Object = (GuiElement)currentObject;
-                if (Object.ControlAlignment == Alignment.Center)
-                {
-                    totalElementHeight += currentObject.ActualBounds.Height;
-                }
-            }
-            return totalElementHeight;
-        }
-
         public virtual void DrawElements(GameTime gameTime, IDictionary<string, BaseElement> objects)
         {
             DrawElements(gameTime, objects.Values);
@@ -160,7 +134,6 @@ namespace Maquina.UI
         {
             UpdateElements(gameTime, elements.Values);
         }
-        public int ElementSpacing { get; set; }
         public virtual void UpdateElements(GameTime gameTime, IEnumerable<BaseElement> elements)
         {
             for (int i = 0; i < elements.Count(); i++)
@@ -176,39 +149,6 @@ namespace Maquina.UI
         }
         public virtual void UpdateLayout(IEnumerable<BaseElement> elements)
         {
-            int distanceFromTop = ScreenCenter.Y - (int)(TotalElementHeight(elements) / 2);
-            for (int i = 0; i < elements.Count(); i++)
-            {
-                BaseElement element = elements.ElementAt(i);
-                if (!(element is GuiElement))
-                {
-                    continue;
-                }
-
-                var modifiedElement = (GuiElement)element;
-                if (modifiedElement.ControlAlignment == Alignment.Center)
-                {
-                    if (modifiedElement.Size != null)
-                    {
-                        modifiedElement.Location = new Point(
-                            ScreenCenter.X - (element.ActualBounds.Width / 2),
-                            distanceFromTop);
-                        distanceFromTop += element.ActualBounds.Height;
-                        distanceFromTop += ElementSpacing;
-                    }
-                    else
-                    {
-                        modifiedElement.Location = new Point(ScreenCenter.X, distanceFromTop);
-                    }
-                }
-
-                if (modifiedElement.ControlAlignment == Alignment.Left ||
-                    modifiedElement.ControlAlignment == Alignment.Right)
-                {
-                    // TODO: Implement left and right control alignments
-                    throw new NotImplementedException();
-                }
-            }
 #if HAS_CONSOLE && LOG_GENERAL
             Console.WriteLine(String.Format("Updated scene layout: {0}", SceneName));
 #endif
