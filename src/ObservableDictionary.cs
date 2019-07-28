@@ -122,8 +122,9 @@ namespace Maquina
 #endif
                 return false;
             }
+            object removedObject = InnerDictionary[key];
             bool result = InnerDictionary.Remove(key);
-            OnCollectionChanged(NotifyCollectionChangedAction.Remove, InnerDictionary[key]);
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, removedObject);
             return result;
         }
 
@@ -136,8 +137,9 @@ namespace Maquina
 #endif
                 return false;
             }
+            object removedObject = InnerDictionary[item.Key];
             bool result = InnerDictionary.Remove(item);
-            OnCollectionChanged(NotifyCollectionChangedAction.Remove, InnerDictionary[item.Key]);
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, removedObject);
             return result;
         }
 
