@@ -12,9 +12,11 @@ namespace Maquina.Elements
         protected GuiElement(string name) : base (name)
         {
             ControlAlignment = Alignment.Center;
+            AutoPosition = false;
         }
 
         public Alignment ControlAlignment { get; set; }
+        public bool AutoPosition { get; set; }
         public override string Id
         {
             get { return "GENERIC_GUI"; }
