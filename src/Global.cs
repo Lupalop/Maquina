@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Maquina.Elements;
 
 namespace Maquina
 {
@@ -48,13 +49,32 @@ namespace Maquina
         public static string DefaultLocale { get; set; }
 
         // App-wide properties
-        public static float Scale { get; set; }
         public static Dictionary<string, SpriteFont> Fonts { get; set; }
         public static Dictionary<string, Song> BGM { get; set; }
         public static Dictionary<string, SoundEffect> SFX { get; set; }
         public static Dictionary<string, Texture2D> Textures { get; set; }
         public static SpriteBatch SpriteBatch { get; set; }
         public static Game Game { get; set; }
+
+        // Scale
+        private static float scale;
+        public static float Scale
+        {
+            get { return scale; }
+            set
+            {
+                scale = value;
+                OnScaleChanged(value);
+            }
+        }
+        public static event EventHandler<float> ScaleChanged;
+        private static void OnScaleChanged(float newScale)
+        {
+            if (ScaleChanged != null)
+            {
+                ScaleChanged(null, newScale);
+            }
+        }
 
         // Managers
         public static SceneManager SceneManager { get; set; }
