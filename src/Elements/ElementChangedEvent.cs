@@ -9,6 +9,7 @@ namespace Maquina.Elements
 {
     public enum ElementChangedProperty
     {
+        Custom,
         DestinationRectangle,
         Location,
         Size,
@@ -18,6 +19,10 @@ namespace Maquina.Elements
 
     public class ElementChangedEventArgs : EventArgs
     {
+        public ElementChangedEventArgs(ElementChangedProperty property)
+        {
+            Property = property;
+        }
         public ElementChangedEventArgs(ElementChangedProperty property, Rectangle bounds)
         {
             Property = property;
