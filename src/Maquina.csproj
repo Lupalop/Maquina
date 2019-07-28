@@ -93,7 +93,7 @@
     <Compile Include="TimerManager.cs" />
     <Compile Include="Elements\Orientation.cs" />
     <Compile Include="UI.Controls\TextBox.cs" />
-    <Compile Include="Elements\StackPanel.cs" />
+    <Compile Include="UI.Controls\StackPanel.cs" />
     <Compile Include="Resources\ContentLoader.cs" />
     <Compile Include="Resources\IContent.cs" />
     <Compile Include="Resources\FontParameters.cs" />

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    public class StackPanel : BaseElement, IContainerElement
+    public class StackPanel : GuiElement, IContainerElement
     {
         public StackPanel(string name) : base(name)
         {
@@ -47,7 +47,7 @@ namespace Maquina.Elements
         }
         public override string Id
         {
-            get { return "GENERIC_STACKPANEL"; }
+            get { return "GUI_STACKPANEL"; }
         }
 
         // Child elements
