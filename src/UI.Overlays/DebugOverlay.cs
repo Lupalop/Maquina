@@ -9,6 +9,13 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
+    // TODO: Convert to use UI elements once API reaches level 1.
+    //
+    //       Elements (and associated properties) are constantly changed
+    //       at this point and converting this now would break
+    //       the overlay frequently.
+    //
+    //       The plan is to convert this into a window once that component lands.
     public class DebugOverlay : Overlay
     {
         // FPS+O Counter
