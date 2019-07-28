@@ -35,6 +35,11 @@ namespace Maquina.UI
             UpdateLayout(Elements);
         }
 
+        private void Global_ScaleChanged(object sender, float e)
+        {
+            UpdateLayout(Elements);
+        }
+
         protected SceneManager SceneManager { get; private set; }
         protected InputManager InputManager { get; private set; }
         protected Game Game { get; private set; }
@@ -67,6 +72,7 @@ namespace Maquina.UI
             }
             // Listen to resolution change events in order to update layout when needed
             Global.DisplayManager.ResolutionChanged += DisplayManager_ResolutionChanged;
+            Global.ScaleChanged += Global_ScaleChanged;
             // Update layout after all elements were loaded
             UpdateLayout(Elements);
         }
@@ -85,6 +91,7 @@ namespace Maquina.UI
         {
             DisposeElements(Elements);
             Global.DisplayManager.ResolutionChanged -= DisplayManager_ResolutionChanged;
+            Global.ScaleChanged -= Global_ScaleChanged;
 #if HAS_CONSOLE && LOG_VERBOSE
             Console.WriteLine("Unloaded content from scene: {0}", SceneName);
 #endif
