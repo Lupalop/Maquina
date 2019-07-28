@@ -66,8 +66,8 @@ namespace Maquina
             get { return InnerDictionary[key]; }
             set
             {
-                OnCollectionChanged(NotifyCollectionChangedAction.Replace, InnerDictionary[key], value);
                 InnerDictionary[key] = value;
+                OnCollectionChanged(NotifyCollectionChangedAction.Replace, InnerDictionary[key], value);
             }
         }
 
@@ -85,8 +85,8 @@ namespace Maquina
                 return;
             }
 
-            OnCollectionChanged(NotifyCollectionChangedAction.Add, item.Value);
             InnerDictionary.Add(item);
+            OnCollectionChanged(NotifyCollectionChangedAction.Add, item.Value);
         }
 
         public bool Contains(TKey key, TValue value)
@@ -122,8 +122,9 @@ namespace Maquina
 #endif
                 return false;
             }
+            bool result = InnerDictionary.Remove(key);
             OnCollectionChanged(NotifyCollectionChangedAction.Remove, InnerDictionary[key]);
-            return InnerDictionary.Remove(key);
+            return result;
         }
 
         public bool Remove(KeyValuePair<TKey, TValue> item)
@@ -135,14 +136,15 @@ namespace Maquina
 #endif
                 return false;
             }
+            bool result = InnerDictionary.Remove(item);
             OnCollectionChanged(NotifyCollectionChangedAction.Remove, InnerDictionary[item.Key]);
-            return InnerDictionary.Remove(item);
+            return result;
         }
 
         public void Clear()
         {
-            OnCollectionReset();
             InnerDictionary.Clear();
+            OnCollectionReset();
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
