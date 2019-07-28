@@ -20,13 +20,31 @@ namespace Maquina.Elements
             OverrideContainerSize = false;
             Children.CollectionChanged += Children_CollectionChanged;
             ElementChanged += StackPanel_ElementChanged;
+            Global.ScaleChanged += Global_ScaleChanged;
         }
 
-        private bool IsFirstUpdateDone = false;
         // General
         public ObservableDictionary<string, BaseElement> Children { get; set; }
-        public Orientation Orientation { get; set; }
-        public Region ElementMargin { get; set; }
+        private Orientation orientation;
+        public Orientation Orientation
+        {
+            get { return orientation; }
+            set
+            {
+                orientation = value;
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
+            }
+        }
+        private Region elementMargin;
+        public Region ElementMargin
+        {
+            get { return elementMargin; }
+            set
+            {
+                elementMargin = value;
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
+            }
+        }
         public override string Id
         {
             get { return "GENERIC_STACKPANEL"; }
@@ -50,11 +68,6 @@ namespace Maquina.Elements
         // Draw and update methods
         public override void Draw(GameTime gameTime)
         {
-            if (!IsFirstUpdateDone)
-            {
-                return;
-            }
-
             foreach (BaseElement element in Children.Values)
             {
                 element.Draw(gameTime);
@@ -70,21 +83,48 @@ namespace Maquina.Elements
                 element.Update(gameTime);
             }
 
-            if (!IsFirstUpdateDone)
-            {
-                UpdateLayout();
-                IsFirstUpdateDone = true;
-            }
-
             base.Update(gameTime);
         }
 
         // Listeners
         private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            BaseElement elem;
+            UpdateSize();
+            UpdateLayout();
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    elem = (BaseElement)e.NewItems[0];
+                    elem.ElementChanged += ChildElement_ElementChanged;
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    elem = (BaseElement)e.OldItems[0];
+                    elem.ElementChanged -= ChildElement_ElementChanged;
+                    break;
+            }
+        }
+
+        private void ChildElement_ElementChanged(object sender, ElementChangedEventArgs e)
+        {
+            if (e.Property != ElementChangedProperty.Location)
+            {
+                UpdateSize();
+                UpdateLayout();
+            }
+        }
+
+        private void StackPanel_ElementChanged(object sender, ElementChangedEventArgs e)
+        {
+            if (e.Property != ElementChangedProperty.Location)
+            {
+                UpdateSize();
+            }
             UpdateLayout();
         }
-        private void StackPanel_ElementChanged(object sender, ElementChangedEventArgs e)
+
+        private void Global_ScaleChanged(object sender, float e)
         {
             UpdateLayout();
         }
@@ -96,34 +136,33 @@ namespace Maquina.Elements
 
             foreach (BaseElement element in Children.Values)
             {
-                switch (Orientation)
+                if (Orientation == Orientation.Horizontal)
                 {
-                    case Orientation.Horizontal:
-                        if (element.Size != null)
-                        {
-                            element.Location = new Point(DistanceFromLeft, Location.Y);
-                            DistanceFromLeft += ElementMargin.Left;
-                            DistanceFromLeft += element.ActualBounds.Width;
-                            DistanceFromLeft += ElementMargin.Right;
-                        }
-                        else
-                        {
-                            element.Location = new Point(DistanceFromLeft, Location.Y);
-                        }
-                        break;
-                    case Orientation.Vertical:
-                        if (element.Size != null)
-                        {
-                            element.Location = new Point(Location.X, DistanceFromTop);
-                            DistanceFromTop += ElementMargin.Top;
-                            DistanceFromTop += element.ActualBounds.Height;
-                            DistanceFromTop += ElementMargin.Bottom;
-                        }
-                        else
-                        {
-                            element.Location = new Point(Location.X, DistanceFromTop);
-                        }
-                        break;
+                    if (element.Size != null)
+                    {
+                        element.Location = new Point(DistanceFromLeft, Location.Y);
+                        DistanceFromLeft += ElementMargin.Left;
+                        DistanceFromLeft += element.ActualBounds.Width;
+                        DistanceFromLeft += ElementMargin.Right;
+                    }
+                    else
+                    {
+                        element.Location = new Point(DistanceFromLeft, Location.Y);
+                    }
+                }
+                if (Orientation == Orientation.Vertical)
+                {
+                    if (element.Size != null)
+                    {
+                        element.Location = new Point(Location.X, DistanceFromTop);
+                        DistanceFromTop += ElementMargin.Top;
+                        DistanceFromTop += element.ActualBounds.Height;
+                        DistanceFromTop += ElementMargin.Bottom;
+                    }
+                    else
+                    {
+                        element.Location = new Point(Location.X, DistanceFromTop);
+                    }
                 }
 
                 // TODO: Add considerations for other control alignments
@@ -143,7 +182,7 @@ namespace Maquina.Elements
                                         ActualBounds.Center.X -
                                         (newElement.ActualBounds.Width / 2),
                                         newElement.Location.Y);
-                                    return;
+                                    break;
                                 }
                                 newElement.Location = new Point(
                                     ActualBounds.Center.X,
@@ -168,6 +207,7 @@ namespace Maquina.Elements
                                         newElement.Location.X,
                                         ActualBounds.Center.Y -
                                         (newElement.ActualBounds.Height / 2));
+                                    break;
                                 }
                                 newElement.Location = new Point(
                                     newElement.Location.X,
@@ -181,7 +221,10 @@ namespace Maquina.Elements
                     }
                 }
             }
+        }
 
+        public void UpdateSize()
+        {
             // Don't continue on recomputing container width/height
             // if this flag is true
             if (OverrideContainerSize)
