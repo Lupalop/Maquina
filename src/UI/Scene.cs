@@ -48,11 +48,11 @@ namespace Maquina.UI
         public event EventHandler LoadContentFinished;
         public event EventHandler UnloadFinished;
 
-        public Point ScreenCenter
+        protected Rectangle WindowBounds
         {
             get
             {
-                return Global.DisplayManager.WindowBounds.Center;
+                return Global.DisplayManager.WindowBounds;
             }
         }
 
