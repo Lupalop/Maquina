@@ -146,7 +146,7 @@ namespace Maquina.Elements
         {
             if (ElementChanged != null)
             {
-#if HAS_CONSOLE && LOG_GENERAL
+#if HAS_CONSOLE && LOG_VERBOSE
                 if (Name != "mouse")
                 {
                     Console.WriteLine("Element updated: " + this.Name + this.Id + e.Property.ToString());
