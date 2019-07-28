@@ -178,8 +178,9 @@ namespace Maquina.Elements
         {
             if (disposing)
             {
-                // Nothing to dispose.
-                return;
+                ElementChanged = null;
+                ElementUpdated = null;
+                ElementDrawn = null;
             }
         }
     }

@@ -85,6 +85,7 @@ namespace Maquina.UI
         public virtual void Unload()
         {
             DisposeElements(Elements);
+            Global.DisplayManager.ResolutionChanged -= DisplayManager_ResolutionChanged;
 #if HAS_CONSOLE && LOG_VERBOSE
             Console.WriteLine("Unloaded content from scene: {0}", SceneName);
 #endif

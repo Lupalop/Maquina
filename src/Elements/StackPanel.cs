@@ -262,5 +262,20 @@ namespace Maquina.Elements
 
             Size = new Point(ComputedWidth, ComputedHeight);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Children.CollectionChanged -= Children_CollectionChanged;
+                ElementChanged -= StackPanel_ElementChanged;
+                Global.ScaleChanged -= Global_ScaleChanged;
+                foreach (var element in Children.Values)
+                {
+                    element.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
     }
 }
