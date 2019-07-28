@@ -126,7 +126,7 @@ namespace Maquina.Elements
         public event Action<BaseElement> ElementUpdated;
         public event Action<BaseElement> ElementDrawn;
 
-        private void OnElementUpdated()
+        protected void OnElementUpdated()
         {
             if (ElementUpdated != null)
             {
@@ -134,7 +134,7 @@ namespace Maquina.Elements
             }
         }
 
-        private void OnElementDrawn()
+        protected void OnElementDrawn()
         {
             if (ElementDrawn != null)
             {
@@ -142,12 +142,12 @@ namespace Maquina.Elements
             }
         }
 
-        private void OnElementChanged(ElementChangedEventArgs e)
+        protected void OnElementChanged(ElementChangedEventArgs e)
         {
             if (ElementChanged != null)
             {
 #if HAS_CONSOLE && LOG_GENERAL
-                if (this.Name != "mouse")
+                if (Name != "mouse")
                 {
                     Console.WriteLine("Element updated: " + this.Name + this.Id + e.Property.ToString());
                 }
