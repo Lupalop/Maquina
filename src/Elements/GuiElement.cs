@@ -15,7 +15,16 @@ namespace Maquina.Elements
             AutoPosition = false;
         }
 
-        public Alignment ControlAlignment { get; set; }
+        private Alignment controlAlignment;
+        public Alignment ControlAlignment
+        {
+            get { return controlAlignment; }
+            set
+            {
+                controlAlignment = value;
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
+            }
+        }
         public bool AutoPosition { get; set; }
         public override string Id
         {
