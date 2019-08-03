@@ -39,7 +39,17 @@ namespace Maquina
                 {
                     Save(true);
                 }
-                Preferences = XElement.Load(value);
+                try
+                {
+                    Preferences = XElement.Load(value);
+                }
+                catch (Exception e)
+                {
+#if LOG_ENABLED
+                    LogManager.Error(0, string.Format("XML error: {0}", e.Message));
+#endif
+                    Preferences = DefaultPreferences;
+                }
             }
         }
 
