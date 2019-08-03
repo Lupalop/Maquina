@@ -17,7 +17,7 @@ namespace Maquina.UI
         public Scene(string sceneName = "Untitled Scene")
         {
             // Scene name assignment
-            this.SceneName = sceneName;
+            SceneName = sceneName;
             // Create local references to global properties
             SceneManager = Global.SceneManager;
             InputManager = Global.InputManager;
