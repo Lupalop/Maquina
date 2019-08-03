@@ -35,8 +35,7 @@ namespace Maquina
             .AddSeconds(_version.Revision * 2);
 
         // General Information
-        public static readonly string Name = "Maquina";
-        public static readonly string BuildId = String.Format("{0} {1}",
+        public static readonly string BuildId = string.Format("{0} {1}",
             BuildDateTime.ToShortDateString(), BuildDateTime.ToShortTimeString());
         public static readonly int APIVersion = 0;
 
