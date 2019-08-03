@@ -5,52 +5,38 @@ using System.Text;
 using System.Threading.Tasks;
 using Maquina.Elements;
 using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework;
 
 namespace Maquina.UI
 {
     public abstract class Overlay : Scene
     {
-        protected Overlay(string sceneName, Scene parentScene = null)
-            : base(sceneName)
+        protected Overlay(string sceneName) : base(sceneName) {}
+        protected Overlay(string sceneName, Scene parentScene) : base(sceneName)
         {
             ParentScene = parentScene;
         }
-
-        public override void LoadContent()
+        protected Overlay(string sceneName, Scene parentScene, bool disableParentSceneGui) : base(sceneName)
         {
-            base.LoadContent();
+            ParentScene = parentScene;
+            DisableParentSceneGui = disableParentSceneGui;
         }
 
         public Scene ParentScene { get; set; }
+        public bool DisableParentSceneGui { get; private set; }
 
-        public virtual void DisableAllMenuButtons(IDictionary<string, BaseElement> objects)
+        public override void LoadContent()
         {
-            if (objects != null)
-                DisableAllMenuButtonsFromArray(objects.Values.ToArray<BaseElement>());
-        }
-        public virtual void DisableAllMenuButtons(Collection<BaseElement> objects)
-        {
-            DisableAllMenuButtonsFromArray(objects.ToArray<BaseElement>());
-        }
-        public virtual void DisableAllMenuButtons(BaseElement[] objects)
-        {
-            DisableAllMenuButtonsFromArray(objects);
-        }
-        private static void DisableAllMenuButtonsFromArray(BaseElement[] objects)
-        {
-            for (int i = 0; i < objects.Length; i++)
+            if (ParentScene != null && DisableParentSceneGui)
             {
-                if (objects[i] is MenuButton)
-                {
-                    MenuButton mb = (MenuButton)objects[i];
-                    mb.Disabled = true;
-                }
+                GuiUtils.DisableAllMenuButtons(ParentScene.Elements);
             }
+            base.LoadContent();
         }
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+
+        public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (ParentScene != null) DisableAllMenuButtons(ParentScene.Elements);
         }
     }
 }
