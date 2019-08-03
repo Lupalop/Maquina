@@ -146,10 +146,11 @@ namespace Maquina.Elements
         {
             if (ElementChanged != null)
             {
-#if HAS_CONSOLE && LOG_VERBOSE
+#if LOG_ENABLED
                 if (Name != "mouse")
                 {
-                    Console.WriteLine("Element updated: " + this.Name + this.Id + e.Property.ToString());
+                    LogManager.Info(0, string.Format("Element updated - Name: {0}, ID: {1}, Property: {2}",
+                        Name, Id, e.Property.ToString()));
                 }
 #endif
                 ElementChanged(this, e);

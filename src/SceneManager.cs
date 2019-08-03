@@ -79,13 +79,13 @@ namespace Maquina
 
         public void SwitchToScene(Scene scene, bool shouldLoadContent = true)
         {
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine("Switching to scene: {0}", scene.SceneName);
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("Switched to scene: {0}", scene.SceneName));
 #endif
             if (scene == null)
             {
-#if HAS_CONSOLE && LOG_GENERAL
-                Console.WriteLine("Switching to given scene failed!");
+#if LOG_ENABLED
+                LogManager.Error(0, "Unable to switch to a `null` scene.");
 #endif
                 return;
             }

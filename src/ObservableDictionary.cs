@@ -79,8 +79,8 @@ namespace Maquina
         {
             if (ContainsKey(item.Key))
             {
-#if HAS_CONSOLE
-                Console.WriteLine("An item with the same key has already been added.");
+#if LOG_ENABLED
+                LogManager.Error(0, "An item with the same key has already been added.");
 #endif
                 return;
             }
@@ -117,8 +117,8 @@ namespace Maquina
         {
             if (!ContainsKey(key))
             {
-#if HAS_CONSOLE
-                Console.WriteLine(String.Format("Attempting to remove a non-existent item: {0}", key));
+#if LOG_ENABLED
+                LogManager.Error(0, string.Format("Attempting to remove a non-existent item: {0}", key));
 #endif
                 return false;
             }
@@ -133,7 +133,7 @@ namespace Maquina
             if (!Contains(item))
             {
 #if HAS_CONSOLE
-                Console.WriteLine(String.Format("Attempting to remove a non-existent item: {0}", item.Key));
+                LogManager.Error(0, string.Format("Attempting to remove a non-existent item: {0}", item.Key));
 #endif
                 return false;
             }

@@ -130,9 +130,6 @@ namespace Maquina
         /// </summary>
         protected override void UnloadContent()
         {
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine("Unloading game content");
-#endif
             // TODO: move to display manager
             PreferencesManager.SetBoolPref("app.window.fullscreen", Graphics.IsFullScreen);
             // Save window dimensions if not in fullscreen
@@ -149,6 +146,10 @@ namespace Maquina
             SceneManager.Dispose();
             SpriteBatch.Dispose();
             Graphics.Dispose();
+
+#if LOG_ENABLED
+            LogManager.Info(0, "Game content unloaded.");
+#endif
         }
 
         /// <summary>

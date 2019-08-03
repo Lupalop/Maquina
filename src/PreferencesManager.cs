@@ -56,8 +56,8 @@ namespace Maquina
             {
                 Boolean.TryParse(node.Value, out value);
             }
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine(String.Format("Preferences Manager: name {1}, value {0}", value, name));
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("Get Bool Pref - Name: {1}, Value: {0}", value, name));
 #endif
             return value;
         }
@@ -73,8 +73,8 @@ namespace Maquina
             {
                 Int32.TryParse(node.Value, out value);
             }
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine(String.Format("Preferences Manager: name {1}, value {0}", value, name));
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("Get Int Pref - Name: {1}, Value: {0}", value, name));
 #endif
             return value;
         }
@@ -90,8 +90,8 @@ namespace Maquina
             {
                 value = node.Value;
             }
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine(String.Format("Preferences Manager: name {1}, value {0}", value, name));
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("Get Char Pref - Name: {1}, Value: {0}", value, name));
 #endif
             return value;
         }
@@ -106,8 +106,9 @@ namespace Maquina
             XElement node = element.ElementAtOrDefault(0);
             if (node != null)
             {
-#if HAS_CONSOLE && LOG_GENERAL
-                Console.WriteLine(String.Format("Preferences Manager: name {1}, old value {0}, new value {2}", node.Value, name, value));
+#if LOG_ENABLED
+                LogManager.Info(0, string.Format("Set Bool Pref - Name: {1}, Old value: {0}, New value: {2}",
+                    node.Value, name, value));
 #endif
                 node.Value = value.ToString();
             }
@@ -126,8 +127,9 @@ namespace Maquina
             XElement node = element.ElementAtOrDefault(0);
             if (node != null)
             {
-#if HAS_CONSOLE && LOG_GENERAL
-                Console.WriteLine(String.Format("Preferences Manager: name {1}, old value {0}, new value {2}", node.Value, name, value));
+#if LOG_ENABLED
+                LogManager.Info(0, string.Format("Set Int Pref - Name: {1}, Old value: {0}, New value: {2}",
+                    node.Value, name, value));
 #endif
                 node.Value = value.ToString();
             }
@@ -146,8 +148,9 @@ namespace Maquina
             XElement node = element.ElementAtOrDefault(0);
             if (node != null)
             {
-#if HAS_CONSOLE && LOG_GENERAL
-                Console.WriteLine(String.Format("Preferences Manager: name {1}, old value {0}, new value {2}", node.Value, name, value));
+#if LOG_ENABLED
+                LogManager.Info(0, string.Format("Set Char Pref - Name: {1}, Old value: {0}, New value: {2}",
+                    node.Value, name, value));
 #endif
                 node.Value = value;
             }
@@ -161,8 +164,9 @@ namespace Maquina
         private void CreateNewPref(string name, string type, string value)
         {
             Preferences.Add(new XElement(type, new XAttribute("id", name), value));
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine(String.Format("Preferences Manager: created - name {0}, type {1}, new value {2}", name, type, value));
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("New Pref - Name: {0}, Type: {1}, Value: {2}",
+                name, type, value));
 #endif
         }
         // Misc

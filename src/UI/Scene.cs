@@ -72,8 +72,8 @@ namespace Maquina.UI
 
         public virtual void LoadContent()
         {
-#if HAS_CONSOLE && LOG_VERBOSE
-            Console.WriteLine("Finished loading content from: {0}", SceneName);
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("Content loaded from: {0}", SceneName));
 #endif
             if (LoadContentFinished != null)
             {
@@ -101,8 +101,8 @@ namespace Maquina.UI
             DisposeElements(Elements);
             Global.DisplayManager.ResolutionChanged -= DisplayManager_ResolutionChanged;
             Global.ScaleChanged -= Global_ScaleChanged;
-#if HAS_CONSOLE && LOG_VERBOSE
-            Console.WriteLine("Unloaded content from scene: {0}", SceneName);
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("Unloaded content from scene: {0}", SceneName));
 #endif
             if (UnloadFinished != null)
             {
@@ -210,8 +210,8 @@ namespace Maquina.UI
                     }
                 }
             }
-#if HAS_CONSOLE && LOG_GENERAL
-            Console.WriteLine(String.Format("Updated scene layout: {0}", SceneName));
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("Updated scene layout: {0}", SceneName));
 #endif
         }
     }

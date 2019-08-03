@@ -46,7 +46,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <OutputPath>bin\AnyCPU\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WINDOWS;HAS_CONSOLE;LOG_GENERAL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINDOWS;HAS_CONSOLE;LOG_ENABLED</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -72,6 +72,9 @@
     <Compile Include="Elements\Sprite.cs" />
     <Compile Include="Elements\TextSprite.cs" />
     <Compile Include="DisplayManager.cs" />
+    <Compile Include="LogEntry.cs" />
+    <Compile Include="LogEntryLevel.cs" />
+    <Compile Include="LogManager.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Elements\Alignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />

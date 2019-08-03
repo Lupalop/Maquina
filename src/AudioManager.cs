@@ -21,10 +21,10 @@ namespace Maquina
                     MediaPlayer.IsRepeating = isRepeating;
                 }
             }
-#if HAS_CONSOLE && LOG_GENERAL
+#if LOG_ENABLED
             else
             {
-                Console.WriteLine(String.Format("Audio Manager: Song '{0}' not found!", songName));
+                LogManager.Warn(0, string.Format("Unable to play song '{0}' because it doesn't exist.", songName));
             }
 #endif
         }

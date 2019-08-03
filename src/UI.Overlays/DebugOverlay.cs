@@ -39,15 +39,17 @@ namespace Maquina.UI
 
         public DebugOverlay() : base("Debug Overlay")
         {
+#if LOG_ENABLED
             // Listen to window focus events
             Game.Activated += delegate
             {
-                Console.WriteLine("Window Focus: Gained");
+                LogManager.Info(0, "Window Focus: Gained");
             };
             Game.Deactivated += delegate
             {
-                Console.WriteLine("Window Focus: Lost");
+                LogManager.Info(0, "Window Focus: Lost");
             };
+#endif
         }
 
         public override void Update(GameTime gameTime)
