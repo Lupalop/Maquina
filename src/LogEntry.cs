@@ -24,7 +24,7 @@ namespace Maquina
         public override string ToString()
         {
             return string.Format("{0}-{1} - {2}: {3}",
-                Timestamp.ToShortDateString(), Timestamp.ToShortTimeString(),
+                Timestamp.ToShortDateString(), Timestamp.ToLongTimeString(),
                 EntryType.ToString(), Message);
         }
     }
