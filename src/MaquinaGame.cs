@@ -49,7 +49,7 @@ namespace Maquina
         {
             // Create instance
             PreferencesManager = new PreferencesManager();
-            LocaleManager = new LocaleManager(PreferencesManager.GetCharPref("app.locale", Global.DefaultLocale));
+            LocaleManager = new LocaleManager(PreferencesManager.GetStringPreference("app.locale", Global.DefaultLocale));
             InputManager = new InputManager();
             AudioManager = new AudioManager();
             SceneManager = new SceneManager();
@@ -63,27 +63,27 @@ namespace Maquina
             Global.DisplayManager = DisplayManager;
 
             // Window
-            IsMouseVisible = PreferencesManager.GetBoolPref("app.window.useNativeCursor", false);
-            LastWindowWidth = PreferencesManager.GetIntPref("app.window.width", 800);
-            LastWindowHeight = PreferencesManager.GetIntPref("app.window.height", 600);
-            Window.AllowUserResizing = PreferencesManager.GetBoolPref("app.window.allowUserResizing", false);
+            IsMouseVisible = PreferencesManager.GetBoolPreference("app.window.useNativeCursor", false);
+            LastWindowWidth = PreferencesManager.GetIntPreference("app.window.width", 800);
+            LastWindowHeight = PreferencesManager.GetIntPreference("app.window.height", 600);
+            Window.AllowUserResizing = PreferencesManager.GetBoolPreference("app.window.allowUserResizing", false);
 
             // Audio
             float soundVolume;
-            float.TryParse(PreferencesManager.GetCharPref("app.audio.sound", "1f"), out soundVolume);
+            float.TryParse(PreferencesManager.GetStringPreference("app.audio.sound", "1f"), out soundVolume);
             AudioManager.SoundVolume = soundVolume;
-            AudioManager.MusicVolume = PreferencesManager.GetIntPref("app.audio.music", 255);
-            AudioManager.IsMuted = PreferencesManager.GetBoolPref("app.audio.mastermuted", false);
+            AudioManager.MusicVolume = PreferencesManager.GetIntPreference("app.audio.music", 255);
+            AudioManager.IsMuted = PreferencesManager.GetBoolPreference("app.audio.mastermuted", false);
 
 #if DEBUG
-            Graphics.HardwareModeSwitch = !PreferencesManager.GetBoolPref("app.window.fullscreen.borderless", true);
+            Graphics.HardwareModeSwitch = !PreferencesManager.GetBoolPreference("app.window.fullscreen.borderless", true);
 #else
             Graphics.HardwareModeSwitch = !PreferencesManager.GetBoolPref("app.window.fullscreen.borderless", false);
 #endif
 
             // TODO: move to display manager
             // Identify if we should go fullscreen
-            if (PreferencesManager.GetBoolPref("app.window.fullscreen", false))
+            if (PreferencesManager.GetBoolPreference("app.window.fullscreen", false))
             {
                 Graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
                 Graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
@@ -131,18 +131,19 @@ namespace Maquina
         protected override void UnloadContent()
         {
             // TODO: move to display manager
-            PreferencesManager.SetBoolPref("app.window.fullscreen", Graphics.IsFullScreen);
+            PreferencesManager.SetBoolPreference("app.window.fullscreen", Graphics.IsFullScreen);
             // Save window dimensions if not in fullscreen
             if (!Graphics.IsFullScreen)
             {
-                PreferencesManager.SetIntPref("app.window.width", Graphics.PreferredBackBufferWidth);
-                PreferencesManager.SetIntPref("app.window.height", Graphics.PreferredBackBufferHeight);
+                PreferencesManager.SetIntPreference("app.window.width", Graphics.PreferredBackBufferWidth);
+                PreferencesManager.SetIntPreference("app.window.height", Graphics.PreferredBackBufferHeight);
             }
-            PreferencesManager.SetBoolPref("app.audio.mastermuted", AudioManager.IsMuted);
-            PreferencesManager.SetCharPref("app.audio.sound", AudioManager.SoundVolume.ToString());
-            PreferencesManager.SetIntPref("app.audio.music", AudioManager.MusicVolume);
+            PreferencesManager.SetBoolPreference("app.audio.mastermuted", AudioManager.IsMuted);
+            PreferencesManager.SetStringPreference("app.audio.sound", AudioManager.SoundVolume.ToString());
+            PreferencesManager.SetIntPreference("app.audio.music", AudioManager.MusicVolume);
 
             // Dispose content
+            PreferencesManager.Dispose();
             SceneManager.Dispose();
             SpriteBatch.Dispose();
             Graphics.Dispose();

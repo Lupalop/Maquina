@@ -8,186 +8,163 @@ using System.IO;
 
 namespace Maquina
 {
-    public class PreferencesManager
+    public class PreferencesManager : IDisposable
     {
         public PreferencesManager()
         {
-            DefaultPreferences = new XElement("preferences");
             Filename = Global.PreferencesXml;
         }
 
-        public XElement Preferences { get; set; }
-
-        private XElement defaultPreferences;
-        public XElement DefaultPreferences
+        public XDocument Document { get; set; }
+        public XDocument DefaultDocument
         {
-            get { return defaultPreferences; }
-            set { defaultPreferences = value; }
+            get { return new XDocument(new XElement("preferences")); }
         }
-        
+        public XElement PreferencesElement
+        {
+            get { return Document.Element("preferences"); }
+        }
+
         private string filename;
         public string Filename
         {
-            get
-            {
-                return filename;
-            }
+            get { return filename; }
             set
             {
                 filename = value;
-                if (!File.Exists(value))
+                if (File.Exists(filename))
                 {
-                    Save(true);
-                }
-                try
-                {
-                    Preferences = XElement.Load(value);
-                }
-                catch (Exception e)
-                {
+                    // Load the document
+                    try
+                    {
+                        using (FileStream filestream = new FileStream(value, FileMode.Open))
+                        {
+                            Document = XDocument.Load(filestream);
+                        }
+                        return;
+                    }
+                    catch (Exception e)
+                    {
 #if LOG_ENABLED
-                    LogManager.Error(0, string.Format("XML error: {0}", e.Message));
+                        LogManager.Error(0, string.Format("Failed reading preferences file: {0}", e.Message));
 #endif
-                    Preferences = DefaultPreferences;
+                    }
                 }
+                // Fallback: use default document if preferences don't exist or due to something else
+                Document = DefaultDocument;
+#if LOG_ENABLED
+                LogManager.Info(0, "Using default preferences file.");
+#endif
             }
         }
 
         // Getters
-        public bool GetBoolPref(string name, bool defaultValue = false)
+        public string GetPreference(string type, string name)
         {
             IEnumerable<XElement> element =
-                from el in Preferences.Elements("bool")
+                from el in PreferencesElement.Elements(type)
                 where (string)el.Attribute("id") == name
                 select el;
             XElement node = element.ElementAtOrDefault(0);
-            bool value = defaultValue;
-            if (node != null)
-            {
-                Boolean.TryParse(node.Value, out value);
-            }
-#if LOG_ENABLED
-            LogManager.Info(0, string.Format("Get Bool Pref - Name: {1}, Value: {0}", value, name));
-#endif
-            return value;
-        }
-        public int GetIntPref(string name, int defaultValue = 0)
-        {
-            IEnumerable<XElement> element =
-                from el in Preferences.Elements("int")
-                where (string)el.Attribute("id") == name
-                select el;
-            XElement node = element.ElementAtOrDefault(0);
-            int value = defaultValue;
-            if (node != null)
-            {
-                Int32.TryParse(node.Value, out value);
-            }
-#if LOG_ENABLED
-            LogManager.Info(0, string.Format("Get Int Pref - Name: {1}, Value: {0}", value, name));
-#endif
-            return value;
-        }
-        public string GetCharPref(string name, string defaultValue = "")
-        {
-            IEnumerable<XElement> element =
-                from el in Preferences.Elements("string")
-                where (string)el.Attribute("id") == name
-                select el;
-            XElement node = element.ElementAtOrDefault(0);
-            string value = defaultValue;
+            string value = null;
             if (node != null)
             {
                 value = node.Value;
             }
 #if LOG_ENABLED
-            LogManager.Info(0, string.Format("Get Char Pref - Name: {1}, Value: {0}", value, name));
+            LogManager.Info(0, string.Format("Get Pref - Type: {0}, Name: {1}, Value: {2}",
+                type, name, (value != null) ? value : "default"));
 #endif
+            return value;
+        }
+        public bool GetBoolPreference(string name, bool defaultValue = false)
+        {
+            string result = GetPreference("bool", name);
+            bool value = defaultValue;
+            if (result != null)
+            {
+                bool.TryParse(result, out value);
+            }
+            return value;
+        }
+        public int GetIntPreference(string name, int defaultValue = 0)
+        {
+            string result = GetPreference("int", name);
+            int value = defaultValue;
+            if (result != null)
+            {
+                int.TryParse(result, out value);
+            }
+            return value;
+        }
+        public string GetStringPreference(string name, string defaultValue = "")
+        {
+            string value = defaultValue;
+            if (value != null)
+            {
+                value = GetPreference("string", name);
+            }
             return value;
         }
 
         // Setters
-        public void SetBoolPref(string name, bool value)
+        public void SetPreference(string type, string name, object value)
         {
             IEnumerable<XElement> element =
-                from el in Preferences.Elements("bool")
+                from el in PreferencesElement.Elements(type)
                 where (string)el.Attribute("id") == name
                 select el;
             XElement node = element.ElementAtOrDefault(0);
             if (node != null)
             {
-#if LOG_ENABLED
-                LogManager.Info(0, string.Format("Set Bool Pref - Name: {1}, Old value: {0}, New value: {2}",
-                    node.Value, name, value));
-#endif
                 node.Value = value.ToString();
-            }
-            else
-            {
-                CreateNewPref(name, "bool", value.ToString());
-            }
-            Save();
-        }
-        public void SetIntPref(string name, int value)
-        {
-            IEnumerable<XElement> element =
-                from el in Preferences.Elements("int")
-                where (string)el.Attribute("id") == name
-                select el;
-            XElement node = element.ElementAtOrDefault(0);
-            if (node != null)
-            {
 #if LOG_ENABLED
-                LogManager.Info(0, string.Format("Set Int Pref - Name: {1}, Old value: {0}, New value: {2}",
-                    node.Value, name, value));
+                LogManager.Info(0, string.Format("Set Pref - Type: {0}, Name: {1}, Old value: {2}, New value: {3}",
+                    type, name, node.Value, value));
 #endif
-                node.Value = value.ToString();
-            }
-            else
-            {
-                CreateNewPref(name, "int", value.ToString());
-            }
-            Save();
-        }
-        public void SetCharPref(string name, string value)
-        {
-            IEnumerable<XElement> element =
-                from el in Preferences.Elements("string")
-                where (string)el.Attribute("id") == name
-                select el;
-            XElement node = element.ElementAtOrDefault(0);
-            if (node != null)
-            {
-#if LOG_ENABLED
-                LogManager.Info(0, string.Format("Set Char Pref - Name: {1}, Old value: {0}, New value: {2}",
-                    node.Value, name, value));
-#endif
-                node.Value = value;
-            }
-            else
-            {
-                CreateNewPref(name, "string", value.ToString());
-            }
-            Save();
-        }
-
-        private void CreateNewPref(string name, string type, string value)
-        {
-            Preferences.Add(new XElement(type, new XAttribute("id", name), value));
-#if LOG_ENABLED
-            LogManager.Info(0, string.Format("New Pref - Name: {0}, Type: {1}, Value: {2}",
-                name, type, value));
-#endif
-        }
-        // Misc
-        public void Save(bool createDefault = false)
-        {
-            if (createDefault)
-            {
-                DefaultPreferences.Save(filename);
                 return;
             }
-            Preferences.Save(filename);
+            // Create preference if node doesn't exist
+            PreferencesElement.Add(new XElement(type, new XAttribute("id", name), value));
+#if LOG_ENABLED
+            LogManager.Info(0, string.Format("New Pref - Type: {0}, Name: {1}, Value: {2}",
+                type, name, value));
+#endif
+        }
+        public void SetBoolPreference(string name, bool value)
+        {
+            SetPreference("bool", name, value);
+        }
+        public void SetIntPreference(string name, int value)
+        {
+            SetPreference("int", name, value);
+        }
+        public void SetStringPreference(string name, string value)
+        {
+            SetPreference("string", name, value);
+        }
+
+        // Misc
+        public void Save()
+        {
+            using (FileStream filestream = new FileStream(filename, FileMode.Create))
+            {
+                Document.Save(filestream);
+            }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Save();
+                Document = null;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
