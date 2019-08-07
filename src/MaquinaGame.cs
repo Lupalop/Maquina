@@ -32,10 +32,6 @@ namespace Maquina
 
         public MaquinaGame()
         {
-            // Initialize graphics manager
-            Graphics = new GraphicsDeviceManager(this);
-            // Set root directory where content files will be loaded
-            Content.RootDirectory = Global.ContentRootDirectory;
             Global.Game = this;
         }
 

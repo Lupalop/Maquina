@@ -20,7 +20,6 @@ namespace Maquina
             ResourceXml = "platformresources.xml";
             PreferencesXml = "preferences.xml";
             LocaleDefinitionXml = "locale.xml";
-            ContentRootDirectory = "Content";
             LocalesDirectory = "locales";
             DefaultLocale = "en-US";
 
@@ -43,7 +42,6 @@ namespace Maquina
         public static string ResourceXml { get; set; }
         public static string PreferencesXml { get; set; }
         public static string LocaleDefinitionXml { get; set; }
-        public static string ContentRootDirectory { get; set; }
         public static string LocalesDirectory { get; set; }
         public static string DefaultLocale { get; set; }
 
