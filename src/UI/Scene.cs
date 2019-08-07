@@ -19,8 +19,8 @@ namespace Maquina.UI
             // Scene name assignment
             SceneName = sceneName;
             // Create local references to global properties
-            SceneManager = Global.SceneManager;
-            InputManager = Global.InputManager;
+            SceneManager = Global.Scenes;
+            InputManager = Global.Input;
             Game = Global.Game;
             SpriteBatch = Global.SpriteBatch;
             Fonts = Global.Fonts;
@@ -66,7 +66,7 @@ namespace Maquina.UI
         {
             get
             {
-                return Global.DisplayManager.WindowBounds;
+                return Global.Display.WindowBounds;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Maquina.UI
                 LoadContentFinished(this, EventArgs.Empty);
             }
             // Listen to resolution change events in order to update layout when needed
-            Global.DisplayManager.ResolutionChanged += DisplayManager_ResolutionChanged;
+            Global.Display.ResolutionChanged += DisplayManager_ResolutionChanged;
             Global.ScaleChanged += Global_ScaleChanged;
             // Update layout after all elements were loaded
             UpdateLayout(Elements);
@@ -99,7 +99,7 @@ namespace Maquina.UI
         public virtual void Unload()
         {
             DisposeElements(Elements);
-            Global.DisplayManager.ResolutionChanged -= DisplayManager_ResolutionChanged;
+            Global.Display.ResolutionChanged -= DisplayManager_ResolutionChanged;
             Global.ScaleChanged -= Global_ScaleChanged;
 #if LOG_ENABLED
             LogManager.Info(0, string.Format("Unloaded content from scene: {0}", SceneName));

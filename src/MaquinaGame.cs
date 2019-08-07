@@ -55,12 +55,12 @@ namespace Maquina
             SceneManager = new SceneManager();
             DisplayManager = new DisplayManager();
 
-            Global.PreferencesManager = PreferencesManager;
-            Global.LocaleManager = LocaleManager;
-            Global.InputManager = InputManager;
-            Global.AudioManager = AudioManager;
-            Global.SceneManager = SceneManager;
-            Global.DisplayManager = DisplayManager;
+            Global.Preferences = PreferencesManager;
+            Global.Locale = LocaleManager;
+            Global.Input = InputManager;
+            Global.Audio = AudioManager;
+            Global.Scenes = SceneManager;
+            Global.Display = DisplayManager;
 
             // Window
             IsMouseVisible = PreferencesManager.GetBoolPreference("app.window.useNativeCursor", false);

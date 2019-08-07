@@ -76,11 +76,11 @@ namespace Maquina
         }
 
         // Managers
-        public static SceneManager SceneManager { get; set; }
-        public static AudioManager AudioManager { get; set; }
-        public static InputManager InputManager { get; set; }
-        public static LocaleManager LocaleManager { get; set; }
-        public static DisplayManager DisplayManager { get; set; }
-        public static PreferencesManager PreferencesManager { get; set; }
+        public static SceneManager Scenes { get; set; }
+        public static AudioManager Audio { get; set; }
+        public static InputManager Input { get; set; }
+        public static LocaleManager Locale { get; set; }
+        public static DisplayManager Display { get; set; }
+        public static PreferencesManager Preferences { get; set; }
     }
 }

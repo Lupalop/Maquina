@@ -23,13 +23,13 @@ namespace Maquina.UI
             MouseElement.ElementUpdated += (elem) =>
             {
                 Image element = (Image)elem;
-                element.Location = Global.InputManager.MousePosition;
+                element.Location = Global.Input.MousePosition;
                 element.Background.CurrentFrame = 0;
 
                 // Change state when selected
-                if (Global.InputManager.MouseDown(MouseButton.Left) ||
-                    Global.InputManager.MouseDown(MouseButton.Right) ||
-                    Global.InputManager.MouseDown(MouseButton.Middle))
+                if (Global.Input.MouseDown(MouseButton.Left) ||
+                    Global.Input.MouseDown(MouseButton.Right) ||
+                    Global.Input.MouseDown(MouseButton.Middle))
                 {
                     element.Background.CurrentFrame = 1;
                 }
