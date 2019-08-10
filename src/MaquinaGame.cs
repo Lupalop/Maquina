@@ -17,7 +17,7 @@ namespace Maquina
     /// </summary>
     public abstract class MaquinaGame : Game
     {
-        public GraphicsDeviceManager Graphics;
+        protected GraphicsDeviceManager Graphics;
         protected SpriteBatch SpriteBatch;
         protected SceneManager SceneManager;
         protected LocaleManager LocaleManager;
@@ -34,6 +34,7 @@ namespace Maquina
         {
             Graphics = new GraphicsDeviceManager(this);
             Global.Game = this;
+            Global.Graphics = Graphics;
         }
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace Maquina
         /// </summary>
         protected override void Initialize()
         {
+            Global.Content = Content;
             // Create instance
             PreferencesManager = new PreferencesManager();
             LocaleManager = new LocaleManager(PreferencesManager.GetStringPreference("app.locale", Global.DefaultLocale));

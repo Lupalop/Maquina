@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Xna.Framework.Content;
 
 namespace Maquina
 {
@@ -56,6 +57,8 @@ namespace Maquina
         public static LocaleManager Locale { get; set; }
         public static DisplayManager Display { get; set; }
         public static PreferencesManager Preferences { get; set; }
+        public static ContentManager Content { get; set; }
+        public static GraphicsDeviceManager Graphics { get; set; }
 
         // Scale
         private static float scale;
