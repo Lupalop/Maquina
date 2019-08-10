@@ -4,12 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Maquina.Elements;
 
 namespace Maquina
 {
@@ -20,7 +15,7 @@ namespace Maquina
             ResourceXml = "platformresources.xml";
             PreferencesXml = "preferences.xml";
             LocaleDefinitionXml = "locale.xml";
-            LocalesDirectory = "locales";
+            LocaleDirectory = "locales";
             DefaultLocale = "en-US";
 
             Scale = 1f;
@@ -28,30 +23,39 @@ namespace Maquina
             BGM = new Dictionary<string, Song>();
         }
 
+        // Platform
         private static Version _version = Assembly.GetExecutingAssembly().GetName().Version;
         public static DateTime BuildDateTime = new DateTime(2000, 1, 1)
             .AddDays(_version.Build)
             .AddSeconds(_version.Revision * 2);
-
-        // General Information
         public static readonly string BuildId = string.Format("{0} {1}",
             BuildDateTime.ToShortDateString(), BuildDateTime.ToShortTimeString());
         public static readonly int APIVersion = 0;
 
-        // Resources
+        // Resource locations
         public static string ResourceXml { get; set; }
         public static string PreferencesXml { get; set; }
         public static string LocaleDefinitionXml { get; set; }
-        public static string LocalesDirectory { get; set; }
+        public static string LocaleDirectory { get; set; }
         public static string DefaultLocale { get; set; }
 
-        // App-wide properties
+        // Content collections
         public static Dictionary<string, SpriteFont> Fonts { get; set; }
         public static Dictionary<string, Song> BGM { get; set; }
         public static Dictionary<string, SoundEffect> SFX { get; set; }
         public static Dictionary<string, Texture2D> Textures { get; set; }
+
+        // Engine properties
         public static SpriteBatch SpriteBatch { get; set; }
         public static Game Game { get; set; }
+
+        // Engine managers
+        public static SceneManager Scenes { get; set; }
+        public static AudioManager Audio { get; set; }
+        public static InputManager Input { get; set; }
+        public static LocaleManager Locale { get; set; }
+        public static DisplayManager Display { get; set; }
+        public static PreferencesManager Preferences { get; set; }
 
         // Scale
         private static float scale;
@@ -72,13 +76,5 @@ namespace Maquina
                 ScaleChanged(null, newScale);
             }
         }
-
-        // Managers
-        public static SceneManager Scenes { get; set; }
-        public static AudioManager Audio { get; set; }
-        public static InputManager Input { get; set; }
-        public static LocaleManager Locale { get; set; }
-        public static DisplayManager Display { get; set; }
-        public static PreferencesManager Preferences { get; set; }
     }
 }

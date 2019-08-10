@@ -32,6 +32,7 @@ namespace Maquina
 
         public MaquinaGame()
         {
+            Graphics = new GraphicsDeviceManager(this);
             Global.Game = this;
         }
 
@@ -109,7 +110,7 @@ namespace Maquina
             ContentLoader<ResourceContent> resources = new ContentLoader<ResourceContent>();
             // Load platform resources synchronously
             resources.Content = resources.Initialize(
-                    Path.Combine(Global.ContentRootDirectory, Global.ResourceXml));
+                    Path.Combine(Content.RootDirectory, Global.ResourceXml));
             Global.Fonts =
                 resources.Content.Load(ResourceType.Fonts) as Dictionary<string, SpriteFont>;
             Global.BGM =
