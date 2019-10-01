@@ -4,7 +4,8 @@ using System.Xml.Serialization;
 namespace Maquina.Resources
 {
     [XmlRoot("LocaleDefinition")]
-    public class LocaleDefinition : IContent
+    [Content("LocaleDefinition")]
+    public class LocaleDefinition
     {
         public string LanguageName { get; set; }
         public string LanguageCode { get; set; }

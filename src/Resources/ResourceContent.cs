@@ -7,7 +7,8 @@ using System.Xml.Serialization;
 namespace Maquina.Resources
 {
     [XmlRoot("Content")]
-    public class ResourceContent : IContent
+    [Content("ResourceContent")]
+    public class ResourceContent
     {
         // key, resource location
         public List<FontParameters> Fonts { get; set; }

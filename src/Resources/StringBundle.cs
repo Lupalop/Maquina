@@ -4,7 +4,8 @@ using System.Xml.Serialization;
 namespace Maquina.Resources
 {
     [XmlRoot("StringBundle")]
-    public class StringBundle : IContent
+    [Content("StringBundle")]
+    public class StringBundle
     {
         public List<StringParameters> Strings { get; set; }
     }
