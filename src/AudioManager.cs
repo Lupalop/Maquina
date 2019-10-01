@@ -8,8 +8,18 @@ using System.Threading.Tasks;
 
 namespace Maquina
 {
-    public class AudioManager
+    public class AudioManager : IDisposable
     {
+        public AudioManager()
+        {
+            // Audio
+            float soundVolume;
+            float.TryParse(Global.Preferences.GetStringPreference("app.audio.sound", "1f"), out soundVolume);
+            SoundVolume = soundVolume;
+            MusicVolume = Global.Preferences.GetIntPreference("app.audio.music", 255);
+            IsMuted = Global.Preferences.GetBoolPreference("app.audio.mastermuted", false);
+        }
+
         public void PlaySong(string songName, bool isRepeating = true)
         {
             if (Global.BGM.ContainsKey(songName))
@@ -87,6 +97,21 @@ namespace Maquina
         public void ToggleMute()
         {
             IsMuted = !IsMuted;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Global.Preferences.SetBoolPreference("app.audio.mastermuted", IsMuted);
+                Global.Preferences.SetStringPreference("app.audio.sound", SoundVolume.ToString());
+                Global.Preferences.SetIntPreference("app.audio.music", MusicVolume);
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
