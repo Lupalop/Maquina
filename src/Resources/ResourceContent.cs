@@ -25,7 +25,7 @@ namespace Maquina.Resources
                     for (int i = 0; i < Fonts.Count; i++)
                     {
                         FontParameters item = Fonts[i];
-                        fonts[item.Name] = Global.Game.Content.Load<SpriteFont>(item.Location);
+                        fonts[item.Name] = Global.Content.Load<SpriteFont>(item.Location);
                         fonts[item.Name].Spacing = item.Spacing;
                         fonts[item.Name].LineSpacing = item.LineSpacing;
                     }
@@ -35,7 +35,7 @@ namespace Maquina.Resources
                     for (int i = 0; i < BGM.Count; i++)
                     {
                         ResourceParameters item = BGM[i];
-                        songs[item.Name] = Global.Game.Content.Load<Song>(item.Location);
+                        songs[item.Name] = Global.Content.Load<Song>(item.Location);
                     }
                     return songs;
                 case ResourceType.SFX:
@@ -43,7 +43,7 @@ namespace Maquina.Resources
                     for (int i = 0; i < SFX.Count; i++)
                     {
                         ResourceParameters item = SFX[i];
-                        sounds[item.Name] = Global.Game.Content.Load<SoundEffect>(item.Location);
+                        sounds[item.Name] = Global.Content.Load<SoundEffect>(item.Location);
                     }
                     return sounds;
                 case ResourceType.Textures:
@@ -51,7 +51,7 @@ namespace Maquina.Resources
                     for (int i = 0; i < Textures.Count; i++)
                     {
                         ResourceParameters item = Textures[i];
-                        tex[item.Name] = Global.Game.Content.Load<Texture2D>(item.Location);
+                        tex[item.Name] = Global.Content.Load<Texture2D>(item.Location);
                     }
                     return tex;
             }
