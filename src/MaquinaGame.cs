@@ -46,7 +46,7 @@ namespace Maquina
             PreferencesManager = new PreferencesManager();
             Global.Preferences = PreferencesManager;
 
-            LocaleManager = new LocaleManager(PreferencesManager.GetStringPreference("app.locale", Global.DefaultLocale));
+            LocaleManager = new LocaleManager();
             InputManager = new InputManager();
             AudioManager = new AudioManager();
             SceneManager = new SceneManager();
