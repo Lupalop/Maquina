@@ -13,23 +13,38 @@ namespace Maquina
     {
         public LocaleManager()
         {
-            LocaleDefinitionContent = new ContentLoader<LocaleDefinition>();
-            StringBundleContent = new ContentLoader<StringBundle>();
             Strings = new Dictionary<string, string>();
-
-            CurrentLocale = new LocaleDefinition()
-            {
-                LanguageCode = Global.Preferences.GetStringPreference("app.locale", Global.DefaultLocale)
-            };
+            LanguageCode = Global.Preferences.GetStringPreference("app.locale", Global.DefaultLocale);
         }
 
-        // Content Managers
-        private ContentLoader<LocaleDefinition> LocaleDefinitionContent;
-        private ContentLoader<StringBundle> StringBundleContent;
+        private string languageCode;
+        public string LanguageCode
+        {
+            get { return languageCode; }
+            set
+            {
+                languageCode = value;
+                CurrentLocale = new LocaleDefinition() { LanguageCode = value };
+                IEnumerable<string> fileList = Directory.EnumerateFiles(
+                    Path.Combine(Global.Content.RootDirectory, Global.LocaleDirectory, value));
+                // Load associated string bundles
+                foreach (string fileName in fileList)
+                {
+                    if (fileName.Contains(Global.LocaleDefinitionXml))
+                    {
+                        continue;
+                    }
+                    List<StringParameters> strings = XmlHelper.Load<StringBundle>(fileName).Strings;
+                    for (int i = 0; i < strings.Count; i++)
+                    {
+                        Strings.Add(strings[i].Name, strings[i].Content);
+                    }
+                }
+            }
+        }
 
-        // Locale Definitions
-        public LocaleDefinition CurrentLocale { get; set; }
-        public List<LocaleDefinition> GetAvailableLocales
+        public LocaleDefinition CurrentLocale { get; private set; }
+        public List<LocaleDefinition> LocaleList
         {
             get
             {
@@ -42,41 +57,13 @@ namespace Maquina
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {
-                        CreatedList.Add(LocaleDefinitionContent.Initialize(LocaleDefLocation));
+                        CreatedList.Add(XmlHelper.Load<LocaleDefinition>(LocaleDefLocation));
                     }
                 }
                 return CreatedList;
             }
         }
 
-        // String Bundles
-        private string _stringBundleName;
-        public string StringBundleName
-        {
-            get
-            {
-                return _stringBundleName;
-            }
-            set
-            {
-                // Load the string bundle
-                StringBundle StringBundle = StringBundleContent.Initialize(
-                    Path.Combine(Global.Content.RootDirectory, Global.LocaleDirectory,
-                        CurrentLocale.LanguageCode, value + ".xml"
-                    ));
-                // Clear dictionary content (in cases where we're reused)
-                Strings.Clear();
-                // Place all items into strings dictionary
-                foreach (var item in StringBundle.Strings)
-                {
-                    Strings[item.Name] = item.Content;
-                }
-                // Set value
-                _stringBundleName = value;
-            }
-        }
-
-        // Strings
         public Dictionary<string, string> Strings { get; set; }
     }
 }
