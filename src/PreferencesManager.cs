@@ -99,12 +99,12 @@ namespace Maquina
         }
         public string GetStringPreference(string name, string defaultValue = "")
         {
-            string value = defaultValue;
-            if (value != null)
+            string result = GetPreference("string", name);
+            if (result != null)
             {
-                value = GetPreference("string", name);
+                return result;
             }
-            return value;
+            return defaultValue;
         }
 
         // Setters
