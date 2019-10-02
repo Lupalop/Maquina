@@ -98,8 +98,8 @@
     <Compile Include="Elements\Orientation.cs" />
     <Compile Include="UI.Controls\TextBox.cs" />
     <Compile Include="UI.Controls\StackPanel.cs" />
-    <Compile Include="Resources\ContentLoader.cs" />
-    <Compile Include="Resources\IContent.cs" />
+    <Compile Include="Resources\XmlHelper.cs" />
+    <Compile Include="Resources\ContentAttribute.cs" />
     <Compile Include="Resources\FontParameters.cs" />
     <Compile Include="LocaleManager.cs" />
     <Compile Include="PreferencesManager.cs" />
