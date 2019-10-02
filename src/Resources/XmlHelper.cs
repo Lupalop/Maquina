@@ -12,20 +12,6 @@ using Maquina.Elements;
 
 namespace Maquina.Resources
 {
-    // Wrapper around for XmlHelper
-    public class ContentLoader<T>
-    {
-        // Accessor methods
-        public T Content { get; set; }
-
-        // Content loader(s)
-        public T Initialize(string file)
-        {
-            T Content = XmlHelper.Load<T>(file);
-            return Content;
-        }
-    }
-
     // Provides methods for dealing with XML files
     public static class XmlHelper
     {

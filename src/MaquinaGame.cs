@@ -70,19 +70,17 @@ namespace Maquina
             // Create instance of SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             Global.SpriteBatch = SpriteBatch;
-            // Create instance of the content loader
-            ContentLoader<ResourceContent> resources = new ContentLoader<ResourceContent>();
             // Load platform resources synchronously
-            resources.Content = resources.Initialize(
+            ResourceContent resources = XmlHelper.Load<ResourceContent>(
                     Path.Combine(Content.RootDirectory, Global.ResourceXml));
             Global.Fonts =
-                resources.Content.Load(ResourceType.Fonts) as Dictionary<string, SpriteFont>;
+                resources.Load(ResourceType.Fonts) as Dictionary<string, SpriteFont>;
             Global.BGM =
-                resources.Content.Load(ResourceType.BGM) as Dictionary<string, Song>;
+                resources.Load(ResourceType.BGM) as Dictionary<string, Song>;
             Global.SFX =
-                resources.Content.Load(ResourceType.SFX) as Dictionary<string, SoundEffect>;
+                resources.Load(ResourceType.SFX) as Dictionary<string, SoundEffect>;
             Global.Textures =
-                resources.Content.Load(ResourceType.Textures) as Dictionary<string, Texture2D>;
+                resources.Load(ResourceType.Textures) as Dictionary<string, Texture2D>;
         }
 
         /// <summary>
