@@ -38,6 +38,7 @@ namespace Maquina.UI
             // Parent
             ElementChanged += MenuButton_ElementChanged;
 
+            LayerDepth = 1f;
             TooltipFont = Global.Fonts["o-default_m"];
             MenuBackground = Global.Textures["button-default"];
             ClickSound = Global.SFX["click_default"];
@@ -184,6 +185,19 @@ namespace Maquina.UI
                 Background.SpriteEffects = value;
                 Label.SpriteEffects = value;
                 Icon.SpriteEffects = value;
+            }
+        }
+        private float layerDepth;
+        public float LayerDepth
+        {
+            get { return layerDepth; }
+            set
+            {
+                layerDepth = value;
+                Background.LayerDepth = value;
+                Icon.LayerDepth = value - 0.1f;
+                Label.LayerDepth = value - 0.1f;
+                Tooltip.LayerDepth = value - 0.15f;
             }
         }
 
