@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    public enum Alignment
+    public enum HorizontalAlignment
     {
         Left,
         Center,
         Right,
-        Fixed
+        Stretch
+    }
+
+    public enum VerticalAlignment
+    {
+        Top,
+        Center,
+        Bottom,
+        Stretch
     }
 }

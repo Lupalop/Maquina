@@ -11,16 +11,13 @@ namespace Maquina.Elements
         // Constructor
         protected GuiElement(string name) : base (name)
         {
-            HorizontalAlignment = Alignment.Center;
-            VerticalAlignment = Alignment.Center;
+            HorizontalAlignment = HorizontalAlignment.Center;
+            VerticalAlignment = VerticalAlignment.Center;
             AutoPosition = false;
         }
 
-        [Obsolete("Use the HorizontalAlignment and/or VerticalAlignment property instead.", true)]
-        public Alignment ControlAlignment;
-
-        private Alignment horizontalAlignment;
-        public Alignment HorizontalAlignment
+        private HorizontalAlignment horizontalAlignment;
+        public HorizontalAlignment HorizontalAlignment
         {
             get { return horizontalAlignment; }
             set
@@ -29,8 +26,8 @@ namespace Maquina.Elements
                 OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
             }
         }
-        private Alignment verticalAlignment;
-        public Alignment VerticalAlignment
+        private VerticalAlignment verticalAlignment;
+        public VerticalAlignment VerticalAlignment
         {
             get { return verticalAlignment; }
             set

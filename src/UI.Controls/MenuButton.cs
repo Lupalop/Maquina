@@ -42,7 +42,7 @@ namespace Maquina.UI
             TooltipFont = Global.Fonts["o-default_m"];
             MenuBackground = Global.Textures["button-default"];
             ClickSound = Global.SFX["click_default"];
-            IconAlignment = Alignment.Center;
+            IconAlignment = HorizontalAlignment.Center;
         }
 
         // General
@@ -66,7 +66,7 @@ namespace Maquina.UI
         public bool Disabled { get; set; }
         public bool Focused { get; set; }
         public SoundEffect ClickSound { get; set; }
-        public Alignment IconAlignment { get; set; }
+        public HorizontalAlignment IconAlignment { get; set; }
         
         // Aliases
         // Child 1: Background
@@ -369,19 +369,20 @@ namespace Maquina.UI
             {
                 switch (IconAlignment)
                 {
-                    case Alignment.Left:
+                    case HorizontalAlignment.Left:
                         Icon.Location = new Point(Location.X,
                             Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
                         break;
-                    case Alignment.Center:
+                    case HorizontalAlignment.Center:
                         Icon.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Icon.ActualSize.X / 2),
                             Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
                         break;
-                    case Alignment.Right:
+                    case HorizontalAlignment.Right:
                         Icon.Location = new Point(Location.X + ActualBounds.Width - Icon.ActualSize.X,
                             Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
                         break;
-                    case Alignment.Fixed:
+                    case HorizontalAlignment.Stretch:
+                        // TODO: stub
                         return;
                 }
             }

@@ -192,33 +192,33 @@ namespace Maquina.UI
 
                     switch (modifiedElement.HorizontalAlignment)
                     {
-                        case Alignment.Left:
+                        case HorizontalAlignment.Left:
                             modifiedElementX = WindowBounds.Left;
                             break;
-                        case Alignment.Center:
+                        case HorizontalAlignment.Center:
                             if (element.ActualBounds.Width != 0)
                                 modifiedElementX = WindowBounds.Center.X - (element.ActualBounds.Width / 2);
                             break;
-                        case Alignment.Right:
+                        case HorizontalAlignment.Right:
                             modifiedElementX = WindowBounds.Right - element.ActualBounds.Width;
                             break;
-                        case Alignment.Fixed:
+                        case HorizontalAlignment.Stretch:
                             break;
                     }
 
                     switch (modifiedElement.VerticalAlignment)
                     {
-                        case Alignment.Left:
-                            modifiedElementY = WindowBounds.Center.Y;
+                        case VerticalAlignment.Top:
+                            modifiedElementY = WindowBounds.Top;
                             break;
-                        case Alignment.Center:
+                        case VerticalAlignment.Center:
                             if (element.ActualBounds.Height != 0)
                                 modifiedElementY = WindowBounds.Center.Y - (element.ActualBounds.Height / 2);
                             break;
-                        case Alignment.Right:
-                            modifiedElementY = WindowBounds.Center.Y;
+                        case VerticalAlignment.Bottom:
+                            modifiedElementY = WindowBounds.Bottom - element.ActualBounds.Height;
                             break;
-                        case Alignment.Fixed:
+                        case VerticalAlignment.Stretch:
                             break;
                     }
 
