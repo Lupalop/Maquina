@@ -18,11 +18,7 @@ namespace Maquina.Elements
             LayerDepth = 1f;
             SpriteBatch = Global.SpriteBatch;
             SourceRectangle = null;
-
             SpriteType = SpriteType.None;
-            LayerDepth = 1f;
-            SpriteBatch = Global.SpriteBatch;
-            SourceRectangle = null;
 
             DelayInterval = 100;
             Table = new Point(1, 1);
