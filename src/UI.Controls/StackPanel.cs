@@ -176,60 +176,80 @@ namespace Maquina.Elements
                 }
 
                 // TODO: Add considerations for other control alignments
-                if (element is GuiElement)
+                if (!(element is GuiElement))
                 {
-                    GuiElement newElement = (GuiElement)element;
-                    if (Orientation == Orientation.Vertical)
+                    continue;
+                }
+
+                GuiElement newElement = (GuiElement)element;
+                int newElementX = newElement.Location.X;
+                int newElementY = newElement.Location.Y;
+
+                if (Orientation == Orientation.Vertical)
+                {
+                    switch (newElement.HorizontalAlignment)
                     {
-                        switch (newElement.ControlAlignment)
-                        {
-                            case Alignment.Left:
+                        case Alignment.Left:
+                            break;
+                        case Alignment.Center:
+                            if (newElement.Size != null)
+                            {
+                                newElementX = ActualBounds.Center.X - (newElement.ActualBounds.Width / 2);
                                 break;
-                            case Alignment.Center:
-                                if (newElement.Size != null)
-                                {
-                                    newElement.Location = new Point(
-                                        ActualBounds.Center.X -
-                                        (newElement.ActualBounds.Width / 2),
-                                        newElement.Location.Y);
-                                    break;
-                                }
-                                newElement.Location = new Point(
-                                    ActualBounds.Center.X,
-                                    newElement.Location.Y);
-                                break;
-                            case Alignment.Right:
-                                break;
-                            case Alignment.Fixed:
-                                break;
-                        }
+                            }
+                            newElementX = ActualBounds.Center.X;
+                            break;
+                        case Alignment.Right:
+                            break;
+                        case Alignment.Fixed:
+                            break;
                     }
-                    if (Orientation == Orientation.Horizontal)
+                    switch (newElement.VerticalAlignment)
                     {
-                        switch (newElement.ControlAlignment)
-                        {
-                            case Alignment.Left:
-                                break;
-                            case Alignment.Center:
-                                if (newElement.Size != null)
-                                {
-                                    newElement.Location = new Point(
-                                        newElement.Location.X,
-                                        ActualBounds.Center.Y -
-                                        (newElement.ActualBounds.Height / 2));
-                                    break;
-                                }
-                                newElement.Location = new Point(
-                                    newElement.Location.X,
-                                    ActualBounds.Center.Y);
-                                break;
-                            case Alignment.Right:
-                                break;
-                            case Alignment.Fixed:
-                                break;
-                        }
+                        case Alignment.Left:
+                            break;
+                        case Alignment.Center:
+                            break;
+                        case Alignment.Right:
+                            break;
+                        case Alignment.Fixed:
+                            break;
                     }
                 }
+
+                if (Orientation == Orientation.Horizontal)
+                {
+                    switch (newElement.HorizontalAlignment)
+                    {
+                        case Alignment.Left:
+                            break;
+                        case Alignment.Center:
+                            break;
+                        case Alignment.Right:
+                            break;
+                        case Alignment.Fixed:
+                            break;
+                    }
+                    switch (newElement.VerticalAlignment)
+                    {
+                        case Alignment.Left:
+                            break;
+                        case Alignment.Center:
+                            if (newElement.Size != null)
+                            {
+                                newElementY = ActualBounds.Center.Y - (newElement.ActualBounds.Height / 2);
+                                break;
+                            }
+                            newElementY = ActualBounds.Center.Y;
+                            break;
+                        case Alignment.Right:
+                            break;
+                        case Alignment.Fixed:
+                            break;
+                    }
+                }
+
+                newElement.Location = new Point(newElementX, newElementY);
             }
         }
 

@@ -52,7 +52,6 @@ namespace Maquina.UI
         {
             Image Background = new Image("Background")
             {
-                ControlAlignment = Alignment.Fixed,
                 IgnoreGlobalScale = true,
             };
             Background.ElementUpdated += (elem) =>

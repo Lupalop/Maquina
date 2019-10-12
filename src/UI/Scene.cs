@@ -187,27 +187,42 @@ namespace Maquina.UI
                         return;
                     }
 
-                    switch (modifiedElement.ControlAlignment)
+                    int modifiedElementX = modifiedElement.Location.X;
+                    int modifiedElementY = modifiedElement.Location.Y;
+
+                    switch (modifiedElement.HorizontalAlignment)
                     {
                         case Alignment.Left:
-                            modifiedElement.Location = new Point(WindowBounds.Left, WindowBounds.Center.Y);
+                            modifiedElementX = WindowBounds.Left;
                             break;
                         case Alignment.Center:
-                            if (element.ActualBounds.Width != 0 || element.ActualBounds.Height != 0)
-                            {
-                                modifiedElement.Location = new Point(
-                                    WindowBounds.Center.X - (element.ActualBounds.Width / 2),
-                                    WindowBounds.Center.Y - (element.ActualBounds.Height / 2));
-                            }
+                            if (element.ActualBounds.Width != 0)
+                                modifiedElementX = WindowBounds.Center.X - (element.ActualBounds.Width / 2);
                             break;
                         case Alignment.Right:
-                            modifiedElement.Location = new Point(
-                                WindowBounds.Right - element.ActualBounds.Width,
-                                WindowBounds.Center.Y);
+                            modifiedElementX = WindowBounds.Right - element.ActualBounds.Width;
                             break;
-                        default:
+                        case Alignment.Fixed:
                             break;
                     }
+
+                    switch (modifiedElement.VerticalAlignment)
+                    {
+                        case Alignment.Left:
+                            modifiedElementY = WindowBounds.Center.Y;
+                            break;
+                        case Alignment.Center:
+                            if (element.ActualBounds.Height != 0)
+                                modifiedElementY = WindowBounds.Center.Y - (element.ActualBounds.Height / 2);
+                            break;
+                        case Alignment.Right:
+                            modifiedElementY = WindowBounds.Center.Y;
+                            break;
+                        case Alignment.Fixed:
+                            break;
+                    }
+
+                    modifiedElement.Location = new Point(modifiedElementX, modifiedElementY);
                 }
             }
 #if LOG_ENABLED
