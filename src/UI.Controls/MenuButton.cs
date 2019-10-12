@@ -63,6 +63,7 @@ namespace Maquina.UI
 
         // Properties
         public bool Disabled { get; set; }
+        public bool Focused { get; set; }
         public SoundEffect ClickSound { get; set; }
         public Alignment IconAlignment { get; set; }
         
@@ -220,10 +221,7 @@ namespace Maquina.UI
                 // If mouse is on top of the button
                 if (ActualBounds.Contains(InputManager.MousePosition))
                 {
-                    if (Background.SpriteType != SpriteType.None)
-                    {
-                        Background.CurrentFrame = 1;
-                    }
+                    Background.CurrentFrame = 1;
                     if (Tooltip != null)
                     {
                         Tooltip.Location = new Point(
@@ -240,11 +238,14 @@ namespace Maquina.UI
                 // If the button was clicked
                 if ((InputManager.MouseDown(MouseButton.Left) ||
                      InputManager.MouseDown(MouseButton.Right) ||
-                     InputManager.MouseDown(MouseButton.Middle)) &&
-                     ActualBounds.Contains(InputManager.MousePosition) &&
-                     Background.SpriteType != SpriteType.None)
+                     InputManager.MouseDown(MouseButton.Middle)))
                 {
-                    Background.CurrentFrame = 2;
+                    Focused = false;
+                    if (ActualBounds.Contains(InputManager.MousePosition))
+                    {
+                        Focused = true;
+                        Background.CurrentFrame = 2;
+                    }
                 }
 
                 // Left Mouse Button Click Action

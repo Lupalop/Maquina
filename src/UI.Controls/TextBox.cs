@@ -43,21 +43,23 @@ namespace Maquina.UI
             {
                 OnInput();
             }
-            if (Disabled && !InputManager.ShouldAcceptInput)
+            if (Disabled || !Focused)
             {
                 return;
             }
-            // TODO: Concept of focus
-            if (e.Key == Keys.Back && MenuLabel.Length > 0)
+            if (InputManager.ShouldAcceptInput)
             {
-                MenuLabel = MenuLabel.Remove(MathHelper.Clamp(MenuLabel.Length - 1, 0, Int32.MaxValue), 1);
-                return;
+                if (e.Key == Keys.Back && MenuLabel.Length > 0)
+                {
+                    MenuLabel = MenuLabel.Remove(MathHelper.Clamp(MenuLabel.Length - 1, 0, int.MaxValue), 1);
+                    return;
+                }
+                if (InputManager.ReservedKeys.Contains(e.Key) || MenuLabel.Length > MaxInput)
+                {
+                    return;
+                }
+                MenuLabel += e.Character;
             }
-            if (InputManager.ReservedKeys.Contains(e.Key) || MenuLabel.Length > MaxInput)
-            {
-                return;
-            }
-            MenuLabel += e.Character;
         }
     }
 }
