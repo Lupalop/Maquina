@@ -103,7 +103,7 @@ namespace Maquina.UI
         {
             Size = Background.Size;
         }
-        private void Image_ElementChanged(object sender, ElementChangedEventArgs e)
+        protected void Image_ElementChanged(object sender, ElementChangedEventArgs e)
         {
             switch (e.Property)
             {

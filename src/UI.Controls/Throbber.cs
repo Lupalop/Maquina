@@ -19,16 +19,33 @@ namespace Maquina.UI
                 if (!IsSpinning)
                     return;
 
-                Image img = (Image)element;
-                Sprite bg = img.Background;
-                bg.RotationOrigin = new Vector2(
-                    element.ActualSize.X / 2,
-                    element.ActualSize.Y / 2);
-                element.Location = new Point(
-                    element.Location.X + (element.ActualSize.X / 2),
-                    element.Location.Y + (element.ActualSize.Y / 2));
-                bg.Rotation += .05f;
+                Background.Rotation += .05f;
             };
+            ElementChanged -= Image_ElementChanged;
+            ElementChanged += Throbber_ElementChanged;
+            Global.ScaleChanged += Global_ScaleChanged;
+        }
+
+        private void Global_ScaleChanged(object sender, float e)
+        {
+            Throbber_ElementChanged(this, new ElementChangedEventArgs(ElementChangedProperty.Location));
+        }
+
+        private void Throbber_ElementChanged(object sender, ElementChangedEventArgs e)
+        {
+            Background.RotationOrigin = new Vector2(Size.X / 2, Size.Y / 2);
+            switch (e.Property)
+            {
+                case ElementChangedProperty.Location:
+                    Point NewLocation = new Point(Location.X + (ActualSize.X / 2), Location.Y + (ActualSize.Y / 2));
+                    Background.Location = NewLocation;
+                    break;
+                case ElementChangedProperty.IgnoreGlobalScale:
+                    Background.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    break;
+                default:
+                    break;
+            }
         }
 
         // General
