@@ -25,20 +25,30 @@ namespace Maquina
             {
                 languageCode = value;
                 CurrentLocale = new LocaleDefinition() { LanguageCode = value };
-                IEnumerable<string> fileList = Directory.EnumerateFiles(
-                    Path.Combine(Global.Content.RootDirectory, Global.LocaleDirectory, value));
-                // Load associated string bundles
-                foreach (string fileName in fileList)
+                try
                 {
-                    if (fileName.Contains(Global.LocaleDefinitionXml))
+                    IEnumerable<string> fileList = Directory.EnumerateFiles(
+                        Path.Combine(Global.Content.RootDirectory, Global.LocaleDirectory, value));
+                    // Load associated string bundles
+                    foreach (string fileName in fileList)
                     {
-                        continue;
+                        if (fileName.Contains(Global.LocaleDefinitionXml))
+                        {
+                            continue;
+                        }
+                        List<StringParameters> strings = XmlHelper.Load<StringBundle>(fileName).Strings;
+                        for (int i = 0; i < strings.Count; i++)
+                        {
+                            Strings.Add(strings[i].Name, strings[i].Content);
+                        }
                     }
-                    List<StringParameters> strings = XmlHelper.Load<StringBundle>(fileName).Strings;
-                    for (int i = 0; i < strings.Count; i++)
-                    {
-                        Strings.Add(strings[i].Name, strings[i].Content);
-                    }
+                }
+                catch (Exception ex)
+                {
+#if LOG_ENABLED
+                    LogManager.Warn(0, ex.Message);
+#endif
+                    return;
                 }
             }
         }
