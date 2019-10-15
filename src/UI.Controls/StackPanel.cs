@@ -136,6 +136,7 @@ namespace Maquina.Elements
 
         private void Global_ScaleChanged(object sender, float e)
         {
+            UpdateSize();
             UpdateLayout();
         }
 
@@ -255,22 +256,22 @@ namespace Maquina.Elements
                 if (Orientation == Orientation.Horizontal)
                 {
                     ComputedWidth += ElementMargin.Left;
-                    ComputedWidth += element.Bounds.Width;
+                    ComputedWidth += element.ActualBounds.Width;
                     ComputedWidth += ElementMargin.Right;
-                    if (element.Bounds.Height > ComputedHeight)
+                    if (element.ActualBounds.Height > ComputedHeight)
                     {
-                        ComputedHeight = element.Bounds.Height;
+                        ComputedHeight = element.ActualBounds.Height;
                     }
                 }
 
                 if (Orientation == Orientation.Vertical)
                 {
                     ComputedHeight += ElementMargin.Top;
-                    ComputedHeight += element.Bounds.Height;
+                    ComputedHeight += element.ActualBounds.Height;
                     ComputedHeight += ElementMargin.Bottom;
-                    if (element.Bounds.Width > ComputedWidth)
+                    if (element.ActualBounds.Width > ComputedWidth)
                     {
-                        ComputedWidth = element.Bounds.Width;
+                        ComputedWidth = element.ActualBounds.Width;
                     }
                 }
             }
