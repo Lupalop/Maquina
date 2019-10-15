@@ -69,11 +69,6 @@ namespace Maquina.UI
             get { return Background.Columns; }
             set { Background.Columns = value; }
         }
-        public Point Table
-        {
-            get { return Background.Table; }
-            set { Background.Table = value; }
-        }
         public float LayerDepth
         {
             get { return Background.LayerDepth; }

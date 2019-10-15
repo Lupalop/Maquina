@@ -80,10 +80,15 @@ namespace Maquina.UI
             get { return Background.Tint; }
             set { Background.Tint = value; }
         }
-        public Point MenuBackgroundTable
+        public int MenuBackgroundRows
         {
-            get { return Background.Table; }
-            set { Background.Table = value; }
+            get { return Background.Rows; }
+            set { Background.Rows = value; }
+        }
+        public int MenuBackgroundColumns
+        {
+            get { return Background.Columns; }
+            set { Background.Columns = value; }
         }
         public SpriteType MenuBackgroundSpriteType
         {
@@ -117,10 +122,15 @@ namespace Maquina.UI
             get { return Icon.Tint; }
             set { Icon.Tint = value; }
         }
-        public Point MenuIconTable
+        public int MenuIconRows
         {
-            get { return Icon.Table; }
-            set { Icon.Table = value; }
+            get { return Icon.Rows; }
+            set { Icon.Rows = value; }
+        }
+        public int MenuIconColumns
+        {
+            get { return Icon.Columns; }
+            set { Icon.Columns = value; }
         }
         public SpriteType MenuIconSpriteType
         {

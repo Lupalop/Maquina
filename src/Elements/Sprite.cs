@@ -21,7 +21,8 @@ namespace Maquina.Elements
             SpriteType = SpriteType.None;
 
             DelayInterval = 100;
-            Table = new Point(1, 1);
+            Rows = 1;
+            Columns = 1;
         }
 
         // General
@@ -190,47 +191,27 @@ namespace Maquina.Elements
         }
         public int TotalFrames { get; private set; }
 
+        private int rows;
         public int Rows
         {
-            get
-            {
-                return Table.Y;
-            }
+            get { return rows; }
             set
             {
-                TotalFrames = value * Table.Y;
-                table.Y = value;
+                TotalFrames = value * Columns;
+                rows = value;
+                UpdateDestinationRectangle();
             }
         }
 
+        private int columns;
         public int Columns
         {
-            get
-            {
-                return Table.X;
-            }
+            get { return columns; }
             set
             {
-                TotalFrames = Table.X * value;
-                table.X = value;
-            }
-        }
-
-        /// <summary>
-        /// Represents the columns and rows contained by a texture atlas.
-        /// X = columns, Y = rows
-        /// </summary>
-        private Point table;
-        public Point Table
-        {
-            get
-            {
-                return table;
-            }
-            set
-            {
-                table = value;
-                TotalFrames = value.X * value.Y;
+                TotalFrames = Rows * value;
+                columns = value;
+                UpdateDestinationRectangle();
             }
         }
 
@@ -256,7 +237,7 @@ namespace Maquina.Elements
             {
                 int width = Graphic.Width / Columns;
                 int height = Graphic.Height / Rows;
-                int row = (int)((float)CurrentFrame / (float)Columns);
+                int row = CurrentFrame / Columns;
                 int column = CurrentFrame % Columns;
 
                 SourceRectangle = new Rectangle(
