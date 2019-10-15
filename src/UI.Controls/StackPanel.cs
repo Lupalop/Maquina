@@ -21,6 +21,7 @@ namespace Maquina.Elements
             Children.CollectionChanged += Children_CollectionChanged;
             ElementChanged += StackPanel_ElementChanged;
             Global.ScaleChanged += Global_ScaleChanged;
+            IsScaleSupported = false;
         }
 
         // General

@@ -12,6 +12,7 @@ namespace Maquina.Elements
         public ContainerElement(string name) : base(name)
         {
             Children = new ObservableDictionary<string, BaseElement>();
+            IsScaleSupported = false;
         }
 
         public ObservableDictionary<string, BaseElement> Children { get; set; }
