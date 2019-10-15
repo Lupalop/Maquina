@@ -28,9 +28,23 @@ namespace Maquina.Elements
         private float scale;
         public float Scale
         {
-            get { return scale; }
+            get
+            {
+                if (!IsScaleSupported)
+                {
+                    return 1;
+                }
+                return scale;
+            }
             set
             {
+#if LOG_ENABLED
+                if (!IsScaleSupported)
+                {
+                    LogManager.Warn(0,
+                        string.Format("Element {0} with ID {1} does not support the scale property.", Name, Id));
+                }
+#endif
                 scale = value;
                 OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Scale, value));
             }
@@ -40,7 +54,7 @@ namespace Maquina.Elements
         {
             get
             {
-                if (IgnoreGlobalScale)
+                if (IgnoreGlobalScale || !IsScaleSupported)
                 {
                     return Scale;
                 }
@@ -58,6 +72,7 @@ namespace Maquina.Elements
                 OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.IgnoreGlobalScale, value));
             }
         }
+        protected bool IsScaleSupported = true;
 
         // Layout
         // Destination rectangle not adjusted for scale
