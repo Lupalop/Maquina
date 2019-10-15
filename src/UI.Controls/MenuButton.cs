@@ -343,6 +343,11 @@ namespace Maquina.UI
                     Icon.IgnoreGlobalScale = e.IgnoreGlobalScale;
                     Label.IgnoreGlobalScale = e.IgnoreGlobalScale;
                     break;
+                case ElementChangedProperty.Scale:
+                    Background.Scale = Scale;
+                    Icon.Scale = Scale;
+                    Label.Scale = Scale;
+                    break;
                 default:
                     break;
             }

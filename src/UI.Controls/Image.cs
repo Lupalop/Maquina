@@ -108,6 +108,9 @@ namespace Maquina.UI
                 case ElementChangedProperty.IgnoreGlobalScale:
                     Background.IgnoreGlobalScale = e.IgnoreGlobalScale;
                     break;
+                case ElementChangedProperty.Scale:
+                    Background.Scale = Scale;
+                    break;
                 default:
                     break;
             }
