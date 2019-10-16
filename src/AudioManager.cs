@@ -20,7 +20,7 @@ namespace Maquina
             IsMuted = Global.Preferences.GetBoolPreference("app.audio.mastermuted", false);
         }
 
-        public void PlaySong(string songName, bool isRepeating = true)
+        public void PlaySong(string songName, bool isRepeating)
         {
             if (Global.BGM.ContainsKey(songName))
             {

@@ -1,12 +1,13 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Maquina.Resources
 {
     public class ResourceParameters
     {
-        [XmlAttribute]
-        public string Name { get; set; }
-        [XmlAttribute]
-        public string Location { get; set; }
+        [XmlAttribute("id")]
+        public string Id { get; set; }
+        [XmlAttribute("path")]
+        public string Path { get; set; }
     }
 }

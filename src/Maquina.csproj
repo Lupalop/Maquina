@@ -76,6 +76,7 @@
     <Compile Include="LogEntry.cs" />
     <Compile Include="LogEntryLevel.cs" />
     <Compile Include="LogManager.cs" />
+    <Compile Include="Resources\ResourceGroup.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Elements\Alignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="Resources\LocaleDefinition.cs" />
-    <Compile Include="Resources\ResourceContent.cs" />
+    <Compile Include="Resources\ResourceManifest.cs" />
     <Compile Include="Resources\ResourceParameters.cs" />
     <Compile Include="Resources\ResourceType.cs" />
     <Compile Include="Resources\StringBundle.cs" />

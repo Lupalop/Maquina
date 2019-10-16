@@ -1,12 +1,13 @@
-﻿using System.Xml.Serialization;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System.Xml.Serialization;
 
 namespace Maquina.Resources
 {
     public class FontParameters : ResourceParameters
     {
-        [XmlAttribute]
+        [XmlAttribute("linespacing")]
         public int LineSpacing { get; set; }
-        [XmlAttribute]
+        [XmlAttribute("spacing")]
         public float Spacing { get; set; }
-    }    
+    }
 }

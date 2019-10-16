@@ -71,16 +71,14 @@ namespace Maquina
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             Global.SpriteBatch = SpriteBatch;
             // Load platform resources synchronously
-            ResourceContent resources = XmlHelper.Load<ResourceContent>(
-                    Path.Combine(Content.RootDirectory, Global.ResourceXml));
-            Global.Fonts =
-                resources.Load(ResourceType.Fonts) as Dictionary<string, SpriteFont>;
-            Global.BGM =
-                resources.Load(ResourceType.BGM) as Dictionary<string, Song>;
-            Global.SFX =
-                resources.Load(ResourceType.SFX) as Dictionary<string, SoundEffect>;
-            Global.Textures =
-                resources.Load(ResourceType.Textures) as Dictionary<string, Texture2D>;
+            ResourceManifest resources = XmlHelper.Load<ResourceManifest>(
+                Path.Combine(Content.RootDirectory, Global.ResourceXml));
+            ResourceGroup group = resources.Load("platform");
+            // Load resources
+            Global.Fonts = group.FontDictionary;
+            Global.BGM = group.BGMDictionary;
+            Global.SFX = group.SFXDictionary;
+            Global.Textures = group.TextureDictionary;
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Maquina
     {
         static Global()
         {
-            ResourceXml = "platformresources.xml";
+            ResourceXml = "resources.xml";
             PreferencesXml = "preferences.xml";
             LocaleDefinitionXml = "locale.xml";
             LocaleDirectory = "locales";
