@@ -164,7 +164,7 @@ namespace Maquina.Elements
 #if LOG_ENABLED
                 if (Name != "mouse")
                 {
-                    LogManager.Info(0, string.Format("Element updated - Name: {0}, ID: {1}, Property: {2}",
+                    LogManager.Info(-1, string.Format("Element updated - Name: {0}, ID: {1}, Property: {2}",
                         Name, Id, e.Property.ToString()));
                 }
 #endif
