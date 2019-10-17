@@ -32,7 +32,7 @@ namespace Maquina
                 Console.Write("> ");
                 string[] action = Console.ReadLine().Split(' ');
 
-                // XXX: We have 4 commands, 3 subs, and 2 aliases
+                // XXX: We have 4 commands, 4 subs, and 2 aliases
                 switch (action[0].ToLower())
                 {
                     case "quit":
@@ -52,7 +52,7 @@ namespace Maquina
                     case "log":
                         if (action.Length < 2)
                         {
-                            CommandRequiresArgument("log", "clear, showall, redirect");
+                            CommandRequiresArgument("log", "[required] action (clear, show, showall, redirect)");
                             break;
                         }
                         switch (action[1])
@@ -66,6 +66,38 @@ namespace Maquina
                                     Console.WriteLine(LogManager.Entries[i].ToString());
                                 }
                                 break;
+                            case "show":
+                                if (action.Length < 3)
+                                {
+                                    CommandRequiresArgument("log show", "[required] logGroup (int), [optional] logLevel (int)");
+                                    break;
+                                }
+                                int logGroup = 0;
+                                int logLevel = -1;
+                                if (!int.TryParse(action[2], out logGroup))
+                                {
+                                    CommandRequiresArgument("log show", "[required] logGroup (int), [optional] logLevel (int)");
+                                }
+                                if (action.Length == 4)
+                                {
+                                    int.TryParse(action[3], out logLevel);
+                                }
+                                for (int i = 0; i < LogManager.Entries.Count; i++)
+                                {
+                                    LogEntry entry = LogManager.Entries[i];
+                                    if (entry.LogGroup == logGroup)
+                                    {
+                                        if (logLevel != -1 && entry.EntryType == (LogEntryLevel)logLevel)
+                                        {
+                                            Console.WriteLine(entry.ToString());
+                                        }
+                                        else if (logLevel == -1)
+                                        {
+                                            Console.WriteLine(entry.ToString());
+                                        }
+                                    }
+                                }
+                                break;
                             case "redirect":
                                 WriteHeader();
                                 Console.WriteLine("Press Esc to stop.");
@@ -77,7 +109,7 @@ namespace Maquina
                                 LogManager.RedirectOutputToConsole = false;
                                 break;
                             default:
-                                CommandRequiresArgument("log", "clear, showall, redirect");
+                                CommandRequiresArgument("log", "[required] action (clear, show, showall, redirect)");
                                 break;
                         }
                         break;
