@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maquina.Elements;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace Maquina
                 Console.Write("> ");
                 string[] action = Console.ReadLine().Split(' ');
 
-                // XXX: We have 4 commands, 4 subs, and 2 aliases
+                // XXX: We have 5 commands, 6 subs, and 2 aliases
                 switch (action[0].ToLower())
                 {
                     case "quit":
@@ -48,6 +49,29 @@ namespace Maquina
                     case "cls":
                     case "clear":
                         WriteHeader();
+                        break;
+                    case "query":
+                        if (action.Length < 3)
+                        {
+                            CommandRequiresArgument("query", "[required] where (scene, overlay), [required] elementName (string)");
+                            break;
+                        }
+                        // Limitation: can only tap into main element dictionary
+                        switch (action[1])
+                        {
+                            case "scene":
+                                GetContainerElementsState(Global.Scenes.CurrentScene.Elements.Values, action[2]);
+                                break;
+                            case "overlay":
+                                for (int i = 0; i < Global.Scenes.Overlays.Count; i++)
+                                {
+                                    GetContainerElementsState(Global.Scenes.Overlays.Values.ElementAt(i).Elements.Values, action[2]);
+                                }
+                                break;
+                            default:
+                                CommandRequiresArgument("query", "[required] where (scene, overlay), [required] elementName (string)");
+                                break;
+                        }
                         break;
                     case "log":
                         if (action.Length < 2)
@@ -118,6 +142,47 @@ namespace Maquina
                         break;
                 }
             }
+        }
+
+        private static void GetContainerElementsState(ICollection<BaseElement> elements, string elementName)
+        {
+            for (int i = 0; i < elements.Count; i++)
+            {
+                BaseElement element = elements.ElementAt(i);
+                if (element.Name.ToLower() == elementName.ToLower())
+                {
+                    //Console.WriteLine(element.ToString());
+                    GetElementState(element);
+                }
+                if (element is IContainerElement)
+                {
+                    GetContainerElementsState(((IContainerElement)element).Children.Values, elementName);
+                }
+            }
+        }
+
+        private static void GetElementState(BaseElement element)
+        {
+            StringBuilder info = new StringBuilder();
+            info.AppendLine(string.Format("Element `{0}` information:", element.Name));
+            info.AppendLine();
+            info.AppendLine(string.Format("ID: {0}", element.Id));
+            info.AppendLine(string.Format("Bounds: {0}", element.Bounds));
+            info.AppendLine(string.Format("Actual Bounds: {0}", element.ActualBounds));
+            info.AppendLine(string.Format("Scale: {0}", element.Scale));
+            info.AppendLine(string.Format("Ignore Global Scale?: {0}", element.IgnoreGlobalScale));
+            if (element is GuiElement)
+            {
+                GuiElement guiElement = (GuiElement)element;
+                info.AppendLine();
+                info.AppendLine("GUI Element information:");
+                info.AppendLine(string.Format("Auto Position?: {0}", guiElement.AutoPosition));
+                info.AppendLine(string.Format("Is Disabled?: {0}", guiElement.Disabled));
+                info.AppendLine(string.Format("Is Focused?: {0}", guiElement.Focused));
+                info.AppendLine(string.Format("Horizontal Alignment: {0}", guiElement.HorizontalAlignment));
+                info.AppendLine(string.Format("Vertical Alignment: {0}", guiElement.VerticalAlignment));
+            }
+            Console.WriteLine(info.ToString());
         }
 
         private static void CommandRequiresArgument(string command, string arguments)
