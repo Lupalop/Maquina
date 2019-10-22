@@ -21,6 +21,7 @@ namespace Maquina.Elements
             Children.CollectionChanged += Children_CollectionChanged;
             ElementChanged += StackPanel_ElementChanged;
             Global.ScaleChanged += Global_ScaleChanged;
+            DisabledStateChanged += StackPanel_DisabledStateChanged;
             IsScaleSupported = false;
         }
 
@@ -139,6 +140,11 @@ namespace Maquina.Elements
         {
             UpdateSize();
             UpdateLayout();
+        }
+
+        private void StackPanel_DisabledStateChanged(object sender, EventArgs e)
+        {
+            UI.GuiUtils.SetElementDisabledState(Children, Disabled);
         }
 
         public void UpdateLayout()
@@ -286,6 +292,7 @@ namespace Maquina.Elements
             {
                 Children.CollectionChanged -= Children_CollectionChanged;
                 ElementChanged -= StackPanel_ElementChanged;
+                DisabledStateChanged -= StackPanel_DisabledStateChanged;
                 Global.ScaleChanged -= Global_ScaleChanged;
                 foreach (var element in Children.Values)
                 {
