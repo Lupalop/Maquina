@@ -9,21 +9,21 @@ namespace Maquina.UI
 {
     public static class GuiUtils
     {
-        public static void DisableAllMenuButtons(IDictionary<string, BaseElement> objects)
+        public static void SetElementDisabledState(IDictionary<string, BaseElement> elements, bool disabled)
         {
-            if (objects != null)
+            if (elements != null)
             {
-                DisableAllMenuButtons(objects.Values.ToArray());
+                SetElementDisabledState(elements.Values, disabled);
             }
         }
-        public static void DisableAllMenuButtons(IEnumerable<BaseElement> objects)
+        public static void SetElementDisabledState(IEnumerable<BaseElement> elements, bool disabled)
         {
-            for (int i = 0; i < objects.Count(); i++)
+            for (int i = 0; i < elements.Count(); i++)
             {
-                MenuButton mb = objects.ElementAt(i) as MenuButton;
-                if (mb != null)
+                BaseElement element = elements.ElementAt(i);
+                if (element is GuiElement)
                 {
-                    mb.Disabled = true;
+                    ((GuiElement)(element)).Disabled = disabled;
                 }
             }
         }
