@@ -43,6 +43,45 @@ namespace Maquina.Elements
             get { return "GENERIC_GUI"; }
         }
 
+        private bool disabled;
+        public bool Disabled
+        {
+            get { return disabled; }
+            set
+            {
+                disabled = value;
+                OnDisabledStateChanged();
+            }
+        }
+        private bool focused;
+        public bool Focused
+        {
+            get { return focused; }
+            set
+            {
+                focused = value;
+                OnFocusedStateChanged();
+            }
+        }
+
+        public event EventHandler DisabledStateChanged;
+        public event EventHandler FocusedStateChanged;
+
+        protected void OnDisabledStateChanged()
+        {
+            if (DisabledStateChanged != null)
+            {
+                DisabledStateChanged(this, EventArgs.Empty);
+            }
+        }
+        protected void OnFocusedStateChanged()
+        {
+            if (FocusedStateChanged != null)
+            {
+                FocusedStateChanged(this, EventArgs.Empty);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

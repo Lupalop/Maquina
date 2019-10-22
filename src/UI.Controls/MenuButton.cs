@@ -63,8 +63,6 @@ namespace Maquina.UI
         public event Action OnRightClick;
 
         // Properties
-        public bool Disabled { get; set; }
-        public bool Focused { get; set; }
         public SoundEffect ClickSound { get; set; }
         public HorizontalAlignment IconAlignment { get; set; }
         
