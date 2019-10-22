@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Maquina.Elements;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.Elements
+namespace Maquina.UI
 {
     public class StackPanel : GuiElement, IContainerElement
     {
@@ -144,7 +145,7 @@ namespace Maquina.Elements
 
         private void StackPanel_DisabledStateChanged(object sender, EventArgs e)
         {
-            UI.GuiUtils.SetElementDisabledState(Children, Disabled);
+            GuiUtils.SetElementDisabledState(Children, Disabled);
         }
 
         public void UpdateLayout()
