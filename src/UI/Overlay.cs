@@ -15,6 +15,7 @@ namespace Maquina.UI
         protected Overlay(string sceneName, Scene parentScene) : base(sceneName)
         {
             ParentScene = parentScene;
+            DisableParentSceneGui = false;
         }
         protected Overlay(string sceneName, Scene parentScene, bool disableParentSceneGui) : base(sceneName)
         {
@@ -22,15 +23,37 @@ namespace Maquina.UI
             DisableParentSceneGui = disableParentSceneGui;
         }
 
-        public Scene ParentScene { get; set; }
-        public bool DisableParentSceneGui { get; private set; }
+        private Scene parentScene;
+        public Scene ParentScene
+        {
+            get { return parentScene; }
+            protected set
+            {
+                parentScene = value;
+                CheckParentScene();
+            }
+        }
+        private bool disableParentSceneGui;
+        public bool DisableParentSceneGui
+        {
+            get { return disableParentSceneGui; }
+            protected set
+            {
+                disableParentSceneGui = value;
+                CheckParentScene();
+            }
+        }
+
+        private void CheckParentScene()
+        {
+            if (ParentScene != null)
+            {
+                GuiUtils.SetElementDisabledState(ParentScene.Elements, DisableParentSceneGui);
+            }
+        }
 
         public override void LoadContent()
         {
-            if (ParentScene != null && DisableParentSceneGui)
-            {
-                GuiUtils.DisableAllMenuButtons(ParentScene.Elements);
-            }
             base.LoadContent();
         }
 
@@ -39,4 +62,5 @@ namespace Maquina.UI
             base.Update(gameTime);
         }
     }
+
 }
