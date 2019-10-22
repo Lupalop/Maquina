@@ -97,6 +97,7 @@
     <Compile Include="Timer.cs" />
     <Compile Include="TimerManager.cs" />
     <Compile Include="Elements\Orientation.cs" />
+    <Compile Include="UI.Controls\Canvas.cs" />
     <Compile Include="UI.Controls\TextBox.cs" />
     <Compile Include="UI.Controls\StackPanel.cs" />
     <Compile Include="Resources\XmlHelper.cs" />
