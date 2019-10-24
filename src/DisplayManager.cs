@@ -79,18 +79,7 @@ namespace Maquina
             Graphics.ToggleFullScreen();
         }
 
-        // Scale
-        private float scale;
-        public float Scale
-        {
-            get { return scale; }
-            set
-            {
-                scale = value;
-                OnScaleChanged();
-            }
-        }
-
+        // Event handlers
         public event EventHandler ScaleChanged;
         private void OnScaleChanged()
         {
@@ -106,6 +95,17 @@ namespace Maquina
             if (ResolutionChanged != null)
             {
                 ResolutionChanged(this, EventArgs.Empty);
+            }
+        }
+
+        private float scale;
+        public float Scale
+        {
+            get { return scale; }
+            set
+            {
+                scale = value;
+                OnScaleChanged();
             }
         }
 
