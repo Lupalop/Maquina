@@ -162,12 +162,12 @@ namespace Maquina.Elements
             Location = new Point(modifiedElementX, modifiedElementY);
         }
 
-        private void Display_ResolutionChanged(Rectangle obj)
+        private void Display_ResolutionChanged(object sender, EventArgs e)
         {
             UpdateAutoPositionedLayout();
         }
 
-        private void Global_ScaleChanged(object sender, float e)
+        private void Global_ScaleChanged(object sender, EventArgs e)
         {
             UpdateAutoPositionedLayout();
         }

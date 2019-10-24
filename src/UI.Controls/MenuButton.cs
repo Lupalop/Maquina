@@ -59,8 +59,8 @@ namespace Maquina.UI
         public TextSprite Tooltip { get; set; }
 
         // Element events
-        public event Action OnLeftClick;
-        public event Action OnRightClick;
+        public event EventHandler OnLeftClick;
+        public event EventHandler OnRightClick;
 
         // Properties
         public SoundEffect ClickSound { get; set; }
@@ -279,7 +279,7 @@ namespace Maquina.UI
                         LeftClickFired = false;
                     if (InputManager.MouseUp(MouseButton.Left) && LeftClickFired)
                     {
-                        OnLeftClick.Invoke();
+                        OnLeftClick(this, EventArgs.Empty);
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
                         LeftClickFired = false;
@@ -295,7 +295,7 @@ namespace Maquina.UI
                         RightClickFired = false;
                     if (InputManager.MouseUp(MouseButton.Right) && RightClickFired)
                     {
-                        OnRightClick.Invoke();
+                        OnRightClick(this, EventArgs.Empty);
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
                         RightClickFired = false;
@@ -350,19 +350,19 @@ namespace Maquina.UI
                     break;
             }
         }
-        private void Icon_SizeChanged(Point value)
+        private void Icon_SizeChanged(object sender, EventArgs e)
         {
             RecalculateIconLocation();
         }
-        private void Label_SizeChanged(Point value)
+        private void Label_SizeChanged(object sender, EventArgs e)
         {
             if (Background == null || Background.Graphic == null)
             {
-                Size = value;
+                Size = Label.Size;
             }
             RecalculateLabelLocation();
         }
-        private void Background_SizeChanged(Point value)
+        private void Background_SizeChanged(object sender, EventArgs e)
         {
             Size = Background.Size;
         }

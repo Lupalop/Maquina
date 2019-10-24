@@ -26,9 +26,9 @@ namespace Maquina.Elements
         bool IgnoreGlobalScale { get; set; }
 
         // Events
-        event Action<Rectangle> DestinationRectangleChanged;
-        event Action<Point> LocationChanged;
-        event Action<Point> SizeChanged;
+        event EventHandler DestinationRectangleChanged;
+        event EventHandler LocationChanged;
+        event EventHandler SizeChanged;
 
         // Draw and update methods
         void Draw(GameTime gameTime);

@@ -138,14 +138,14 @@ namespace Maquina.Elements
 
         // Element events
         public event ElementChangedEventHandler ElementChanged;
-        public event Action<BaseElement> ElementUpdated;
-        public event Action<BaseElement> ElementDrawn;
+        public event EventHandler ElementUpdated;
+        public event EventHandler ElementDrawn;
 
         protected void OnElementUpdated()
         {
             if (ElementUpdated != null)
             {
-                ElementUpdated(this);
+                ElementUpdated(this, EventArgs.Empty);
             }
         }
 
@@ -153,7 +153,7 @@ namespace Maquina.Elements
         {
             if (ElementDrawn != null)
             {
-                ElementDrawn(this);
+                ElementDrawn(this, EventArgs.Empty);
             }
         }
 

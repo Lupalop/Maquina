@@ -54,12 +54,11 @@ namespace Maquina.UI
             {
                 IgnoreGlobalScale = true,
             };
-            Background.ElementUpdated += (elem) =>
+            Background.ElementUpdated += (sender, e) =>
             {
-                Image element = (Image)elem;
-                element.Graphic = FadeBackground;
-                element.Background.DestinationRectangle = Game.GraphicsDevice.Viewport.Bounds;
-                element.Background.Tint = FadeColor * Opacity;
+                Background.Graphic = FadeBackground;
+                Background.Background.DestinationRectangle = Game.GraphicsDevice.Viewport.Bounds;
+                Background.Background.Tint = FadeColor * Opacity;
             };
             Elements.Add(Background.Name, Background);
 

@@ -94,7 +94,7 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Background_SizeChanged(Point value)
+        private void Background_SizeChanged(object sender, EventArgs e)
         {
             Size = Background.Size;
         }

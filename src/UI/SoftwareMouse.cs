@@ -20,18 +20,17 @@ namespace Maquina.UI
                 Rows = 1,
                 Columns = 2,
             };
-            MouseElement.ElementUpdated += (elem) =>
+            MouseElement.ElementUpdated += (sender, e) =>
             {
-                Image element = (Image)elem;
-                element.Location = Global.Input.MousePosition;
-                element.Background.CurrentFrame = 0;
+                MouseElement.Location = Global.Input.MousePosition;
+                MouseElement.Background.CurrentFrame = 0;
 
                 // Change state when selected
                 if (Global.Input.MouseDown(MouseButton.Left) ||
                     Global.Input.MouseDown(MouseButton.Right) ||
                     Global.Input.MouseDown(MouseButton.Middle))
                 {
-                    element.Background.CurrentFrame = 1;
+                    MouseElement.Background.CurrentFrame = 1;
                 }
             };
         }

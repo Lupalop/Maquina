@@ -137,7 +137,7 @@ namespace Maquina.UI
             UpdateLayout();
         }
 
-        private void Global_ScaleChanged(object sender, float e)
+        private void Global_ScaleChanged(object sender, EventArgs e)
         {
             UpdateSize();
             UpdateLayout();

@@ -57,7 +57,6 @@ namespace Maquina
             Graphics.ApplyChanges();
         }
 
-        public event Action<Rectangle> ResolutionChanged;
         public Rectangle PreviousWindowBounds { get; private set; }
         public Rectangle WindowBounds { get; private set; }
         //
@@ -88,24 +87,33 @@ namespace Maquina
             set
             {
                 scale = value;
-                OnScaleChanged(value);
+                OnScaleChanged();
             }
         }
 
-        public event EventHandler<float> ScaleChanged;
-        private void OnScaleChanged(float newScale)
+        public event EventHandler ScaleChanged;
+        private void OnScaleChanged()
         {
             if (ScaleChanged != null)
             {
-                ScaleChanged(null, newScale);
+                ScaleChanged(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler ResolutionChanged;
+        private void OnResolutionChanged()
+        {
+            if (ResolutionChanged != null)
+            {
+                ResolutionChanged(this, EventArgs.Empty);
             }
         }
 
         public void Update()
         {
-            if (PreviousWindowBounds != WindowBounds && ResolutionChanged != null)
+            if (PreviousWindowBounds != WindowBounds)
             {
-                ResolutionChanged(WindowBounds);
+                OnResolutionChanged();
             }
             PreviousWindowBounds = WindowBounds;
             WindowBounds = Global.Game.GraphicsDevice.Viewport.Bounds;

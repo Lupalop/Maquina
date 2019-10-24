@@ -70,7 +70,7 @@ namespace Maquina.Elements
                 Size = value.Size;
                 if (DestinationRectangleChanged != null)
                 {
-                    DestinationRectangleChanged(value);
+                    DestinationRectangleChanged(this, EventArgs.Empty);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace Maquina.Elements
                 location = value;
                 if (LocationChanged != null)
                 {
-                    LocationChanged(value);
+                    LocationChanged(this, EventArgs.Empty);
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace Maquina.Elements
                 size = value;
                 if (SizeChanged != null)
                 {
-                    SizeChanged(value);
+                    SizeChanged(this, EventArgs.Empty);
                 }
             }
         }
@@ -261,9 +261,9 @@ namespace Maquina.Elements
         }
 
         // Child Events
-        public event Action<Rectangle> DestinationRectangleChanged;
-        public event Action<Point> LocationChanged;
-        public event Action<Point> SizeChanged;
+        public event EventHandler DestinationRectangleChanged;
+        public event EventHandler LocationChanged;
+        public event EventHandler SizeChanged;
 
         // IDisposable implementation
         public void Dispose()

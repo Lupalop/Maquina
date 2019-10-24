@@ -14,7 +14,7 @@ namespace Maquina.UI
         {
             IsSpinning = true;
             Graphic = Global.Textures["throbber-default"];
-            ElementUpdated += (element) =>
+            ElementUpdated += (sender, e) =>
             {
                 if (!IsSpinning)
                     return;
@@ -26,7 +26,7 @@ namespace Maquina.UI
             Global.Display.ScaleChanged += Global_ScaleChanged;
         }
 
-        private void Global_ScaleChanged(object sender, float e)
+        private void Global_ScaleChanged(object sender, EventArgs e)
         {
             Throbber_ElementChanged(this, new ElementChangedEventArgs(ElementChangedProperty.Location));
         }

@@ -85,7 +85,7 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Child_SizeChanged(Point value)
+        private void Child_SizeChanged(object sender, EventArgs e)
         {
             Size = Child.Size;
         }

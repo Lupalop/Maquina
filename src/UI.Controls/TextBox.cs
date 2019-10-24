@@ -30,7 +30,7 @@ namespace Maquina.UI
         public int MaxInput { get; set; }
 
         // Element events
-        public event Action OnInput;
+        public event EventHandler OnInput;
 
         public override string Id
         {
@@ -41,7 +41,7 @@ namespace Maquina.UI
         {
             if (OnInput != null)
             {
-                OnInput();
+                OnInput(this, EventArgs.Empty);
             }
             if (Disabled || !Focused)
             {
