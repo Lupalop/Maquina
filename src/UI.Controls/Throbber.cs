@@ -10,8 +10,9 @@ namespace Maquina.UI
 {
     public class Throbber : Image
     {
-        public Throbber(string objectName) : base(objectName)
+        public Throbber(string name) : base(name)
         {
+            Id = "GUI_THROBBER";
             IsSpinning = true;
             Graphic = Global.Textures["throbber-default"];
             ElementUpdated += (sender, e) =>
@@ -48,11 +49,6 @@ namespace Maquina.UI
             }
         }
 
-        // General
-        public override string Id
-        {
-            get { return "GUI_THROBBER"; }
-        }
         public bool IsSpinning { get; set; }
     }
 }

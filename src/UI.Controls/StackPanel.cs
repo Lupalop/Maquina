@@ -14,8 +14,9 @@ namespace Maquina.UI
     {
         public StackPanel(string name) : base(name)
         {
+            Id = "GUI_STACKPANEL";
             Background = new Sprite();
-            Children = new ObservableDictionary<string, BaseElement>();
+            children = new ObservableDictionary<string, BaseElement>();
             Orientation = Orientation.Vertical;
             ElementMargin = new Region();
             OverrideContainerSize = false;
@@ -57,10 +58,6 @@ namespace Maquina.UI
                 elementMargin = value;
                 OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
             }
-        }
-        public override string Id
-        {
-            get { return "GUI_STACKPANEL"; }
         }
 
         // Child elements

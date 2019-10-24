@@ -14,15 +14,10 @@ namespace Maquina.UI
     {
         public Image(string name) : base(name)
         {
+            Id = "GUI_IMAGE";
             Background = new Sprite();
             Background.SpriteChanged += Background_SpriteChanged;
             ElementChanged += Image_ElementChanged;
-        }
-
-        // General
-        public override string Id
-        {
-            get { return "GUI_IMAGE"; }
         }
 
         // Child elements

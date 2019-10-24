@@ -12,6 +12,7 @@ namespace Maquina.Elements
         // Constructor
         protected GuiElement(string name) : base (name)
         {
+            Id = "GENERIC_GUI";
             HorizontalAlignment = HorizontalAlignment.Center;
             VerticalAlignment = VerticalAlignment.Center;
             AutoPosition = false;
@@ -38,10 +39,6 @@ namespace Maquina.Elements
             }
         }
 
-        public override string Id
-        {
-            get { return "GENERIC_GUI"; }
-        }
 
         private bool disabled;
         public bool Disabled

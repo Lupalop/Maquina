@@ -13,8 +13,10 @@ namespace Maquina.UI
 {
     public class TextBox : MenuButton
     {
-        public TextBox(string objectName) : base (objectName)
+        public TextBox(string name) : base(name)
         {
+            Id = "GUI_TEXTBOX";
+
             // Default TB graphic
             MenuBackground = Global.Textures["textbox-default"];
             MenuFont = Global.Fonts["o-default_m"];
@@ -31,11 +33,6 @@ namespace Maquina.UI
 
         // Element events
         public event EventHandler OnInput;
-
-        public override string Id
-        {
-            get { return "GUI_TEXTBOX"; }
-        }
 
         private void Window_TextInput(object sender, TextInputEventArgs e)
         {

@@ -13,8 +13,9 @@ namespace Maquina.UI
 {
     public class MenuButton : GuiElement
     {
-        public MenuButton(string objectName) : base (objectName)
+        public MenuButton(string name) : base (name)
         {
+            Id = "GUI_MENUBUTTON";
             InputManager = Global.Input;
 
             Background = new Sprite()
@@ -47,10 +48,6 @@ namespace Maquina.UI
 
         // General
         protected InputManager InputManager;
-        public override string Id
-        {
-            get { return "GUI_MENUBUTTON"; }
-        }
         
         // Child elements
         public Sprite Background { get; set; }

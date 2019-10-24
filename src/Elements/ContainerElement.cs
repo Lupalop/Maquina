@@ -11,15 +11,12 @@ namespace Maquina.Elements
     {
         public ContainerElement(string name) : base(name)
         {
+            Id = "GENERIC_CONTAINER";
             Children = new ObservableDictionary<string, BaseElement>();
             IsScaleSupported = false;
         }
 
         public ObservableDictionary<string, BaseElement> Children { get; set; }
-        public override string Id
-        {
-            get { return "GENERIC_CONTAINER"; }
-        }
 
         public override void Draw(GameTime gameTime)
         {

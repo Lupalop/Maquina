@@ -13,16 +13,14 @@ namespace Maquina.Elements
         // Constructor
         protected BaseElement(string name)
         {
+            Id = "GENERIC_BASE";
             Name = name;
             Scale = 1;
         }
 
         // General properties
         public string Name { get; set; }
-        public virtual string Id
-        {
-            get { return "GENERIC_BASE"; }
-        }
+        public string Id { get; protected set; }
         
         // Scale
         private float scale;

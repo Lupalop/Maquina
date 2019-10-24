@@ -8,18 +8,12 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class ProgressBar : Image
+    public class ProgressBar : GuiElement
     {
         // FIXME: REWRITE PROGRESS BAR ELEMENT, USE BARSPRITE SUBELEMENT
-        public ProgressBar(string name)
-            : base(name)
+        public ProgressBar(string name) : base(name)
         {
-        }
-
-        // General
-        public override string Id
-        {
-            get { return "GUI_PROGRESSBAR"; }
+            Id = "GUI_PROGRESSBAR";
         }
     }
 }

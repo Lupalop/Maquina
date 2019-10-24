@@ -14,14 +14,10 @@ namespace Maquina.UI
         //        Sprite and BaseElement (and their children) have to be updated to handle this.
         public Canvas(string name) : base(name)
         {
+            Id = "GUI_CANVAS";
             Children = new ObservableDictionary<string, BaseElement>();
             DisabledStateChanged += Canvas_DisabledStateChanged;
             IsScaleSupported = false;
-        }
-
-        public override string Id
-        {
-            get { return "GUI_CANVAS"; }
         }
 
         private ObservableDictionary<string, BaseElement> children;

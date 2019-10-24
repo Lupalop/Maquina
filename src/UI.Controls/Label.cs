@@ -12,18 +12,13 @@ namespace Maquina.UI
 {
     public class Label : GuiElement
     {
-        public Label(string objectName) : base (objectName)
+        public Label(string name) : base (name)
         {
+            Id = "GUI_LABEL";
             Child = new TextSprite();
             Child.SpriteChanged += Child_SpriteChanged;
             ElementChanged += Label_ElementChanged;
             Text = "";
-        }
-
-        // General
-        public override string Id
-        {
-            get { return "GUI_LABEL"; }
         }
 
         // Child elements
