@@ -103,14 +103,14 @@ namespace Maquina.Elements
                 if (value)
                 {
                     Global.Display.ResolutionChanged += Display_ResolutionChanged;
-                    Global.ScaleChanged += Global_ScaleChanged;
+                    Global.Display.ScaleChanged += Global_ScaleChanged;
                     ElementChanged += GuiElement_ElementChanged;
                 }
                 // Only unregister from these events if auto position was previously true
                 if (autoPosition && !value)
                 {
                     Global.Display.ResolutionChanged -= Display_ResolutionChanged;
-                    Global.ScaleChanged -= Global_ScaleChanged;
+                    Global.Display.ScaleChanged -= Global_ScaleChanged;
                     ElementChanged -= GuiElement_ElementChanged;
                 }
             }

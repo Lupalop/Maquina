@@ -23,7 +23,7 @@ namespace Maquina.UI
             };
             ElementChanged -= Image_ElementChanged;
             ElementChanged += Throbber_ElementChanged;
-            Global.ScaleChanged += Global_ScaleChanged;
+            Global.Display.ScaleChanged += Global_ScaleChanged;
         }
 
         private void Global_ScaleChanged(object sender, float e)

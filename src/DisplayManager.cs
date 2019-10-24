@@ -37,6 +37,8 @@ namespace Maquina
             Global.Game.Window.AllowUserResizing =
                 Global.Preferences.GetBoolPreference("app.window.allowUserResizing", false);
 
+            // Global Scale
+            Scale = 1f;
 
             // Identify if we should go fullscreen
             if (Global.Preferences.GetBoolPreference("app.window.fullscreen", false))
@@ -76,6 +78,27 @@ namespace Maquina
                 Graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             }
             Graphics.ToggleFullScreen();
+        }
+
+        // Scale
+        private float scale;
+        public float Scale
+        {
+            get { return scale; }
+            set
+            {
+                scale = value;
+                OnScaleChanged(value);
+            }
+        }
+
+        public event EventHandler<float> ScaleChanged;
+        private void OnScaleChanged(float newScale)
+        {
+            if (ScaleChanged != null)
+            {
+                ScaleChanged(null, newScale);
+            }
         }
 
         public void Update()

@@ -68,9 +68,9 @@ namespace Maquina.UI
 
             // Scale controls
             if (InputManager.KeyPressed(Keys.F9))
-                Global.Scale += 0.1f;
+                Global.Display.Scale += 0.1f;
             if (InputManager.KeyPressed(Keys.F8))
-                Global.Scale -= 0.1f;
+                Global.Display.Scale -= 0.1f;
 
             elapsedTime += gameTime.ElapsedGameTime;
 

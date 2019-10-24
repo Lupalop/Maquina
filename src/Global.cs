@@ -19,7 +19,6 @@ namespace Maquina
             LocaleDirectory = "locales";
             DefaultLocale = "en-US";
 
-            Scale = 1f;
             Fonts = new Dictionary<string, SpriteFont>();
             BGM = new Dictionary<string, Song>();
         }
@@ -59,25 +58,5 @@ namespace Maquina
         public static PreferencesManager Preferences { get; set; }
         public static ContentManager Content { get; set; }
         public static GraphicsDeviceManager Graphics { get; set; }
-
-        // Scale
-        private static float scale;
-        public static float Scale
-        {
-            get { return scale; }
-            set
-            {
-                scale = value;
-                OnScaleChanged(value);
-            }
-        }
-        public static event EventHandler<float> ScaleChanged;
-        private static void OnScaleChanged(float newScale)
-        {
-            if (ScaleChanged != null)
-            {
-                ScaleChanged(null, newScale);
-            }
-        }
     }
 }
