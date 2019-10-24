@@ -32,9 +32,9 @@ namespace Maquina.UI
             };
 
             // Child
-            Background.SizeChanged += Background_SizeChanged;
-            Label.SizeChanged += Label_SizeChanged;
-            Icon.SizeChanged += Icon_SizeChanged;
+            Background.SpriteChanged += Background_SpriteChanged;
+            Label.SpriteChanged += Label_SpriteChanged;
+            Icon.SpriteChanged += Icon_SpriteChanged;
             // Parent
             ElementChanged += MenuButton_ElementChanged;
 
@@ -350,20 +350,29 @@ namespace Maquina.UI
                     break;
             }
         }
-        private void Icon_SizeChanged(object sender, EventArgs e)
+        private void Icon_SpriteChanged(object sender, ElementChangedEventArgs e)
         {
+            if (e.Property != ElementChangedProperty.Size)
+                return;
+
             RecalculateIconLocation();
         }
-        private void Label_SizeChanged(object sender, EventArgs e)
+        private void Label_SpriteChanged(object sender, ElementChangedEventArgs e)
         {
+            if (e.Property != ElementChangedProperty.Size)
+                return;
+
             if (Background == null || Background.Graphic == null)
             {
                 Size = Label.Size;
             }
             RecalculateLabelLocation();
         }
-        private void Background_SizeChanged(object sender, EventArgs e)
+        private void Background_SpriteChanged(object sender, ElementChangedEventArgs e)
         {
+            if (e.Property != ElementChangedProperty.Size)
+                return;
+
             Size = Background.Size;
         }
 

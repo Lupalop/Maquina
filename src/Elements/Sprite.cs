@@ -68,10 +68,7 @@ namespace Maquina.Elements
             {
                 Location = value.Location;
                 Size = value.Size;
-                if (DestinationRectangleChanged != null)
-                {
-                    DestinationRectangleChanged(this, EventArgs.Empty);
-                }
+                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle, value));
             }
         }
         // Destination rectangle adjusted for scale
@@ -93,10 +90,7 @@ namespace Maquina.Elements
                     return;
                 }
                 location = value;
-                if (LocationChanged != null)
-                {
-                    LocationChanged(this, EventArgs.Empty);
-                }
+                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Location, value, Point.Zero));
             }
         }
         // Size not adjusted for scale
@@ -111,10 +105,7 @@ namespace Maquina.Elements
                     //return;
                 }
                 size = value;
-                if (SizeChanged != null)
-                {
-                    SizeChanged(this, EventArgs.Empty);
-                }
+                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Size, Point.Zero, value));
             }
         }
         // Size adjusted for scale
@@ -261,9 +252,15 @@ namespace Maquina.Elements
         }
 
         // Child Events
-        public event EventHandler DestinationRectangleChanged;
-        public event EventHandler LocationChanged;
-        public event EventHandler SizeChanged;
+        public event ElementChangedEventHandler SpriteChanged;
+        protected void OnSpriteChanged(ElementChangedEventArgs e)
+        {
+            if (SpriteChanged != null)
+            {
+                SpriteChanged(this, e);
+            }
+        }
+
 
         // IDisposable implementation
         public void Dispose()

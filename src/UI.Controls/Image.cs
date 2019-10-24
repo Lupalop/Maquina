@@ -15,7 +15,7 @@ namespace Maquina.UI
         public Image(string name) : base(name)
         {
             Background = new Sprite();
-            Background.SizeChanged += Background_SizeChanged;
+            Background.SpriteChanged += Background_SpriteChanged;
             ElementChanged += Image_ElementChanged;
         }
 
@@ -94,10 +94,14 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Background_SizeChanged(object sender, EventArgs e)
+        private void Background_SpriteChanged(object sender, ElementChangedEventArgs e)
         {
-            Size = Background.Size;
+            if (e.Property == ElementChangedProperty.Size)
+            {
+                Size = Background.Size;
+            }
         }
+
         protected void Image_ElementChanged(object sender, ElementChangedEventArgs e)
         {
             switch (e.Property)

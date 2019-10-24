@@ -15,7 +15,7 @@ namespace Maquina.UI
         public Label(string objectName) : base (objectName)
         {
             Child = new TextSprite();
-            Child.SizeChanged += Child_SizeChanged;
+            Child.SpriteChanged += Child_SpriteChanged;
             ElementChanged += Label_ElementChanged;
             Text = "";
         }
@@ -85,9 +85,12 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Child_SizeChanged(object sender, EventArgs e)
+        private void Child_SpriteChanged(object sender, ElementChangedEventArgs e)
         {
-            Size = Child.Size;
+            if (e.Property == ElementChangedProperty.Size)
+            {
+                Size = Child.Size;
+            }
         }
         private void Label_ElementChanged(object sender, ElementChangedEventArgs e)
         {
@@ -102,6 +105,17 @@ namespace Maquina.UI
                 default:
                     break;
             }
+        }
+
+        // Dispose
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Child.SpriteChanged -= Child_SpriteChanged;
+                ElementChanged -= Label_ElementChanged;
+            }
+            base.Dispose(disposing);
         }
     }
 }
