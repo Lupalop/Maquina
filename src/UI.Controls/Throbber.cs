@@ -41,7 +41,7 @@ namespace Maquina.UI
                     Background.Location = NewLocation;
                     break;
                 case ElementChangedProperty.IgnoreGlobalScale:
-                    Background.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    Background.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
                     break;
                 default:
                     break;

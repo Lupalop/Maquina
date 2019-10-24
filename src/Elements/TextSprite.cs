@@ -73,7 +73,7 @@ namespace Maquina.Elements
             {
                 Location = value.Location;
                 Size = value.Size;
-                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle, value));
+                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle));
             }
         }
         // Destination rectangle adjusted for scale
@@ -99,7 +99,7 @@ namespace Maquina.Elements
                     return;
                 }
                 location = value;
-                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Location, value, Point.Zero));
+                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Location));
             }
         }
         // Size not adjusted for scale
@@ -114,7 +114,7 @@ namespace Maquina.Elements
                     return;
                 }
                 size = value;
-                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Size, Point.Zero, value));
+                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Size));
             }
         }
         // Size adjusted for scale

@@ -337,9 +337,9 @@ namespace Maquina.UI
                     RecalculateIconLocation();
                     break;
                 case ElementChangedProperty.IgnoreGlobalScale:
-                    Background.IgnoreGlobalScale = e.IgnoreGlobalScale;
-                    Icon.IgnoreGlobalScale = e.IgnoreGlobalScale;
-                    Label.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    Background.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                    Icon.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                    Label.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
                     break;
                 case ElementChangedProperty.Scale:
                     Background.Scale = Scale;

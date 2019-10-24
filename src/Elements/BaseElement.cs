@@ -46,7 +46,7 @@ namespace Maquina.Elements
                 }
 #endif
                 scale = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Scale, value));
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Scale));
             }
         }
         // Scale adjusted for global scale
@@ -69,7 +69,7 @@ namespace Maquina.Elements
             set
             {
                 ignoreGlobalScale = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.IgnoreGlobalScale, value));
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.IgnoreGlobalScale));
             }
         }
         protected bool IsScaleSupported = true;
@@ -83,7 +83,7 @@ namespace Maquina.Elements
             {
                 Location = value.Location;
                 Size = value.Size;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle, value));
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle));
             }
         }
         // Destination rectangle adjusted for scale
@@ -106,7 +106,7 @@ namespace Maquina.Elements
                     return;
                 }
                 location = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Location, value, Point.Zero));
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Location));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Maquina.Elements
                     return;
                 }
                 size = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Size, Point.Zero, value));
+                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Size));
             }
         }
         // Size adjusted for scale

@@ -100,7 +100,7 @@ namespace Maquina.UI
                     Child.Location = Location;
                     break;
                 case ElementChangedProperty.IgnoreGlobalScale:
-                    Child.IgnoreGlobalScale = e.IgnoreGlobalScale;
+                    Child.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
                     break;
                 default:
                     break;
