@@ -23,6 +23,7 @@ namespace Maquina.Elements
         float Scale { get; set; }
         float ActualScale { get; }
         float LayerDepth { get; set; }
+        float Opacity { get; set; }
         bool IgnoreGlobalScale { get; set; }
 
         // Events

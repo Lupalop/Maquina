@@ -19,6 +19,7 @@ namespace Maquina.Elements
             SpriteBatch = Global.SpriteBatch;
             SourceRectangle = null;
             SpriteType = SpriteType.None;
+            Opacity = 1;
 
             DelayInterval = 100;
             Rows = 1;
@@ -120,6 +121,7 @@ namespace Maquina.Elements
         }
         
         public float LayerDepth { get; set; }
+        public float Opacity { get; set; }
 
         // For animated sprites
         private Timer DelayTimer;
@@ -212,7 +214,7 @@ namespace Maquina.Elements
             if (Graphic != null)
             {
                 SpriteBatch.Draw(Graphic, ActualDestinationRectangle,
-                    SourceRectangle, Tint, Rotation, RotationOrigin,
+                    SourceRectangle, Tint * Opacity, Rotation, RotationOrigin,
                     SpriteEffects, LayerDepth);
             }
         }

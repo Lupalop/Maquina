@@ -60,6 +60,11 @@ namespace Maquina.UI
             get { return Child.LayerDepth; }
             set { Child.LayerDepth = value; }
         }
+        public float Opacity
+        {
+            get { return Child.Opacity; }
+            set { Child.Opacity = value; }
+        }
 
         // Draw and update methods
         public override void Draw(GameTime gameTime)

@@ -205,6 +205,18 @@ namespace Maquina.UI
                 Tooltip.LayerDepth = value - 0.15f;
             }
         }
+        private float opacity;
+        public float Opacity
+        {
+            get { return opacity; }
+            set
+            {
+                opacity = value;
+                Background.Opacity = value;
+                Icon.Opacity = value;
+                Label.Opacity = value;
+            }
+        }
 
         // Draw and update methods
         public override void Draw(GameTime gameTime)

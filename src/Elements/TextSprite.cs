@@ -16,6 +16,7 @@ namespace Maquina.Elements
             Label = "";
             Scale = 1;
             LayerDepth = 1f;
+            Opacity = 1;
             SpriteBatch = Global.SpriteBatch;
         }
 
@@ -128,11 +129,12 @@ namespace Maquina.Elements
             }
         }
         public float LayerDepth { get; set; }
+        public float Opacity { get; set; }
 
         // Draw and update methods
         public virtual void Draw(GameTime gameTime)
         {
-            SpriteBatch.DrawString(Font, Label, Location.ToVector2(), Tint,
+            SpriteBatch.DrawString(Font, Label, Location.ToVector2(), Tint * Opacity,
                 Rotation, RotationOrigin, ActualScale, SpriteEffects, LayerDepth);
         }
 
