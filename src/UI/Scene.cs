@@ -1,126 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Input.Touch;
 using Maquina.Elements;
-using System.Collections.ObjectModel;
 
 namespace Maquina.UI
 {
-    public abstract class Scene
+    public abstract class Scene : IDisposable
     {
-        public Scene(string sceneName = "Untitled Scene")
+        public Scene(string sceneName)
         {
-            // Scene name assignment
-            SceneName = sceneName;
-            // 
+            Name = sceneName;
             Elements = new Dictionary<string, BaseElement>();
-            // Layout stuff
-            IsFirstUpdateDone = false;
         }
+        public Scene() : this("Untitled Scene") { }
 
         protected Game Game { get { return Global.Game; } }
         protected SpriteBatch SpriteBatch { get { return Global.SpriteBatch; } }
 
-        public IDictionary<string, BaseElement> Elements { get; set; }
-        public string SceneName { get; private set; }
-        private bool IsFirstUpdateDone;
+        public IDictionary<string, BaseElement> Elements { get; protected set; }
+        public string Name { get; private set; }
 
-        public event EventHandler LoadContentFinished;
-        public event EventHandler UnloadFinished;
+        public event EventHandler ContentLoaded;
+        public event EventHandler Disposed;
 
         protected Rectangle WindowBounds
         {
-            get
-            {
-                return Global.Display.WindowBounds;
-            }
+            get { return Global.Display.WindowBounds; }
         }
 
         public virtual void LoadContent()
         {
 #if LOG_ENABLED
-            LogManager.Info(0, string.Format("Content loaded from: {0}", SceneName));
+            LogManager.Info(0, string.Format("Content loaded from: {0}", Name));
 #endif
-            if (LoadContentFinished != null)
+            if (ContentLoaded != null)
             {
-                LoadContentFinished(this, EventArgs.Empty);
+                ContentLoaded(this, EventArgs.Empty);
             }
         }
 
-        public virtual void Draw(GameTime gameTime) { }
+        public abstract void Draw(GameTime gameTime);
+        public abstract void Update(GameTime gameTime);
 
-        public virtual void Update(GameTime gameTime)
+        public void Dispose()
         {
-            if (!IsFirstUpdateDone)
-            {
-                IsFirstUpdateDone = true;
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public virtual void Unload()
+        protected virtual void Dispose(bool disposing)
         {
-            DisposeElements(Elements);
+            if (disposing)
+            {
+                GuiUtils.DisposeElements(Elements);
 #if LOG_ENABLED
-            LogManager.Info(0, string.Format("Unloaded content from scene: {0}", SceneName));
+                LogManager.Info(0, string.Format("Scene disposed: {0}", Name));
 #endif
-            if (UnloadFinished != null)
-            {
-                UnloadFinished(this, EventArgs.Empty);
-            }
-        }
-
-        public virtual void DisposeElements(IDictionary<string, BaseElement> objects)
-        {
-            DisposeElements(objects.Values);
-        }
-        public virtual void DisposeElements(IEnumerable<BaseElement> objects)
-        {
-            for (int i = 0; i < objects.Count(); i++)
-            {
-                objects.ElementAt(i).Dispose();
-            }
-        }
-
-        public virtual void DrawElements(GameTime gameTime, IDictionary<string, BaseElement> objects)
-        {
-            DrawElements(gameTime, objects.Values);
-        }
-        public virtual void DrawElements(GameTime gameTime, IEnumerable<BaseElement> objects)
-        {
-            if (!IsFirstUpdateDone)
-            {
-                return;
-            }
-            // Draw elements in the element array
-            for (int i = 0; i < objects.Count(); i++)
-            {
-                try
+                if (Disposed != null)
                 {
-                    objects.ElementAt(i).Draw(gameTime);
+                    Disposed(this, EventArgs.Empty);
                 }
-                catch (NullReferenceException)
-                { 
-                    // Suppress errors
-                }
-            }
-        }
-
-        public virtual void UpdateElements(GameTime gameTime, IDictionary<string, BaseElement> elements)
-        {
-            UpdateElements(gameTime, elements.Values);
-        }
-        public virtual void UpdateElements(GameTime gameTime, IEnumerable<BaseElement> elements)
-        {
-            for (int i = 0; i < elements.Count(); i++)
-            {
-                BaseElement element = elements.ElementAt(i);
-                element.Update(gameTime);
             }
         }
     }

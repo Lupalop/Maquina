@@ -13,7 +13,7 @@ namespace Maquina.UI
         public override void Draw(GameTime gameTime)
         {
             Game.GraphicsDevice.Clear(Color.Black);
-            base.Draw(gameTime);
         }
+        public override void Update(GameTime gameTime) { }
     }
 }

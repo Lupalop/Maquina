@@ -44,16 +44,16 @@ namespace Maquina
                     newScene.LoadContent();
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    oldScene.Unload();
+                    oldScene.Dispose();
                     break;
                 case NotifyCollectionChangedAction.Replace:
-                    oldScene.Unload();
+                    oldScene.Dispose();
                     newScene.LoadContent();
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     foreach (Scene scene in Overlays.Values)
                     {
-                        scene.Unload();
+                        scene.Dispose();
                     }
                     break;
             }
@@ -62,35 +62,18 @@ namespace Maquina
         public ObservableDictionary<string, Scene> Overlays { get; private set; }
 
         public Scene CurrentScene { get; protected set; }
-        private Scene _storedScene;
-        public Scene StoredScene
-        {
-            get
-            {
-                return _storedScene;
-            }
-            set
-            {
-                // Preload content
-                value.LoadContent();
-                _storedScene = value;
-            }
-        }
 
         public void SwitchToScene(Scene scene, bool shouldLoadContent = true)
         {
-#if LOG_ENABLED
-            LogManager.Info(0, string.Format("Switched to scene: {0}", scene.SceneName));
-#endif
             if (scene == null)
             {
 #if LOG_ENABLED
-                LogManager.Error(0, "Unable to switch to a `null` scene.");
+                LogManager.Error(0, "Can't switch to a non-existent scene.");
 #endif
                 return;
             }
             // Show a fade effect when switching
-            string overlayKey = String.Format("fade-{0}", scene);
+            string overlayKey = string.Format("fade-{0}", scene);
             FadeOverlay overlay = new FadeOverlay(overlayKey);
             if (!Overlays.ContainsKey(overlayKey))
             {
@@ -99,7 +82,7 @@ namespace Maquina
             // Unload previous scene
             if (CurrentScene != null)
             {
-                CurrentScene.Unload();
+                CurrentScene.Dispose();
             }
             // Check if load content should still be called
             if (shouldLoadContent)
@@ -107,26 +90,23 @@ namespace Maquina
                 scene.LoadContent();
             }
             // Set current state to given scene
-            overlay.FadeInAnimation.AnimationFinished += (sender, e) => CurrentScene = scene;
-        }
-
-        public bool SwitchToStoredScene()
-        {
-            if (StoredScene == null)
+            overlay.FadeInAnimation.AnimationFinished += (sender, e) =>
             {
-                return false;
-            }
-            SwitchToScene(StoredScene, false);
-            return true;
+#if LOG_ENABLED
+                LogManager.Info(0, string.Format("Switched to scene: {0}", scene.Name));
+#endif
+                CurrentScene = scene;
+            };
         }
 
         public void TryRemoveOverlays(string name)
         {
             for (int i = 0; i < Overlays.Keys.Count; i++)
             {
-                if (Overlays.Keys.ElementAt(i).Contains(name))
+                string overlayKey = Overlays.Keys.ElementAt(i);
+                if (overlayKey.Contains(name))
                 {
-                    Overlays.Remove(Overlays.Keys.ElementAt(i));
+                    Overlays.Remove(overlayKey);
                 }
             }
         }
@@ -137,7 +117,7 @@ namespace Maquina
             // If there are Overlays, call their draw method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Overlays[Overlays.Keys.ElementAt(i)].Draw(gameTime);
+                Overlays.Values.ElementAt(i).Draw(gameTime);
             }
         }
 
@@ -147,7 +127,7 @@ namespace Maquina
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Overlays[Overlays.Keys.ElementAt(i)].Update(gameTime);
+                Overlays.Values.ElementAt(i).Update(gameTime);
             }
         }
 
@@ -161,7 +141,7 @@ namespace Maquina
         {
             if (disposing)
             {
-                CurrentScene.Unload();
+                CurrentScene.Dispose();
                 Overlays.Clear();
             }
         }

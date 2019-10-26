@@ -292,10 +292,7 @@ namespace Maquina.UI
                 ElementChanged -= StackPanel_ElementChanged;
                 DisabledStateChanged -= StackPanel_DisabledStateChanged;
                 Global.Display.ScaleChanged -= Global_ScaleChanged;
-                foreach (var element in Children.Values)
-                {
-                    element.Dispose();
-                }
+                GuiUtils.DisposeElements(Children);
             }
             base.Dispose(disposing);
         }

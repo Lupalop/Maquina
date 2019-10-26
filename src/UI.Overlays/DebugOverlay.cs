@@ -95,7 +95,7 @@ namespace Maquina.UI
                 {
                     List<string> keyList = Global.Scenes.Overlays.Keys.ToList();
                     sceneOverlayList += String.Format("Key {0}: {2}, Scene Name: {1} \n",
-                        i, Global.Scenes.Overlays[keyList[i]].SceneName, keyList[i]);
+                        i, Global.Scenes.Overlays[keyList[i]].Name, keyList[i]);
                 }
             }
             // List elements loaded
@@ -166,7 +166,7 @@ namespace Maquina.UI
             if (isCounterVisible[2])
             {
                 string sceneManagerInfo = sceneInfoHeader + 
-                    string.Format(sceneCurrentHeader, Global.Scenes.CurrentScene.SceneName) + 
+                    string.Format(sceneCurrentHeader, Global.Scenes.CurrentScene.Name) + 
                     string.Format(sceneOverlayHeader, Global.Scenes.Overlays.Count) + 
                     sceneOverlayList;
                 SpriteBatch.DrawString(Global.Fonts["o-default"], sceneManagerInfo, new Vector2(0, 0), Color.White);
