@@ -89,6 +89,13 @@ namespace Maquina
 #endif
                 return;
             }
+            // Show a fade effect when switching
+            string overlayKey = String.Format("fade-{0}", scene);
+            FadeOverlay overlay = new FadeOverlay(overlayKey);
+            if (!Overlays.ContainsKey(overlayKey))
+            {
+                Overlays.Add(overlayKey, overlay);
+            }
             // Unload previous scene
             if (CurrentScene != null)
             {
@@ -100,13 +107,7 @@ namespace Maquina
                 scene.LoadContent();
             }
             // Set current state to given scene
-            CurrentScene = scene;
-            // Show a fade effect when switching
-            string overlayKey = String.Format("fade-{0}", scene);
-            if (!Overlays.ContainsKey(overlayKey))
-            {
-                Overlays.Add(overlayKey, new FadeOverlay(overlayKey));
-            }
+            overlay.FadeInAnimation.AnimationFinished += (sender, e) => CurrentScene = scene;
         }
 
         public bool SwitchToStoredScene()
