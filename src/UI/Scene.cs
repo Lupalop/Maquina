@@ -18,23 +18,17 @@ namespace Maquina.UI
         {
             // Scene name assignment
             SceneName = sceneName;
-            // Create local references to global properties
-            SceneManager = Global.Scenes;
-            InputManager = Global.Input;
-            Game = Global.Game;
-            SpriteBatch = Global.SpriteBatch;
-            Fonts = Global.Fonts;
             // 
             Elements = new Dictionary<string, BaseElement>();
             // Layout stuff
             IsFirstUpdateDone = false;
         }
 
-        protected SceneManager SceneManager { get; private set; }
-        protected InputManager InputManager { get; private set; }
-        protected Game Game { get; private set; }
-        protected SpriteBatch SpriteBatch { get; private set; }
-        protected Dictionary<string, SpriteFont> Fonts { get; private set; }
+        protected SceneManager SceneManager { get { return Global.Scenes; } }
+        protected InputManager InputManager { get { return Global.Input; } }
+        protected Game Game { get { return Global.Game; } }
+        protected SpriteBatch SpriteBatch { get { return Global.SpriteBatch; } }
+        protected Dictionary<string, SpriteFont> Fonts { get { return Global.Fonts; } }
 
         public IDictionary<string, BaseElement> Elements { get; set; }
         public string SceneName { get; private set; }
