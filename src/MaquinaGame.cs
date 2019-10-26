@@ -110,6 +110,7 @@ namespace Maquina
             DisplayManager.Update();
             InputManager.Update();
             SceneManager.Update(gameTime);
+            AnimationManager.Update(gameTime);
             TimerManager.Update(gameTime);
             SoftwareMouse.Update(gameTime);
 

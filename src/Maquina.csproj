@@ -66,9 +66,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimationManager.cs" />
+    <Compile Include="Elements\Animation.cs" />
     <Compile Include="Elements\BarSprite.cs" />
     <Compile Include="Elements\ContainerElement.cs" />
     <Compile Include="Elements\ElementChangedEvent.cs" />
+    <Compile Include="Elements\FadeInAnimation.cs" />
+    <Compile Include="Elements\FadeOutAnimation.cs" />
+    <Compile Include="Elements\IAnimation.cs" />
     <Compile Include="Elements\ISprite.cs" />
     <Compile Include="Elements\Sprite.cs" />
     <Compile Include="Elements\TextSprite.cs" />
