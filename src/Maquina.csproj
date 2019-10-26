@@ -71,8 +71,7 @@
     <Compile Include="Elements\BarSprite.cs" />
     <Compile Include="Elements\ContainerElement.cs" />
     <Compile Include="Elements\ElementChangedEvent.cs" />
-    <Compile Include="Elements\FadeInAnimation.cs" />
-    <Compile Include="Elements\FadeOutAnimation.cs" />
+    <Compile Include="Elements\FadeAnimation.cs" />
     <Compile Include="Elements\IAnimation.cs" />
     <Compile Include="Elements\ISprite.cs" />
     <Compile Include="Elements\Sprite.cs" />
