@@ -89,6 +89,8 @@ namespace Maquina
             {
                 scene.LoadContent();
             }
+            // Do a pre-current scene update pass
+            scene.Update();
             // Set current state to given scene
             overlay.FadeInAnimation.AnimationFinished += (sender, e) =>
             {
