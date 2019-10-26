@@ -111,23 +111,23 @@ namespace Maquina
             }
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
-            CurrentScene.Draw(gameTime);
+            CurrentScene.Draw();
             // If there are Overlays, call their draw method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Overlays.Values.ElementAt(i).Draw(gameTime);
+                Overlays.Values.ElementAt(i).Draw();
             }
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            CurrentScene.Update(gameTime);
+            CurrentScene.Update();
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Overlays.Values.ElementAt(i).Update(gameTime);
+                Overlays.Values.ElementAt(i).Update();
             }
         }
 

@@ -67,21 +67,21 @@ namespace Maquina.UI
         }
 
         // Draw and update methods
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
             if (Child != null)
             {
-                Child.Draw(gameTime);
+                Child.Draw();
             }
-            base.Draw(gameTime);
+            base.Draw();
         }
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             if (Child != null)
             {
-                Child.Update(gameTime);
+                Child.Update();
             }
-            base.Update(gameTime);
+            base.Update();
         }
 
         // Listeners

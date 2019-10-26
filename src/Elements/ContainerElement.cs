@@ -18,24 +18,24 @@ namespace Maquina.Elements
 
         public ObservableDictionary<string, BaseElement> Children { get; set; }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
             foreach (BaseElement element in Children.Values)
             {
-                element.Draw(gameTime);
+                element.Draw();
             }
 
-            base.Draw(gameTime);
+            base.Draw();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             foreach (BaseElement element in Children.Values)
             {
-                element.Update(gameTime);
+                element.Update();
             }
 
-            base.Update(gameTime);
+            base.Update();
         }
     }
 }

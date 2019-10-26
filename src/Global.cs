@@ -48,6 +48,7 @@ namespace Maquina
         // Engine properties
         public static SpriteBatch SpriteBatch { get; set; }
         public static Game Game { get; set; }
+        public static GameTime GameTime { get; set; }
 
         // Engine managers
         public static SceneManager Scenes { get; set; }

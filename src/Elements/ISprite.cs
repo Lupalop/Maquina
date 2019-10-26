@@ -30,7 +30,7 @@ namespace Maquina.Elements
         event ElementChangedEventHandler SpriteChanged;
 
         // Draw and update methods
-        void Draw(GameTime gameTime);
-        void Update(GameTime gameTime);
+        void Draw();
+        void Update();
     }
 }

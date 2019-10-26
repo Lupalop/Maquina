@@ -107,12 +107,14 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            Global.GameTime = gameTime;
+
             DisplayManager.Update();
             InputManager.Update();
-            SceneManager.Update(gameTime);
-            AnimationManager.Update(gameTime);
-            TimerManager.Update(gameTime);
-            SoftwareMouse.Update(gameTime);
+            SceneManager.Update();
+            AnimationManager.Update();
+            TimerManager.Update();
+            SoftwareMouse.Update();
 
             base.Update(gameTime);
         }
@@ -123,8 +125,9 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            SceneManager.Draw(gameTime);
-            SoftwareMouse.Draw(gameTime);
+            SceneManager.Draw();
+            SoftwareMouse.Draw();
+
             base.Draw(gameTime);
         }
     }

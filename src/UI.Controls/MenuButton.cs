@@ -219,30 +219,30 @@ namespace Maquina.UI
         }
 
         // Draw and update methods
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
             if (Background != null && MenuBackground != null)
             {
-                Background.Draw(gameTime);
+                Background.Draw();
             }
             if (Label != null)
             {
-                Label.Draw(gameTime);
+                Label.Draw();
             }
             if (Icon != null && MenuIcon != null)
             {
-                Icon.Draw(gameTime);
+                Icon.Draw();
             }
             if (Tooltip != null)
             {
-                Tooltip.Draw(gameTime);
+                Tooltip.Draw();
             }
-            base.Draw(gameTime);
+            base.Draw();
         }
 
         bool LeftClickFired;
         bool RightClickFired;
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Background.CurrentFrame = 0;
 
@@ -314,22 +314,22 @@ namespace Maquina.UI
 
             if (Background != null)
             {
-                Background.Update(gameTime);
+                Background.Update();
             }
             if (Label != null)
             {
-                Label.Update(gameTime);
+                Label.Update();
             }
             if (Icon != null)
             {
-                Icon.Update(gameTime);
+                Icon.Update();
             }
             if (Tooltip != null)
             {
-                Tooltip.Update(gameTime);
+                Tooltip.Update();
             }
 
-            base.Update(gameTime);
+            base.Update();
         }
         
         // Listeners

@@ -120,14 +120,14 @@ namespace Maquina
         private double interval;
         private double timeElapsed;
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             if (!Enabled)
             {
                 return;
             }
 
-            timeElapsed += gameTime.ElapsedGameTime.TotalMilliseconds;
+            timeElapsed += Global.GameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (timeElapsed >= Interval)
             {

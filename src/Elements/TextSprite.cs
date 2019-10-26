@@ -132,13 +132,13 @@ namespace Maquina.Elements
         public float Opacity { get; set; }
 
         // Draw and update methods
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw()
         {
             SpriteBatch.DrawString(Font, Label, Location.ToVector2(), Tint * Opacity,
                 Rotation, RotationOrigin, ActualScale, SpriteEffects, LayerDepth);
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update()
         {
             // Do nothing
         }

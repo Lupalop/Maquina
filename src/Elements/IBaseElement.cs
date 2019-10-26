@@ -10,7 +10,7 @@ namespace Maquina.Elements
         string Name { get; set; }
         string Id { get; }
 
-        void Update(GameTime gameTime);
-        void Draw(GameTime gameTime);
+        void Update();
+        void Draw();
     }
 }

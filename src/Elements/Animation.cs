@@ -57,7 +57,7 @@ namespace Maquina.Elements
             IsRunning = false;
         }
 
-        public abstract void Update(GameTime gameTime);
+        public abstract void Update();
 
         // IDisposable implementation
         public void Dispose()

@@ -44,16 +44,16 @@ namespace Maquina.UI
             base.LoadContent();
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
             SpriteBatch.Begin();
-            GuiUtils.DrawElements(gameTime, Elements);
+            GuiUtils.DrawElements(Elements);
             SpriteBatch.End();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            GuiUtils.UpdateElements(gameTime, Elements);
+            GuiUtils.UpdateElements(Elements);
         }
 
         protected override void Dispose(bool disposing)

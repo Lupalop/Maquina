@@ -22,11 +22,11 @@ namespace Maquina
             Animations.Remove(timer);
         }
 
-        public static void Update(GameTime gameTime)
+        public static void Update()
         {
             for (int i = 0; i < Animations.Count; i++)
             {
-                Animations[i].Update(gameTime);
+                Animations[i].Update();
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Maquina.Elements
 
         private float Opacity = 1;
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Opacity -= Speed;
             Target.Opacity = Opacity;
@@ -30,7 +30,7 @@ namespace Maquina.Elements
 
         private float Opacity = 0;
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Opacity += Speed;
             Target.Opacity = Opacity;

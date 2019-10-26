@@ -164,12 +164,12 @@ namespace Maquina.Elements
         }
 
         // Update and draw methods
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update()
         {
             OnElementUpdated();
         }
 
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw()
         {
             OnElementDrawn();
         }

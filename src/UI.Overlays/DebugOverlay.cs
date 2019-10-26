@@ -52,7 +52,7 @@ namespace Maquina.UI
 #endif
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             // FPS Counter
             if (Global.Input.KeyPressed(Keys.F2))
@@ -72,7 +72,7 @@ namespace Maquina.UI
             if (Global.Input.KeyPressed(Keys.F8))
                 Global.Display.Scale -= 0.1f;
 
-            elapsedTime += gameTime.ElapsedGameTime;
+            elapsedTime += Global.GameTime.ElapsedGameTime;
 
             if (elapsedTime > TimeSpan.FromSeconds(1))
             {
@@ -146,7 +146,7 @@ namespace Maquina.UI
             return list;
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
             // FPS Counter
             frameCounter++;

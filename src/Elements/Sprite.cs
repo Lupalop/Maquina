@@ -209,7 +209,7 @@ namespace Maquina.Elements
         }
 
         // Draw and update methods
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw()
         {
             if (Graphic != null)
             {
@@ -219,7 +219,7 @@ namespace Maquina.Elements
             }
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update()
         {
             if (SpriteType != SpriteType.None && CurrentFrame == TotalFrames)
             {

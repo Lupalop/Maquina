@@ -40,8 +40,8 @@ namespace Maquina.UI
             }
         }
 
-        public abstract void Draw(GameTime gameTime);
-        public abstract void Update(GameTime gameTime);
+        public abstract void Draw();
+        public abstract void Update();
 
         public void Dispose()
         {

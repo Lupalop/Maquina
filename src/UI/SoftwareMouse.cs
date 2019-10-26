@@ -43,16 +43,16 @@ namespace Maquina.UI
         }
         public static BlendState BlendState { get; set; }
 
-        public static void Draw(GameTime gameTime)
+        public static void Draw()
         {
             Global.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
-            MouseElement.Draw(gameTime);
+            MouseElement.Draw();
             Global.SpriteBatch.End();
         }
 
-        public static void Update(GameTime gameTime)
+        public static void Update()
         {
-            MouseElement.Update(gameTime);
+            MouseElement.Update();
         }
     }
 }

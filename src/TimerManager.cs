@@ -17,11 +17,11 @@ namespace Maquina
             Timers.Remove(timer);
         }
 
-        public static void Update(GameTime gameTime)
+        public static void Update()
         {
             for (int i = 0; i < Timers.Count; i++)
             {
-                Timers[i].Update(gameTime);
+                Timers[i].Update();
             }
         }
     }
