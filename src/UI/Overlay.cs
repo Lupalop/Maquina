@@ -51,16 +51,5 @@ namespace Maquina.UI
                 GuiUtils.SetElementDisabledState(ParentScene.Elements, DisableParentSceneGui);
             }
         }
-
-        public override void LoadContent()
-        {
-            base.LoadContent();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
     }
-
 }
