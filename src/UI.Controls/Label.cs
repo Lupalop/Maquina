@@ -15,71 +15,29 @@ namespace Maquina.UI
         public Label(string name) : base (name)
         {
             Id = "GUI_LABEL";
-            Child = new TextSprite();
-            Child.SpriteChanged += Child_SpriteChanged;
+            Sprite = new TextSprite();
+            Sprite.SpriteChanged += Child_SpriteChanged;
             ElementChanged += Label_ElementChanged;
-            Text = "";
+            Sprite.Text = "";
         }
 
         // Child elements
-        public TextSprite Child { get; set; }
-
-        // Convenient aliases
-        public SpriteFont Font
-        {
-            get { return Child.Font; }
-            set { Child.Font = value; }
-        }
-        public string Text
-        {
-            get { return Child.Label; }
-            set { Child.Label = value; }
-        }
-        public Color Tint
-        {
-            get { return Child.Tint; }
-            set { Child.Tint = value; }
-        }
-        public float Rotation
-        {
-            get { return Child.Rotation; }
-            set { Child.Rotation = value; }
-        }
-        public Vector2 RotationOrigin
-        {
-            get { return Child.RotationOrigin; }
-            set { Child.RotationOrigin = value; }
-        }
-        public SpriteEffects SpriteEffects
-        {
-            get { return Child.SpriteEffects; }
-            set { Child.SpriteEffects = value; }
-        }
-        public float LayerDepth
-        {
-            get { return Child.LayerDepth; }
-            set { Child.LayerDepth = value; }
-        }
-        public float Opacity
-        {
-            get { return Child.Opacity; }
-            set { Child.Opacity = value; }
-        }
+        public TextSprite Sprite { get; private set; }
 
         // Draw and update methods
         public override void Draw()
         {
-            if (Child != null)
+            if (Sprite != null)
             {
-                Child.Draw();
+                Sprite.Draw();
             }
             base.Draw();
         }
         public override void Update()
         {
-            if (Child != null)
+            if (Sprite != null)
             {
-                Child.Update();
+                Sprite.Update();
             }
             base.Update();
         }
@@ -89,7 +47,7 @@ namespace Maquina.UI
         {
             if (e.Property == ElementChangedProperty.Size)
             {
-                Size = Child.Size;
+                Size = Sprite.Size;
             }
         }
         private void Label_ElementChanged(object sender, ElementChangedEventArgs e)
@@ -97,10 +55,10 @@ namespace Maquina.UI
             switch (e.Property)
             {
                 case ElementChangedProperty.Location:
-                    Child.Location = Location;
+                    Sprite.Location = Location;
                     break;
                 case ElementChangedProperty.IgnoreGlobalScale:
-                    Child.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                    Sprite.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
                     break;
                 default:
                     break;
@@ -112,7 +70,7 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                Child.SpriteChanged -= Child_SpriteChanged;
+                Sprite.SpriteChanged -= Child_SpriteChanged;
                 ElementChanged -= Label_ElementChanged;
             }
             base.Dispose(disposing);

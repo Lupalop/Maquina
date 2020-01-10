@@ -98,8 +98,8 @@ namespace Maquina.UI
         }
         public string MenuLabel
         {
-            get { return Label.Label; }
-            set { Label.Label = value; }
+            get { return Label.Text; }
+            set { Label.Text = value; }
         }
         public Color MenuLabelTint
         {
@@ -135,8 +135,8 @@ namespace Maquina.UI
         // Child 4: Tooltip
         public string TooltipText
         {
-            get { return Tooltip.Label; }
-            set { Tooltip.Label = value; }
+            get { return Tooltip.Text; }
+            set { Tooltip.Text = value; }
         }
         public SpriteFont TooltipFont
         {

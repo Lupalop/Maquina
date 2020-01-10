@@ -14,23 +14,21 @@ namespace Maquina.UI
     {
         static SoftwareMouse()
         {
-            MouseElement = new Image("mouse")
-            {
-                SpriteType = SpriteType.Static,
-                Rows = 1,
-                Columns = 2,
-            };
+            MouseElement = new Image("mouse");
+            MouseElement.Sprite.SpriteType = SpriteType.Static;
+            MouseElement.Sprite.Rows = 1;
+            MouseElement.Sprite.Columns = 2;
             MouseElement.ElementUpdated += (sender, e) =>
             {
                 MouseElement.Location = Global.Input.MousePosition;
-                MouseElement.Background.CurrentFrame = 0;
+                MouseElement.Sprite.CurrentFrame = 0;
 
                 // Change state when selected
                 if (Global.Input.MouseDown(MouseButton.Left) ||
                     Global.Input.MouseDown(MouseButton.Right) ||
                     Global.Input.MouseDown(MouseButton.Middle))
                 {
-                    MouseElement.Background.CurrentFrame = 1;
+                    MouseElement.Sprite.CurrentFrame = 1;
                 }
             };
         }
@@ -38,8 +36,8 @@ namespace Maquina.UI
         public static Image MouseElement;
         public static Texture2D MouseSprite
         {
-            get { return MouseElement.Graphic; }
-            set { MouseElement.Graphic = value; }
+            get { return MouseElement.Sprite.Graphic; }
+            set { MouseElement.Sprite.Graphic = value; }
         }
         public static BlendState BlendState { get; set; }
 

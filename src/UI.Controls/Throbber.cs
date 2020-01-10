@@ -14,13 +14,13 @@ namespace Maquina.UI
         {
             Id = "GUI_THROBBER";
             IsSpinning = true;
-            Graphic = Global.Textures["throbber-default"];
+            Sprite.Graphic = Global.Textures["throbber-default"];
             ElementUpdated += (sender, e) =>
             {
                 if (!IsSpinning)
                     return;
 
-                Background.Rotation += .05f;
+                Sprite.Rotation += .05f;
             };
             ElementChanged -= Image_ElementChanged;
             ElementChanged += Throbber_ElementChanged;
@@ -34,15 +34,15 @@ namespace Maquina.UI
 
         private void Throbber_ElementChanged(object sender, ElementChangedEventArgs e)
         {
-            Background.RotationOrigin = new Vector2(Size.X / 2, Size.Y / 2);
+            Sprite.RotationOrigin = new Vector2(Size.X / 2, Size.Y / 2);
             switch (e.Property)
             {
                 case ElementChangedProperty.Location:
                     Point NewLocation = new Point(Location.X + (ActualSize.X / 2), Location.Y + (ActualSize.Y / 2));
-                    Background.Location = NewLocation;
+                    Sprite.Location = NewLocation;
                     break;
                 case ElementChangedProperty.IgnoreGlobalScale:
-                    Background.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                    Sprite.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
                     break;
                 default:
                     break;

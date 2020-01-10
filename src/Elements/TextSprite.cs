@@ -13,7 +13,7 @@ namespace Maquina.Elements
         {
             Tint = Color.White;
             Font = Global.Fonts["default"];
-            Label = "";
+            Text = "";
             Scale = 1;
             LayerDepth = 1f;
             Opacity = 1;
@@ -54,13 +54,13 @@ namespace Maquina.Elements
             }
         }
 
-        private string label;
-        public string Label
+        private string text;
+        public string Text
         {
-            get { return label; }
+            get { return text; }
             set
             {
-                label = value;
+                text = value;
                 UpdateTextMeasurement();
             }
         }
@@ -134,7 +134,7 @@ namespace Maquina.Elements
         // Draw and update methods
         public virtual void Draw()
         {
-            SpriteBatch.DrawString(Font, Label, Location.ToVector2(), Tint * Opacity,
+            SpriteBatch.DrawString(Font, Text, Location.ToVector2(), Tint * Opacity,
                 Rotation, RotationOrigin, ActualScale, SpriteEffects, LayerDepth);
         }
 
@@ -145,9 +145,9 @@ namespace Maquina.Elements
 
         public void UpdateTextMeasurement()
         {
-            if (font != null && label != null)
+            if (font != null && text != null)
             {
-                Size = font.MeasureString(Label).ToPoint();
+                Size = font.MeasureString(Text).ToPoint();
             }
         }
 
