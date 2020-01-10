@@ -18,13 +18,13 @@ namespace Maquina.UI
             Id = "GUI_TEXTBOX";
 
             // Default TB graphic
-            MenuBackground = Global.Textures["textbox-default"];
-            MenuFont = Global.Fonts["o-default_m"];
-            TooltipFont = Global.Fonts["o-default_m"];
-            MenuBackgroundSpriteType = SpriteType.None;
+            Background.Graphic = Global.Textures["textbox-default"];
+            Label.Font = Global.Fonts["o-default_m"];
+            Tooltip.Font = Global.Fonts["o-default_m"];
+            Background.SpriteType = SpriteType.None;
 
             Global.Game.Window.TextInput += Window_TextInput;
-            MenuLabel = "";
+            Label.Text = "";
             MaxInput = 30;
         }
 
@@ -46,16 +46,16 @@ namespace Maquina.UI
             }
             if (InputManager.ShouldAcceptInput)
             {
-                if (e.Key == Keys.Back && MenuLabel.Length > 0)
+                if (e.Key == Keys.Back && Label.Text.Length > 0)
                 {
-                    MenuLabel = MenuLabel.Remove(MathHelper.Clamp(MenuLabel.Length - 1, 0, int.MaxValue), 1);
+                    Label.Text = Label.Text.Remove(MathHelper.Clamp(Label.Text.Length - 1, 0, int.MaxValue), 1);
                     return;
                 }
-                if (InputManager.ReservedKeys.Contains(e.Key) || MenuLabel.Length > MaxInput)
+                if (InputManager.ReservedKeys.Contains(e.Key) || Label.Text.Length > MaxInput)
                 {
                     return;
                 }
-                MenuLabel += e.Character;
+                Label.Text += e.Character;
             }
         }
     }

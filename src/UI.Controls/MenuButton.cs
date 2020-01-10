@@ -40,8 +40,8 @@ namespace Maquina.UI
             ElementChanged += MenuButton_ElementChanged;
 
             LayerDepth = 1f;
-            TooltipFont = Global.Fonts["o-default_m"];
-            MenuBackground = Global.Textures["button-default"];
+            Tooltip.Font = Global.Fonts["o-default_m"];
+            Background.Graphic = Global.Textures["button-default"];
             ClickSound = Global.SFX["click_default"];
             IconAlignment = HorizontalAlignment.Center;
         }
@@ -50,10 +50,10 @@ namespace Maquina.UI
         protected InputManager InputManager;
         
         // Child elements
-        public Sprite Background { get; set; }
-        public Sprite Icon { get; set; }
-        public TextSprite Label { get; set; }
-        public TextSprite Tooltip { get; set; }
+        public Sprite Background { get; private set; }
+        public Sprite Icon { get; private set; }
+        public TextSprite Label { get; private set; }
+        public TextSprite Tooltip { get; private set; }
 
         // Element events
         public event EventHandler OnLeftClick;
@@ -63,86 +63,6 @@ namespace Maquina.UI
         public SoundEffect ClickSound { get; set; }
         public HorizontalAlignment IconAlignment { get; set; }
         
-        // Aliases
-        // Child 1: Background
-        public Texture2D MenuBackground
-        {
-            get { return Background.Graphic; }
-            set { Background.Graphic = value; }
-        }
-        public Color MenuBackgroundTint
-        {
-            get { return Background.Tint; }
-            set { Background.Tint = value; }
-        }
-        public int MenuBackgroundRows
-        {
-            get { return Background.Rows; }
-            set { Background.Rows = value; }
-        }
-        public int MenuBackgroundColumns
-        {
-            get { return Background.Columns; }
-            set { Background.Columns = value; }
-        }
-        public SpriteType MenuBackgroundSpriteType
-        {
-            get { return Background.SpriteType; }
-            set { Background.SpriteType = value; }
-        }
-        // Child 2: Label
-        public SpriteFont MenuFont
-        {
-            get { return Label.Font; }
-            set { Label.Font = value; }
-        }
-        public string MenuLabel
-        {
-            get { return Label.Text; }
-            set { Label.Text = value; }
-        }
-        public Color MenuLabelTint
-        {
-            get { return Label.Tint; }
-            set { Label.Tint = value; }
-        }
-        // Child 3: Icon
-        public Texture2D MenuIcon
-        {
-            get { return Icon.Graphic; }
-            set { Icon.Graphic = value; }
-        }
-        public Color MenuIconTint
-        {
-            get { return Icon.Tint; }
-            set { Icon.Tint = value; }
-        }
-        public int MenuIconRows
-        {
-            get { return Icon.Rows; }
-            set { Icon.Rows = value; }
-        }
-        public int MenuIconColumns
-        {
-            get { return Icon.Columns; }
-            set { Icon.Columns = value; }
-        }
-        public SpriteType MenuIconSpriteType
-        {
-            get { return Icon.SpriteType; }
-            set { Icon.SpriteType = value; }
-        }
-        // Child 4: Tooltip
-        public string TooltipText
-        {
-            get { return Tooltip.Text; }
-            set { Tooltip.Text = value; }
-        }
-        public SpriteFont TooltipFont
-        {
-            get { return Tooltip.Font; }
-            set { Tooltip.Font = value; }
-        }
         // Common properties
         private Color tint;
         public Color Tint
@@ -221,7 +141,7 @@ namespace Maquina.UI
         // Draw and update methods
         public override void Draw()
         {
-            if (Background != null && MenuBackground != null)
+            if (Background != null)
             {
                 Background.Draw();
             }
@@ -229,7 +149,7 @@ namespace Maquina.UI
             {
                 Label.Draw();
             }
-            if (Icon != null && MenuIcon != null)
+            if (Icon != null)
             {
                 Icon.Draw();
             }
