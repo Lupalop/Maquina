@@ -72,6 +72,7 @@ namespace Maquina
 #endif
                 return;
             }
+            CurrentScene._stopUpdating = true;
             // Show a fade effect when switching
             string overlayKey = string.Format("fade-{0}", scene);
             FadeOverlay overlay = new FadeOverlay(overlayKey);
@@ -125,7 +126,10 @@ namespace Maquina
 
         public void Update()
         {
-            CurrentScene.Update();
+            if (!CurrentScene._stopUpdating)
+            {
+                CurrentScene.Update();
+            }
             // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {

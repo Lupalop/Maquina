@@ -21,6 +21,8 @@ namespace Maquina.UI
         public IDictionary<string, BaseElement> Elements { get; protected set; }
         public string Name { get; private set; }
 
+        internal bool _stopUpdating = false;
+
         public event EventHandler ContentLoaded;
         public event EventHandler Disposed;
 
