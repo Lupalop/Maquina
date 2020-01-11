@@ -11,77 +11,30 @@ namespace Maquina
     [Serializable]
     public struct Region : IEquatable<Region>
     {
-        private int top;
-        public int Top
-        {
-            get
-            {
-                return top;
-            }
-            set
-            {
-                top = value;
-            }
-        }
-        private int right;
-        public int Right
-        {
-            get
-            {
-                return right;
-            }
-            set
-            {
-                right = value;
-            }
-        }
-        private int bottom;
-        public int Bottom
-        {
-            get
-            {
-                return bottom;
-            }
-            set
-            {
-                bottom = value;
-            }
-        }
-        private int left;
-        public int Left
-        {
-            get
-            {
-                return left;
-            }
-            set
-            {
-                left = value;
-            }
-        }
+        public int Top { get; set; }
+        public int Right { get; set; }
+        public int Bottom { get; set; }
+        public int Left { get; set; }
 
         public Region(int top, int right, int bottom, int left)
         {
-            this.top = top;
-            this.right = right;
-            this.bottom = bottom;
-            this.left = left;
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+            Left = left;
         }
 
         public Region(Point height, Point width)
         {
-            this.top = height.X;
-            this.bottom = height.Y;
-            this.right = width.X;
-            this.left = width.Y;
+            Top = height.X;
+            Bottom = height.Y;
+            Right = width.X;
+            Left = width.Y;
         }
 
         public static Region Empty
         {
-            get
-            {
-                return default(Region);
-            }
+            get { return default(Region); }
         }
 
         public bool IsEmpty
