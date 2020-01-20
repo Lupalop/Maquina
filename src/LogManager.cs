@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Maquina
 {
-#if LOG_ENABLED
     public static class LogManager
     {
         /// <summary>
@@ -28,6 +27,7 @@ namespace Maquina
         /// <param name="message">The message held by the log entry.</param>
         public static void Log(LogEntryLevel logLevel, int logGroup, string message)
         {
+#if LOG_ENABLED
             LogEntry entry = new LogEntry(logLevel, logGroup, message);
             Entries.Add(entry);
 #if HAS_CONSOLE
@@ -35,6 +35,7 @@ namespace Maquina
             {
                 Console.WriteLine(entry.ToString());
             }
+#endif
 #endif
         }
 
@@ -68,24 +69,4 @@ namespace Maquina
             Log(LogEntryLevel.Error, logGroup, message);
         }
     }
-#else
-    // Stub implementation
-    public static class LogManager
-    {
-        /// <summary>
-        /// A list containing objects of type <see cref="LogEntry"/>.
-        /// </summary>
-        public static List<LogEntry> Entries { get; private set; } = new List<LogEntry>();
-
-        /// <summary>
-        /// Gets or sets a value indicating whether messages of the log entries should be redirected to <see cref="Console"/>.
-        /// </summary>
-        public static bool RedirectOutputToConsole { get; set; }
-
-        public static void Log(LogEntryLevel logLevel, int logGroup, string message) { }
-        public static void Info(int logGroup, string message) { }
-        public static void Warn(int logGroup, string message) { }
-        public static void Error(int logGroup, string message) { }
-    }
-#endif
 }
