@@ -13,8 +13,8 @@ using System.Runtime.InteropServices;
 #else
 [assembly: AssemblyConfiguration("RELEASE")]
 #endif
-[assembly: AssemblyCompany("Produksiyong Lúpalop")]
-[assembly: AssemblyCopyright("Copyright © 2018-2019 Produksiyong Lúpalop")]
+[assembly: AssemblyCompany("Lúpalop")]
+[assembly: AssemblyCopyright("Copyright © 2018-2020 Lúpalop")]
 [assembly: AssemblyTrademark("No trademarks registered")]
 [assembly: CLSCompliant(true)]
 
