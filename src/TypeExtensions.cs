@@ -26,9 +26,5 @@ namespace Maquina
                     .GroupBy(e => e.Key)
                     .ToDictionary(g => g.Key, g => g.Last().Value);
         }
-        public static Vector2 Truncate(this Vector2 vector)
-        {
-            return new Vector2((int)vector.X, (int)vector.Y);
-        }
     }
 }
