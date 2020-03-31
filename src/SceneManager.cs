@@ -72,6 +72,13 @@ namespace Maquina
 #endif
                 return;
             }
+            if (CurrentScene == scene)
+            {
+#if LOG_ENABLED
+                LogManager.Error(0, "Can't switch to the given scene because it is the current scene.");
+#endif
+                return;
+            }
             CurrentScene._stopUpdating = true;
             // Show a fade effect when switching
             string overlayKey = string.Format("fade-{0}", scene);
