@@ -18,7 +18,7 @@ namespace Maquina
             // Run the command parser on a separate thread to avoid blocking
             // the main thread. MonoGame doesn't support running the game
             // asynchronously and using Task will cause problems.
-            Thread parserThread = new Thread(() => ParseCommands());
+            Thread parserThread = new Thread(ParseCommands);
             parserThread.Start();
         }
 
