@@ -8,6 +8,14 @@ using System.IO;
 
 namespace Maquina
 {
+    public enum PreferenceType
+    {
+        String,
+        Boolean,
+        Integer,
+        Float
+    }
+
     public class PreferencesManager : IDisposable
     {
         public const string PreferencesXml = "preferences.xml";
@@ -59,93 +67,90 @@ namespace Maquina
             }
         }
 
-        // Getters
-        public string GetPreference(string type, string name)
+        private string DeterminePreferenceType(PreferenceType typeId)
         {
-            IEnumerable<XElement> element =
-                from el in PreferencesElement.Elements(type)
-                where (string)el.Attribute("id") == name
-                select el;
-            XElement node = element.ElementAtOrDefault(0);
-            string value = null;
-            if (node != null)
+            string type;
+            switch (typeId)
             {
-                value = node.Value;
+                case PreferenceType.String:
+                    type = "string";
+                    break;
+                case PreferenceType.Boolean:
+                    type = "bool";
+                    break;
+                case PreferenceType.Integer:
+                    type = "int";
+                    break;
+                case PreferenceType.Float:
+                    type = "float";
+                    break;
+                default:
+                    type = "object";
+                    break;
             }
-#if LOG_ENABLED
-            LogManager.Info(0, string.Format("Get Pref - Type: {0}, Name: {1}, Value: {2}",
-                type, name, (value != null) ? value : "default"));
-#endif
-            return value;
-        }
-        public bool GetBoolPreference(string name, bool defaultValue = false)
-        {
-            string result = GetPreference("bool", name);
-            bool value = defaultValue;
-            if (result != null)
-            {
-                bool.TryParse(result, out value);
-            }
-            return value;
-        }
-        public int GetIntPreference(string name, int defaultValue = 0)
-        {
-            string result = GetPreference("int", name);
-            int value = defaultValue;
-            if (result != null)
-            {
-                int.TryParse(result, out value);
-            }
-            return value;
-        }
-        public string GetStringPreference(string name, string defaultValue = "")
-        {
-            string result = GetPreference("string", name);
-            if (result != null)
-            {
-                return result;
-            }
-            return defaultValue;
+            return type;
         }
 
-        // Setters
-        public void SetPreference(string type, string name, object value)
+        public object this[PreferenceType typeId, string name]
         {
-            IEnumerable<XElement> element =
-                from el in PreferencesElement.Elements(type)
-                where (string)el.Attribute("id") == name
-                select el;
-            XElement node = element.ElementAtOrDefault(0);
-            if (node != null)
+            get
             {
-                node.Value = value.ToString();
+                string type = DeterminePreferenceType(typeId);
+                IEnumerable<XElement> element =
+                    from el in PreferencesElement.Elements(type)
+                    where (string)el.Attribute("id") == name
+                    select el;
+                XElement node = element.ElementAtOrDefault(0);
+                string value = null;
+                if (node != null)
+                {
+                    value = node.Value;
+                }
 #if LOG_ENABLED
-                LogManager.Info(0, string.Format("Set Pref - Type: {0}, Name: {1}, Old value: {2}, New value: {3}",
-                    type, name, node.Value, value));
+                LogManager.Info(0, string.Format("Get Pref - Type: {0}, Name: {1}, Value: {2}",
+                    type, name, (value != null) ? value : "default"));
 #endif
-                return;
+                return value;
             }
-            // Create preference if node doesn't exist
-            PreferencesElement.Add(new XElement(type, new XAttribute("id", name), value));
+            set
+            {
+                string type = DeterminePreferenceType(typeId);
+                IEnumerable<XElement> element =
+                    from el in PreferencesElement.Elements(type)
+                    where (string)el.Attribute("id") == name
+                    select el;
+                XElement node = element.ElementAtOrDefault(0);
+                if (node != null)
+                {
+                    node.Value = value.ToString();
 #if LOG_ENABLED
-            LogManager.Info(0, string.Format("New Pref - Type: {0}, Name: {1}, Value: {2}",
-                type, name, value));
+                    LogManager.Info(0, string.Format("Set Pref - Type: {0}, Name: {1}, Old value: {2}, New value: {3}",
+                        type, name, node.Value, value));
 #endif
-        }
-        public void SetBoolPreference(string name, bool value)
-        {
-            SetPreference("bool", name, value);
-        }
-        public void SetIntPreference(string name, int value)
-        {
-            SetPreference("int", name, value);
-        }
-        public void SetStringPreference(string name, string value)
-        {
-            SetPreference("string", name, value);
+                    return;
+                }
+                // Create preference if node doesn't exist
+                PreferencesElement.Add(new XElement(type, new XAttribute("id", name), value));
+#if LOG_ENABLED
+                LogManager.Info(0, string.Format("New Pref - Type: {0}, Name: {1}, Value: {2}",
+                    type, name, value));
+#endif
+            }
         }
 
-        // Misc
+        public object this[PreferenceType typeId, string name, object defaultValue]
+        {
+            get
+            {
+                object value = this[typeId, name];
+                if (value != null)
+                {
+                    return value;
+                }
+                return defaultValue;
+            }
+        }
+
         public void Save()
         {
             using (FileStream filestream = new FileStream(filename, FileMode.Create))
