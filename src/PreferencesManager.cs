@@ -8,17 +8,10 @@ using System.IO;
 
 namespace Maquina
 {
-    public enum PreferenceType
-    {
-        String,
-        Boolean,
-        Integer,
-        Float
-    }
-
     public class PreferencesManager : IDisposable
     {
         public const string PreferencesXml = "preferences.xml";
+        private const string SubElementName = "preference";
         public PreferencesManager()
         {
             Filename = PreferencesXml;
@@ -29,7 +22,7 @@ namespace Maquina
         {
             get { return new XDocument(new XElement("preferences")); }
         }
-        public XElement PreferencesElement
+        public XElement RootElement
         {
             get { return Document.Element("preferences"); }
         }
@@ -67,37 +60,12 @@ namespace Maquina
             }
         }
 
-        private string DeterminePreferenceType(PreferenceType typeId)
-        {
-            string type;
-            switch (typeId)
-            {
-                case PreferenceType.String:
-                    type = "string";
-                    break;
-                case PreferenceType.Boolean:
-                    type = "bool";
-                    break;
-                case PreferenceType.Integer:
-                    type = "int";
-                    break;
-                case PreferenceType.Float:
-                    type = "float";
-                    break;
-                default:
-                    type = "object";
-                    break;
-            }
-            return type;
-        }
-
-        public object this[PreferenceType typeId, string name]
+        public object this[string name]
         {
             get
             {
-                string type = DeterminePreferenceType(typeId);
                 IEnumerable<XElement> element =
-                    from el in PreferencesElement.Elements(type)
+                    from el in RootElement.Elements(SubElementName)
                     where (string)el.Attribute("id") == name
                     select el;
                 XElement node = element.ElementAtOrDefault(0);
@@ -107,16 +75,15 @@ namespace Maquina
                     value = node.Value;
                 }
 #if LOG_ENABLED
-                LogManager.Info(0, string.Format("Get Pref - Type: {0}, Name: {1}, Value: {2}",
-                    type, name, (value != null) ? value : "default"));
+                LogManager.Info(0, string.Format("Get Pref - Name: {0}, Value: {1}",
+                    name, (value != null) ? value : "default"));
 #endif
                 return value;
             }
             set
             {
-                string type = DeterminePreferenceType(typeId);
                 IEnumerable<XElement> element =
-                    from el in PreferencesElement.Elements(type)
+                    from el in RootElement.Elements(SubElementName)
                     where (string)el.Attribute("id") == name
                     select el;
                 XElement node = element.ElementAtOrDefault(0);
@@ -124,25 +91,24 @@ namespace Maquina
                 {
                     node.Value = value.ToString();
 #if LOG_ENABLED
-                    LogManager.Info(0, string.Format("Set Pref - Type: {0}, Name: {1}, Old value: {2}, New value: {3}",
-                        type, name, node.Value, value));
+                    LogManager.Info(0, string.Format("Set Pref - Name: {0}, Old value: {1}, New value: {2}",
+                        name, node.Value, value));
 #endif
                     return;
                 }
                 // Create preference if node doesn't exist
-                PreferencesElement.Add(new XElement(type, new XAttribute("id", name), value));
+                RootElement.Add(new XElement(SubElementName, new XAttribute("id", name), value));
 #if LOG_ENABLED
-                LogManager.Info(0, string.Format("New Pref - Type: {0}, Name: {1}, Value: {2}",
-                    type, name, value));
+                LogManager.Info(0, string.Format("New Pref - Name: {0}, Value: {1}", name, value));
 #endif
             }
         }
 
-        public object this[PreferenceType typeId, string name, object defaultValue]
+        public object this[string name, object defaultValue]
         {
             get
             {
-                object value = this[typeId, name];
+                object value = this[name];
                 if (value != null)
                 {
                     return value;

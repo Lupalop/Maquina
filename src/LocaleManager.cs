@@ -20,7 +20,7 @@ namespace Maquina
             RootDirectory = "locales";
             DefaultLocale = "en-US";
             Strings = new Dictionary<string, string>();
-            LanguageCode = Application.Preferences.GetStringPreference("app.locale", DefaultLocale);
+            LanguageCode = (string)Application.Preferences["app.locale", DefaultLocale];
         }
 
         private string languageCode;
