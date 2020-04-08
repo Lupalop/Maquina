@@ -66,8 +66,8 @@ namespace Maquina.UI
         // Alias
         public Texture2D ContainerBackground
         {
-            get { return Background.Graphic; }
-            set { Background.Graphic = value; }
+            get { return Background.Texture; }
+            set { Background.Texture = value; }
         }
 
         // This flag prevents automatic updating of the container size

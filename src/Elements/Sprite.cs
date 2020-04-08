@@ -27,13 +27,13 @@ namespace Maquina.Elements
         }
 
         // General
-        private Texture2D graphic;
-        public Texture2D Graphic
+        private Texture2D texture;
+        public Texture2D Texture
         {
-            get { return graphic; }
+            get { return texture; }
             set
             {
-                graphic = value;
+                texture = value;
                 UpdateDestinationRectangle();
             }
         }
@@ -211,9 +211,9 @@ namespace Maquina.Elements
         // Draw and update methods
         public virtual void Draw()
         {
-            if (Graphic != null)
+            if (Texture != null)
             {
-                SpriteBatch.Draw(Graphic, ActualDestinationRectangle,
+                SpriteBatch.Draw(Texture, ActualDestinationRectangle,
                     SourceRectangle, Tint * Opacity, Rotation, RotationOrigin,
                     SpriteEffects, LayerDepth);
             }
@@ -226,10 +226,10 @@ namespace Maquina.Elements
                 CurrentFrame = 0;
             }
 
-            if (Graphic != null && SpriteType != SpriteType.None)
+            if (Texture != null && SpriteType != SpriteType.None)
             {
-                int width = Graphic.Width / Columns;
-                int height = Graphic.Height / Rows;
+                int width = Texture.Width / Columns;
+                int height = Texture.Height / Rows;
                 int row = CurrentFrame / Columns;
                 int column = CurrentFrame % Columns;
 
@@ -240,17 +240,17 @@ namespace Maquina.Elements
 
         public void UpdateDestinationRectangle()
         {
-            if (Graphic == null)
+            if (Texture == null)
             {
                 return;
             }
             if (SpriteType != SpriteType.None)
             {
                 Size = new Point(
-                    Graphic.Width / Columns, Graphic.Height / Rows);
+                    Texture.Width / Columns, Texture.Height / Rows);
                 return;
             }
-            Size = Graphic.Bounds.Size;
+            Size = Texture.Bounds.Size;
         }
 
         // Child Events

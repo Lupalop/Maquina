@@ -16,7 +16,7 @@ namespace Maquina.UI
         {
             FadeImage = new Image("Background");
             FadeImage.IgnoreGlobalScale = true;
-            FadeImage.Sprite.Graphic = FadeBackground;
+            FadeImage.Sprite.Texture = FadeBackground;
             FadeImage.Sprite.DestinationRectangle = WindowBounds;
 
             Application.Display.ResolutionChanged += (sender, e) =>

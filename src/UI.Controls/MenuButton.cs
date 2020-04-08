@@ -41,7 +41,7 @@ namespace Maquina.UI
 
             LayerDepth = 1f;
             Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
-            Background.Graphic = (Texture2D)ContentFactory.TryGetResource("button-default");
+            Background.Texture = (Texture2D)ContentFactory.TryGetResource("button-default");
             ClickSound = (SoundEffect)ContentFactory.TryGetResource("click_default");
             IconAlignment = HorizontalAlignment.Center;
         }
@@ -291,7 +291,7 @@ namespace Maquina.UI
             if (e.Property != ElementChangedProperty.Size)
                 return;
 
-            if (Background == null || Background.Graphic == null)
+            if (Background == null || Background.Texture == null)
             {
                 Size = Label.Size;
             }

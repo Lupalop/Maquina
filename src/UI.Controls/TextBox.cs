@@ -18,7 +18,7 @@ namespace Maquina.UI
             Id = "GUI_TEXTBOX";
 
             // Default TB graphic
-            Background.Graphic = (Texture2D)ContentFactory.TryGetResource("textbox-default");
+            Background.Texture = (Texture2D)ContentFactory.TryGetResource("textbox-default");
             Label.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
             Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
             Background.SpriteType = SpriteType.None;

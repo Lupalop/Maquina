@@ -15,7 +15,7 @@ namespace Maquina.UI
         {
             Id = "GUI_THROBBER";
             IsSpinning = true;
-            Sprite.Graphic = (Texture2D)ContentFactory.TryGetResource("throbber-default");
+            Sprite.Texture = (Texture2D)ContentFactory.TryGetResource("throbber-default");
             ElementUpdated += (sender, e) =>
             {
                 if (!IsSpinning)

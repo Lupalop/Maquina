@@ -36,8 +36,8 @@ namespace Maquina.UI
         public static Image MouseElement;
         public static Texture2D MouseSprite
         {
-            get { return MouseElement.Sprite.Graphic; }
-            set { MouseElement.Sprite.Graphic = value; }
+            get { return MouseElement.Sprite.Texture; }
+            set { MouseElement.Sprite.Texture = value; }
         }
         public static BlendState BlendState { get; set; }
 
