@@ -22,9 +22,9 @@ namespace Maquina
 
         public void PlaySong(string songName, bool isRepeating)
         {
-            if (ContentFactory.ContainsResource(songName))
+            Song song = (Song)ContentFactory.TryGetResource(songName);
+            if (song != null)
             {
-                Song song = (Song)ContentFactory.TryGetResource(songName);
                 if (MediaPlayer.Queue.ActiveSong != song)
                 {
                     MediaPlayer.Play(song);

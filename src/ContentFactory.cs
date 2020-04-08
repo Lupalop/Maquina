@@ -40,28 +40,5 @@ namespace Maquina
             }
             return null;
         }
-
-        public static bool ContainsResource(string containerName, string resourceName)
-        {
-            IDictionary<string, object> targetContainer;
-            Source.TryGetValue(containerName, out targetContainer);
-            if (targetContainer != null)
-            {
-                return targetContainer.ContainsKey(resourceName);
-            }
-            return false;
-        }
-
-        public static bool ContainsResource(string resourceName)
-        {
-            foreach (var item in Source)
-            {
-                if (item.Value.ContainsKey(resourceName))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }
