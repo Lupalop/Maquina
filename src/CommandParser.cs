@@ -38,11 +38,11 @@ namespace Maquina
                 {
                     case "quit":
                     case "exit":
-                        Global.Game.Exit();
+                        Application.Game.Exit();
                         Environment.Exit(0);
                         break;
                     case "restart":
-                        Global.Game.Exit();
+                        Application.Game.Exit();
                         Process.Start(Assembly.GetEntryAssembly().Location);
                         Environment.Exit(0);
                         break;
@@ -60,12 +60,12 @@ namespace Maquina
                         switch (action[1])
                         {
                             case "scene":
-                                GetContainerElementsState(Global.Scenes.CurrentScene.Elements.Values, action[2]);
+                                GetContainerElementsState(Application.Scenes.CurrentScene.Elements.Values, action[2]);
                                 break;
                             case "overlay":
-                                for (int i = 0; i < Global.Scenes.Overlays.Count; i++)
+                                for (int i = 0; i < Application.Scenes.Overlays.Count; i++)
                                 {
-                                    GetContainerElementsState(Global.Scenes.Overlays.Values.ElementAt(i).Elements.Values, action[2]);
+                                    GetContainerElementsState(Application.Scenes.Overlays.Values.ElementAt(i).Elements.Values, action[2]);
                                 }
                                 break;
                             default:
@@ -197,7 +197,7 @@ namespace Maquina
             string consoleName = "Maquina Developer Console";
             Console.Title = consoleName;
             Console.WriteLine(consoleName);
-            Console.WriteLine("API Version: {0} | Build identifier: {1}", Global.APIVersion, Global.BuildId);
+            Console.WriteLine("API Version: {0} | Build identifier: {1}", Application.APIVersion, Application.BuildId);
             Console.WriteLine();
         }
 #else

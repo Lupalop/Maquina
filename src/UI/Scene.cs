@@ -15,8 +15,8 @@ namespace Maquina.UI
         }
         public Scene() : this("Untitled Scene") { }
 
-        protected Game Game { get { return Global.Game; } }
-        protected SpriteBatch SpriteBatch { get { return Global.SpriteBatch; } }
+        protected Game Game { get { return Application.Game; } }
+        protected SpriteBatch SpriteBatch { get { return Application.SpriteBatch; } }
 
         public IDictionary<string, BaseElement> Elements { get; protected set; }
         public string Name { get; private set; }
@@ -28,7 +28,7 @@ namespace Maquina.UI
 
         protected Rectangle WindowBounds
         {
-            get { return Global.Display.WindowBounds; }
+            get { return Application.Display.WindowBounds; }
         }
 
         public virtual void LoadContent()

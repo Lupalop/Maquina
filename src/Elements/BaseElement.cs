@@ -56,7 +56,7 @@ namespace Maquina.Elements
                 {
                     return Scale;
                 }
-                return Scale * Global.Display.Scale;
+                return Scale * Application.Display.Scale;
             }
         }
         //

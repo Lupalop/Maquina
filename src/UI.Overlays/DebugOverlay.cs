@@ -55,24 +55,24 @@ namespace Maquina.UI
         public override void Update()
         {
             // FPS Counter
-            if (Global.Input.KeyPressed(Keys.F2))
+            if (Application.Input.KeyPressed(Keys.F2))
                 isCounterVisible[0] = !isCounterVisible[0];
-            if (Global.Input.KeyPressed(Keys.F10))
+            if (Application.Input.KeyPressed(Keys.F10))
                 isCounterVisible[1] = !isCounterVisible[1];
-            if (Global.Input.KeyPressed(Keys.F11))
+            if (Application.Input.KeyPressed(Keys.F11))
                 isCounterVisible[2] = !isCounterVisible[2];
-            if (Global.Input.KeyPressed(Keys.F12))
+            if (Application.Input.KeyPressed(Keys.F12))
                 isCounterVisible[3] = !isCounterVisible[3];
-            if (Global.Input.KeyPressed(Keys.F7))
+            if (Application.Input.KeyPressed(Keys.F7))
                 isCounterVisible[4] = !isCounterVisible[4];
 
             // Scale controls
-            if (Global.Input.KeyPressed(Keys.F9))
-                Global.Display.Scale += 0.1f;
-            if (Global.Input.KeyPressed(Keys.F8))
-                Global.Display.Scale -= 0.1f;
+            if (Application.Input.KeyPressed(Keys.F9))
+                Application.Display.Scale += 0.1f;
+            if (Application.Input.KeyPressed(Keys.F8))
+                Application.Display.Scale -= 0.1f;
 
-            elapsedTime += Global.GameTime.ElapsedGameTime;
+            elapsedTime += Application.GameTime.ElapsedGameTime;
 
             if (elapsedTime > TimeSpan.FromSeconds(1))
             {
@@ -84,24 +84,24 @@ namespace Maquina.UI
             // List mouse coordinates
             if (isCounterVisible[3])
             {
-                mouseCoordinates = Global.Input.MousePosition.ToString();
+                mouseCoordinates = Application.Input.MousePosition.ToString();
             }
 
             // List Overlays currently loaded
             if (isCounterVisible[2])
             {
                 sceneOverlayList = "";
-                for (int i = 0; i < Global.Scenes.Overlays.Count; i++)
+                for (int i = 0; i < Application.Scenes.Overlays.Count; i++)
                 {
-                    List<string> keyList = Global.Scenes.Overlays.Keys.ToList();
+                    List<string> keyList = Application.Scenes.Overlays.Keys.ToList();
                     sceneOverlayList += String.Format("Key {0}: {2}, Scene Name: {1} \n",
-                        i, Global.Scenes.Overlays[keyList[i]].Name, keyList[i]);
+                        i, Application.Scenes.Overlays[keyList[i]].Name, keyList[i]);
                 }
             }
             // List elements loaded
             if (isCounterVisible[1])
             {
-                sceneObjectList = ListElementsFromDictionary(Global.Scenes.CurrentScene.Elements);
+                sceneObjectList = ListElementsFromDictionary(Application.Scenes.CurrentScene.Elements);
             }
             // List timers
             if (isCounterVisible[4])
@@ -154,20 +154,20 @@ namespace Maquina.UI
             SpriteBatch.Begin();
             if (isCounterVisible[0])
             {
-                string dbCounter = string.Format("FPS: {0}, Memory: {1}, Overlay scenes: {2}", frameRate, GC.GetTotalMemory(false), Global.Scenes.Overlays.Count);
+                string dbCounter = string.Format("FPS: {0}, Memory: {1}, Overlay scenes: {2}", frameRate, GC.GetTotalMemory(false), Application.Scenes.Overlays.Count);
                 SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), dbCounter, new Vector2(0, 0), Color.White);
             }
             if (isCounterVisible[1])
             {
-                string objectInfo = string.Format(sceneObjectHeader, Global.Scenes.CurrentScene.Elements.Count) +
+                string objectInfo = string.Format(sceneObjectHeader, Application.Scenes.CurrentScene.Elements.Count) +
                                     sceneObjectList;
                 SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), objectInfo, new Vector2(0, 0), Color.White);
             }
             if (isCounterVisible[2])
             {
                 string sceneManagerInfo = sceneInfoHeader + 
-                    string.Format(sceneCurrentHeader, Global.Scenes.CurrentScene.Name) + 
-                    string.Format(sceneOverlayHeader, Global.Scenes.Overlays.Count) + 
+                    string.Format(sceneCurrentHeader, Application.Scenes.CurrentScene.Name) + 
+                    string.Format(sceneOverlayHeader, Application.Scenes.Overlays.Count) + 
                     sceneOverlayList;
                 SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), sceneManagerInfo, new Vector2(0, 0), Color.White);
             }

@@ -32,7 +32,7 @@ namespace Maquina.Resources
                 for (int i = 0; i < group.Fonts.Length; i++)
                 {
                     FontParameters item = group.Fonts[i];
-                    SpriteFont spriteFont = Global.Content.Load<SpriteFont>(item.Path);
+                    SpriteFont spriteFont = Application.Content.Load<SpriteFont>(item.Path);
                     spriteFont.Spacing = item.Spacing;
                     spriteFont.LineSpacing = item.LineSpacing;
                     resourceDictionary[item.Id] = spriteFont;
@@ -43,7 +43,7 @@ namespace Maquina.Resources
                 for (int i = 0; i < group.BGM.Length; i++)
                 {
                     ResourceParameters item = group.BGM[i];
-                    resourceDictionary[item.Id] = Global.Content.Load<Song>(item.Path);
+                    resourceDictionary[item.Id] = Application.Content.Load<Song>(item.Path);
                 }
             }
             if (group.SFX != null)
@@ -51,7 +51,7 @@ namespace Maquina.Resources
                 for (int i = 0; i < group.SFX.Length; i++)
                 {
                     ResourceParameters item = group.SFX[i];
-                    resourceDictionary[item.Id] = Global.Content.Load<SoundEffect>(item.Path);
+                    resourceDictionary[item.Id] = Application.Content.Load<SoundEffect>(item.Path);
                 }
             }
             if (group.Textures != null)
@@ -59,7 +59,7 @@ namespace Maquina.Resources
                 for (int i = 0; i < group.Textures.Length; i++)
                 {
                     ResourceParameters item = group.Textures[i];
-                    resourceDictionary[item.Id] = Global.Content.Load<Texture2D>(item.Path);
+                    resourceDictionary[item.Id] = Application.Content.Load<Texture2D>(item.Path);
                 }
             }
 

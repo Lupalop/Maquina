@@ -127,7 +127,7 @@ namespace Maquina
                 return;
             }
 
-            timeElapsed += Global.GameTime.ElapsedGameTime.TotalMilliseconds;
+            timeElapsed += Application.GameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (timeElapsed >= Interval)
             {

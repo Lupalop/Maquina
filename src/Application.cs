@@ -7,9 +7,9 @@ using Maquina.UI;
 
 namespace Maquina
 {
-    public static class Global
+    public static class Application
     {
-        static Global()
+        static Application()
         {
             ResourceXml = "resources.xml";
             PreferencesXml = "preferences.xml";

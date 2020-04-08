@@ -15,11 +15,11 @@ namespace Maquina
     {
         public InputManager()
         {
-            Global.Game.Activated += delegate
+            Application.Game.Activated += delegate
             {
                 ShouldAcceptInput = true;
             };
-            Global.Game.Deactivated += delegate
+            Application.Game.Deactivated += delegate
             {
                 ShouldAcceptInput = false;
             };
@@ -138,13 +138,13 @@ namespace Maquina
             GamepadState = GamePad.GetState(PlayerIndex.One);
             KeyboardState = Keyboard.GetState();
             MouseState = Mouse.GetState();
-            TouchState = TouchPanel.GetState(Global.Game.Window);
+            TouchState = TouchPanel.GetState(Application.Game.Window);
             //
             PreviousMousePosition = MousePosition;
             //
             MousePosition = new Point(
-                MathHelper.Clamp(MouseState.Position.X, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Right),
-                MathHelper.Clamp(MouseState.Position.Y, 0, Global.Game.GraphicsDevice.Viewport.Bounds.Bottom));
+                MathHelper.Clamp(MouseState.Position.X, 0, Application.Game.GraphicsDevice.Viewport.Bounds.Right),
+                MathHelper.Clamp(MouseState.Position.Y, 0, Application.Game.GraphicsDevice.Viewport.Bounds.Bottom));
             //
             MousePositionDifference = MousePosition - PreviousMousePosition;
         }

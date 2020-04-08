@@ -16,7 +16,7 @@ namespace Maquina.UI
         public MenuButton(string name) : base (name)
         {
             Id = "GUI_MENUBUTTON";
-            InputManager = Global.Input;
+            InputManager = Application.Input;
 
             Background = new Sprite()
             {

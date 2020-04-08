@@ -17,7 +17,7 @@ namespace Maquina.Elements
             Scale = 1;
             LayerDepth = 1f;
             Opacity = 1;
-            SpriteBatch = Global.SpriteBatch;
+            SpriteBatch = Application.SpriteBatch;
         }
 
         // General
@@ -50,7 +50,7 @@ namespace Maquina.Elements
                 {
                     return Scale;
                 }
-                return Scale * Global.Display.Scale;
+                return Scale * Application.Display.Scale;
             }
         }
 

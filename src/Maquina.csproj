@@ -125,7 +125,7 @@
     <Compile Include="UI\Scene.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Elements\BaseElement.cs" />
-    <Compile Include="Global.cs" />
+    <Compile Include="Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

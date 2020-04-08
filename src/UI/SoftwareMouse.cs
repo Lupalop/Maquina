@@ -20,13 +20,13 @@ namespace Maquina.UI
             MouseElement.Sprite.Columns = 2;
             MouseElement.ElementUpdated += (sender, e) =>
             {
-                MouseElement.Location = Global.Input.MousePosition;
+                MouseElement.Location = Application.Input.MousePosition;
                 MouseElement.Sprite.CurrentFrame = 0;
 
                 // Change state when selected
-                if (Global.Input.MouseDown(MouseButton.Left) ||
-                    Global.Input.MouseDown(MouseButton.Right) ||
-                    Global.Input.MouseDown(MouseButton.Middle))
+                if (Application.Input.MouseDown(MouseButton.Left) ||
+                    Application.Input.MouseDown(MouseButton.Right) ||
+                    Application.Input.MouseDown(MouseButton.Middle))
                 {
                     MouseElement.Sprite.CurrentFrame = 1;
                 }
@@ -43,9 +43,9 @@ namespace Maquina.UI
 
         public static void Draw()
         {
-            Global.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
+            Application.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
             MouseElement.Draw();
-            Global.SpriteBatch.End();
+            Application.SpriteBatch.End();
         }
 
         public static void Update()

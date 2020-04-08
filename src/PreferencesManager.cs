@@ -12,7 +12,7 @@ namespace Maquina
     {
         public PreferencesManager()
         {
-            Filename = Global.PreferencesXml;
+            Filename = Application.PreferencesXml;
         }
 
         public XDocument Document { get; set; }

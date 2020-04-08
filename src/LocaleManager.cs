@@ -14,7 +14,7 @@ namespace Maquina
         public LocaleManager()
         {
             Strings = new Dictionary<string, string>();
-            LanguageCode = Global.Preferences.GetStringPreference("app.locale", Global.DefaultLocale);
+            LanguageCode = Application.Preferences.GetStringPreference("app.locale", Application.DefaultLocale);
         }
 
         private string languageCode;
@@ -28,11 +28,11 @@ namespace Maquina
                 try
                 {
                     IEnumerable<string> fileList = Directory.EnumerateFiles(
-                        Path.Combine(Global.Content.RootDirectory, Global.LocaleDirectory, value));
+                        Path.Combine(Application.Content.RootDirectory, Application.LocaleDirectory, value));
                     // Load associated string bundles
                     foreach (string fileName in fileList)
                     {
-                        if (fileName.Contains(Global.LocaleDefinitionXml))
+                        if (fileName.Contains(Application.LocaleDefinitionXml))
                         {
                             continue;
                         }
@@ -60,10 +60,10 @@ namespace Maquina
             {
                 List<LocaleDefinition> CreatedList = new List<LocaleDefinition>();
                 IEnumerable<string> Directories = Directory.EnumerateDirectories(
-                        Path.Combine(Global.Content.RootDirectory, Global.LocaleDirectory));
+                        Path.Combine(Application.Content.RootDirectory, Application.LocaleDirectory));
                 foreach (var item in Directories)
                 {
-                    string LocaleDefLocation = Path.Combine(item, Global.LocaleDefinitionXml);
+                    string LocaleDefLocation = Path.Combine(item, Application.LocaleDefinitionXml);
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {

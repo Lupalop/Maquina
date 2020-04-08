@@ -25,7 +25,7 @@ namespace Maquina.UI
             };
             ElementChanged -= Image_ElementChanged;
             ElementChanged += Throbber_ElementChanged;
-            Global.Display.ScaleChanged += Global_ScaleChanged;
+            Application.Display.ScaleChanged += Global_ScaleChanged;
         }
 
         private void Global_ScaleChanged(object sender, EventArgs e)

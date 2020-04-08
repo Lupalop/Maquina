@@ -15,36 +15,36 @@ namespace Maquina
     {
         private GraphicsDeviceManager Graphics
         {
-            get { return Global.Graphics; }
+            get { return Application.Graphics; }
         }
         private GraphicsDevice GraphicsDevice
         {
-            get { return Global.Game.GraphicsDevice; }
+            get { return Application.Game.GraphicsDevice; }
         }
 
         public DisplayManager()
         {
 #if DEBUG
-            Graphics.HardwareModeSwitch = !Global.Preferences.GetBoolPreference("app.window.fullscreen.borderless", true);
+            Graphics.HardwareModeSwitch = !Application.Preferences.GetBoolPreference("app.window.fullscreen.borderless", true);
 #else
             Graphics.HardwareModeSwitch = !Global.Preferences.GetBoolPreference("app.window.fullscreen.borderless", false);
 #endif
             // Window
-            Global.Game.IsMouseVisible = Global.Preferences.GetBoolPreference("app.window.useNativeCursor", false);
+            Application.Game.IsMouseVisible = Application.Preferences.GetBoolPreference("app.window.useNativeCursor", false);
             UnmaximizedWindowBounds = new Point(
-                Global.Preferences.GetIntPreference("app.window.width", 800),
-                Global.Preferences.GetIntPreference("app.window.height", 600));
-            Global.Game.Window.AllowUserResizing =
-                Global.Preferences.GetBoolPreference("app.window.allowUserResizing", false);
+                Application.Preferences.GetIntPreference("app.window.width", 800),
+                Application.Preferences.GetIntPreference("app.window.height", 600));
+            Application.Game.Window.AllowUserResizing =
+                Application.Preferences.GetBoolPreference("app.window.allowUserResizing", false);
 
             // Global Scale
             Scale = 1f;
 
             // Identify if we should go fullscreen
-            if (Global.Preferences.GetBoolPreference("app.window.fullscreen", false))
+            if (Application.Preferences.GetBoolPreference("app.window.fullscreen", false))
             {
-                Graphics.PreferredBackBufferHeight = Global.Game.GraphicsDevice.DisplayMode.Height;
-                Graphics.PreferredBackBufferWidth = Global.Game.GraphicsDevice.DisplayMode.Width;
+                Graphics.PreferredBackBufferHeight = Application.Game.GraphicsDevice.DisplayMode.Height;
+                Graphics.PreferredBackBufferWidth = Application.Game.GraphicsDevice.DisplayMode.Width;
 
                 Graphics.ToggleFullScreen();
             }
@@ -116,19 +116,19 @@ namespace Maquina
                 OnResolutionChanged();
             }
             PreviousWindowBounds = WindowBounds;
-            WindowBounds = Global.Game.GraphicsDevice.Viewport.Bounds;
+            WindowBounds = Application.Game.GraphicsDevice.Viewport.Bounds;
         }
 
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
-                Global.Preferences.SetBoolPreference("app.window.fullscreen", Global.Graphics.IsFullScreen);
+                Application.Preferences.SetBoolPreference("app.window.fullscreen", Application.Graphics.IsFullScreen);
                 // Save window dimensions if not in fullscreen
                 if (!Graphics.IsFullScreen)
                 {
-                    Global.Preferences.SetIntPreference("app.window.width", Global.Graphics.PreferredBackBufferWidth);
-                    Global.Preferences.SetIntPreference("app.window.height", Global.Graphics.PreferredBackBufferHeight);
+                    Application.Preferences.SetIntPreference("app.window.width", Application.Graphics.PreferredBackBufferWidth);
+                    Application.Preferences.SetIntPreference("app.window.height", Application.Graphics.PreferredBackBufferHeight);
                 }
             }
         }

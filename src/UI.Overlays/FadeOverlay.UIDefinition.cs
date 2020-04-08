@@ -19,7 +19,7 @@ namespace Maquina.UI
             FadeImage.Sprite.Graphic = FadeBackground;
             FadeImage.Sprite.DestinationRectangle = WindowBounds;
 
-            Global.Display.ResolutionChanged += (sender, e) =>
+            Application.Display.ResolutionChanged += (sender, e) =>
             {
                 FadeImage.Sprite.DestinationRectangle = ((DisplayManager)sender).WindowBounds;
             };
@@ -33,7 +33,7 @@ namespace Maquina.UI
             FadeOutAnimation = new FadeOutAnimation(FadeImage.Sprite, FadeSpeed);
             FadeOutAnimation.AnimationFinished += (sender, e) =>
             {
-                Global.Scenes.Overlays.Remove(OverlayKey);
+                Application.Scenes.Overlays.Remove(OverlayKey);
             };
 
             FadeInAnimation.Start();

@@ -23,7 +23,7 @@ namespace Maquina.UI
             Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
             Background.SpriteType = SpriteType.None;
 
-            Global.Game.Window.TextInput += Window_TextInput;
+            Application.Game.Window.TextInput += Window_TextInput;
             Label.Text = "";
             MaxInput = 30;
         }

@@ -26,7 +26,7 @@ namespace Maquina
         /// </summary>
         protected override void Initialize()
         {
-            Global.Initialize(this);
+            Application.Initialize(this);
             base.Initialize();
         }
 
@@ -38,9 +38,9 @@ namespace Maquina
         {
             // Create instance of SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-            Global.SpriteBatch = SpriteBatch;
+            Application.SpriteBatch = SpriteBatch;
             // Load platform resources synchronously
-            string resourcePath = Path.Combine(Content.RootDirectory, Global.ResourceXml);
+            string resourcePath = Path.Combine(Content.RootDirectory, Application.ResourceXml);
             ResourceManifest resources = XmlHelper.Load<ResourceManifest>(resourcePath);
             ContentFactory.Source.Add("platform", resources.Load("platform"));
         }
@@ -51,7 +51,7 @@ namespace Maquina
         /// </summary>
         protected override void UnloadContent()
         {
-            Global.Unload();
+            Application.Unload();
             SpriteBatch.Dispose();
             Graphics.Dispose();
 #if LOG_ENABLED
@@ -66,8 +66,8 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            Global.GameTime = gameTime;
-            Global.Update();
+            Application.GameTime = gameTime;
+            Application.Update();
             base.Update(gameTime);
         }
 
@@ -77,7 +77,7 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Global.Draw();
+            Application.Draw();
             base.Draw(gameTime);
         }
     }

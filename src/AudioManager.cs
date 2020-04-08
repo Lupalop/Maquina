@@ -14,10 +14,10 @@ namespace Maquina
         {
             // Audio
             float soundVolume;
-            float.TryParse(Global.Preferences.GetStringPreference("app.audio.sound", "1f"), out soundVolume);
+            float.TryParse(Application.Preferences.GetStringPreference("app.audio.sound", "1f"), out soundVolume);
             SoundVolume = soundVolume;
-            MusicVolume = Global.Preferences.GetIntPreference("app.audio.music", 255);
-            IsMuted = Global.Preferences.GetBoolPreference("app.audio.mastermuted", false);
+            MusicVolume = Application.Preferences.GetIntPreference("app.audio.music", 255);
+            IsMuted = Application.Preferences.GetBoolPreference("app.audio.mastermuted", false);
         }
 
         public void PlaySong(string songName, bool isRepeating)
@@ -103,9 +103,9 @@ namespace Maquina
         {
             if (disposing)
             {
-                Global.Preferences.SetBoolPreference("app.audio.mastermuted", IsMuted);
-                Global.Preferences.SetStringPreference("app.audio.sound", SoundVolume.ToString());
-                Global.Preferences.SetIntPreference("app.audio.music", MusicVolume);
+                Application.Preferences.SetBoolPreference("app.audio.mastermuted", IsMuted);
+                Application.Preferences.SetStringPreference("app.audio.sound", SoundVolume.ToString());
+                Application.Preferences.SetIntPreference("app.audio.music", MusicVolume);
             }
         }
 

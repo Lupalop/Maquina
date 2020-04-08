@@ -22,7 +22,7 @@ namespace Maquina.UI
             OverrideContainerSize = false;
             Children.CollectionChanged += Children_CollectionChanged;
             ElementChanged += StackPanel_ElementChanged;
-            Global.Display.ScaleChanged += Global_ScaleChanged;
+            Application.Display.ScaleChanged += Global_ScaleChanged;
             DisabledStateChanged += StackPanel_DisabledStateChanged;
             IsScaleSupported = false;
         }
@@ -291,7 +291,7 @@ namespace Maquina.UI
                 Children.CollectionChanged -= Children_CollectionChanged;
                 ElementChanged -= StackPanel_ElementChanged;
                 DisabledStateChanged -= StackPanel_DisabledStateChanged;
-                Global.Display.ScaleChanged -= Global_ScaleChanged;
+                Application.Display.ScaleChanged -= Global_ScaleChanged;
                 GuiUtils.DisposeElements(Children);
             }
             base.Dispose(disposing);
