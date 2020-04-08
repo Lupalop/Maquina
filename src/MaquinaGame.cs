@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Input.Touch;
-using Microsoft.Xna.Framework.Media;
-using Maquina.UI;
 using Maquina.Resources;
 using System.IO;
 
@@ -17,20 +10,12 @@ namespace Maquina
     /// </summary>
     public abstract class MaquinaGame : Game
     {
-        protected GraphicsDeviceManager Graphics;
-        protected SpriteBatch SpriteBatch;
-        protected SceneManager SceneManager;
-        protected LocaleManager LocaleManager;
-        protected InputManager InputManager;
-        protected PreferencesManager PreferencesManager;
-        protected AudioManager AudioManager;
-        protected DisplayManager DisplayManager;
+        public GraphicsDeviceManager Graphics { get; protected set; }
+        public SpriteBatch SpriteBatch { get; protected set; }
 
         public MaquinaGame()
         {
             Graphics = new GraphicsDeviceManager(this);
-            Global.Game = this;
-            Global.Graphics = Graphics;
         }
 
         /// <summary>
@@ -41,23 +26,7 @@ namespace Maquina
         /// </summary>
         protected override void Initialize()
         {
-            Global.Content = Content;
-            // Create instance
-            PreferencesManager = new PreferencesManager();
-            Global.Preferences = PreferencesManager;
-
-            LocaleManager = new LocaleManager();
-            InputManager = new InputManager();
-            AudioManager = new AudioManager();
-            SceneManager = new SceneManager();
-            DisplayManager = new DisplayManager();
-
-            Global.Locale = LocaleManager;
-            Global.Input = InputManager;
-            Global.Audio = AudioManager;
-            Global.Scenes = SceneManager;
-            Global.Display = DisplayManager;
-
+            Global.Initialize(this);
             base.Initialize();
         }
 
@@ -82,14 +51,9 @@ namespace Maquina
         /// </summary>
         protected override void UnloadContent()
         {
-            // Dispose content
-            AudioManager.Dispose();
-            DisplayManager.Dispose();
-
-            SceneManager.Dispose();
+            Global.Unload();
             SpriteBatch.Dispose();
             Graphics.Dispose();
-            PreferencesManager.Dispose();
 #if LOG_ENABLED
             LogManager.Info(0, "Game content unloaded.");
 #endif
@@ -103,14 +67,7 @@ namespace Maquina
         protected override void Update(GameTime gameTime)
         {
             Global.GameTime = gameTime;
-
-            DisplayManager.Update();
-            InputManager.Update();
-            SceneManager.Update();
-            AnimationManager.Update();
-            TimerManager.Update();
-            SoftwareMouse.Update();
-
+            Global.Update();
             base.Update(gameTime);
         }
 
@@ -120,9 +77,7 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            SceneManager.Draw();
-            SoftwareMouse.Draw();
-
+            Global.Draw();
             base.Draw(gameTime);
         }
     }
