@@ -103,6 +103,10 @@ namespace Maquina
         {
             get { return Game.Graphics; }
         }
+        public static GraphicsDevice GraphicsDevice
+        {
+            get { return Game.GraphicsDevice; }
+        }
         public static SpriteBatch SpriteBatch
         {
             get { return Game.SpriteBatch; }
