@@ -1,5 +1,6 @@
 ﻿using Maquina.Elements;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Maquina.UI
         {
             Id = "GUI_THROBBER";
             IsSpinning = true;
-            Sprite.Graphic = Global.Textures["throbber-default"];
+            Sprite.Graphic = (Texture2D)ContentFactory.TryGetResource("throbber-default");
             ElementUpdated += (sender, e) =>
             {
                 if (!IsSpinning)

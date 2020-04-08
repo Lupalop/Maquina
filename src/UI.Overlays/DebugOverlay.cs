@@ -155,13 +155,13 @@ namespace Maquina.UI
             if (isCounterVisible[0])
             {
                 string dbCounter = string.Format("FPS: {0}, Memory: {1}, Overlay scenes: {2}", frameRate, GC.GetTotalMemory(false), Global.Scenes.Overlays.Count);
-                SpriteBatch.DrawString(Global.Fonts["o-default"], dbCounter, new Vector2(0, 0), Color.White);
+                SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), dbCounter, new Vector2(0, 0), Color.White);
             }
             if (isCounterVisible[1])
             {
                 string objectInfo = string.Format(sceneObjectHeader, Global.Scenes.CurrentScene.Elements.Count) +
                                     sceneObjectList;
-                SpriteBatch.DrawString(Global.Fonts["o-default"], objectInfo, new Vector2(0, 0), Color.White);
+                SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), objectInfo, new Vector2(0, 0), Color.White);
             }
             if (isCounterVisible[2])
             {
@@ -169,16 +169,16 @@ namespace Maquina.UI
                     string.Format(sceneCurrentHeader, Global.Scenes.CurrentScene.Name) + 
                     string.Format(sceneOverlayHeader, Global.Scenes.Overlays.Count) + 
                     sceneOverlayList;
-                SpriteBatch.DrawString(Global.Fonts["o-default"], sceneManagerInfo, new Vector2(0, 0), Color.White);
+                SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), sceneManagerInfo, new Vector2(0, 0), Color.White);
             }
             if (isCounterVisible[3])
             {
-                SpriteBatch.DrawString(Global.Fonts["o-default"], mouseCoordinates, new Vector2(0, 0), Color.White);
+                SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), mouseCoordinates, new Vector2(0, 0), Color.White);
             }
             if (isCounterVisible[4])
             {
                 string timerManagerInfo = globalTimerHeader + globalTimerList;
-                SpriteBatch.DrawString(Global.Fonts["o-default"], timerManagerInfo, new Vector2(0, 0), Color.White);
+                SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), timerManagerInfo, new Vector2(0, 0), Color.White);
             }
             SpriteBatch.End();
         }

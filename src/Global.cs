@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Xna.Framework.Content;
+using Maquina.Resources;
 
 namespace Maquina
 {
@@ -18,9 +19,6 @@ namespace Maquina
             LocaleDefinitionXml = "locale.xml";
             LocaleDirectory = "locales";
             DefaultLocale = "en-US";
-
-            Fonts = new Dictionary<string, SpriteFont>();
-            BGM = new Dictionary<string, Song>();
         }
 
         // Platform
@@ -38,12 +36,6 @@ namespace Maquina
         public static string LocaleDefinitionXml { get; set; }
         public static string LocaleDirectory { get; set; }
         public static string DefaultLocale { get; set; }
-
-        // Content collections
-        public static Dictionary<string, SpriteFont> Fonts { get; set; }
-        public static Dictionary<string, Song> BGM { get; set; }
-        public static Dictionary<string, SoundEffect> SFX { get; set; }
-        public static Dictionary<string, Texture2D> Textures { get; set; }
 
         // Engine properties
         public static SpriteBatch SpriteBatch { get; set; }

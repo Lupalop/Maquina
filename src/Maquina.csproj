@@ -80,6 +80,7 @@
     <Compile Include="LogEntry.cs" />
     <Compile Include="LogEntryLevel.cs" />
     <Compile Include="LogManager.cs" />
+    <Compile Include="Resources\ContentFactory.cs" />
     <Compile Include="Resources\ResourceGroup.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Elements\Alignment.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Resources\LocaleDefinition.cs" />
     <Compile Include="Resources\ResourceManifest.cs" />
     <Compile Include="Resources\ResourceParameters.cs" />
-    <Compile Include="Resources\ResourceType.cs" />
     <Compile Include="Resources\StringBundle.cs" />
     <Compile Include="Resources\StringParameters.cs" />
     <Compile Include="Timer.cs" />

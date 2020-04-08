@@ -18,14 +18,5 @@ namespace Maquina.Resources
         public ResourceParameters[] SFX { get; set; }
         [XmlElement("texture")]
         public ResourceParameters[] Textures { get; set; }
-
-        [XmlIgnore]
-        public Dictionary<string, SpriteFont> FontDictionary { get; set; }
-        [XmlIgnore]
-        public Dictionary<string, Song> BGMDictionary { get; set; }
-        [XmlIgnore]
-        public Dictionary<string, SoundEffect> SFXDictionary { get; set; }
-        [XmlIgnore]
-        public Dictionary<string, Texture2D> TextureDictionary { get; set; }
     }
 }

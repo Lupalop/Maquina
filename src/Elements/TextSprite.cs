@@ -12,7 +12,7 @@ namespace Maquina.Elements
         public TextSprite()
         {
             Tint = Color.White;
-            Font = Global.Fonts["default"];
+            Font = (SpriteFont)ContentFactory.TryGetResource("default");
             Text = "";
             Scale = 1;
             LayerDepth = 1f;

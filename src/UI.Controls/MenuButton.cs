@@ -40,9 +40,9 @@ namespace Maquina.UI
             ElementChanged += MenuButton_ElementChanged;
 
             LayerDepth = 1f;
-            Tooltip.Font = Global.Fonts["o-default_m"];
-            Background.Graphic = Global.Textures["button-default"];
-            ClickSound = Global.SFX["click_default"];
+            Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
+            Background.Graphic = (Texture2D)ContentFactory.TryGetResource("button-default");
+            ClickSound = (SoundEffect)ContentFactory.TryGetResource("click_default");
             IconAlignment = HorizontalAlignment.Center;
         }
 
