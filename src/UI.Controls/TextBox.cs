@@ -11,7 +11,7 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class TextBox : MenuButton
+    public class TextBox : Button
     {
         public TextBox(string name) : base(name)
         {

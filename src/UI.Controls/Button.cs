@@ -11,11 +11,11 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class MenuButton : GuiElement
+    public class Button : GuiElement
     {
-        public MenuButton(string name) : base (name)
+        public Button(string name) : base (name)
         {
-            Id = "GUI_MENUBUTTON";
+            Id = "GUI_BUTTON";
             InputManager = Application.Input;
 
             Background = new Sprite()
@@ -37,7 +37,7 @@ namespace Maquina.UI
             Label.SpriteChanged += Label_SpriteChanged;
             Icon.SpriteChanged += Icon_SpriteChanged;
             // Parent
-            ElementChanged += MenuButton_ElementChanged;
+            ElementChanged += Button_ElementChanged;
 
             LayerDepth = 1f;
             Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
@@ -253,7 +253,7 @@ namespace Maquina.UI
         }
         
         // Listeners
-        private void MenuButton_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Button_ElementChanged(object sender, ElementChangedEventArgs e)
         {
             switch (e.Property)
             {
