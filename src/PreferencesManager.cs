@@ -10,9 +10,10 @@ namespace Maquina
 {
     public class PreferencesManager : IDisposable
     {
+        public const string PreferencesXml = "preferences.xml";
         public PreferencesManager()
         {
-            Filename = Application.PreferencesXml;
+            Filename = PreferencesXml;
         }
 
         public XDocument Document { get; set; }

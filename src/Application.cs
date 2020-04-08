@@ -9,15 +9,6 @@ namespace Maquina
 {
     public static class Application
     {
-        static Application()
-        {
-            ResourceXml = "resources.xml";
-            PreferencesXml = "preferences.xml";
-            LocaleDefinitionXml = "locale.xml";
-            LocaleDirectory = "locales";
-            DefaultLocale = "en-US";
-        }
-
         private static bool _isInitialized;
         internal static void Initialize(MaquinaGame gameClass)
         {
@@ -79,23 +70,18 @@ namespace Maquina
             SoftwareMouse.Draw();
         }
 
-        // Platform
+        // Platform version information
         private static Version _version = Assembly.GetExecutingAssembly().GetName().Version;
         public static DateTime BuildDateTime = new DateTime(2000, 1, 1)
             .AddDays(_version.Build)
             .AddSeconds(_version.Revision * 2);
         public static readonly string BuildId = string.Format("{0} {1}",
             BuildDateTime.ToShortDateString(), BuildDateTime.ToShortTimeString());
+        
+        // Increment API version for breaking changes
         public static readonly int APIVersion = 0;
 
-        // Resource locations
-        public static string ResourceXml { get; set; }
-        public static string PreferencesXml { get; set; }
-        public static string LocaleDefinitionXml { get; set; }
-        public static string LocaleDirectory { get; set; }
-        public static string DefaultLocale { get; set; }
-
-        // Game managers
+        // Game component managers
         public static SceneManager Scenes { get; private set; }
         public static AudioManager Audio { get; private set; }
         public static InputManager Input { get; private set; }
@@ -103,10 +89,12 @@ namespace Maquina
         public static DisplayManager Display { get; private set; }
         public static PreferencesManager Preferences { get; private set; }
 
-        // MG Framework
-        public static SpriteBatch SpriteBatch { get; set; }
-        public static MaquinaGame Game { get; set; }
-        public static GameTime GameTime { get; set; }
+        // Game properties
+        public static MaquinaGame Game { get; private set; }
+        public static GameTime GameTime
+        {
+            get { return Game.GameTime; }
+        }
         public static ContentManager Content
         {
             get { return Game.Content; }
@@ -114,6 +102,10 @@ namespace Maquina
         public static GraphicsDeviceManager Graphics
         {
             get { return Game.Graphics; }
+        }
+        public static SpriteBatch SpriteBatch
+        {
+            get { return Game.SpriteBatch; }
         }
     }
 }

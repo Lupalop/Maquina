@@ -11,10 +11,16 @@ namespace Maquina
 {
     public class LocaleManager
     {
+        public string RootDirectory { get; set; }
+        public string DefaultLocale { get; set; }
+        public const string LocaleDefinitionXml = "locale.xml";
+
         public LocaleManager()
         {
+            RootDirectory = "locales";
+            DefaultLocale = "en-US";
             Strings = new Dictionary<string, string>();
-            LanguageCode = Application.Preferences.GetStringPreference("app.locale", Application.DefaultLocale);
+            LanguageCode = Application.Preferences.GetStringPreference("app.locale", DefaultLocale);
         }
 
         private string languageCode;
@@ -28,11 +34,11 @@ namespace Maquina
                 try
                 {
                     IEnumerable<string> fileList = Directory.EnumerateFiles(
-                        Path.Combine(Application.Content.RootDirectory, Application.LocaleDirectory, value));
+                        Path.Combine(Application.Content.RootDirectory, RootDirectory, value));
                     // Load associated string bundles
                     foreach (string fileName in fileList)
                     {
-                        if (fileName.Contains(Application.LocaleDefinitionXml))
+                        if (fileName.Contains(LocaleDefinitionXml))
                         {
                             continue;
                         }
@@ -60,10 +66,10 @@ namespace Maquina
             {
                 List<LocaleDefinition> CreatedList = new List<LocaleDefinition>();
                 IEnumerable<string> Directories = Directory.EnumerateDirectories(
-                        Path.Combine(Application.Content.RootDirectory, Application.LocaleDirectory));
+                        Path.Combine(Application.Content.RootDirectory, RootDirectory));
                 foreach (var item in Directories)
                 {
-                    string LocaleDefLocation = Path.Combine(item, Application.LocaleDefinitionXml);
+                    string LocaleDefLocation = Path.Combine(item, LocaleDefinitionXml);
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {

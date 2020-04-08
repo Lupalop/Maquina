@@ -12,6 +12,8 @@ namespace Maquina
     {
         public GraphicsDeviceManager Graphics { get; protected set; }
         public SpriteBatch SpriteBatch { get; protected set; }
+        public GameTime GameTime { get; protected set; }
+        public const string ResourceXml = "resources.xml";
 
         public MaquinaGame()
         {
@@ -38,9 +40,8 @@ namespace Maquina
         {
             // Create instance of SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-            Application.SpriteBatch = SpriteBatch;
             // Load platform resources synchronously
-            string resourcePath = Path.Combine(Content.RootDirectory, Application.ResourceXml);
+            string resourcePath = Path.Combine(Content.RootDirectory, ResourceXml);
             ResourceManifest resources = XmlHelper.Load<ResourceManifest>(resourcePath);
             ContentFactory.Source.Add("platform", resources.Load("platform"));
         }
@@ -66,7 +67,7 @@ namespace Maquina
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            Application.GameTime = gameTime;
+            GameTime = gameTime;
             Application.Update();
             base.Update(gameTime);
         }
