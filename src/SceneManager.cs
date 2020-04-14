@@ -109,18 +109,6 @@ namespace Maquina
             };
         }
 
-        public void TryRemoveOverlays(string name)
-        {
-            for (int i = 0; i < Overlays.Keys.Count; i++)
-            {
-                string overlayKey = Overlays.Keys.ElementAt(i);
-                if (overlayKey.Contains(name))
-                {
-                    Overlays.Remove(overlayKey);
-                }
-            }
-        }
-
         public void Draw()
         {
             CurrentScene.Draw();
