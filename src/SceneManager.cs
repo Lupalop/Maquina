@@ -109,7 +109,7 @@ namespace Maquina
             };
         }
 
-        public void Draw()
+        internal void Draw()
         {
             CurrentScene.Draw();
             // If there are Overlays, call their draw method
@@ -119,7 +119,7 @@ namespace Maquina
             }
         }
 
-        public void Update()
+        internal void Update()
         {
             if (!CurrentScene._stopUpdating)
             {
