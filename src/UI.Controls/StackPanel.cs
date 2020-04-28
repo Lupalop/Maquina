@@ -16,11 +16,11 @@ namespace Maquina.UI
         {
             Id = "GUI_STACKPANEL";
             Background = new Sprite();
-            children = new ObservableDictionary<string, BaseElement>();
+            Children = new ElementDictionary();
             Orientation = Orientation.Vertical;
             ElementMargin = new Region();
             OverrideContainerSize = false;
-            Children.CollectionChanged += Children_CollectionChanged;
+            Children.ElementChanged += Children_ElementChanged;
             ElementChanged += StackPanel_ElementChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
             DisabledStateChanged += StackPanel_DisabledStateChanged;
@@ -28,17 +28,7 @@ namespace Maquina.UI
         }
 
         // General
-        private ObservableDictionary<string, BaseElement> children;
-        public ObservableDictionary<string, BaseElement> Children
-        {
-            get { return children; }
-            set
-            {
-                children = value;
-                UpdateSize();
-                UpdateLayout();
-            }
-        }
+        public ElementDictionary Children { get; protected set; }
         private Orientation orientation;
         public Orientation Orientation
         {
@@ -78,45 +68,20 @@ namespace Maquina.UI
         // Draw and update methods
         public override void Draw()
         {
-            foreach (BaseElement element in Children.Values)
-            {
-                element.Draw();
-            }
+            Children.Draw();
 
             base.Draw();
         }
 
         public override void Update()
         {
-            foreach (BaseElement element in Children.Values)
-            {
-                element.Update();
-            }
+            Children.Update();
 
             base.Update();
         }
 
         // Listeners
-        private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            BaseElement elem;
-            UpdateSize();
-            UpdateLayout();
-
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    elem = (BaseElement)e.NewItems[0];
-                    elem.ElementChanged += ChildElement_ElementChanged;
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    elem = (BaseElement)e.OldItems[0];
-                    elem.ElementChanged -= ChildElement_ElementChanged;
-                    break;
-            }
-        }
-
-        private void ChildElement_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Children_ElementChanged(object sender, ElementChangedEventArgs e)
         {
             if (e.Property != ElementChangedProperty.Location)
             {
@@ -288,11 +253,11 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                Children.CollectionChanged -= Children_CollectionChanged;
+                Children.ElementChanged -= Children_ElementChanged;
+                Children.Clear(true);
                 ElementChanged -= StackPanel_ElementChanged;
                 DisabledStateChanged -= StackPanel_DisabledStateChanged;
                 Application.Display.ScaleChanged -= Global_ScaleChanged;
-                GuiUtils.DisposeElements(Children);
             }
             base.Dispose(disposing);
         }

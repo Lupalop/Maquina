@@ -11,14 +11,14 @@ namespace Maquina.UI
         public Scene(string sceneName)
         {
             Name = sceneName;
-            Elements = new Dictionary<string, BaseElement>();
+            Elements = new ElementDictionary();
         }
         public Scene() : this("Untitled Scene") { }
 
         protected Game Game { get { return Application.Game; } }
         protected SpriteBatch SpriteBatch { get { return Application.SpriteBatch; } }
 
-        public IDictionary<string, BaseElement> Elements { get; protected set; }
+        public ElementDictionary Elements { get; private set; }
         public string Name { get; private set; }
 
         internal bool _stopUpdating = false;
@@ -55,7 +55,7 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                GuiUtils.DisposeElements(Elements);
+                Elements.Clear(true);
 #if LOG_ENABLED
                 LogManager.Info(0, string.Format("Scene disposed: {0}", Name));
 #endif

@@ -15,37 +15,23 @@ namespace Maquina.UI
         public Canvas(string name) : base(name)
         {
             Id = "GUI_CANVAS";
-            Children = new ObservableDictionary<string, BaseElement>();
+            Children = new ElementDictionary();
             DisabledStateChanged += Canvas_DisabledStateChanged;
             IsScaleSupported = false;
         }
 
-        private ObservableDictionary<string, BaseElement> children;
-        public ObservableDictionary<string, BaseElement> Children
-        {
-            get { return children; }
-            set
-            {
-                children = value;
-            }
-        }
+        public ElementDictionary Children { get; private set; }
 
         public override void Draw()
         {
-            foreach (BaseElement element in Children.Values)
-            {
-                element.Draw();
-            }
+            Children.Draw();
 
             base.Draw();
         }
 
         public override void Update()
         {
-            foreach (BaseElement element in Children.Values)
-            {
-                element.Update();
-            }
+            Children.Update();
 
             base.Update();
         }

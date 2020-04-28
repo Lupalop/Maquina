@@ -47,13 +47,13 @@ namespace Maquina.UI
         public override void Draw()
         {
             SpriteBatch.Begin();
-            GuiUtils.DrawElements(Elements);
+            Elements.Draw();
             SpriteBatch.End();
         }
 
         public override void Update()
         {
-            GuiUtils.UpdateElements(Elements);
+            Elements.Update();
         }
 
         protected override void Dispose(bool disposing)

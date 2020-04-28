@@ -12,28 +12,22 @@ namespace Maquina.Elements
         public ContainerElement(string name) : base(name)
         {
             Id = "GENERIC_CONTAINER";
-            Children = new ObservableDictionary<string, BaseElement>();
+            Children = new ElementDictionary();
             IsScaleSupported = false;
         }
 
-        public ObservableDictionary<string, BaseElement> Children { get; set; }
+        public ElementDictionary Children { get; protected set; }
 
         public override void Draw()
         {
-            foreach (BaseElement element in Children.Values)
-            {
-                element.Draw();
-            }
+            Children.Draw();
 
             base.Draw();
         }
 
         public override void Update()
         {
-            foreach (BaseElement element in Children.Values)
-            {
-                element.Update();
-            }
+            Children.Update();
 
             base.Update();
         }
