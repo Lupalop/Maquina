@@ -13,26 +13,26 @@ namespace Maquina
         public DisplayManager()
         {
 #if DEBUG
-            Application.Graphics.HardwareModeSwitch = !(bool)Application.Preferences[
-                "app.window.fullscreen.borderless", true];
+            Application.Graphics.HardwareModeSwitch =
+                !Application.Preferences.GetBoolean("app.window.fullscreen.borderless", true);
 #else
-            Application.Graphics.HardwareModeSwitch = !(bool)Application.Preferences[
-                "app.window.fullscreen.borderless", false];
+            Application.Graphics.HardwareModeSwitch =
+                !Application.Preferences.GetBoolean("app.window.fullscreen.borderless", false);
 #endif
             // Window
-            Application.Game.IsMouseVisible = 
-                (bool)Application.Preferences["app.window.useNativeCursor", false];
+            Application.Game.IsMouseVisible =
+                Application.Preferences.GetBoolean("app.window.useNativeCursor", false);
             UnmaximizedWindowBounds = new Point(
-                (int)Application.Preferences["app.window.width", 800],
-                (int)Application.Preferences["app.window.height", 600]);
+                Application.Preferences.GetInt32("app.window.width", 800),
+                Application.Preferences.GetInt32("app.window.height", 600));
             Application.Game.Window.AllowUserResizing =
-                (bool)Application.Preferences["app.window.allowUserResizing", false];
+                Application.Preferences.GetBoolean("app.window.allowUserResizing", false);
 
             // Global Scale
             Scale = 1f;
 
             // Identify if we should go fullscreen
-            if ((bool)Application.Preferences["app.window.fullscreen", false])
+            if (Application.Preferences.GetBoolean("app.window.fullscreen", false))
             {
                 Application.Graphics.PreferredBackBufferHeight = Application.GraphicsDevice.DisplayMode.Height;
                 Application.Graphics.PreferredBackBufferWidth = Application.GraphicsDevice.DisplayMode.Width;
@@ -114,15 +114,15 @@ namespace Maquina
         {
             if (disposing)
             {
-                Application.Preferences["app.window.fullscreen"] =
-                    Application.Graphics.IsFullScreen;
+                Application.Preferences.SetBoolean(
+                    "app.window.fullscreen", Application.Graphics.IsFullScreen);
                 // Save window dimensions if not in fullscreen
                 if (!Application.Graphics.IsFullScreen)
                 {
-                    Application.Preferences["app.window.width"] =
-                        Application.Graphics.PreferredBackBufferWidth;
-                    Application.Preferences["app.window.height"] =
-                        Application.Graphics.PreferredBackBufferHeight;
+                    Application.Preferences.SetInt32(
+                        "app.window.width", Application.Graphics.PreferredBackBufferWidth);
+                    Application.Preferences.SetInt32(
+                        "app.window.height", Application.Graphics.PreferredBackBufferHeight);
                 }
             }
         }

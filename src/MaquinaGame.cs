@@ -42,7 +42,7 @@ namespace Maquina
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             // Load platform resources synchronously
             string resourcePath = Path.Combine(Content.RootDirectory, ResourceXml);
-            ResourceManifest resources = XmlHelper.Load<ResourceManifest>(resourcePath);
+            ContentManifest resources = XmlHelper.Load<ContentManifest>(resourcePath);
             ContentFactory.Source.Add("platform", resources.Load("platform"));
         }
 

@@ -13,9 +13,9 @@ namespace Maquina
         public AudioManager()
         {
             // Audio
-            SoundVolume = (float)Application.Preferences["app.audio.sound", 1f];
-            MusicVolume = (int)Application.Preferences["app.audio.music", 255];
-            IsMuted = (bool)Application.Preferences["app.audio.mastermuted", false];
+            SoundVolume = Application.Preferences.GetFloat("app.audio.sound", 1f);
+            MusicVolume = Application.Preferences.GetInt32("app.audio.music", 255);
+            IsMuted = Application.Preferences.GetBoolean("app.audio.mastermuted", false);
         }
 
         public void PlaySong(string songName, bool isRepeating)
@@ -42,54 +42,37 @@ namespace Maquina
             PlaySong(songName, true);
         }
 
-        private int musicVolume;
+        private int _musicVolume;
         public int MusicVolume
         {
-            get
-            {
-                return musicVolume;
-            }
+            get { return _musicVolume; }
             set
             {
+                _musicVolume = value;
                 MediaPlayer.Volume = value;
-                musicVolume = value;
             }
         }
 
-        private float soundVolume;
+        private float _soundVolume;
         public float SoundVolume
         {
-            get
-            {
-                return soundVolume;
-            }
+            get { return _soundVolume; }
             set
             {
+                _soundVolume = value;
                 SoundEffect.MasterVolume = value;
-                soundVolume = value;
             }
         }
 
-        private bool isMuted;
+        private bool _isMuted;
         public bool IsMuted
         {
-            get
-            {
-                return isMuted;
-            }
+            get { return _isMuted; }
             set
             {
-                if (value)
-                {
-                    MediaPlayer.IsMuted = true;
-                    SoundEffect.MasterVolume = 0;
-                }
-                else
-                {
-                    MediaPlayer.IsMuted = false;
-                    SoundEffect.MasterVolume = 1;
-                }
-                isMuted = value;
+                _isMuted = value;
+                MediaPlayer.IsMuted = value;
+                SoundEffect.MasterVolume = (value) ? 0 : 1;
             }
         }
         public void ToggleMute()
@@ -101,9 +84,9 @@ namespace Maquina
         {
             if (disposing)
             {
-                Application.Preferences["app.audio.mastermuted"] = IsMuted;
-                Application.Preferences["app.audio.sound"] = SoundVolume;
-                Application.Preferences["app.audio.music"] = MusicVolume;
+                Application.Preferences.SetBoolean("app.audio.mastermuted", IsMuted);
+                Application.Preferences.SetFloat("app.audio.sound", SoundVolume);
+                Application.Preferences.SetInt32("app.audio.music", MusicVolume);
             }
         }
 
