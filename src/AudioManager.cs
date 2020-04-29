@@ -42,54 +42,37 @@ namespace Maquina
             PlaySong(songName, true);
         }
 
-        private int musicVolume;
+        private int _musicVolume;
         public int MusicVolume
         {
-            get
-            {
-                return musicVolume;
-            }
+            get { return _musicVolume; }
             set
             {
+                _musicVolume = value;
                 MediaPlayer.Volume = value;
-                musicVolume = value;
             }
         }
 
-        private float soundVolume;
+        private float _soundVolume;
         public float SoundVolume
         {
-            get
-            {
-                return soundVolume;
-            }
+            get { return _soundVolume; }
             set
             {
+                _soundVolume = value;
                 SoundEffect.MasterVolume = value;
-                soundVolume = value;
             }
         }
 
-        private bool isMuted;
+        private bool _isMuted;
         public bool IsMuted
         {
-            get
-            {
-                return isMuted;
-            }
+            get { return _isMuted; }
             set
             {
-                if (value)
-                {
-                    MediaPlayer.IsMuted = true;
-                    SoundEffect.MasterVolume = 0;
-                }
-                else
-                {
-                    MediaPlayer.IsMuted = false;
-                    SoundEffect.MasterVolume = 1;
-                }
-                isMuted = value;
+                _isMuted = value;
+                MediaPlayer.IsMuted = value;
+                SoundEffect.MasterVolume = (value) ? 0 : 1;
             }
         }
         public void ToggleMute()
