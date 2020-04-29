@@ -6,17 +6,17 @@ using System.Xml.Serialization;
 
 namespace Maquina.Resources
 {
-    public class ResourceGroup
+    public class ContentGroup
     {
         [XmlAttribute("id")]
         public string Id { get; set; }
         [XmlElement("font")]
-        public FontParameters[] Fonts { get; set; }
+        public SpriteFontProperty[] FontPropertySet { get; set; }
         [XmlElement("music")]
-        public ResourceParameters[] BGM { get; set; }
+        public Property<string>[] MusicPropertySet { get; set; }
         [XmlElement("sfx")]
-        public ResourceParameters[] SFX { get; set; }
+        public Property<string>[] SfxPropertySet { get; set; }
         [XmlElement("texture")]
-        public ResourceParameters[] Textures { get; set; }
+        public Property<string>[] TexturePropertySet { get; set; }
     }
 }

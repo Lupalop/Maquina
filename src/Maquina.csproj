@@ -81,7 +81,10 @@
     <Compile Include="LogEntryLevel.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="ContentFactory.cs" />
-    <Compile Include="Resources\ResourceGroup.cs" />
+    <Compile Include="Resources\ContentGroup.cs" />
+    <Compile Include="Resources\IManifest.cs" />
+    <Compile Include="Resources\PreferencesManifest.cs" />
+    <Compile Include="Resources\StringManifest.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Elements\Alignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />
@@ -93,11 +96,9 @@
     <Compile Include="MaquinaGame.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />
-    <Compile Include="Resources\LocaleDefinition.cs" />
-    <Compile Include="Resources\ResourceManifest.cs" />
-    <Compile Include="Resources\ResourceParameters.cs" />
-    <Compile Include="Resources\StringBundle.cs" />
-    <Compile Include="Resources\StringParameters.cs" />
+    <Compile Include="Resources\LocaleManifest.cs" />
+    <Compile Include="Resources\ContentManifest.cs" />
+    <Compile Include="Resources\Property.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="TimerManager.cs" />
     <Compile Include="Elements\Orientation.cs" />
@@ -105,8 +106,7 @@
     <Compile Include="UI.Controls\TextBox.cs" />
     <Compile Include="UI.Controls\StackPanel.cs" />
     <Compile Include="Resources\XmlHelper.cs" />
-    <Compile Include="Resources\ContentAttribute.cs" />
-    <Compile Include="Resources\FontParameters.cs" />
+    <Compile Include="Resources\SpriteFontProperty.cs" />
     <Compile Include="LocaleManager.cs" />
     <Compile Include="PreferencesManager.cs" />
     <Compile Include="CommandParser.cs" />

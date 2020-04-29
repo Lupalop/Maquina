@@ -20,7 +20,7 @@ namespace Maquina
             RootDirectory = "locales";
             DefaultLocale = "en-US";
             Strings = new Dictionary<string, string>();
-            LanguageCode = (string)Application.Preferences["app.locale", DefaultLocale];
+            LanguageCode = Application.Preferences.GetString("app.locale", DefaultLocale);
         }
 
         private string languageCode;
@@ -30,11 +30,12 @@ namespace Maquina
             set
             {
                 languageCode = value;
-                CurrentLocale = new LocaleDefinition() { LanguageCode = value };
+                CurrentLocale = new LocaleManifest() { Code = value };
                 try
                 {
                     IEnumerable<string> fileList = Directory.EnumerateFiles(
                         Path.Combine(Application.Content.RootDirectory, RootDirectory, value));
+                    
                     // Load associated string bundles
                     foreach (string fileName in fileList)
                     {
@@ -42,10 +43,10 @@ namespace Maquina
                         {
                             continue;
                         }
-                        List<StringParameters> strings = XmlHelper.Load<StringBundle>(fileName).Strings;
-                        for (int i = 0; i < strings.Count; i++)
+                        Property<string>[] strings = XmlHelper.Load<StringManifest>(fileName).StringPropertySet;
+                        for (int i = 0; i < strings.Length; i++)
                         {
-                            Strings.Add(strings[i].Name, strings[i].Content);
+                            Strings.Add(strings[i].Id, strings[i].Value);
                         }
                     }
                 }
@@ -59,12 +60,12 @@ namespace Maquina
             }
         }
 
-        public LocaleDefinition CurrentLocale { get; private set; }
-        public List<LocaleDefinition> LocaleList
+        public LocaleManifest CurrentLocale { get; private set; }
+        public List<LocaleManifest> LocaleList
         {
             get
             {
-                List<LocaleDefinition> CreatedList = new List<LocaleDefinition>();
+                List<LocaleManifest> CreatedList = new List<LocaleManifest>();
                 IEnumerable<string> Directories = Directory.EnumerateDirectories(
                         Path.Combine(Application.Content.RootDirectory, RootDirectory));
                 foreach (var item in Directories)
@@ -73,7 +74,7 @@ namespace Maquina
                     // Check first if locale definition exists
                     if (File.Exists(LocaleDefLocation))
                     {
-                        CreatedList.Add(XmlHelper.Load<LocaleDefinition>(LocaleDefLocation));
+                        CreatedList.Add(XmlHelper.Load<LocaleManifest>(LocaleDefLocation));
                     }
                 }
                 return CreatedList;

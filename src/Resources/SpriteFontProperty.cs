@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Maquina.Resources
 {
-    public class FontParameters : ResourceParameters
+    public class SpriteFontProperty : Property<string>
     {
         [XmlAttribute("linespacing")]
         public int LineSpacing { get; set; }

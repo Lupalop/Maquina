@@ -13,9 +13,9 @@ namespace Maquina
         public AudioManager()
         {
             // Audio
-            SoundVolume = (float)Application.Preferences["app.audio.sound", 1f];
-            MusicVolume = (int)Application.Preferences["app.audio.music", 255];
-            IsMuted = (bool)Application.Preferences["app.audio.mastermuted", false];
+            SoundVolume = Application.Preferences.GetFloat("app.audio.sound", 1f);
+            MusicVolume = Application.Preferences.GetInt32("app.audio.music", 255);
+            IsMuted = Application.Preferences.GetBoolean("app.audio.mastermuted", false);
         }
 
         public void PlaySong(string songName, bool isRepeating)
@@ -84,9 +84,9 @@ namespace Maquina
         {
             if (disposing)
             {
-                Application.Preferences["app.audio.mastermuted"] = IsMuted;
-                Application.Preferences["app.audio.sound"] = SoundVolume;
-                Application.Preferences["app.audio.music"] = MusicVolume;
+                Application.Preferences.SetBoolean("app.audio.mastermuted", IsMuted);
+                Application.Preferences.SetFloat("app.audio.sound", SoundVolume);
+                Application.Preferences.SetInt32("app.audio.music", MusicVolume);
             }
         }
 
