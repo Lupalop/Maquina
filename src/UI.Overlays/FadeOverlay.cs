@@ -17,6 +17,8 @@ namespace Maquina.UI
             OverlayKey = overlayKey;
             FadeColor = fadeColor;
             FadeSpeed = 0.1f;
+
+            InitializeComponent();
         }
         public FadeOverlay(string overlayKey) : this(overlayKey, Color.Black) { }
 
@@ -36,12 +38,6 @@ namespace Maquina.UI
                 FadeBackground = new Texture2D(Game.GraphicsDevice, 1, 1);
                 FadeBackground.SetData(new Color[] { value });
             }
-        }
-
-        public override void LoadContent()
-        {
-            InitializeComponent();
-            base.LoadContent();
         }
 
         public override void Draw()
