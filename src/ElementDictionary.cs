@@ -92,7 +92,7 @@ namespace Maquina
 
         public bool Contains(string key, BaseElement value)
         {
-            return this.Contains(new KeyValuePair<string, BaseElement>(key, value));
+            return Contains(new KeyValuePair<string, BaseElement>(key, value));
         }
         public bool Contains(KeyValuePair<string, BaseElement> item)
         {
@@ -134,22 +134,21 @@ namespace Maquina
 
         public void Clear()
         {
-            _isModified = true;
-            foreach (var item in InnerDictionary.Values)
-            {
-                item.ElementChanged -= Child_ElementChanged;
-            }
-            InnerDictionary.Clear();
+            Clear(false);
         }
 
         public void Clear(bool disposeElements)
         {
+            _isModified = true;
             lock (InnerDictionary)
             {
                 foreach (var item in InnerDictionary.Values)
                 {
                     item.ElementChanged -= Child_ElementChanged;
-                    item.Dispose();
+                    if (disposeElements)
+                    {
+                        item.Dispose();
+                    }
                 }
                 InnerDictionary.Clear();
             }
@@ -184,26 +183,26 @@ namespace Maquina
         {
             foreach (var item in Values)
             {
+                item.Update();
                 if (_isModified)
                 {
-                    _isModified = false;
-                    return;
+                    break;
                 }
-                item.Update();
             }
+            _isModified = false;
         }
 
         public void Draw()
         {
             foreach (var item in Values)
             {
+                item.Draw();
                 if (_isModified)
                 {
-                    _isModified = false;
-                    return;
+                    break;
                 }
-                item.Draw();
             }
+            _isModified = false;
         }
     }
 }
