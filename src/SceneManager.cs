@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -12,6 +11,7 @@ using System.Globalization;
 using Maquina.Resources;
 using Maquina.UI;
 using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 
 namespace Maquina
 {
@@ -19,7 +19,7 @@ namespace Maquina
     {
         public SceneManager()
         {
-            Overlays = new ObservableDictionary<string, Scene>();
+            Overlays = new ObservableCollection<Scene>();
             Overlays.CollectionChanged += Overlays_CollectionChanged;
             CurrentScene = new EmptyScene();
         }
@@ -51,7 +51,7 @@ namespace Maquina
                     newScene.LoadContent();
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    foreach (Scene scene in Overlays.Values)
+                    foreach (Scene scene in Overlays)
                     {
                         scene.Dispose();
                     }
@@ -59,12 +59,13 @@ namespace Maquina
             }
         }
 
-        public ObservableDictionary<string, Scene> Overlays { get; private set; }
+        public ObservableCollection<Scene> Overlays { get; private set; }
 
         public Scene CurrentScene { get; protected set; }
 
         public void SwitchToScene(Scene scene, bool shouldLoadContent = true)
         {
+            List<string> x = new List<string>();
             if (scene == null)
             {
 #if LOG_ENABLED
@@ -79,27 +80,11 @@ namespace Maquina
 #endif
                 return;
             }
+            // Prevent current scene from drawing/updating
             CurrentScene.IsFrozen = true;
-            // Show a fade effect when switching
-            string overlayKey = string.Format("fade-{0}", scene);
-            FadeOverlay overlay = new FadeOverlay(overlayKey);
-            if (!Overlays.ContainsKey(overlayKey))
-            {
-                Overlays.Add(overlayKey, overlay);
-            }
-            // Unload previous scene
-            if (CurrentScene != null)
-            {
-                CurrentScene.Dispose();
-            }
-            // Check if load content should still be called
-            if (shouldLoadContent)
-            {
-                scene.LoadContent();
-            }
-            // Do a pre-current scene update pass
-            scene.Update();
-            // Set current state to given scene
+
+            FadeOverlay overlay = new FadeOverlay("fade-overlay");
+            // Switch to the given scene once the fade transition is complete
             overlay.FadeInAnimation.AnimationFinished += (sender, e) =>
             {
 #if LOG_ENABLED
@@ -107,6 +92,19 @@ namespace Maquina
 #endif
                 CurrentScene = scene;
             };
+            Overlays.Add(overlay);
+            
+            // Unload previous scene
+            CurrentScene.Dispose();
+
+            // Check if load content should still be called
+            if (shouldLoadContent)
+            {
+                scene.LoadContent();
+            }
+
+            // Do a pre-current scene update pass
+            scene.Update();
         }
 
         internal void Draw()
@@ -115,10 +113,9 @@ namespace Maquina
             {
                 CurrentScene.Draw();
             }
-            // If there are Overlays, call their draw method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Overlays.Values.ElementAt(i).Draw();
+                Overlays[i].Draw();
             }
         }
 
@@ -128,10 +125,9 @@ namespace Maquina
             {
                 CurrentScene.Update();
             }
-            // If there are Overlays, call their update method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
-                Overlays.Values.ElementAt(i).Update();
+                Overlays[i].Update();
             }
         }
 

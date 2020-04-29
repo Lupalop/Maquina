@@ -33,7 +33,7 @@ namespace Maquina.UI
             FadeOutAnimation = new FadeOutAnimation(FadeImage.Sprite, FadeSpeed);
             FadeOutAnimation.AnimationFinished += (sender, e) =>
             {
-                Application.Scenes.Overlays.Remove(OverlayKey);
+                Application.Scenes.Overlays.Remove(this);
             };
 
             FadeInAnimation.Start();

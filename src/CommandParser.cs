@@ -65,7 +65,7 @@ namespace Maquina
                             case "overlay":
                                 for (int i = 0; i < Application.Scenes.Overlays.Count; i++)
                                 {
-                                    GetContainerElementsState(Application.Scenes.Overlays.Values.ElementAt(i).Elements.Values, action[2]);
+                                    GetContainerElementsState(Application.Scenes.Overlays[i].Elements.Values, action[2]);
                                 }
                                 break;
                             default:

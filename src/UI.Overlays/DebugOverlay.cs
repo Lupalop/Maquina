@@ -93,9 +93,8 @@ namespace Maquina.UI
                 sceneOverlayList = "";
                 for (int i = 0; i < Application.Scenes.Overlays.Count; i++)
                 {
-                    List<string> keyList = Application.Scenes.Overlays.Keys.ToList();
-                    sceneOverlayList += String.Format("Key {0}: {2}, Scene Name: {1} \n",
-                        i, Application.Scenes.Overlays[keyList[i]].Name, keyList[i]);
+                    sceneOverlayList += string.Format("Index {0}: Scene Name: {1} \n",
+                        i, Application.Scenes.Overlays[i].Name);
                 }
             }
             // List elements loaded
