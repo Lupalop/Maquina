@@ -21,7 +21,7 @@ namespace Maquina.UI
         public ElementDictionary Elements { get; private set; }
         public string Name { get; private set; }
 
-        internal bool _stopUpdating = false;
+        public bool IsFrozen { get; internal set; }
 
         public event EventHandler ContentLoaded;
         public event EventHandler Disposed;

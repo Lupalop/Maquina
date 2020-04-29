@@ -79,7 +79,7 @@ namespace Maquina
 #endif
                 return;
             }
-            CurrentScene._stopUpdating = true;
+            CurrentScene.IsFrozen = true;
             // Show a fade effect when switching
             string overlayKey = string.Format("fade-{0}", scene);
             FadeOverlay overlay = new FadeOverlay(overlayKey);
@@ -111,7 +111,10 @@ namespace Maquina
 
         internal void Draw()
         {
-            CurrentScene.Draw();
+            if (!CurrentScene.IsFrozen)
+            {
+                CurrentScene.Draw();
+            }
             // If there are Overlays, call their draw method
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
@@ -121,7 +124,7 @@ namespace Maquina
 
         internal void Update()
         {
-            if (!CurrentScene._stopUpdating)
+            if (!CurrentScene.IsFrozen)
             {
                 CurrentScene.Update();
             }
