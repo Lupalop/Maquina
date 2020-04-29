@@ -38,7 +38,7 @@ namespace Maquina.UI
 
             FadeInAnimation.Start();
 
-            Elements.Add(FadeImage.Name, FadeImage);
+            Elements.Add(FadeImage);
         }
     }
 }
