@@ -78,6 +78,10 @@ namespace Maquina
             }
         }
 
+        public void Add(BaseElement value)
+        {
+            Add(new KeyValuePair<string, BaseElement>(value.Name, value));
+        }
         public void Add(string key, BaseElement value)
         {
             Add(new KeyValuePair<string, BaseElement>(key, value));
