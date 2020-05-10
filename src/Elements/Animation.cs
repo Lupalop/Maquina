@@ -23,14 +23,14 @@ namespace Maquina.Elements
         public event EventHandler AnimationFinished;
         public event EventHandler AnimationStarted;
 
-        protected void OnAnimationStarted()
+        protected virtual void OnAnimationStarted()
         {
             if (AnimationStarted != null)
             {
                 AnimationStarted(this, EventArgs.Empty);
             }
         }
-        protected void OnAnimationFinished()
+        protected virtual void OnAnimationFinished()
         {
             if (AnimationFinished != null)
             {

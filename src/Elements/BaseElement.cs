@@ -139,7 +139,7 @@ namespace Maquina.Elements
         public event EventHandler ElementUpdated;
         public event EventHandler ElementDrawn;
 
-        protected void OnElementUpdated()
+        protected virtual void OnElementUpdated()
         {
             if (ElementUpdated != null)
             {
@@ -147,7 +147,7 @@ namespace Maquina.Elements
             }
         }
 
-        protected void OnElementDrawn()
+        protected virtual void OnElementDrawn()
         {
             if (ElementDrawn != null)
             {
@@ -155,7 +155,7 @@ namespace Maquina.Elements
             }
         }
 
-        protected void OnElementChanged(ElementChangedEventArgs e)
+        protected virtual void OnElementChanged(ElementChangedEventArgs e)
         {
             if (ElementChanged != null)
             {

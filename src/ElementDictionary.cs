@@ -170,7 +170,7 @@ namespace Maquina
 
         public event ElementChangedEventHandler ElementChanged;
 
-        private void OnElementChanged(object sender, ElementChangedEventArgs e)
+        protected virtual void OnElementChanged(object sender, ElementChangedEventArgs e)
         {
             if (ElementChanged != null)
             {

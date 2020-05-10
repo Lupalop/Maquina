@@ -153,7 +153,7 @@ namespace Maquina.Elements
 
         // Child Events
         public event ElementChangedEventHandler SpriteChanged;
-        protected void OnSpriteChanged(ElementChangedEventArgs e)
+        protected virtual void OnSpriteChanged(ElementChangedEventArgs e)
         {
             if (SpriteChanged != null)
             {

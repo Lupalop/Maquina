@@ -64,14 +64,14 @@ namespace Maquina.Elements
         public event EventHandler DisabledStateChanged;
         public event EventHandler FocusedStateChanged;
 
-        protected void OnDisabledStateChanged()
+        protected virtual void OnDisabledStateChanged()
         {
             if (DisabledStateChanged != null)
             {
                 DisabledStateChanged(this, EventArgs.Empty);
             }
         }
-        protected void OnFocusedStateChanged()
+        protected virtual void OnFocusedStateChanged()
         {
             if (FocusedStateChanged != null)
             {
