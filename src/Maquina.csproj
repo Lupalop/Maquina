@@ -89,7 +89,7 @@
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Elements\Alignment.cs" />
     <Compile Include="Elements\IBaseElement.cs" />
-    <Compile Include="Elements\UIElement.cs" />
+    <Compile Include="UI.Controls\Control.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Elements\IContainerElement.cs" />
     <Compile Include="Elements\SpriteType.cs" />
