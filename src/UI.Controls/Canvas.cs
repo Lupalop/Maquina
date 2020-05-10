@@ -16,7 +16,6 @@ namespace Maquina.UI
         {
             Id = "UI_CANVAS";
             Children = new ElementDictionary();
-            DisabledStateChanged += Canvas_DisabledStateChanged;
             IsScaleSupported = false;
         }
 
@@ -36,7 +35,7 @@ namespace Maquina.UI
             base.Update();
         }
 
-        private void Canvas_DisabledStateChanged(object sender, EventArgs e)
+        protected override void OnDisabledStateChanged()
         {
             GuiUtils.SetElementDisabledState(Children, Disabled);
         }
@@ -45,7 +44,6 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                DisabledStateChanged -= Canvas_DisabledStateChanged;
                 foreach (var element in Children.Values)
                 {
                     element.Dispose();
