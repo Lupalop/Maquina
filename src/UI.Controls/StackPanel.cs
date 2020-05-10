@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class StackPanel : GuiElement, IContainerElement
+    public class StackPanel : Control, IContainerElement
     {
         public StackPanel(string name) : base(name)
         {
-            Id = "GUI_STACKPANEL";
+            Id = "UI_STACKPANEL";
             Background = new Sprite();
             Children = new ElementDictionary();
             Orientation = Orientation.Vertical;
@@ -146,12 +146,12 @@ namespace Maquina.UI
                     }
                 }
 
-                if (!(element is GuiElement))
+                if (!(element is Control))
                 {
                     continue;
                 }
 
-                GuiElement modifiedElement = (GuiElement)element;
+                Control modifiedElement = (Control)element;
                 int newElementX = modifiedElement.Location.X;
                 int newElementY = modifiedElement.Location.Y;
 

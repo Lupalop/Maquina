@@ -15,7 +15,7 @@ namespace Maquina.UI
     {
         public TextBox(string name) : base(name)
         {
-            Id = "GUI_TEXTBOX";
+            Id = "UI_TEXTBOX";
 
             // Default TB graphic
             Background.Texture = (Texture2D)ContentFactory.TryGetResource("textbox-default");

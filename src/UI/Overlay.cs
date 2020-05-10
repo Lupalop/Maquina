@@ -15,12 +15,12 @@ namespace Maquina.UI
         protected Overlay(string sceneName, Scene parentScene) : base(sceneName)
         {
             ParentScene = parentScene;
-            DisableParentSceneGui = false;
+            DisableParentSceneUI = false;
         }
-        protected Overlay(string sceneName, Scene parentScene, bool disableParentSceneGui) : base(sceneName)
+        protected Overlay(string sceneName, Scene parentScene, bool disableParentSceneUI) : base(sceneName)
         {
             ParentScene = parentScene;
-            DisableParentSceneGui = disableParentSceneGui;
+            DisableParentSceneUI = disableParentSceneUI;
         }
 
         private Scene parentScene;
@@ -33,13 +33,13 @@ namespace Maquina.UI
                 CheckParentScene();
             }
         }
-        private bool disableParentSceneGui;
-        public bool DisableParentSceneGui
+        private bool disableParentSceneUI;
+        public bool DisableParentSceneUI
         {
-            get { return disableParentSceneGui; }
+            get { return disableParentSceneUI; }
             protected set
             {
-                disableParentSceneGui = value;
+                disableParentSceneUI = value;
                 CheckParentScene();
             }
         }
@@ -48,7 +48,7 @@ namespace Maquina.UI
         {
             if (ParentScene != null)
             {
-                GuiUtils.SetElementDisabledState(ParentScene.Elements, DisableParentSceneGui);
+                GuiUtils.SetElementDisabledState(ParentScene.Elements, DisableParentSceneUI);
             }
         }
     }

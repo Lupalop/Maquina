@@ -171,16 +171,16 @@ namespace Maquina
             info.AppendLine(string.Format("Actual Bounds: {0}", element.ActualBounds));
             info.AppendLine(string.Format("Scale: {0}", element.Scale));
             info.AppendLine(string.Format("Ignore Global Scale?: {0}", element.IgnoreGlobalScale));
-            if (element is GuiElement)
+            if (element is Control)
             {
-                GuiElement guiElement = (GuiElement)element;
+                Control control = (Control)element;
                 info.AppendLine();
-                info.AppendLine("GUI Element information:");
-                info.AppendLine(string.Format("Auto Position?: {0}", guiElement.AutoPosition));
-                info.AppendLine(string.Format("Is Disabled?: {0}", guiElement.Disabled));
-                info.AppendLine(string.Format("Is Focused?: {0}", guiElement.Focused));
-                info.AppendLine(string.Format("Horizontal Alignment: {0}", guiElement.HorizontalAlignment));
-                info.AppendLine(string.Format("Vertical Alignment: {0}", guiElement.VerticalAlignment));
+                info.AppendLine("UI Element information:");
+                info.AppendLine(string.Format("Auto Position?: {0}", control.AutoPosition));
+                info.AppendLine(string.Format("Is Disabled?: {0}", control.Disabled));
+                info.AppendLine(string.Format("Is Focused?: {0}", control.Focused));
+                info.AppendLine(string.Format("Horizontal Alignment: {0}", control.HorizontalAlignment));
+                info.AppendLine(string.Format("Vertical Alignment: {0}", control.VerticalAlignment));
             }
             Console.WriteLine(info.ToString());
         }

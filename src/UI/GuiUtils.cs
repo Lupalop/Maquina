@@ -25,9 +25,9 @@ namespace Maquina.UI
             for (int i = 0; i < elements.Count(); i++)
             {
                 BaseElement element = elements.ElementAt(i);
-                if (element is GuiElement)
+                if (element is Control)
                 {
-                    ((GuiElement)(element)).Disabled = disabled;
+                    ((Control)(element)).Disabled = disabled;
                 }
             }
         }

@@ -10,11 +10,11 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class Image : GuiElement
+    public class Image : Control
     {
         public Image(string name) : base(name)
         {
-            Id = "GUI_IMAGE";
+            Id = "UI_IMAGE";
             Sprite = new Sprite();
             Sprite.SpriteChanged += Background_SpriteChanged;
             ElementChanged += Image_ElementChanged;

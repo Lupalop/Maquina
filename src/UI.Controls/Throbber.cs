@@ -13,7 +13,7 @@ namespace Maquina.UI
     {
         public Throbber(string name) : base(name)
         {
-            Id = "GUI_THROBBER";
+            Id = "UI_THROBBER";
             IsSpinning = true;
             Sprite.Texture = (Texture2D)ContentFactory.TryGetResource("throbber-default");
             ElementUpdated += (sender, e) =>

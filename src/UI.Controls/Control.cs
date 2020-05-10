@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Maquina.Elements
 {
-    public abstract class GuiElement : BaseElement
+    public abstract class Control : BaseElement
     {
         // Constructor
-        protected GuiElement(string name) : base (name)
+        protected Control(string name) : base (name)
         {
-            Id = "GENERIC_GUI";
+            Id = "UI_CONTROL";
             HorizontalAlignment = HorizontalAlignment.Center;
             VerticalAlignment = VerticalAlignment.Center;
             AutoPosition = false;
@@ -101,14 +101,14 @@ namespace Maquina.Elements
                 {
                     Application.Display.ResolutionChanged += Display_ResolutionChanged;
                     Application.Display.ScaleChanged += Global_ScaleChanged;
-                    ElementChanged += GuiElement_ElementChanged;
+                    ElementChanged += Control_ElementChanged;
                 }
                 // Only unregister from these events if auto position was previously true
                 if (autoPosition && !value)
                 {
                     Application.Display.ResolutionChanged -= Display_ResolutionChanged;
                     Application.Display.ScaleChanged -= Global_ScaleChanged;
-                    ElementChanged -= GuiElement_ElementChanged;
+                    ElementChanged -= Control_ElementChanged;
                 }
             }
         }
@@ -169,7 +169,7 @@ namespace Maquina.Elements
             UpdateAutoPositionedLayout();
         }
 
-        private void GuiElement_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Control_ElementChanged(object sender, ElementChangedEventArgs e)
         {
             if (e.Property == ElementChangedProperty.Location)
                 return;

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class Canvas : GuiElement, IContainerElement
+    public class Canvas : Control, IContainerElement
     {
         // FIXME: Elements inside a canvas element SHOULD be relative to the container's location.
         //        Sprite and BaseElement (and their children) have to be updated to handle this.
         public Canvas(string name) : base(name)
         {
-            Id = "GUI_CANVAS";
+            Id = "UI_CANVAS";
             Children = new ElementDictionary();
             DisabledStateChanged += Canvas_DisabledStateChanged;
             IsScaleSupported = false;

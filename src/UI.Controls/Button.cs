@@ -11,11 +11,11 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class Button : GuiElement
+    public class Button : Control
     {
         public Button(string name) : base (name)
         {
-            Id = "GUI_BUTTON";
+            Id = "UI_BUTTON";
             InputManager = Application.Input;
 
             Background = new Sprite()

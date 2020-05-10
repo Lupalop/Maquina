@@ -10,11 +10,11 @@ using Maquina.Elements;
 
 namespace Maquina.UI
 {
-    public class Label : GuiElement
+    public class Label : Control
     {
         public Label(string name) : base (name)
         {
-            Id = "GUI_LABEL";
+            Id = "UI_LABEL";
             Sprite = new TextSprite();
             Sprite.SpriteChanged += Child_SpriteChanged;
             ElementChanged += Label_ElementChanged;
