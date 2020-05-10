@@ -40,7 +40,7 @@ namespace Maquina.Elements
 
         public Color Tint { get; set; }
         public float Rotation { get; set; }
-        public Vector2 RotationOrigin { get; set; }
+        public Vector2 Origin { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
         public bool IgnoreGlobalScale { get; set; }
         public SpriteBatch SpriteBatch { get; set; }
@@ -214,7 +214,7 @@ namespace Maquina.Elements
             if (Texture != null)
             {
                 SpriteBatch.Draw(Texture, ActualDestinationRectangle,
-                    SourceRectangle, Tint * Opacity, Rotation, RotationOrigin,
+                    SourceRectangle, Tint * Opacity, Rotation, Origin,
                     SpriteEffects, LayerDepth);
             }
         }

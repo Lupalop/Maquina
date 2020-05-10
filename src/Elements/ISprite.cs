@@ -9,7 +9,7 @@ namespace Maquina.Elements
         // General
         Color Tint { get; set; }
         float Rotation { get; set; }
-        Vector2 RotationOrigin { get; set; }
+        Vector2 Origin { get; set; }
         SpriteEffects SpriteEffects { get; set; }
         SpriteBatch SpriteBatch { get; set; }
 

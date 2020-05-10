@@ -23,7 +23,7 @@ namespace Maquina.Elements
         // General
         public Color Tint { get; set; }
         public float Rotation { get; set; }
-        public Vector2 RotationOrigin { get; set; }
+        public Vector2 Origin { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
         public bool IgnoreGlobalScale { get; set; }
         public SpriteBatch SpriteBatch { get; set; }
@@ -135,7 +135,7 @@ namespace Maquina.Elements
         public virtual void Draw()
         {
             SpriteBatch.DrawString(Font, Text, Location.ToVector2(), Tint * Opacity,
-                Rotation, RotationOrigin, ActualScale, SpriteEffects, LayerDepth);
+                Rotation, Origin, ActualScale, SpriteEffects, LayerDepth);
         }
 
         public virtual void Update()

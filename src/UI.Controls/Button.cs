@@ -88,16 +88,16 @@ namespace Maquina.UI
                 Icon.Rotation = value;
             }
         }
-        private Vector2 rotationOrigin;
-        public Vector2 RotationOrigin
+        private Vector2 origin;
+        public Vector2 Origin
         {
-            get { return rotationOrigin; }
+            get { return origin; }
             set
             {
-                rotationOrigin = value;
-                Background.RotationOrigin = value;
-                Label.RotationOrigin = value;
-                Icon.RotationOrigin = value;
+                origin = value;
+                Background.Origin = value;
+                Label.Origin = value;
+                Icon.Origin = value;
             }
         }
         private SpriteEffects spriteEffects;

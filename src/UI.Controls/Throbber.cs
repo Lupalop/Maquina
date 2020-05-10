@@ -35,7 +35,7 @@ namespace Maquina.UI
 
         private void Throbber_ElementChanged(object sender, ElementChangedEventArgs e)
         {
-            Sprite.RotationOrigin = new Vector2(Size.X / 2, Size.Y / 2);
+            Sprite.Origin = new Vector2(Size.X / 2, Size.Y / 2);
             switch (e.Property)
             {
                 case ElementChangedProperty.Location:
