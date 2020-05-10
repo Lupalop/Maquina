@@ -141,22 +141,11 @@ namespace Maquina.UI
         // Draw and update methods
         public override void Draw()
         {
-            if (Background != null)
-            {
-                Background.Draw();
-            }
-            if (Label != null)
-            {
-                Label.Draw();
-            }
-            if (Icon != null)
-            {
-                Icon.Draw();
-            }
-            if (Tooltip != null)
-            {
-                Tooltip.Draw();
-            }
+            Background.Draw();
+            Label.Draw();
+            Icon.Draw();
+            Tooltip.Draw();
+
             base.Draw();
         }
 
@@ -173,7 +162,7 @@ namespace Maquina.UI
                 if (ActualBounds.Contains(InputManager.MousePosition))
                 {
                     Background.CurrentFrame = 1;
-                    if (Tooltip != null)
+                    if (Tooltip.Text != string.Empty)
                     {
                         Tooltip.Location = new Point(
                             InputManager.MousePosition.X + 20,
@@ -232,22 +221,10 @@ namespace Maquina.UI
                 }
             }
 
-            if (Background != null)
-            {
-                Background.Update();
-            }
-            if (Label != null)
-            {
-                Label.Update();
-            }
-            if (Icon != null)
-            {
-                Icon.Update();
-            }
-            if (Tooltip != null)
-            {
-                Tooltip.Update();
-            }
+            Background.Update();
+            Label.Update();
+            Icon.Update();
+            Tooltip.Update();
 
             base.Update();
         }
@@ -258,10 +235,7 @@ namespace Maquina.UI
             switch (e.Property)
             {
                 case ElementChangedProperty.Location:
-                    if (Background != null)
-                    {
-                        Background.Location = Location;
-                    }
+                    Background.Location = Location;
                     RecalculateLabelLocation();
                     RecalculateIconLocation();
                     break;
@@ -291,7 +265,7 @@ namespace Maquina.UI
             if (e.Property != ElementChangedProperty.Size)
                 return;
 
-            if (Background == null || Background.Texture == null)
+            if (Background.Texture == null)
             {
                 Size = Label.Size;
             }
@@ -308,34 +282,28 @@ namespace Maquina.UI
         // Misc
         private void RecalculateLabelLocation()
         {
-            if (Label != null)
-            {
-                Label.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Label.ActualSize.X / 2),
-                    Location.Y + (ActualBounds.Height / 2) - (Label.ActualSize.Y / 2));
-            }
+            Label.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Label.ActualSize.X / 2),
+                Location.Y + (ActualBounds.Height / 2) - (Label.ActualSize.Y / 2));
         }
         private void RecalculateIconLocation()
         {
-            if (Icon != null)
+            switch (IconAlignment)
             {
-                switch (IconAlignment)
-                {
-                    case HorizontalAlignment.Left:
-                        Icon.Location = new Point(Location.X,
-                            Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
-                        break;
-                    case HorizontalAlignment.Center:
-                        Icon.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Icon.ActualSize.X / 2),
-                            Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
-                        break;
-                    case HorizontalAlignment.Right:
-                        Icon.Location = new Point(Location.X + ActualBounds.Width - Icon.ActualSize.X,
-                            Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
-                        break;
-                    case HorizontalAlignment.Stretch:
-                        // TODO: stub
-                        return;
-                }
+                case HorizontalAlignment.Left:
+                    Icon.Location = new Point(Location.X,
+                        Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
+                    break;
+                case HorizontalAlignment.Center:
+                    Icon.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Icon.ActualSize.X / 2),
+                        Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
+                    break;
+                case HorizontalAlignment.Right:
+                    Icon.Location = new Point(Location.X + ActualBounds.Width - Icon.ActualSize.X,
+                        Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
+                    break;
+                case HorizontalAlignment.Stretch:
+                    // TODO: stub
+                    return;
             }
         }
 

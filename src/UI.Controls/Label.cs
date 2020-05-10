@@ -27,18 +27,12 @@ namespace Maquina.UI
         // Draw and update methods
         public override void Draw()
         {
-            if (Sprite != null)
-            {
-                Sprite.Draw();
-            }
+            Sprite.Draw();
             base.Draw();
         }
         public override void Update()
         {
-            if (Sprite != null)
-            {
-                Sprite.Update();
-            }
+            Sprite.Update();
             base.Update();
         }
 
