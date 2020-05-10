@@ -44,7 +44,7 @@ namespace Maquina.Elements
         public SpriteEffects SpriteEffects { get; set; }
         public bool IgnoreGlobalScale { get; set; }
         public SpriteBatch SpriteBatch { get; set; }
-        
+
         // Scale
         public float Scale { get; set; }
         // Scale adjusted for global scale
@@ -119,7 +119,7 @@ namespace Maquina.Elements
                     (int)(size.Y * ActualScale));
             }
         }
-        
+
         public float LayerDepth { get; set; }
         public float Opacity { get; set; }
 
@@ -180,7 +180,23 @@ namespace Maquina.Elements
         public int CurrentFrame
         {
             get { return currentFrame; }
-            set { currentFrame = value; }
+            set
+            {
+                currentFrame = value;
+
+                if (SpriteType == SpriteType.None)
+                {
+                    return;
+                }
+
+                int width = Texture.Width / Columns;
+                int height = Texture.Height / Rows;
+                int row = CurrentFrame / Columns;
+                int column = CurrentFrame % Columns;
+
+                SourceRectangle = new Rectangle(
+                    width * column, height * row, width, height);
+            }
         }
         public int TotalFrames { get; private set; }
 
@@ -224,17 +240,6 @@ namespace Maquina.Elements
             if (SpriteType != SpriteType.None && CurrentFrame == TotalFrames)
             {
                 CurrentFrame = 0;
-            }
-
-            if (Texture != null && SpriteType != SpriteType.None)
-            {
-                int width = Texture.Width / Columns;
-                int height = Texture.Height / Rows;
-                int row = CurrentFrame / Columns;
-                int column = CurrentFrame % Columns;
-
-                SourceRectangle = new Rectangle(
-                    width * column, height * row, width, height);
             }
         }
 
