@@ -48,7 +48,17 @@ namespace Maquina.UI
         {
             if (ParentScene != null)
             {
-                GuiUtils.SetElementDisabledState(ParentScene.Entities, DisableParentSceneUI);
+                foreach (var item in ParentScene.Entities.Values)
+                {
+                    if (item is Control)
+                    {
+                        ((Control)(item)).Disabled = DisableParentSceneUI;
+                    }
+                    if (ParentScene.Entities.IsModified)
+                    {
+                        break;
+                    }
+                }
             }
         }
     }
