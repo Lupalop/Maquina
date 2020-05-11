@@ -143,7 +143,7 @@ namespace Maquina.Entities
             // Do nothing
         }
 
-        public void UpdateTextMeasurement()
+        protected virtual void UpdateTextMeasurement()
         {
             if (font != null && text != null)
             {
