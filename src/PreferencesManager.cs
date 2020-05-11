@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Maquina.Resources;
+using Maquina.Content;
 
 namespace Maquina
 {

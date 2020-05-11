@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System.Xml.Serialization;
 
-namespace Maquina.Resources
+namespace Maquina.Content
 {
     public class SpriteFontProperty : Property<string>
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Maquina.Resources
+namespace Maquina.Content
 {
     // This is essentially the same as KeyValuePair<TKey, TValue>
     // except that it's a class and makes use of custom XML attributes

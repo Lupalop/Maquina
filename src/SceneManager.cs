@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 using System.Globalization;
-using Maquina.Resources;
+using Maquina.Content;
 using Maquina.UI;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;

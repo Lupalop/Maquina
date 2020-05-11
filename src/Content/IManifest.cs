@@ -1,4 +1,4 @@
-﻿namespace Maquina.Resources
+﻿namespace Maquina.Content
 {
     public interface IManifest
     {

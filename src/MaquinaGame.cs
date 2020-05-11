@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Maquina.Resources;
+using Maquina.Content;
 using System.IO;
 
 namespace Maquina

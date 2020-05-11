@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Maquina.Resources
+namespace Maquina.Content
 {
     [XmlRoot("manifest")]
     public class LocaleManifest : IManifest

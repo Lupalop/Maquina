@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using Maquina.Entities;
 
-namespace Maquina.Resources
+namespace Maquina.Content
 {
     // Provides methods for dealing with XML files
     public static class XmlHelper
