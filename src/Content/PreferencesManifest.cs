@@ -37,6 +37,14 @@ namespace Maquina.Content
         [XmlElement("string")]
         public List<Property<string>> StringPropertySet { get; set; }
 
+        public void Reset()
+        {
+            BooleanPropertySet.Clear();
+            Int32PropertySet.Clear();
+            FloatPropertySet.Clear();
+            StringPropertySet.Clear();
+        }
+
         public T GetPreference<T>(List<Property<T>> collection, string name, T defaultValue)
         {
             T result = defaultValue;

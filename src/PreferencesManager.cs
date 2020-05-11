@@ -13,6 +13,11 @@ namespace Maquina
 
         private PreferencesManifest _manifest;
 
+        public void Reset()
+        {
+            _manifest.Reset();
+        }
+
         public bool GetBoolean(string name, bool defaultValue = default(bool))
         {
             return _manifest.GetPreference(_manifest.BooleanPropertySet, name, defaultValue);
