@@ -20,9 +20,7 @@ namespace Maquina.UI
             Orientation = Orientation.Vertical;
             ControlMargin = new Region();
             Children.EntityChanged += Children_EntityChanged;
-            EntityChanged += StackPanel_EntityChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
-            DisabledStateChanged += StackPanel_DisabledStateChanged;
             IsScaleSupported = false;
         }
 
@@ -84,22 +82,24 @@ namespace Maquina.UI
             }
         }
 
-        private void StackPanel_EntityChanged(object sender, EntityChangedEventArgs e)
-        {
-            if (e.Property != EntityChangedProperty.Location)
-            {
-                UpdateSize();
-            }
-            UpdateLayout();
-        }
-
         private void Global_ScaleChanged(object sender, EventArgs e)
         {
             UpdateSize();
             UpdateLayout();
         }
 
-        private void StackPanel_DisabledStateChanged(object sender, EventArgs e)
+        protected override void OnEntityChanged(EntityChangedEventArgs e)
+        {
+            if (e.Property != EntityChangedProperty.Location)
+            {
+                UpdateSize();
+            }
+            UpdateLayout();
+
+            base.OnEntityChanged(e);
+        }
+
+        protected override void OnDisabledStateChanged()
         {
             foreach (var item in Children.Values)
             {
@@ -112,10 +112,17 @@ namespace Maquina.UI
                     break;
                 }
             }
+
+            base.OnDisabledStateChanged();
         }
 
         public void UpdateLayout()
         {
+            if (Children == null)
+            {
+                return;
+            }
+
             int DistanceFromLeft = Location.X;
             int DistanceFromTop = Location.Y;
 
@@ -215,6 +222,11 @@ namespace Maquina.UI
 
         public void UpdateSize()
         {
+            if (Children == null)
+            {
+                return;
+            }
+
             int ComputedWidth = 0;
             int ComputedHeight = 0;
 
@@ -252,8 +264,6 @@ namespace Maquina.UI
             {
                 Children.EntityChanged -= Children_EntityChanged;
                 Children.Clear(true);
-                EntityChanged -= StackPanel_EntityChanged;
-                DisabledStateChanged -= StackPanel_DisabledStateChanged;
                 Application.Display.ScaleChanged -= Global_ScaleChanged;
             }
             base.Dispose(disposing);

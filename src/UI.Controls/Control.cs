@@ -26,7 +26,7 @@ namespace Maquina.UI
             set
             {
                 horizontalAlignment = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
+                UpdateAutoPositionedLayout(this, EventArgs.Empty);
             }
         }
         private VerticalAlignment verticalAlignment;
@@ -36,7 +36,7 @@ namespace Maquina.UI
             set
             {
                 verticalAlignment = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
+                UpdateAutoPositionedLayout(this, EventArgs.Empty);
             }
         }
 
@@ -100,21 +100,19 @@ namespace Maquina.UI
                 // Register to events necessary to update in time
                 if (value)
                 {
-                    Application.Display.ResolutionChanged += Display_ResolutionChanged;
-                    Application.Display.ScaleChanged += Global_ScaleChanged;
-                    EntityChanged += Control_EntityChanged;
+                    Application.Display.ResolutionChanged += UpdateAutoPositionedLayout;
+                    Application.Display.ScaleChanged += UpdateAutoPositionedLayout;
                 }
                 // Only unregister from these events if auto position was previously true
                 if (autoPosition && !value)
                 {
-                    Application.Display.ResolutionChanged -= Display_ResolutionChanged;
-                    Application.Display.ScaleChanged -= Global_ScaleChanged;
-                    EntityChanged -= Control_EntityChanged;
+                    Application.Display.ResolutionChanged -= UpdateAutoPositionedLayout;
+                    Application.Display.ScaleChanged -= UpdateAutoPositionedLayout;
                 }
             }
         }
 
-        public void UpdateAutoPositionedLayout()
+        public void UpdateAutoPositionedLayout(object sender, EventArgs e)
         {
             // Ignore controls that are not requesting auto position
             if (!AutoPosition)
@@ -160,22 +158,13 @@ namespace Maquina.UI
             Location = new Point(modifiedX, modifiedY);
         }
 
-        private void Display_ResolutionChanged(object sender, EventArgs e)
+        protected override void OnEntityChanged(EntityChangedEventArgs e)
         {
-            UpdateAutoPositionedLayout();
-        }
-
-        private void Global_ScaleChanged(object sender, EventArgs e)
-        {
-            UpdateAutoPositionedLayout();
-        }
-
-        private void Control_EntityChanged(object sender, EntityChangedEventArgs e)
-        {
-            if (e.Property == EntityChangedProperty.Location)
-                return;
-
-            UpdateAutoPositionedLayout();
+            if (AutoPosition && e.Property != EntityChangedProperty.Location)
+            {
+                UpdateAutoPositionedLayout(this, e);
+            }
+            base.OnEntityChanged(e);
         }
     }
 }
