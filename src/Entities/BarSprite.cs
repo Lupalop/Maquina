@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Maquina.Elements;
+using Maquina.Entities;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
     public class BarSprite : Sprite
     {

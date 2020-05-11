@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
-    public class ContainerElement : BaseElement, IContainerElement
+    public class Container : Entity, IContainer
     {
-        public ContainerElement(string name) : base(name)
+        public Container(string name) : base(name)
         {
-            Id = "GENERIC_CONTAINER";
-            Children = new ElementDictionary();
+            Id = "CONTAINER";
+            Children = new EntityDictionary();
             IsScaleSupported = false;
         }
 
-        public ElementDictionary Children { get; protected set; }
+        public EntityDictionary Children { get; protected set; }
 
         public override void Draw()
         {

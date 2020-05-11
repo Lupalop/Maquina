@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
     public interface ISprite
     {
@@ -27,7 +27,7 @@ namespace Maquina.Elements
         bool IgnoreGlobalScale { get; set; }
 
         // Events
-        event ElementChangedEventHandler SpriteChanged;
+        event EntityChangedEventHandler SpriteChanged;
 
         // Draw and update methods
         void Draw();

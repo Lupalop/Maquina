@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
     public class TextSprite : ISprite
     {
@@ -74,7 +74,7 @@ namespace Maquina.Elements
             {
                 Location = value.Location;
                 Size = value.Size;
-                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle));
+                OnSpriteChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
             }
         }
         // Destination rectangle adjusted for scale
@@ -100,7 +100,7 @@ namespace Maquina.Elements
                     return;
                 }
                 location = value;
-                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Location));
+                OnSpriteChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
             }
         }
         // Size not adjusted for scale
@@ -115,7 +115,7 @@ namespace Maquina.Elements
                     return;
                 }
                 size = value;
-                OnSpriteChanged(new ElementChangedEventArgs(ElementChangedProperty.Size));
+                OnSpriteChanged(new EntityChangedEventArgs(EntityChangedProperty.Size));
             }
         }
         // Size adjusted for scale
@@ -152,8 +152,8 @@ namespace Maquina.Elements
         }
 
         // Child Events
-        public event ElementChangedEventHandler SpriteChanged;
-        protected virtual void OnSpriteChanged(ElementChangedEventArgs e)
+        public event EntityChangedEventHandler SpriteChanged;
+        protected virtual void OnSpriteChanged(EntityChangedEventArgs e)
         {
             if (SpriteChanged != null)
             {

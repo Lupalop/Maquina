@@ -1,4 +1,4 @@
-﻿using Maquina.Elements;
+﻿using Maquina.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,24 +10,24 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class StackPanel : Control, IContainerElement
+    public class StackPanel : Control, IContainer
     {
         public StackPanel(string name) : base(name)
         {
             Id = "UI_STACKPANEL";
             Background = new Sprite();
-            Children = new ElementDictionary();
+            Children = new EntityDictionary();
             Orientation = Orientation.Vertical;
-            ElementMargin = new Region();
-            Children.ElementChanged += Children_ElementChanged;
-            ElementChanged += StackPanel_ElementChanged;
+            ControlMargin = new Region();
+            Children.EntityChanged += Children_EntityChanged;
+            EntityChanged += StackPanel_EntityChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
             DisabledStateChanged += StackPanel_DisabledStateChanged;
             IsScaleSupported = false;
         }
 
         // General
-        public ElementDictionary Children { get; protected set; }
+        public EntityDictionary Children { get; protected set; }
         private Orientation orientation;
         public Orientation Orientation
         {
@@ -35,21 +35,21 @@ namespace Maquina.UI
             set
             {
                 orientation = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
             }
         }
-        private Region elementMargin;
-        public Region ElementMargin
+        private Region controlMargin;
+        public Region ControlMargin
         {
-            get { return elementMargin; }
+            get { return controlMargin; }
             set
             {
-                elementMargin = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
+                controlMargin = value;
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
             }
         }
 
-        // Child elements
+        // Child sprite
         public Sprite Background { get; set; }
 
         // Alias
@@ -75,18 +75,18 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Children_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Children_EntityChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property != ElementChangedProperty.Location)
+            if (e.Property != EntityChangedProperty.Location)
             {
                 UpdateSize();
                 UpdateLayout();
             }
         }
 
-        private void StackPanel_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void StackPanel_EntityChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property != ElementChangedProperty.Location)
+            if (e.Property != EntityChangedProperty.Location)
             {
                 UpdateSize();
             }
@@ -119,67 +119,67 @@ namespace Maquina.UI
             int DistanceFromLeft = Location.X;
             int DistanceFromTop = Location.Y;
 
-            foreach (BaseElement element in Children.Values)
+            foreach (var item in Children.Values)
             {
                 if (Orientation == Orientation.Horizontal)
                 {
-                    if (element.Size != null)
+                    if (item.Size != null)
                     {
-                        element.Location = new Point(DistanceFromLeft, Location.Y);
-                        DistanceFromLeft += ElementMargin.Left;
-                        DistanceFromLeft += element.ActualBounds.Width;
-                        DistanceFromLeft += ElementMargin.Right;
+                        item.Location = new Point(DistanceFromLeft, Location.Y);
+                        DistanceFromLeft += ControlMargin.Left;
+                        DistanceFromLeft += item.ActualBounds.Width;
+                        DistanceFromLeft += ControlMargin.Right;
                     }
                     else
                     {
-                        element.Location = new Point(DistanceFromLeft, Location.Y);
+                        item.Location = new Point(DistanceFromLeft, Location.Y);
                     }
                 }
                 if (Orientation == Orientation.Vertical)
                 {
-                    if (element.Size != null)
+                    if (item.Size != null)
                     {
-                        element.Location = new Point(Location.X, DistanceFromTop);
-                        DistanceFromTop += ElementMargin.Top;
-                        DistanceFromTop += element.ActualBounds.Height;
-                        DistanceFromTop += ElementMargin.Bottom;
+                        item.Location = new Point(Location.X, DistanceFromTop);
+                        DistanceFromTop += ControlMargin.Top;
+                        DistanceFromTop += item.ActualBounds.Height;
+                        DistanceFromTop += ControlMargin.Bottom;
                     }
                     else
                     {
-                        element.Location = new Point(Location.X, DistanceFromTop);
+                        item.Location = new Point(Location.X, DistanceFromTop);
                     }
                 }
 
-                if (!(element is Control))
+                if (!(item is Control))
                 {
                     continue;
                 }
 
-                Control modifiedElement = (Control)element;
-                int newElementX = modifiedElement.Location.X;
-                int newElementY = modifiedElement.Location.Y;
+                Control modifiedEntity = (Control)item;
+                int newX = modifiedEntity.Location.X;
+                int newY = modifiedEntity.Location.Y;
 
                 if (Orientation == Orientation.Vertical)
                 {
-                    switch (modifiedElement.HorizontalAlignment)
+                    switch (modifiedEntity.HorizontalAlignment)
                     {
                         case HorizontalAlignment.Left:
                             break;
                         case HorizontalAlignment.Center:
-                            if (modifiedElement.Size != null)
+                            if (modifiedEntity.Size != null)
                             {
-                                newElementX = ActualBounds.Center.X - (modifiedElement.ActualBounds.Width / 2);
+                                newX = ActualBounds.Center.X - (modifiedEntity.ActualBounds.Width / 2);
                                 break;
                             }
-                            newElementX = ActualBounds.Center.X;
+                            newX = ActualBounds.Center.X;
                             break;
                         case HorizontalAlignment.Right:
-                            if (modifiedElement.Size != null)
+                            if (modifiedEntity.Size != null)
                             {
-                                newElementX = ActualBounds.Right - modifiedElement.ActualBounds.Width;
+                                newX = ActualBounds.Right - modifiedEntity.ActualBounds.Width;
                                 break;
                             }
-                            newElementX = ActualBounds.Right;
+                            newX = ActualBounds.Right;
                             break;
                         case HorizontalAlignment.Stretch:
                             break;
@@ -188,28 +188,28 @@ namespace Maquina.UI
 
                 if (Orientation == Orientation.Horizontal)
                 {
-                    switch (modifiedElement.VerticalAlignment)
+                    switch (modifiedEntity.VerticalAlignment)
                     {
                         case VerticalAlignment.Top:
-                            newElementY = ActualBounds.Top;
+                            newY = ActualBounds.Top;
                             break;
                         case VerticalAlignment.Center:
-                            if (modifiedElement.Size != null)
+                            if (modifiedEntity.Size != null)
                             {
-                                newElementY = ActualBounds.Center.Y - (modifiedElement.ActualBounds.Height / 2);
+                                newY = ActualBounds.Center.Y - (modifiedEntity.ActualBounds.Height / 2);
                                 break;
                             }
-                            newElementY = ActualBounds.Center.Y;
+                            newY = ActualBounds.Center.Y;
                             break;
                         case VerticalAlignment.Bottom:
-                            newElementY = ActualBounds.Bottom - modifiedElement.ActualBounds.Height;
+                            newY = ActualBounds.Bottom - modifiedEntity.ActualBounds.Height;
                             break;
                         case VerticalAlignment.Stretch:
                             break;
                     }
                 }
 
-                modifiedElement.Location = new Point(newElementX, newElementY);
+                modifiedEntity.Location = new Point(newX, newY);
             }
         }
 
@@ -218,27 +218,27 @@ namespace Maquina.UI
             int ComputedWidth = 0;
             int ComputedHeight = 0;
 
-            foreach (BaseElement element in Children.Values)
+            foreach (var item in Children.Values)
             {
                 if (Orientation == Orientation.Horizontal)
                 {
-                    ComputedWidth += ElementMargin.Left;
-                    ComputedWidth += element.ActualBounds.Width;
-                    ComputedWidth += ElementMargin.Right;
-                    if (element.ActualBounds.Height > ComputedHeight)
+                    ComputedWidth += ControlMargin.Left;
+                    ComputedWidth += item.ActualBounds.Width;
+                    ComputedWidth += ControlMargin.Right;
+                    if (item.ActualBounds.Height > ComputedHeight)
                     {
-                        ComputedHeight = element.ActualBounds.Height;
+                        ComputedHeight = item.ActualBounds.Height;
                     }
                 }
 
                 if (Orientation == Orientation.Vertical)
                 {
-                    ComputedHeight += ElementMargin.Top;
-                    ComputedHeight += element.ActualBounds.Height;
-                    ComputedHeight += ElementMargin.Bottom;
-                    if (element.ActualBounds.Width > ComputedWidth)
+                    ComputedHeight += ControlMargin.Top;
+                    ComputedHeight += item.ActualBounds.Height;
+                    ComputedHeight += ControlMargin.Bottom;
+                    if (item.ActualBounds.Width > ComputedWidth)
                     {
-                        ComputedWidth = element.ActualBounds.Width;
+                        ComputedWidth = item.ActualBounds.Width;
                     }
                 }
             }
@@ -250,9 +250,9 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                Children.ElementChanged -= Children_ElementChanged;
+                Children.EntityChanged -= Children_EntityChanged;
                 Children.Clear(true);
-                ElementChanged -= StackPanel_ElementChanged;
+                EntityChanged -= StackPanel_EntityChanged;
                 DisabledStateChanged -= StackPanel_DisabledStateChanged;
                 Application.Display.ScaleChanged -= Global_ScaleChanged;
             }

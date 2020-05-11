@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
@@ -31,7 +31,7 @@ namespace Maquina.UI
         // Properties
         public int MaxInput { get; set; }
 
-        // Element events
+        // Events
         public event EventHandler OnInput;
 
         private void Window_TextInput(object sender, TextInputEventArgs e)

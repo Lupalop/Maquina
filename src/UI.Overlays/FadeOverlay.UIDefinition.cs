@@ -1,4 +1,4 @@
-﻿using Maquina.Elements;
+﻿using Maquina.Entities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ namespace Maquina.UI
 
             FadeInAnimation.Start();
 
-            Elements.Add(FadeImage);
+            Entities.Add(FadeImage);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.Resources
 {

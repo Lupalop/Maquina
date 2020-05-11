@@ -1,4 +1,4 @@
-﻿using Maquina.Elements;
+﻿using Maquina.Entities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public abstract class Control : BaseElement
+    public abstract class Control : Entity
     {
         // Constructor
         protected Control(string name) : base (name)
@@ -26,7 +26,7 @@ namespace Maquina.UI
             set
             {
                 horizontalAlignment = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
             }
         }
         private VerticalAlignment verticalAlignment;
@@ -36,7 +36,7 @@ namespace Maquina.UI
             set
             {
                 verticalAlignment = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Custom));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
             }
         }
 
@@ -89,7 +89,7 @@ namespace Maquina.UI
             base.Dispose(disposing);
         }
 
-        // Element Auto Position implementation
+        // Control Auto Position implementation
         private bool autoPosition;
         public bool AutoPosition
         {
@@ -102,40 +102,40 @@ namespace Maquina.UI
                 {
                     Application.Display.ResolutionChanged += Display_ResolutionChanged;
                     Application.Display.ScaleChanged += Global_ScaleChanged;
-                    ElementChanged += Control_ElementChanged;
+                    EntityChanged += Control_EntityChanged;
                 }
                 // Only unregister from these events if auto position was previously true
                 if (autoPosition && !value)
                 {
                     Application.Display.ResolutionChanged -= Display_ResolutionChanged;
                     Application.Display.ScaleChanged -= Global_ScaleChanged;
-                    ElementChanged -= Control_ElementChanged;
+                    EntityChanged -= Control_EntityChanged;
                 }
             }
         }
 
         public void UpdateAutoPositionedLayout()
         {
-            // Ignore elements that are not requesting auto position
+            // Ignore controls that are not requesting auto position
             if (!AutoPosition)
             {
                 return;
             }
 
-            int modifiedElementX = Location.X;
-            int modifiedElementY = Location.Y;
+            int modifiedX = Location.X;
+            int modifiedY = Location.Y;
 
             switch (HorizontalAlignment)
             {
                 case HorizontalAlignment.Left:
-                    modifiedElementX = Application.Display.WindowBounds.Left;
+                    modifiedX = Application.Display.WindowBounds.Left;
                     break;
                 case HorizontalAlignment.Center:
                     if (ActualBounds.Width != 0)
-                        modifiedElementX = Application.Display.WindowBounds.Center.X - (ActualBounds.Width / 2);
+                        modifiedX = Application.Display.WindowBounds.Center.X - (ActualBounds.Width / 2);
                     break;
                 case HorizontalAlignment.Right:
-                    modifiedElementX = Application.Display.WindowBounds.Right - ActualBounds.Width;
+                    modifiedX = Application.Display.WindowBounds.Right - ActualBounds.Width;
                     break;
                 case HorizontalAlignment.Stretch:
                     break;
@@ -144,20 +144,20 @@ namespace Maquina.UI
             switch (VerticalAlignment)
             {
                 case VerticalAlignment.Top:
-                    modifiedElementY = Application.Display.WindowBounds.Top;
+                    modifiedY = Application.Display.WindowBounds.Top;
                     break;
                 case VerticalAlignment.Center:
                     if (ActualBounds.Height != 0)
-                        modifiedElementY = Application.Display.WindowBounds.Center.Y - (ActualBounds.Height / 2);
+                        modifiedY = Application.Display.WindowBounds.Center.Y - (ActualBounds.Height / 2);
                     break;
                 case VerticalAlignment.Bottom:
-                    modifiedElementY = Application.Display.WindowBounds.Bottom - ActualBounds.Height;
+                    modifiedY = Application.Display.WindowBounds.Bottom - ActualBounds.Height;
                     break;
                 case VerticalAlignment.Stretch:
                     break;
             }
 
-            Location = new Point(modifiedElementX, modifiedElementY);
+            Location = new Point(modifiedX, modifiedY);
         }
 
         private void Display_ResolutionChanged(object sender, EventArgs e)
@@ -170,9 +170,9 @@ namespace Maquina.UI
             UpdateAutoPositionedLayout();
         }
 
-        private void Control_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Control_EntityChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property == ElementChangedProperty.Location)
+            if (e.Property == EntityChangedProperty.Location)
                 return;
 
             UpdateAutoPositionedLayout();

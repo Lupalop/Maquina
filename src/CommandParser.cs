@@ -1,4 +1,4 @@
-﻿using Maquina.Elements;
+﻿using Maquina.Entities;
 using Maquina.UI;
 using System;
 using System.Collections.Generic;
@@ -54,23 +54,23 @@ namespace Maquina
                     case "query":
                         if (action.Length < 3)
                         {
-                            CommandRequiresArgument("query", "[required] where (scene, overlay), [required] elementName (string)");
+                            CommandRequiresArgument("query", "[required] where (scene, overlay), [required] entityName (string)");
                             break;
                         }
-                        // Limitation: can only tap into main element dictionary
+                        // Limitation: can only tap into main entity dictionary
                         switch (action[1])
                         {
                             case "scene":
-                                GetContainerElementsState(Application.Scenes.CurrentScene.Elements.Values, action[2]);
+                                GetContainerEntitiesState(Application.Scenes.CurrentScene.Entities.Values, action[2]);
                                 break;
                             case "overlay":
                                 for (int i = 0; i < Application.Scenes.Overlays.Count; i++)
                                 {
-                                    GetContainerElementsState(Application.Scenes.Overlays[i].Elements.Values, action[2]);
+                                    GetContainerEntitiesState(Application.Scenes.Overlays[i].Entities.Values, action[2]);
                                 }
                                 break;
                             default:
-                                CommandRequiresArgument("query", "[required] where (scene, overlay), [required] elementName (string)");
+                                CommandRequiresArgument("query", "[required] where (scene, overlay), [required] entityName (string)");
                                 break;
                         }
                         break;
@@ -145,38 +145,38 @@ namespace Maquina
             }
         }
 
-        private static void GetContainerElementsState(ICollection<BaseElement> elements, string elementName)
+        private static void GetContainerEntitiesState(ICollection<Entity> entities, string entityName)
         {
-            for (int i = 0; i < elements.Count; i++)
+            for (int i = 0; i < entities.Count; i++)
             {
-                BaseElement element = elements.ElementAt(i);
-                if (element.Name.ToLower() == elementName.ToLower())
+                Entity entity = entities.ElementAt(i);
+                if (entity.Name.ToLower() == entityName.ToLower())
                 {
-                    //Console.WriteLine(element.ToString());
-                    GetElementState(element);
+                    //Console.WriteLine(entity.ToString());
+                    GetEntityState(entity);
                 }
-                if (element is IContainerElement)
+                if (entity is IContainer)
                 {
-                    GetContainerElementsState(((IContainerElement)element).Children.Values, elementName);
+                    GetContainerEntitiesState(((IContainer)entity).Children.Values, entityName);
                 }
             }
         }
 
-        private static void GetElementState(BaseElement element)
+        private static void GetEntityState(Entity entity)
         {
             StringBuilder info = new StringBuilder();
-            info.AppendLine(string.Format("Element `{0}` information:", element.Name));
+            info.AppendLine(string.Format("Entity `{0}` information:", entity.Name));
             info.AppendLine();
-            info.AppendLine(string.Format("ID: {0}", element.Id));
-            info.AppendLine(string.Format("Bounds: {0}", element.Bounds));
-            info.AppendLine(string.Format("Actual Bounds: {0}", element.ActualBounds));
-            info.AppendLine(string.Format("Scale: {0}", element.Scale));
-            info.AppendLine(string.Format("Ignore Global Scale?: {0}", element.IgnoreGlobalScale));
-            if (element is Control)
+            info.AppendLine(string.Format("ID: {0}", entity.Id));
+            info.AppendLine(string.Format("Bounds: {0}", entity.Bounds));
+            info.AppendLine(string.Format("Actual Bounds: {0}", entity.ActualBounds));
+            info.AppendLine(string.Format("Scale: {0}", entity.Scale));
+            info.AppendLine(string.Format("Ignore Global Scale?: {0}", entity.IgnoreGlobalScale));
+            if (entity is Control)
             {
-                Control control = (Control)element;
+                Control control = (Control)entity;
                 info.AppendLine();
-                info.AppendLine("UI Element information:");
+                info.AppendLine("UI Control information:");
                 info.AppendLine(string.Format("Auto Position?: {0}", control.AutoPosition));
                 info.AppendLine(string.Format("Is Disabled?: {0}", control.Disabled));
                 info.AppendLine(string.Format("Is Focused?: {0}", control.Focused));

@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
-    public interface IBaseElement : IDisposable
+    public interface IEntity : IDisposable
     {
         string Name { get; set; }
         string Id { get; }

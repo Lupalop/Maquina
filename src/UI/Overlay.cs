@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Maquina.Elements;
+using Maquina.Entities;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 
@@ -48,7 +48,7 @@ namespace Maquina.UI
         {
             if (ParentScene != null)
             {
-                GuiUtils.SetElementDisabledState(ParentScene.Elements, DisableParentSceneUI);
+                GuiUtils.SetElementDisabledState(ParentScene.Entities, DisableParentSceneUI);
             }
         }
     }

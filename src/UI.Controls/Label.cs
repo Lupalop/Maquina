@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
@@ -17,11 +17,11 @@ namespace Maquina.UI
             Id = "UI_LABEL";
             Sprite = new TextSprite();
             Sprite.SpriteChanged += Child_SpriteChanged;
-            ElementChanged += Label_ElementChanged;
+            EntityChanged += Label_EntityChanged;
             Sprite.Text = "";
         }
 
-        // Child elements
+        // Child sprite
         public TextSprite Sprite { get; private set; }
 
         // Draw and update methods
@@ -37,22 +37,22 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Child_SpriteChanged(object sender, ElementChangedEventArgs e)
+        private void Child_SpriteChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property == ElementChangedProperty.Size)
+            if (e.Property == EntityChangedProperty.Size)
             {
                 Size = Sprite.Size;
             }
         }
-        private void Label_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Label_EntityChanged(object sender, EntityChangedEventArgs e)
         {
             switch (e.Property)
             {
-                case ElementChangedProperty.Location:
+                case EntityChangedProperty.Location:
                     Sprite.Location = Location;
                     break;
-                case ElementChangedProperty.IgnoreGlobalScale:
-                    Sprite.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                case EntityChangedProperty.IgnoreGlobalScale:
+                    Sprite.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
                     break;
                 default:
                     break;
@@ -65,7 +65,7 @@ namespace Maquina.UI
             if (disposing)
             {
                 Sprite.SpriteChanged -= Child_SpriteChanged;
-                ElementChanged -= Label_ElementChanged;
+                EntityChanged -= Label_EntityChanged;
             }
             base.Dispose(disposing);
         }

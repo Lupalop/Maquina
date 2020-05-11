@@ -5,17 +5,17 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
-    // TODO: Convert to use UI elements once API reaches level 1.
+    // TODO: Convert to use UI controls once API reaches level 1.
     //
-    //       Elements (and associated properties) are constantly changed
+    //       Entities (and its subclasses) are constantly changed
     //       at this point and converting this now would break
     //       the overlay frequently.
     //
-    //       The plan is to convert this into a window once that component lands.
+    //       The plan is wait until the UI code stabilizes.
     public class DebugOverlay : Overlay
     {
         // FPS+O Counter
@@ -29,7 +29,7 @@ namespace Maquina.UI
         string sceneCurrentHeader = "\nCurrent Scene: {0}";
         string sceneOverlayHeader = "\nOverlay Scenes ({0}):\n";
         string sceneOverlayList = "";
-        string sceneObjectHeader = "\nElements in Current Scene ({0}):\n";
+        string sceneObjectHeader = "\nEntities in Current Scene ({0}):\n";
         string sceneObjectList;
         string globalTimerHeader = "\nRegistered Timers:\n";
         string globalTimerList;
@@ -97,10 +97,10 @@ namespace Maquina.UI
                         i, Application.Scenes.Overlays[i].Name);
                 }
             }
-            // List elements loaded
+            // List loaded entities
             if (isCounterVisible[1])
             {
-                sceneObjectList = ListElementsFromDictionary(Application.Scenes.CurrentScene.Elements);
+                sceneObjectList = ListEntitiesFromDictionary(Application.Scenes.CurrentScene.Entities);
             }
             // List timers
             if (isCounterVisible[4])
@@ -115,32 +115,32 @@ namespace Maquina.UI
             }
         }
 
-        public string ListElementsFromDictionary(IDictionary<string, BaseElement> elements, bool isContainer = false)
+        public string ListEntitiesFromDictionary(IDictionary<string, Entity> entities, bool isContainer = false)
         {
-            List<string> keyList = elements.Keys.ToList();
+            List<string> keyList = entities.Keys.ToList();
             string list = "";
             if (isContainer)
             {
-                list += "== START CONTAINER ELEMENTS ==\n";
+                list += "== START CONTAINER ENTITIES ==\n";
             }
-            for (int i = 0; i < elements.Count; i++)
+            for (int i = 0; i < entities.Count; i++)
             {
                 list += String.Format(
                     "Key {0}: {1}, ID: {2}, Name: {3}, Bounds: {4} \n",
                     i,
                     keyList[i],
-                    elements[keyList[i]].Id,
-                    elements[keyList[i]].Name,
-                    elements[keyList[i]].ActualBounds.ToString());
-                if (elements[keyList[i]] is IContainerElement)
+                    entities[keyList[i]].Id,
+                    entities[keyList[i]].Name,
+                    entities[keyList[i]].ActualBounds.ToString());
+                if (entities[keyList[i]] is IContainer)
                 {
-                    IContainerElement container = (IContainerElement)elements[keyList[i]];
-                    list += ListElementsFromDictionary(container.Children, true);
+                    IContainer container = (IContainer)entities[keyList[i]];
+                    list += ListEntitiesFromDictionary(container.Children, true);
                 }
             }
             if (isContainer)
             {
-                list += "== END CONTAINER ELEMENTS ==\n";
+                list += "== END CONTAINER ENTITIES ==\n";
             }
             return list;
         }
@@ -158,7 +158,7 @@ namespace Maquina.UI
             }
             if (isCounterVisible[1])
             {
-                string objectInfo = string.Format(sceneObjectHeader, Application.Scenes.CurrentScene.Elements.Count) +
+                string objectInfo = string.Format(sceneObjectHeader, Application.Scenes.CurrentScene.Entities.Count) +
                                     sceneObjectList;
                 SpriteBatch.DrawString((SpriteFont)ContentFactory.TryGetResource("o-default"), objectInfo, new Vector2(0, 0), Color.White);
             }

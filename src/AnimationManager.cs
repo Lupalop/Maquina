@@ -1,4 +1,4 @@
-﻿using Maquina.Elements;
+﻿using Maquina.Entities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

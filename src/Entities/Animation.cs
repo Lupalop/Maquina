@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
     public abstract class Animation : IAnimation, IDisposable
     {

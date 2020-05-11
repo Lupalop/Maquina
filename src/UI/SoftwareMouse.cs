@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
@@ -14,43 +14,43 @@ namespace Maquina.UI
     {
         static SoftwareMouse()
         {
-            MouseElement = new Image("mouse");
-            MouseElement.Sprite.SpriteType = SpriteType.Static;
-            MouseElement.Sprite.Rows = 1;
-            MouseElement.Sprite.Columns = 2;
-            MouseElement.ElementUpdated += (sender, e) =>
+            MouseEntity = new Image("mouse");
+            MouseEntity.Sprite.SpriteType = SpriteType.Static;
+            MouseEntity.Sprite.Rows = 1;
+            MouseEntity.Sprite.Columns = 2;
+            MouseEntity.EntityUpdated += (sender, e) =>
             {
-                MouseElement.Location = Application.Input.MousePosition;
-                MouseElement.Sprite.CurrentFrame = 0;
+                MouseEntity.Location = Application.Input.MousePosition;
+                MouseEntity.Sprite.CurrentFrame = 0;
 
                 // Change state when selected
                 if (Application.Input.MouseDown(MouseButton.Left) ||
                     Application.Input.MouseDown(MouseButton.Right) ||
                     Application.Input.MouseDown(MouseButton.Middle))
                 {
-                    MouseElement.Sprite.CurrentFrame = 1;
+                    MouseEntity.Sprite.CurrentFrame = 1;
                 }
             };
         }
 
-        public static Image MouseElement;
+        public static Image MouseEntity;
         public static Texture2D MouseSprite
         {
-            get { return MouseElement.Sprite.Texture; }
-            set { MouseElement.Sprite.Texture = value; }
+            get { return MouseEntity.Sprite.Texture; }
+            set { MouseEntity.Sprite.Texture = value; }
         }
         public static BlendState BlendState { get; set; }
 
         public static void Draw()
         {
             Application.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
-            MouseElement.Draw();
+            MouseEntity.Draw();
             Application.SpriteBatch.End();
         }
 
         public static void Update()
         {
-            MouseElement.Update();
+            MouseEntity.Update();
         }
     }
 }

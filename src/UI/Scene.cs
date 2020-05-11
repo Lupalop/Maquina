@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
@@ -11,14 +11,14 @@ namespace Maquina.UI
         public Scene(string sceneName)
         {
             Name = sceneName;
-            Elements = new ElementDictionary();
+            Entities = new EntityDictionary();
         }
         public Scene() : this("Untitled Scene") { }
 
         protected Game Game { get { return Application.Game; } }
         protected SpriteBatch SpriteBatch { get { return Application.SpriteBatch; } }
 
-        public ElementDictionary Elements { get; private set; }
+        public EntityDictionary Entities { get; private set; }
         public string Name { get; private set; }
 
         public bool IsFrozen { get; internal set; }
@@ -55,7 +55,7 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                Elements.Clear(true);
+                Entities.Clear(true);
 #if LOG_ENABLED
                 LogManager.Info(0, string.Format("Scene disposed: {0}", Name));
 #endif

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
@@ -43,13 +43,13 @@ namespace Maquina.UI
         public override void Draw()
         {
             SpriteBatch.Begin();
-            Elements.Draw();
+            Entities.Draw();
             SpriteBatch.End();
         }
 
         public override void Update()
         {
-            Elements.Update();
+            Entities.Update();
         }
 
         protected override void Dispose(bool disposing)

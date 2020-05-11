@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
@@ -37,7 +37,7 @@ namespace Maquina.UI
             Label.SpriteChanged += Label_SpriteChanged;
             Icon.SpriteChanged += Icon_SpriteChanged;
             // Parent
-            ElementChanged += Button_ElementChanged;
+            EntityChanged += Button_EntityChanged;
 
             LayerDepth = 1f;
             Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
@@ -49,13 +49,13 @@ namespace Maquina.UI
         // General
         protected InputManager InputManager;
         
-        // Child elements
+        // Child sprite
         public Sprite Background { get; private set; }
         public Sprite Icon { get; private set; }
         public TextSprite Label { get; private set; }
         public TextSprite Tooltip { get; private set; }
 
-        // Element events
+        // Entity events
         public event EventHandler OnLeftClick;
         public event EventHandler OnRightClick;
 
@@ -230,21 +230,21 @@ namespace Maquina.UI
         }
         
         // Listeners
-        private void Button_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Button_EntityChanged(object sender, EntityChangedEventArgs e)
         {
             switch (e.Property)
             {
-                case ElementChangedProperty.Location:
+                case EntityChangedProperty.Location:
                     Background.Location = Location;
                     RecalculateLabelLocation();
                     RecalculateIconLocation();
                     break;
-                case ElementChangedProperty.IgnoreGlobalScale:
-                    Background.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
-                    Icon.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
-                    Label.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                case EntityChangedProperty.IgnoreGlobalScale:
+                    Background.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
+                    Icon.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
+                    Label.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
                     break;
-                case ElementChangedProperty.Scale:
+                case EntityChangedProperty.Scale:
                     Background.Scale = Scale;
                     Icon.Scale = Scale;
                     Label.Scale = Scale;
@@ -253,16 +253,16 @@ namespace Maquina.UI
                     break;
             }
         }
-        private void Icon_SpriteChanged(object sender, ElementChangedEventArgs e)
+        private void Icon_SpriteChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property != ElementChangedProperty.Size)
+            if (e.Property != EntityChangedProperty.Size)
                 return;
 
             RecalculateIconLocation();
         }
-        private void Label_SpriteChanged(object sender, ElementChangedEventArgs e)
+        private void Label_SpriteChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property != ElementChangedProperty.Size)
+            if (e.Property != EntityChangedProperty.Size)
                 return;
 
             if (Background.Texture == null)
@@ -271,9 +271,9 @@ namespace Maquina.UI
             }
             RecalculateLabelLocation();
         }
-        private void Background_SpriteChanged(object sender, ElementChangedEventArgs e)
+        private void Background_SpriteChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property != ElementChangedProperty.Size)
+            if (e.Property != EntityChangedProperty.Size)
                 return;
 
             Size = Background.Size;

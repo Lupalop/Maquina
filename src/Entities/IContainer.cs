@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
-    public interface IContainerElement
+    public interface IContainer
     {
-        ElementDictionary Children { get; }
+        EntityDictionary Children { get; }
     }
 }

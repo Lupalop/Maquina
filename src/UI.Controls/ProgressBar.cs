@@ -4,13 +4,13 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
     public class ProgressBar : Control
     {
-        // FIXME: REWRITE PROGRESS BAR ELEMENT, USE BARSPRITE SUBELEMENT
+        // FIXME: REWRITE PROGRESS BAR ENTITY, USE BARSPRITE
         public ProgressBar(string name) : base(name)
         {
             Id = "UI_PROGRESSBAR";

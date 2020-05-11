@@ -1,4 +1,4 @@
-﻿using Maquina.Elements;
+﻿using Maquina.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -16,34 +16,34 @@ namespace Maquina.UI
             Id = "UI_THROBBER";
             IsSpinning = true;
             Sprite.Texture = (Texture2D)ContentFactory.TryGetResource("throbber-default");
-            ElementUpdated += (sender, e) =>
+            EntityUpdated += (sender, e) =>
             {
                 if (!IsSpinning)
                     return;
 
                 Sprite.Rotation += .05f;
             };
-            ElementChanged -= Image_ElementChanged;
-            ElementChanged += Throbber_ElementChanged;
+            EntityChanged -= Image_EntityChanged;
+            EntityChanged += Throbber_EntityChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
         }
 
         private void Global_ScaleChanged(object sender, EventArgs e)
         {
-            Throbber_ElementChanged(this, new ElementChangedEventArgs(ElementChangedProperty.Location));
+            Throbber_EntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Location));
         }
 
-        private void Throbber_ElementChanged(object sender, ElementChangedEventArgs e)
+        private void Throbber_EntityChanged(object sender, EntityChangedEventArgs e)
         {
             Sprite.Origin = new Vector2(Size.X / 2, Size.Y / 2);
             switch (e.Property)
             {
-                case ElementChangedProperty.Location:
+                case EntityChangedProperty.Location:
                     Point NewLocation = new Point(Location.X + (ActualSize.X / 2), Location.Y + (ActualSize.Y / 2));
                     Sprite.Location = NewLocation;
                     break;
-                case ElementChangedProperty.IgnoreGlobalScale:
-                    Sprite.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                case EntityChangedProperty.IgnoreGlobalScale:
+                    Sprite.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
                     break;
                 default:
                     break;

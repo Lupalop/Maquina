@@ -1,4 +1,4 @@
-﻿using Maquina.Elements;
+﻿using Maquina.Entities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class Canvas : Control, IContainerElement
+    public class Canvas : Control, IContainer
     {
-        // FIXME: Elements inside a canvas element SHOULD be relative to the container's location.
-        //        Sprite and BaseElement (and their children) have to be updated to handle this.
+        // FIXME: Entities inside a canvas entity SHOULD be relative to the container's location.
+        //        Sprite and Entity (and their children) have to be updated to handle this.
         public Canvas(string name) : base(name)
         {
             Id = "UI_CANVAS";
-            Children = new ElementDictionary();
+            Children = new EntityDictionary();
             IsScaleSupported = false;
         }
 
-        public ElementDictionary Children { get; private set; }
+        public EntityDictionary Children { get; private set; }
 
         public override void Draw()
         {
@@ -54,9 +54,9 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                foreach (var element in Children.Values)
+                foreach (var item in Children.Values)
                 {
-                    element.Dispose();
+                    item.Dispose();
                 }
             }
             base.Dispose(disposing);

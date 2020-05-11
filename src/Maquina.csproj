@@ -67,32 +67,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationManager.cs" />
-    <Compile Include="Elements\Animation.cs" />
-    <Compile Include="Elements\BarSprite.cs" />
-    <Compile Include="Elements\ContainerElement.cs" />
-    <Compile Include="Elements\ElementChangedEvent.cs" />
-    <Compile Include="Elements\FadeAnimation.cs" />
-    <Compile Include="Elements\IAnimation.cs" />
-    <Compile Include="Elements\ISprite.cs" />
-    <Compile Include="Elements\Sprite.cs" />
-    <Compile Include="Elements\TextSprite.cs" />
+    <Compile Include="Entities\Animation.cs" />
+    <Compile Include="Entities\BarSprite.cs" />
+    <Compile Include="Entities\Container.cs" />
+    <Compile Include="Entities\EntityChangedEvent.cs" />
+    <Compile Include="Entities\FadeAnimation.cs" />
+    <Compile Include="Entities\IAnimation.cs" />
+    <Compile Include="Entities\ISprite.cs" />
+    <Compile Include="Entities\Sprite.cs" />
+    <Compile Include="Entities\TextSprite.cs" />
     <Compile Include="DisplayManager.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="LogEntryLevel.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="ContentFactory.cs" />
-    <Compile Include="ElementDictionary.cs" />
+    <Compile Include="EntityDictionary.cs" />
     <Compile Include="Resources\ContentGroup.cs" />
     <Compile Include="Resources\IManifest.cs" />
     <Compile Include="Resources\PreferencesManifest.cs" />
     <Compile Include="Resources\StringManifest.cs" />
     <Compile Include="TypeExtensions.cs" />
-    <Compile Include="Elements\Alignment.cs" />
-    <Compile Include="Elements\IBaseElement.cs" />
+    <Compile Include="Entities\Alignment.cs" />
+    <Compile Include="Entities\IEntity.cs" />
     <Compile Include="UI.Controls\Control.cs" />
     <Compile Include="AudioManager.cs" />
-    <Compile Include="Elements\IContainerElement.cs" />
-    <Compile Include="Elements\SpriteType.cs" />
+    <Compile Include="Entities\IContainer.cs" />
+    <Compile Include="Entities\SpriteType.cs" />
     <Compile Include="MaquinaGame.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />
@@ -101,7 +101,7 @@
     <Compile Include="Resources\Property.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="TimerManager.cs" />
-    <Compile Include="Elements\Orientation.cs" />
+    <Compile Include="Entities\Orientation.cs" />
     <Compile Include="UI.Controls\Canvas.cs" />
     <Compile Include="UI.Controls\TextBox.cs" />
     <Compile Include="UI.Controls\StackPanel.cs" />
@@ -123,7 +123,7 @@
     <Compile Include="UI\Overlay.cs" />
     <Compile Include="UI\Scene.cs" />
     <Compile Include="SceneManager.cs" />
-    <Compile Include="Elements\BaseElement.cs" />
+    <Compile Include="Entities\Entity.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

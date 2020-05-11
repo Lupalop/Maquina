@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Maquina.Elements;
+using Maquina.Entities;
 
 namespace Maquina.UI
 {
@@ -17,10 +17,10 @@ namespace Maquina.UI
             Id = "UI_IMAGE";
             Sprite = new Sprite();
             Sprite.SpriteChanged += Background_SpriteChanged;
-            ElementChanged += Image_ElementChanged;
+            EntityChanged += Image_EntityChanged;
         }
 
-        // Child elements
+        // Child sprite
         public Sprite Sprite { get; private set; }
         
         // Draw and update methods
@@ -36,25 +36,25 @@ namespace Maquina.UI
         }
 
         // Listeners
-        private void Background_SpriteChanged(object sender, ElementChangedEventArgs e)
+        private void Background_SpriteChanged(object sender, EntityChangedEventArgs e)
         {
-            if (e.Property == ElementChangedProperty.Size)
+            if (e.Property == EntityChangedProperty.Size)
             {
                 Size = Sprite.Size;
             }
         }
 
-        protected void Image_ElementChanged(object sender, ElementChangedEventArgs e)
+        protected void Image_EntityChanged(object sender, EntityChangedEventArgs e)
         {
             switch (e.Property)
             {
-                case ElementChangedProperty.Location:
+                case EntityChangedProperty.Location:
                     Sprite.Location = Location;
                     break;
-                case ElementChangedProperty.IgnoreGlobalScale:
-                    Sprite.IgnoreGlobalScale = ((BaseElement)sender).IgnoreGlobalScale;
+                case EntityChangedProperty.IgnoreGlobalScale:
+                    Sprite.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
                     break;
-                case ElementChangedProperty.Scale:
+                case EntityChangedProperty.Scale:
                     Sprite.Scale = Scale;
                     break;
                 default:

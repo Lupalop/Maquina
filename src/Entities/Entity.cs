@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.ObjectModel;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
-    public abstract class BaseElement : IBaseElement
+    public abstract class Entity : IEntity
     {
         // Constructor
-        protected BaseElement(string name)
+        protected Entity(string name)
         {
             Id = "GENERIC_BASE";
             Name = name;
@@ -40,11 +40,11 @@ namespace Maquina.Elements
                 if (!IsScaleSupported)
                 {
                     LogManager.Warn(0,
-                        string.Format("Element {0} with ID {1} does not support the scale property.", Name, Id));
+                        string.Format("Entity {0} with ID {1} does not support the scale property.", Name, Id));
                 }
 #endif
                 scale = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Scale));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Scale));
             }
         }
         // Scale adjusted for global scale
@@ -67,7 +67,7 @@ namespace Maquina.Elements
             set
             {
                 ignoreGlobalScale = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.IgnoreGlobalScale));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.IgnoreGlobalScale));
             }
         }
         protected bool IsScaleSupported = true;
@@ -81,7 +81,7 @@ namespace Maquina.Elements
             {
                 Location = value.Location;
                 Size = value.Size;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.DestinationRectangle));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
             }
         }
         // Destination rectangle adjusted for scale
@@ -104,7 +104,7 @@ namespace Maquina.Elements
                     return;
                 }
                 location = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Location));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
             }
         }
 
@@ -120,7 +120,7 @@ namespace Maquina.Elements
                     return;
                 }
                 size = value;
-                OnElementChanged(new ElementChangedEventArgs(ElementChangedProperty.Size));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Size));
             }
         }
         // Size adjusted for scale
@@ -134,44 +134,44 @@ namespace Maquina.Elements
             }
         }
 
-        // Element events
-        public event ElementChangedEventHandler ElementChanged;
-        public event EventHandler ElementUpdated;
-        public event EventHandler ElementDrawn;
+        // Entity events
+        public event EntityChangedEventHandler EntityChanged;
+        public event EventHandler EntityUpdated;
+        public event EventHandler EntityDrawn;
 
-        protected virtual void OnElementUpdated()
+        protected virtual void OnEntityUpdated()
         {
-            if (ElementUpdated != null)
+            if (EntityUpdated != null)
             {
-                ElementUpdated(this, EventArgs.Empty);
+                EntityUpdated(this, EventArgs.Empty);
             }
         }
 
-        protected virtual void OnElementDrawn()
+        protected virtual void OnEntityDrawn()
         {
-            if (ElementDrawn != null)
+            if (EntityDrawn != null)
             {
-                ElementDrawn(this, EventArgs.Empty);
+                EntityDrawn(this, EventArgs.Empty);
             }
         }
 
-        protected virtual void OnElementChanged(ElementChangedEventArgs e)
+        protected virtual void OnEntityChanged(EntityChangedEventArgs e)
         {
-            if (ElementChanged != null)
+            if (EntityChanged != null)
             {
-                ElementChanged(this, e);
+                EntityChanged(this, e);
             }
         }
 
         // Update and draw methods
         public virtual void Update()
         {
-            OnElementUpdated();
+            OnEntityUpdated();
         }
 
         public virtual void Draw()
         {
-            OnElementDrawn();
+            OnEntityDrawn();
         }
 
         // IDisposable implementation
@@ -185,9 +185,9 @@ namespace Maquina.Elements
         {
             if (disposing)
             {
-                ElementChanged = null;
-                ElementUpdated = null;
-                ElementDrawn = null;
+                EntityChanged = null;
+                EntityUpdated = null;
+                EntityDrawn = null;
             }
         }
     }

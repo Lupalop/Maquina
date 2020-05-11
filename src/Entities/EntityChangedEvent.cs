@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maquina.Elements
+namespace Maquina.Entities
 {
-    public enum ElementChangedProperty
+    public enum EntityChangedProperty
     {
         Custom,
         DestinationRectangle,
@@ -17,14 +17,14 @@ namespace Maquina.Elements
         IgnoreGlobalScale
     }
 
-    public class ElementChangedEventArgs : EventArgs
+    public class EntityChangedEventArgs : EventArgs
     {
-        public ElementChangedEventArgs(ElementChangedProperty property)
+        public EntityChangedEventArgs(EntityChangedProperty property)
         {
             Property = property;
         }
-        public ElementChangedProperty Property { get; set; }
+        public EntityChangedProperty Property { get; set; }
     }
 
-    public delegate void ElementChangedEventHandler(object sender, ElementChangedEventArgs e);
+    public delegate void EntityChangedEventHandler(object sender, EntityChangedEventArgs e);
 }
