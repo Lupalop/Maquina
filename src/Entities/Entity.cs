@@ -135,7 +135,7 @@ namespace Maquina.Entities
         }
 
         // Entity events
-        public event EntityChangedEventHandler EntityChanged;
+        public event EventHandler<EntityChangedEventArgs> EntityChanged;
         public event EventHandler EntityUpdated;
         public event EventHandler EntityDrawn;
 

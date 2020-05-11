@@ -24,6 +24,4 @@ namespace Maquina.Entities
         }
         public EntityChangedProperty Property { get; set; }
     }
-
-    public delegate void EntityChangedEventHandler(object sender, EntityChangedEventArgs e);
 }

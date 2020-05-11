@@ -168,7 +168,7 @@ namespace Maquina
             return InnerDictionary.GetEnumerator();
         }
 
-        public event EntityChangedEventHandler EntityChanged;
+        public event EventHandler<EntityChangedEventArgs> EntityChanged;
 
         protected virtual void OnEntityChanged(object sender, EntityChangedEventArgs e)
         {

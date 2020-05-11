@@ -259,7 +259,7 @@ namespace Maquina.Entities
         }
 
         // Child Events
-        public event EntityChangedEventHandler SpriteChanged;
+        public event EventHandler<EntityChangedEventArgs> SpriteChanged;
         protected virtual void OnSpriteChanged(EntityChangedEventArgs e)
         {
             if (SpriteChanged != null)

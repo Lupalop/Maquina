@@ -27,7 +27,7 @@ namespace Maquina.Entities
         bool IgnoreGlobalScale { get; set; }
 
         // Events
-        event EntityChangedEventHandler SpriteChanged;
+        event EventHandler<EntityChangedEventArgs> SpriteChanged;
 
         // Draw and update methods
         void Draw();
