@@ -14,43 +14,41 @@ namespace Maquina.UI
     {
         static SoftwareMouse()
         {
-            MouseEntity = new Image("mouse");
-            MouseEntity.Sprite.SpriteType = SpriteType.Static;
-            MouseEntity.Sprite.Rows = 1;
-            MouseEntity.Sprite.Columns = 2;
-            MouseEntity.EntityUpdated += (sender, e) =>
-            {
-                MouseEntity.Location = Application.Input.MousePosition;
-                MouseEntity.Sprite.CurrentFrame = 0;
-
-                // Change state when selected
-                if (Application.Input.MouseDown(MouseButton.Left) ||
-                    Application.Input.MouseDown(MouseButton.Right) ||
-                    Application.Input.MouseDown(MouseButton.Middle))
-                {
-                    MouseEntity.Sprite.CurrentFrame = 1;
-                }
-            };
+            MouseSprite = new Sprite();
+            MouseSprite.SpriteType = SpriteType.Static;
+            MouseSprite.Rows = 1;
+            MouseSprite.Columns = 2;
         }
 
-        public static Image MouseEntity;
-        public static Texture2D MouseSprite
+        public static Sprite MouseSprite;
+
+        public static Texture2D MouseTexture
         {
-            get { return MouseEntity.Sprite.Texture; }
-            set { MouseEntity.Sprite.Texture = value; }
+            get { return MouseSprite.Texture; }
+            set { MouseSprite.Texture = value; }
         }
+
         public static BlendState BlendState { get; set; }
 
         public static void Draw()
         {
             Application.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
-            MouseEntity.Draw();
+            MouseSprite.Draw();
             Application.SpriteBatch.End();
         }
 
         public static void Update()
         {
-            MouseEntity.Update();
+            MouseSprite.Update();
+            MouseSprite.CurrentFrame = 0;
+            MouseSprite.Location = Application.Input.MousePosition;
+
+            if (Application.Input.MouseDown(MouseButton.Left) ||
+                Application.Input.MouseDown(MouseButton.Right) ||
+                Application.Input.MouseDown(MouseButton.Middle))
+            {
+                MouseSprite.CurrentFrame = 1;
+            }
         }
     }
 }
