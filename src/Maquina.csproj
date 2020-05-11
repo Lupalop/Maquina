@@ -117,7 +117,6 @@
     <Compile Include="UI.Controls\ProgressBar.cs" />
     <Compile Include="UI.Overlays\DebugOverlay.cs" />
     <Compile Include="UI.Overlays\FadeOverlay.cs" />
-    <Compile Include="UI\GuiUtils.cs" />
     <Compile Include="UI\SoftwareMouse.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="UI\EmptyScene.cs" />
