@@ -19,7 +19,6 @@ namespace Maquina.UI
             Children = new ElementDictionary();
             Orientation = Orientation.Vertical;
             ElementMargin = new Region();
-            OverrideContainerSize = false;
             Children.ElementChanged += Children_ElementChanged;
             ElementChanged += StackPanel_ElementChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
@@ -59,11 +58,6 @@ namespace Maquina.UI
             get { return Background.Texture; }
             set { Background.Texture = value; }
         }
-
-        // This flag prevents automatic updating of the container size
-        // based on the elements inside it.
-        // Useful when you want to use a custom width/height for the control.
-        public bool OverrideContainerSize { get; set; }
 
         // Draw and update methods
         public override void Draw()
@@ -221,13 +215,6 @@ namespace Maquina.UI
 
         public void UpdateSize()
         {
-            // Don't continue on recomputing container width/height
-            // if this flag is true
-            if (OverrideContainerSize)
-            {
-                return;
-            }
-
             int ComputedWidth = 0;
             int ComputedHeight = 0;
 
