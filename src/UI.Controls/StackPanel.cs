@@ -107,7 +107,17 @@ namespace Maquina.UI
 
         private void StackPanel_DisabledStateChanged(object sender, EventArgs e)
         {
-            GuiUtils.SetElementDisabledState(Children, Disabled);
+            foreach (var item in Children.Values)
+            {
+                if (item is Control)
+                {
+                    ((Control)(item)).Disabled = Disabled;
+                }
+                if (Children.IsModified)
+                {
+                    break;
+                }
+            }
         }
 
         public void UpdateLayout()

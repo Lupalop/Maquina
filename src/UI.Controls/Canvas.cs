@@ -37,7 +37,17 @@ namespace Maquina.UI
 
         protected override void OnDisabledStateChanged()
         {
-            GuiUtils.SetElementDisabledState(Children, Disabled);
+            foreach (var item in Children.Values)
+            {
+                if (item is Control)
+                {
+                    ((Control)(item)).Disabled = Disabled;
+                }
+                if (Children.IsModified)
+                {
+                    break;
+                }
+            }
         }
 
         protected override void Dispose(bool disposing)
