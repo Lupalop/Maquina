@@ -9,7 +9,6 @@ namespace Maquina.Entities
 {
     public enum EntityChangedProperty
     {
-        Custom,
         DestinationRectangle,
         Location,
         Size,

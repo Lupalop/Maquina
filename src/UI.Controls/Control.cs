@@ -26,7 +26,7 @@ namespace Maquina.UI
             set
             {
                 horizontalAlignment = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
             }
         }
         private VerticalAlignment verticalAlignment;
@@ -36,7 +36,7 @@ namespace Maquina.UI
             set
             {
                 verticalAlignment = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
             }
         }
 

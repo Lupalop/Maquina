@@ -35,7 +35,7 @@ namespace Maquina.UI
             set
             {
                 orientation = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
             }
         }
         private Region controlMargin;
@@ -45,7 +45,7 @@ namespace Maquina.UI
             set
             {
                 controlMargin = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Custom));
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
             }
         }
 
