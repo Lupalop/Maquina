@@ -13,12 +13,14 @@ namespace Maquina
     {
         public string RootDirectory { get; set; }
         public string DefaultLocale { get; set; }
+        public string LocalizedPrefix { get; set; }
         public const string LocaleDefinitionXml = "locale.xml";
 
         public LocaleManager()
         {
             RootDirectory = "locales";
             DefaultLocale = "en-US";
+            LocalizedPrefix = Application.Preferences.GetString("app.locale.prefix", "&");
             Strings = new Dictionary<string, string>();
             LanguageCode = Application.Preferences.GetString("app.locale", DefaultLocale);
         }
@@ -82,5 +84,23 @@ namespace Maquina
         }
 
         public Dictionary<string, string> Strings { get; set; }
+        public string TryGetString(string name)
+        {
+            string keyName = name;
+            
+            // Check for existence of the prefix
+            if (name.StartsWith(LocalizedPrefix, StringComparison.InvariantCultureIgnoreCase))
+            {
+                keyName = name.Substring(1);
+            }
+
+            if (Strings.ContainsKey(keyName))
+            {
+                return Strings[keyName];
+            }
+
+            // If string is not found, simply return the original string
+            return name;
+        }
     }
 }
