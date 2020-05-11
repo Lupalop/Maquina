@@ -13,7 +13,7 @@ namespace Maquina
     {
         // Fields
         private IDictionary<string, BaseElement> InnerDictionary;
-        private bool _isModified;
+        public bool IsModified { get; protected set; }
 
         // Constructors
         public ElementDictionary()
@@ -67,7 +67,7 @@ namespace Maquina
             get { return InnerDictionary[key]; }
             set
             {
-                _isModified = true;
+                IsModified = true;
                 // Stop listening to old element changes and listen to new element
                 InnerDictionary[key].ElementChanged -= Child_ElementChanged;
                 value.ElementChanged += Child_ElementChanged;
@@ -88,7 +88,7 @@ namespace Maquina
         }
         public void Add(KeyValuePair<string, BaseElement> item)
         {
-            _isModified = true;
+            IsModified = true;
             InnerDictionary.Add(item);
             item.Value.ElementChanged += Child_ElementChanged;
             OnElementChanged(this, new ElementChangedEventArgs(ElementChangedProperty.Size));
@@ -120,7 +120,7 @@ namespace Maquina
 
         public bool Remove(string key)
         {
-            _isModified = true;
+            IsModified = true;
             InnerDictionary[key].ElementChanged -= Child_ElementChanged;
             bool result = InnerDictionary.Remove(key);
             OnElementChanged(this, new ElementChangedEventArgs(ElementChangedProperty.Size));
@@ -129,7 +129,7 @@ namespace Maquina
 
         public bool Remove(KeyValuePair<string, BaseElement> item)
         {
-            _isModified = true;
+            IsModified = true;
             InnerDictionary[item.Key].ElementChanged -= Child_ElementChanged;
             bool result = InnerDictionary.Remove(item);
             OnElementChanged(this, new ElementChangedEventArgs(ElementChangedProperty.Size));
@@ -143,7 +143,7 @@ namespace Maquina
 
         public void Clear(bool disposeElements)
         {
-            _isModified = true;
+            IsModified = true;
             lock (InnerDictionary)
             {
                 foreach (var item in InnerDictionary.Values)
@@ -188,12 +188,12 @@ namespace Maquina
             foreach (var item in Values)
             {
                 item.Update();
-                if (_isModified)
+                if (IsModified)
                 {
                     break;
                 }
             }
-            _isModified = false;
+            IsModified = false;
         }
 
         public void Draw()
@@ -201,12 +201,12 @@ namespace Maquina
             foreach (var item in Values)
             {
                 item.Draw();
-                if (_isModified)
+                if (IsModified)
                 {
                     break;
                 }
             }
-            _isModified = false;
+            IsModified = false;
         }
     }
 }
