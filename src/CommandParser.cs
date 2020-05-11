@@ -34,7 +34,7 @@ namespace Maquina
                 Console.Write("> ");
                 string[] action = Console.ReadLine().Split(' ');
 
-                // XXX: We have 5 commands, 6 subs, and 2 aliases
+                // XXX: We have 8 commands, 14 subs, and 4 aliases
                 switch (action[0].ToLower())
                 {
                     case "quit":
@@ -137,6 +137,68 @@ namespace Maquina
                                 CommandRequiresArgument("log", "[required] action (clear, show, showall, redirect)");
                                 break;
                         }
+                        break;
+                    case "sp":
+                    case "setpref":
+                        if (action.Length < 4)
+                        {
+                            CommandRequiresArgument("setpref", "[required] type (bool, int, float, string), [required] name (string), [required] value (depends on type)");
+                            break;
+                        }
+                        switch (action[1])
+                        {
+                            case "bool":
+                                bool boolValue;
+                                bool.TryParse(action[3], out boolValue);
+                                Application.Preferences.SetBoolean(action[2], boolValue);
+                                break;
+                            case "int":
+                                int intValue;
+                                int.TryParse(action[3], out intValue);
+                                Application.Preferences.SetInt32(action[2], intValue);
+                                break;
+                            case "float":
+                                float floatValue;
+                                float.TryParse(action[3], out floatValue);
+                                Application.Preferences.SetFloat(action[2], floatValue);
+                                break;
+                            case "string":
+                                Application.Preferences.SetString(action[2], action[3]);
+                                break;
+                            default:
+                                CommandRequiresArgument("setpref", "[required] prefType (bool, int, float, string), [required] prefName (string)");
+                                break;
+                        }
+                        Console.WriteLine("Preference set.");
+                        break;
+                    case "gp":
+                    case "getpref":
+                        if (action.Length < 3)
+                        {
+                            CommandRequiresArgument("setpref", "[required] prefType (bool, int, float, string), [required] prefName (string)");
+                            break;
+                        }
+                        switch (action[1])
+                        {
+                            case "bool":
+                                Console.WriteLine("{0}: {1}", action[2], Application.Preferences.GetBoolean(action[2]));
+                                break;
+                            case "int":
+                                Console.WriteLine("{0}: {1}", action[2], Application.Preferences.GetInt32(action[2]));
+                                break;
+                            case "float":
+                                Console.WriteLine("{0}: {1}", action[2], Application.Preferences.GetFloat(action[2]));
+                                break;
+                            case "string":
+                                Console.WriteLine("{0}: {1}", action[2], Application.Preferences.GetString(action[2]));
+                                break;
+                            default:
+                                CommandRequiresArgument("setpref", "[required] prefType (bool, int, float, string), [required] prefName (string)");
+                                break;
+                        }
+                        break;
+                    case "resetprefs":
+                        Application.Preferences.Reset();
                         break;
                     default:
                         Console.WriteLine("Invalid command.");
