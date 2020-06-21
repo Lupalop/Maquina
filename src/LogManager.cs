@@ -27,10 +27,10 @@ namespace Maquina
         /// <param name="message">The message held by the log entry.</param>
         public static void Log(LogEntryLevel logLevel, int logGroup, string message)
         {
-#if LOG_ENABLED
+#if MGE_LOGGING
             LogEntry entry = new LogEntry(logLevel, logGroup, message);
             Entries.Add(entry);
-#if HAS_CONSOLE
+#if MGE_CONSOLE
             if (RedirectOutputToConsole)
             {
                 Console.WriteLine(entry.ToString());

@@ -68,7 +68,7 @@ namespace Maquina
                 if (_manifest == null)
                 {
                     _manifest = new PreferencesManifest();
-#if LOG_ENABLED
+#if MGE_LOGGING
                     LogManager.Info(0, "Using default preferences file.");
 #endif
                 }

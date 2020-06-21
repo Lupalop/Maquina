@@ -55,7 +55,7 @@ namespace Maquina.Content
                     result = item.Value;
                 }
             }
-#if LOG_ENABLED
+#if MGE_LOGGING
             LogManager.Info(0, string.Format("Get Pref - Name: {0}, Value: {1}",
                 name, result));
 #endif
@@ -67,7 +67,7 @@ namespace Maquina.Content
             {
                 if (item.Id == name)
                 {
-#if LOG_ENABLED
+#if MGE_LOGGING
                     LogManager.Info(0, string.Format("Set Pref - Name: {0}, Old value: {1}, New value: {2}",
                         name, item.Value, value));
 #endif
@@ -78,7 +78,7 @@ namespace Maquina.Content
 
             // Create preference if it doesn't exist
             collection.Add(new Property<T>() { Id = name, Value = value });
-#if LOG_ENABLED
+#if MGE_LOGGING
             LogManager.Info(0, string.Format("New Pref - Name: {0}, Value: {1}", name, value));
 #endif
         }

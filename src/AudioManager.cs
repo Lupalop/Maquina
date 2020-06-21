@@ -29,7 +29,7 @@ namespace Maquina
                     MediaPlayer.IsRepeating = isRepeating;
                 }
             }
-#if LOG_ENABLED
+#if MGE_LOGGING
             else
             {
                 LogManager.Warn(0, string.Format("Unable to play song '{0}' because it doesn't exist.", songName));

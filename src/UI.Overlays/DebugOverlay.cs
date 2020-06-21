@@ -39,7 +39,7 @@ namespace Maquina.UI
 
         public DebugOverlay() : base("Debug Overlay")
         {
-#if LOG_ENABLED
+#if MGE_LOGGING
             // Listen to window focus events
             Game.Activated += delegate
             {

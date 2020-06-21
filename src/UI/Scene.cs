@@ -33,7 +33,7 @@ namespace Maquina.UI
 
         public virtual void LoadContent()
         {
-#if LOG_ENABLED
+#if MGE_LOGGING
             LogManager.Info(0, string.Format("Content loaded from: {0}", Name));
 #endif
             if (ContentLoaded != null)
@@ -56,7 +56,7 @@ namespace Maquina.UI
             if (disposing)
             {
                 Entities.Clear(true);
-#if LOG_ENABLED
+#if MGE_LOGGING
                 LogManager.Info(0, string.Format("Scene disposed: {0}", Name));
 #endif
                 if (Disposed != null)

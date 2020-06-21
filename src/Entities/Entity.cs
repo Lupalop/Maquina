@@ -36,7 +36,7 @@ namespace Maquina.Entities
             }
             set
             {
-#if LOG_ENABLED
+#if MGE_LOGGING
                 if (!IsScaleSupported)
                 {
                     LogManager.Warn(0,

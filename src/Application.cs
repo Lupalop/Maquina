@@ -24,7 +24,7 @@ namespace Maquina
             Display = new DisplayManager();
             Input = new InputManager();
             Scenes = new SceneManager();
-#if LOCALE_ENABLED
+#if MGE_LOCALE
             Locale = new LocaleManager();
 #endif
 
@@ -87,7 +87,7 @@ namespace Maquina
         public static SceneManager Scenes { get; private set; }
         public static AudioManager Audio { get; private set; }
         public static InputManager Input { get; private set; }
-#if LOCALE_ENABLED
+#if MGE_LOCALE
         public static LocaleManager Locale { get; private set; }
 #endif
         public static DisplayManager Display { get; private set; }

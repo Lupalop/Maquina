@@ -26,7 +26,7 @@ namespace Maquina
                 targetContainer.TryGetValue(resourceName, out targetResource);
                 return targetResource;
             }
-#if LOG_ENABLED
+#if MGE_LOGGING
             LogManager.Warn(0, $"Missing resource: {containerName}, {resourceName}");
 #endif
             return null;
@@ -41,7 +41,7 @@ namespace Maquina
                     return item.Value[resourceName];
                 }
             }
-#if LOG_ENABLED
+#if MGE_LOGGING
             LogManager.Warn(0, $"Missing resource: {resourceName}");
 #endif
             return null;

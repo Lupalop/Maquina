@@ -15,7 +15,7 @@ namespace Maquina
     {
         public static void Start()
         {
-#if HAS_CONSOLE
+#if MGE_CONSOLE
             // Run the command parser on a separate thread to avoid blocking
             // the main thread. MonoGame doesn't support running the game
             // asynchronously and using Task will cause problems.

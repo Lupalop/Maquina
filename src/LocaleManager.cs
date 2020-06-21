@@ -5,7 +5,7 @@ using Maquina.Content;
 
 namespace Maquina
 {
-#if LOCALE_ENABLED
+#if MGE_LOCALE
     public class LocaleManager
     {
         public string RootDirectory { get; set; }
@@ -90,7 +90,7 @@ namespace Maquina
             }
             catch (Exception ex)
             {
-#if LOG_ENABLED
+#if MGE_LOGGING
                 LogManager.Warn(0, ex.Message);
 #endif
                 return false;

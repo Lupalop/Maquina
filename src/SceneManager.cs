@@ -68,14 +68,14 @@ namespace Maquina
             List<string> x = new List<string>();
             if (scene == null)
             {
-#if LOG_ENABLED
+#if MGE_LOGGING
                 LogManager.Error(0, "Can't switch to a non-existent scene.");
 #endif
                 return;
             }
             if (CurrentScene == scene)
             {
-#if LOG_ENABLED
+#if MGE_LOGGING
                 LogManager.Error(0, "Can't switch to the given scene because it is the current scene.");
 #endif
                 return;
@@ -87,7 +87,7 @@ namespace Maquina
             // Switch to the given scene once the fade transition is complete
             overlay.FadeInAnimation.AnimationFinished += (sender, e) =>
             {
-#if LOG_ENABLED
+#if MGE_LOGGING
                 LogManager.Info(0, string.Format("Switched to scene: {0}", scene.Name));
 #endif
                 CurrentScene = scene;

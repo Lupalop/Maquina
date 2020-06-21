@@ -55,7 +55,7 @@ namespace Maquina
             Application.Unload();
             SpriteBatch.Dispose();
             Graphics.Dispose();
-#if LOG_ENABLED
+#if MGE_LOGGING
             LogManager.Info(0, "Game content unloaded.");
 #endif
         }
