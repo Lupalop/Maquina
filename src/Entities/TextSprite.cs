@@ -57,7 +57,11 @@ namespace Maquina.Entities
             get { return text; }
             set
             {
+#if LOCALE_ENABLED
                 text = Application.Locale.TryGetString(value);
+#else
+                text = value;
+#endif
                 UpdateTextMeasurement();
             }
         }

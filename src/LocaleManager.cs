@@ -5,6 +5,7 @@ using Maquina.Content;
 
 namespace Maquina
 {
+#if LOCALE_ENABLED
     public class LocaleManager
     {
         public string RootDirectory { get; set; }
@@ -136,4 +137,5 @@ namespace Maquina
             return name;
         }
     }
+#endif
 }
