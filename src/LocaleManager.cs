@@ -8,16 +8,24 @@ namespace Maquina
     public class LocaleManager
     {
         public string RootDirectory { get; set; }
-        public string LocalizedPrefix { get; set; }
+        public string BindingPrefix { get; set; }
+
         public Dictionary<string, string> Strings { get; set; }
-        public const string LocaleDefinitionXml = "locale.xml";
+        public Dictionary<string, LocaleManifest> Languages { get; private set; }
+
+        public const string LocaleDefinitionFileName = "locale.xml";
+        public const string LanguageCodePreference = "app.locale";
 
         public LocaleManager()
         {
+            Strings = new Dictionary<string, string>(
+                StringComparer.InvariantCultureIgnoreCase);
+            Languages = new Dictionary<string, LocaleManifest>(
+                StringComparer.InvariantCultureIgnoreCase);
             RootDirectory = "locales";
-            LocalizedPrefix = Application.Preferences.GetString("app.locale.prefix", "&");
-            Strings = new Dictionary<string, string>();
-            LanguageCode = Application.Preferences.GetString("app.locale", "");
+            BindingPrefix = "&";
+            LanguageCode = Application.Preferences.GetString(LanguageCodePreference, "");
+            ReloadLanguages();
         }
 
         private string languageCode;
@@ -27,62 +35,83 @@ namespace Maquina
             set
             {
                 languageCode = value.Trim();
+                Application.Preferences.SetString(LanguageCodePreference, languageCode);
 
-                if (languageCode == string.Empty)
+                if (languageCode == string.Empty || !Languages.ContainsKey(languageCode))
                 {
+                    Strings.Clear();
                     return;
                 }
 
-                CurrentLocale = new LocaleManifest() { Code = value };
+                string languageDirectory =
+                    Path.Combine(Application.Content.RootDirectory, RootDirectory, value);
 
-                try
-                {
-                    IEnumerable<string> fileList = Directory.EnumerateFiles(
-                        Path.Combine(Application.Content.RootDirectory, RootDirectory, value));
-                    
-                    // Load associated string bundles
-                    foreach (string fileName in fileList)
-                    {
-                        if (fileName.Contains(LocaleDefinitionXml))
-                        {
-                            continue;
-                        }
-                        Property<string>[] strings = XmlHelper.Load<StringManifest>(fileName).StringPropertySet;
-                        for (int i = 0; i < strings.Length; i++)
-                        {
-                            Strings.Add(strings[i].Id, strings[i].Value);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-#if LOG_ENABLED
-                    LogManager.Warn(0, ex.Message);
-#endif
-                    return;
-                }
+                LoadStringManifests(languageDirectory);
             }
         }
 
-        public LocaleManifest CurrentLocale { get; private set; }
-
-        public List<LocaleManifest> LocaleList
+        public LocaleManifest CurrentLanguage
         {
             get
             {
-                List<LocaleManifest> CreatedList = new List<LocaleManifest>();
-                IEnumerable<string> Directories = Directory.EnumerateDirectories(
-                        Path.Combine(Application.Content.RootDirectory, RootDirectory));
-                foreach (var item in Directories)
+                if (Languages.ContainsKey(languageCode))
                 {
-                    string LocaleDefLocation = Path.Combine(item, LocaleDefinitionXml);
-                    // Check first if locale definition exists
-                    if (File.Exists(LocaleDefLocation))
+                    return Languages[languageCode];
+                }
+
+                return null;
+            }
+        }
+
+        private bool LoadStringManifests(string location)
+        {
+            try
+            {
+                IEnumerable<string> fileList = Directory.EnumerateFiles(location);
+
+                foreach (string fileName in fileList)
+                {
+                    if (fileName.Contains(LocaleDefinitionFileName))
                     {
-                        CreatedList.Add(XmlHelper.Load<LocaleManifest>(LocaleDefLocation));
+                        continue;
+                    }
+
+                    Property<string>[] strings =
+                        XmlHelper.Load<StringManifest>(fileName).StringPropertySet;
+
+                    for (int i = 0; i < strings.Length; i++)
+                    {
+                        Strings.Add(strings[i].Id, strings[i].Value);
                     }
                 }
-                return CreatedList;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+#if LOG_ENABLED
+                LogManager.Warn(0, ex.Message);
+#endif
+                return false;
+            }
+        }
+
+        public void ReloadLanguages()
+        {
+            Languages.Clear();
+
+            IEnumerable<string> Directories = Directory.EnumerateDirectories(
+                    Path.Combine(Application.Content.RootDirectory, RootDirectory));
+
+            foreach (var item in Directories)
+            {
+                string manifestFileName = Path.Combine(item, LocaleDefinitionFileName);
+
+                if (File.Exists(manifestFileName))
+                {
+                    LocaleManifest manifest = XmlHelper.Load<LocaleManifest>(manifestFileName);
+                    Languages.Add(manifest.Code, manifest);
+                }
             }
         }
 
@@ -92,7 +121,7 @@ namespace Maquina
             {
                 string keyName = name;
 
-                if (name.StartsWith(LocalizedPrefix, StringComparison.InvariantCultureIgnoreCase))
+                if (name.StartsWith(BindingPrefix, StringComparison.InvariantCultureIgnoreCase))
                 {
                     keyName = name.Substring(1);
                 }
