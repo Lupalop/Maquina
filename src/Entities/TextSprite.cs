@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -60,7 +57,7 @@ namespace Maquina.Entities
             get { return text; }
             set
             {
-                text = value;
+                text = Application.Locale.TryGetString(value);
                 UpdateTextMeasurement();
             }
         }
