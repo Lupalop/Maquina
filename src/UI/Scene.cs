@@ -26,7 +26,7 @@ namespace Maquina.UI
         public event EventHandler ContentLoaded;
         public event EventHandler Disposed;
 
-        protected Rectangle WindowBounds
+        protected Rectangle Bounds
         {
             get { return Application.Display.WindowBounds; }
         }
