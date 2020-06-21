@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Maquina.Content;
 
@@ -12,17 +8,16 @@ namespace Maquina
     public class LocaleManager
     {
         public string RootDirectory { get; set; }
-        public string DefaultLocale { get; set; }
         public string LocalizedPrefix { get; set; }
+        public Dictionary<string, string> Strings { get; set; }
         public const string LocaleDefinitionXml = "locale.xml";
 
         public LocaleManager()
         {
             RootDirectory = "locales";
-            DefaultLocale = "en-US";
             LocalizedPrefix = Application.Preferences.GetString("app.locale.prefix", "&");
             Strings = new Dictionary<string, string>();
-            LanguageCode = Application.Preferences.GetString("app.locale", DefaultLocale);
+            LanguageCode = Application.Preferences.GetString("app.locale", "");
         }
 
         private string languageCode;
@@ -31,8 +26,15 @@ namespace Maquina
             get { return languageCode; }
             set
             {
-                languageCode = value;
+                languageCode = value.Trim();
+
+                if (languageCode == string.Empty)
+                {
+                    return;
+                }
+
                 CurrentLocale = new LocaleManifest() { Code = value };
+
                 try
                 {
                     IEnumerable<string> fileList = Directory.EnumerateFiles(
@@ -63,6 +65,7 @@ namespace Maquina
         }
 
         public LocaleManifest CurrentLocale { get; private set; }
+
         public List<LocaleManifest> LocaleList
         {
             get
@@ -83,20 +86,21 @@ namespace Maquina
             }
         }
 
-        public Dictionary<string, string> Strings { get; set; }
         public string TryGetString(string name)
         {
-            string keyName = name;
-            
-            // Check for existence of the prefix
-            if (name.StartsWith(LocalizedPrefix, StringComparison.InvariantCultureIgnoreCase))
+            if (languageCode != string.Empty)
             {
-                keyName = name.Substring(1);
-            }
+                string keyName = name;
 
-            if (Strings.ContainsKey(keyName))
-            {
-                return Strings[keyName];
+                if (name.StartsWith(LocalizedPrefix, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    keyName = name.Substring(1);
+                }
+
+                if (Strings.ContainsKey(keyName))
+                {
+                    return Strings[keyName];
+                }
             }
 
             // If string is not found, simply return the original string
