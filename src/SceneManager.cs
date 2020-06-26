@@ -93,7 +93,7 @@ namespace Maquina
                 CurrentScene = scene;
             };
             Overlays.Add(overlay);
-            
+
             // Unload previous scene
             CurrentScene.Dispose();
 
@@ -102,9 +102,6 @@ namespace Maquina
             {
                 scene.LoadContent();
             }
-
-            // Do a pre-current scene update pass
-            scene.Update();
         }
 
         internal void Draw()
