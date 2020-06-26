@@ -35,6 +35,7 @@ namespace Maquina.Entities
             {
                 texture = value;
                 UpdateDestinationRectangle();
+                CurrentFrame = 0;
             }
         }
 
@@ -184,7 +185,7 @@ namespace Maquina.Entities
             {
                 currentFrame = value;
 
-                if (SpriteType == SpriteType.None)
+                if (SpriteType == SpriteType.None || Texture == null)
                 {
                     return;
                 }
@@ -206,6 +207,7 @@ namespace Maquina.Entities
             get { return rows; }
             set
             {
+                CurrentFrame = 0;
                 TotalFrames = value * Columns;
                 rows = value;
                 UpdateDestinationRectangle();
@@ -218,6 +220,7 @@ namespace Maquina.Entities
             get { return columns; }
             set
             {
+                CurrentFrame = 0;
                 TotalFrames = Rows * value;
                 columns = value;
                 UpdateDestinationRectangle();
