@@ -28,21 +28,10 @@ namespace Maquina.Entities
         {
             get
             {
-                if (!IsScaleSupported)
-                {
-                    return 1;
-                }
                 return scale;
             }
             set
             {
-#if MGE_LOGGING
-                if (!IsScaleSupported)
-                {
-                    LogManager.Warn(0,
-                        string.Format("Entity {0} with ID {1} does not support the scale property.", Name, Id));
-                }
-#endif
                 scale = value;
                 OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Scale));
             }
@@ -52,7 +41,7 @@ namespace Maquina.Entities
         {
             get
             {
-                if (IgnoreGlobalScale || !IsScaleSupported)
+                if (IgnoreGlobalScale)
                 {
                     return Scale;
                 }
@@ -70,7 +59,6 @@ namespace Maquina.Entities
                 OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.IgnoreGlobalScale));
             }
         }
-        protected bool IsScaleSupported = true;
 
         // Layout
         // Destination rectangle not adjusted for scale
