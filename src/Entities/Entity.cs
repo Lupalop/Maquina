@@ -56,7 +56,6 @@ namespace Maquina.Entities
             set
             {
                 ignoreGlobalScale = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.IgnoreGlobalScale));
             }
         }
 

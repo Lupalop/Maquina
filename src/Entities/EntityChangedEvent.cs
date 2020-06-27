@@ -13,7 +13,6 @@ namespace Maquina.Entities
         Location,
         Size,
         Scale,
-        IgnoreGlobalScale
     }
 
     public class EntityChangedEventArgs : EventArgs
