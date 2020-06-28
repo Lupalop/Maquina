@@ -5,6 +5,9 @@ namespace Maquina
 {
     public static class TimerManager
     {
+#if DEBUG
+        public static bool IsFrozen { get; set; }
+#endif
         public static List<Timer> Timers = new List<Timer>();
 
         public static void Add(Timer timer)
@@ -19,6 +22,12 @@ namespace Maquina
 
         public static void Update()
         {
+#if DEBUG
+            if (IsFrozen)
+            {
+                return;
+            }
+#endif
             for (int i = 0; i < Timers.Count; i++)
             {
                 Timers[i].Update();

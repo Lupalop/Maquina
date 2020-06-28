@@ -34,7 +34,7 @@ namespace Maquina
                 Console.Write("> ");
                 string[] action = Console.ReadLine().Split(' ');
 
-                // XXX: We have 8 commands, 14 subs, and 4 aliases
+                // XXX: We have 10 commands, 14 subs, and 4 aliases
                 switch (action[0].ToLower())
                 {
                     case "quit":
@@ -199,6 +199,20 @@ namespace Maquina
                         break;
                     case "resetprefs":
                         Application.Preferences.Reset();
+                        break;
+                    case "freeze":
+                        Application.Scenes.CurrentScene.IsFrozen = true;
+#if DEBUG
+                        AnimationManager.IsFrozen = true;
+                        TimerManager.IsFrozen = true;
+#endif
+                        break;
+                    case "unfreeze":
+                        Application.Scenes.CurrentScene.IsFrozen = false;
+#if DEBUG
+                        AnimationManager.IsFrozen = false;
+                        TimerManager.IsFrozen = false;
+#endif
                         break;
                     default:
                         Console.WriteLine("Invalid command.");

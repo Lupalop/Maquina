@@ -106,10 +106,7 @@ namespace Maquina
 
         internal void Draw()
         {
-            if (!CurrentScene.IsFrozen)
-            {
-                CurrentScene.Draw();
-            }
+            CurrentScene.Draw();
             for (int i = Overlays.Count - 1; i >= 0; i--)
             {
                 Overlays[i].Draw();

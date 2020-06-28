@@ -10,6 +10,9 @@ namespace Maquina
 {
     public static class AnimationManager
     {
+#if DEBUG
+        public static bool IsFrozen { get; set; }
+#endif
         public static List<Animation> Animations = new List<Animation>();
 
         public static void Add(Animation animation)
@@ -24,6 +27,12 @@ namespace Maquina
 
         public static void Update()
         {
+#if DEBUG
+            if (IsFrozen)
+            {
+                return;
+            }
+#endif
             for (int i = 0; i < Animations.Count; i++)
             {
                 Animations[i].Update();
