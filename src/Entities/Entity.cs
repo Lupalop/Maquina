@@ -10,6 +10,11 @@ namespace Maquina.Entities
 {
     public abstract class Entity : IEntity
     {
+        private Point _location;
+        private Point _size;
+        private float _scale;
+        private bool _ignoreGlobalScale;
+
         protected Entity(string name)
         {
             Id = "GENERIC_BASE";
@@ -20,22 +25,20 @@ namespace Maquina.Entities
         public string Name { get; set; }
         public string Id { get; protected set; }
 
-        private Point location;
         public virtual Point Location
         {
-            get { return location; }
+            get { return _location; }
             set
             {
-                if (value == location)
+                if (value == _location)
                 {
                     return;
                 }
-                location = value;
+                _location = value;
                 OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
             }
         }
 
-        private Point _size;
         public virtual Point Size
         {
             get { return _size; }
@@ -50,7 +53,6 @@ namespace Maquina.Entities
             }
         }
 
-        private float _scale;
         public float Scale
         {
             get { return _scale; }
@@ -61,7 +63,6 @@ namespace Maquina.Entities
             }
         }
 
-        private bool _ignoreGlobalScale;
         public bool IgnoreGlobalScale
         {
             get { return _ignoreGlobalScale; }
