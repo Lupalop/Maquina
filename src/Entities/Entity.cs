@@ -10,7 +10,6 @@ namespace Maquina.Entities
 {
     public abstract class Entity : IEntity
     {
-        // Constructor
         protected Entity(string name)
         {
             Id = "GENERIC_BASE";
@@ -18,67 +17,8 @@ namespace Maquina.Entities
             Scale = 1;
         }
 
-        // General properties
         public string Name { get; set; }
         public string Id { get; protected set; }
-        
-        // Scale
-        private float scale;
-        public float Scale
-        {
-            get
-            {
-                return scale;
-            }
-            set
-            {
-                scale = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Scale));
-            }
-        }
-        // Scale adjusted for global scale
-        public float ActualScale
-        {
-            get
-            {
-                if (IgnoreGlobalScale)
-                {
-                    return Scale;
-                }
-                return Scale * Application.Display.Scale;
-            }
-        }
-        //
-        private bool ignoreGlobalScale;
-        public bool IgnoreGlobalScale
-        {
-            get { return ignoreGlobalScale; }
-            set
-            {
-                ignoreGlobalScale = value;
-            }
-        }
-
-        // Layout
-        // Destination rectangle not adjusted for scale
-        public virtual Rectangle Bounds
-        {
-            get { return new Rectangle(Location, Size); }
-            set
-            {
-                Location = value.Location;
-                Size = value.Size;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
-            }
-        }
-        // Destination rectangle adjusted for scale
-        public Rectangle ActualBounds
-        {
-            get
-            {
-                return new Rectangle(Location, ActualSize);
-            }
-        }
 
         private Point location;
         public virtual Point Location
@@ -95,33 +35,77 @@ namespace Maquina.Entities
             }
         }
 
-        // Size not adjusted for scale
-        private Point size;
+        private Point _size;
         public virtual Point Size
         {
-            get { return size; }
+            get { return _size; }
             set
             {
-                if (value == size)
+                if (value == _size)
                 {
                     return;
                 }
-                size = value;
+                _size = value;
                 OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Size));
             }
         }
-        // Size adjusted for scale
+
+        private float _scale;
+        public float Scale
+        {
+            get { return _scale; }
+            set
+            {
+                _scale = value;
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Scale));
+            }
+        }
+
+        private bool _ignoreGlobalScale;
+        public bool IgnoreGlobalScale
+        {
+            get { return _ignoreGlobalScale; }
+            set { _ignoreGlobalScale = value; }
+        }
+
+        public virtual Rectangle Bounds
+        {
+            get { return new Rectangle(Location, Size); }
+            set
+            {
+                Location = value.Location;
+                Size = value.Size;
+                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
+            }
+        }
+
+        public float ActualScale
+        {
+            get
+            {
+                if (IgnoreGlobalScale)
+                {
+                    return Scale;
+                }
+                return Scale * Application.Display.Scale;
+            }
+        }
+
         public Point ActualSize
         {
             get
             {
                 return new Point(
-                    (int)(size.X * ActualScale),
-                    (int)(size.Y * ActualScale));
+                    (int)(_size.X * ActualScale),
+                    (int)(_size.Y * ActualScale));
             }
         }
 
-        // Entity events
+        public Rectangle ActualBounds
+        {
+            get { return new Rectangle(Location, ActualSize); }
+        }
+
         public event EventHandler<EntityChangedEventArgs> EntityChanged;
         public event EventHandler EntityUpdated;
         public event EventHandler EntityDrawn;
@@ -150,7 +134,6 @@ namespace Maquina.Entities
             }
         }
 
-        // Update and draw methods
         public virtual void Update()
         {
             OnEntityUpdated();
@@ -161,13 +144,6 @@ namespace Maquina.Entities
             OnEntityDrawn();
         }
 
-        // IDisposable implementation
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -176,6 +152,11 @@ namespace Maquina.Entities
                 EntityUpdated = null;
                 EntityDrawn = null;
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
