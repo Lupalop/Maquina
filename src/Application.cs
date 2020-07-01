@@ -27,6 +27,7 @@ namespace Maquina
 #if MGE_LOCALE
             Locale = new LocaleManager();
 #endif
+            SoftwareMouse = new SoftwareMouse();
 
             _isInitialized = true;
         }
@@ -92,6 +93,7 @@ namespace Maquina
 #endif
         public static DisplayManager Display { get; private set; }
         public static PreferencesManager Preferences { get; private set; }
+        public static SoftwareMouse SoftwareMouse { get; private set; }
 
         // Game properties
         public static MaquinaGame Game { get; private set; }

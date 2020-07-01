@@ -10,23 +10,23 @@ using Maquina.Entities;
 
 namespace Maquina.UI
 {
-    public static class SoftwareMouse
+    public class SoftwareMouse : Entity
     {
-        static SoftwareMouse()
+        public SoftwareMouse() : base("SoftwareMouse")
         {
             DrawController = new DrawController();
         }
 
-        public static DrawController DrawController;
+        public DrawController DrawController;
 
-        private static Texture2D _texture;
-        public static Texture2D Texture
+        private Texture2D _texture;
+        public Texture2D Texture
         {
             get { return _texture; }
             set
             {
                 _texture = value;
-                DrawController.Size = AtlasUtils.GetFrameSize(
+                Size = AtlasUtils.GetFrameSize(
                     _texture.Bounds.Size,
                     2,
                     1);
@@ -38,14 +38,14 @@ namespace Maquina.UI
             }
         }
 
-        public static BlendState BlendState { get; set; }
+        public BlendState BlendState { get; set; }
 
-        public static void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Application.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
             Application.SpriteBatch.Draw(
                 Texture,
-                DrawController.DestinationRectangle,
+                ActualBounds,
                 DrawController.SourceRectangle,
                 DrawController.Tint * DrawController.Opacity,
                 DrawController.Rotation,
@@ -55,14 +55,14 @@ namespace Maquina.UI
             Application.SpriteBatch.End();
         }
 
-        public static void Update()
+        public override void Update()
         {
             DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
                     _texture.Bounds.Size,
                     2,
                     1,
                     0);
-            DrawController.Location = Application.Input.MousePosition;
+            Location = Application.Input.MousePosition;
 
             if (Application.Input.MouseDown(MouseButton.Left) ||
                 Application.Input.MouseDown(MouseButton.Right) ||
