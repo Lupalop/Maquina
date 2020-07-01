@@ -164,10 +164,19 @@ namespace Maquina.Entities
         }
 
         /// <summary>
-        /// This is called when the entity should draw itself.
+        /// This is called when the entity should draw itself using the specified <see cref="SpriteBatch"/>.
         /// </summary>
-        public virtual void Draw()
+        /// <param name="spriteBatch">The <see cref="SpriteBatch"/> to be used in drawing text strings and sprites.</param>
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
+        }
+
+        /// <summary>
+        /// This is called when the entity should draw itself using the default <see cref="SpriteBatch"/>.
+        /// </summary>
+        public void Draw()
+        {
+            Draw(Application.SpriteBatch);
         }
 
         protected virtual void Dispose(bool disposing)
