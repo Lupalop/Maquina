@@ -15,51 +15,53 @@ namespace Maquina.UI
         public Image(string name) : base(name)
         {
             Id = "UI_IMAGE";
-            Sprite = new Sprite();
-            Sprite.SpriteChanged += Background_SpriteChanged;
-            Changed += Image_EntityChanged;
+            DrawController = new DrawController();
         }
 
-        // Child sprite
-        public Sprite Sprite { get; private set; }
-        
-        // Draw and update methods
-        public override void Draw()
+        private Texture2D _texture;
+        public Texture2D Texture
         {
-            Sprite.Draw();
-            base.Draw();
-        }
-        public override void Update()
-        {
-            Sprite.Update();
-            base.Update();
-        }
-
-        // Listeners
-        private void Background_SpriteChanged(object sender, EntityChangedEventArgs e)
-        {
-            if (e.Property == EntityChangedProperty.Size)
+            get { return _texture; }
+            set
             {
-                Size = Sprite.Size;
+                _texture = value;
+                DrawController.DestinationRectangle = _texture.Bounds;
             }
         }
 
-        protected void Image_EntityChanged(object sender, EntityChangedEventArgs e)
+        public DrawController DrawController { get; set; }
+
+        public override Point Location
         {
-            switch (e.Property)
+            get { return DrawController.Location; }
+            set
             {
-                case EntityChangedProperty.Location:
-                    Sprite.Location = Location;
-                    break;
-                case EntityChangedProperty.IgnoreGlobalScale:
-                    Sprite.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
-                    break;
-                case EntityChangedProperty.Scale:
-                    Sprite.Scale = Scale;
-                    break;
-                default:
-                    break;
+                DrawController.Location = value;
+                base.Location = value;
             }
+        }
+
+        public override Point Size
+        {
+            get { return DrawController.Size; }
+            set
+            {
+                DrawController.Size = value;
+                base.Size = value;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(
+                Texture,
+                ActualBounds,
+                DrawController.SourceRectangle,
+                DrawController.Tint * DrawController.Opacity,
+                DrawController.Rotation,
+                DrawController.Origin,
+                DrawController.SpriteEffects,
+                DrawController.LayerDepth);
         }
     }
 }

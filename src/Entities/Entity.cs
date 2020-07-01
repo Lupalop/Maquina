@@ -130,8 +130,8 @@ namespace Maquina.Entities
             get
             {
                 return new Point(
-                    (int)(_size.X * ActualScale),
-                    (int)(_size.Y * ActualScale));
+                    (int)(Size.X * ActualScale),
+                    (int)(Size.Y * ActualScale));
             }
         }
 

@@ -139,7 +139,7 @@ namespace Maquina.UI
         }
 
         // Draw and update methods
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Background.Draw();
             Label.Draw();

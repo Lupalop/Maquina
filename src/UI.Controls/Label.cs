@@ -15,59 +15,43 @@ namespace Maquina.UI
         public Label(string name) : base (name)
         {
             Id = "UI_LABEL";
-            Sprite = new TextSprite();
-            Sprite.SpriteChanged += Child_SpriteChanged;
-            Changed += Label_EntityChanged;
-            Sprite.Text = "";
+            DrawController.Text = "";
         }
 
-        // Child sprite
-        public TextSprite Sprite { get; private set; }
+        public TextDrawController DrawController { get; set; }
 
-        // Draw and update methods
-        public override void Draw()
+        public override Point Location
         {
-            Sprite.Draw();
-            base.Draw();
-        }
-        public override void Update()
-        {
-            Sprite.Update();
-            base.Update();
-        }
-
-        // Listeners
-        private void Child_SpriteChanged(object sender, EntityChangedEventArgs e)
-        {
-            if (e.Property == EntityChangedProperty.Size)
+            get { return DrawController.Location; }
+            set
             {
-                Size = Sprite.Size;
-            }
-        }
-        private void Label_EntityChanged(object sender, EntityChangedEventArgs e)
-        {
-            switch (e.Property)
-            {
-                case EntityChangedProperty.Location:
-                    Sprite.Location = Location;
-                    break;
-                case EntityChangedProperty.IgnoreGlobalScale:
-                    Sprite.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
-                    break;
-                default:
-                    break;
+                DrawController.Location = value;
+                base.Location = value;
             }
         }
 
-        // Dispose
-        protected override void Dispose(bool disposing)
+        public override Point Size
         {
-            if (disposing)
+            get { return DrawController.Size; }
+            set
             {
-                Sprite.SpriteChanged -= Child_SpriteChanged;
-                Changed -= Label_EntityChanged;
+                DrawController.Size = value;
+                base.Size = value;
             }
-            base.Dispose(disposing);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(
+                DrawController.Font,
+                DrawController.Text,
+                DrawController.Location.ToVector2(),
+                DrawController.Tint * DrawController.Opacity,
+                DrawController.Rotation,
+                DrawController.Origin,
+                ActualScale,
+                DrawController.SpriteEffects,
+                DrawController.LayerDepth);
         }
     }
 }

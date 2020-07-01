@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,22 +14,19 @@ namespace Maquina.Entities
         {
             Id = "CONTAINER";
             Children = new EntityDictionary();
-            IsScaleSupported = false;
         }
 
         public EntityDictionary Children { get; protected set; }
 
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Children.Draw();
-
-            base.Draw();
+            base.Draw(spriteBatch);
         }
 
         public override void Update()
         {
             Children.Update();
-
             base.Update();
         }
     }

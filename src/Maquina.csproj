@@ -68,14 +68,13 @@
   <ItemGroup>
     <Compile Include="AnimationManager.cs" />
     <Compile Include="Entities\Animation.cs" />
-    <Compile Include="Entities\BarSprite.cs" />
+    <Compile Include="Entities\AtlasUtils.cs" />
     <Compile Include="Entities\Container.cs" />
+    <Compile Include="Entities\DrawController.cs" />
     <Compile Include="Entities\EntityChangedEvent.cs" />
     <Compile Include="Entities\FadeAnimation.cs" />
+    <Compile Include="Entities\TextDrawController.cs" />
     <Compile Include="Entities\IAnimation.cs" />
-    <Compile Include="Entities\ISprite.cs" />
-    <Compile Include="Entities\Sprite.cs" />
-    <Compile Include="Entities\TextSprite.cs" />
     <Compile Include="DisplayManager.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="LogEntryLevel.cs" />
@@ -92,7 +91,6 @@
     <Compile Include="UI.Controls\Control.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Entities\IContainer.cs" />
-    <Compile Include="Entities\SpriteType.cs" />
     <Compile Include="MaquinaGame.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />
@@ -103,7 +101,7 @@
     <Compile Include="TimerManager.cs" />
     <Compile Include="Entities\Orientation.cs" />
     <Compile Include="UI.Controls\Canvas.cs" />
-    <Compile Include="UI.Controls\TextBox.cs" />
+    <None Include="UI.Controls\TextBox.cs" />
     <Compile Include="UI.Controls\StackPanel.cs" />
     <Compile Include="Content\XmlHelper.cs" />
     <Compile Include="Content\SpriteFontProperty.cs" />
@@ -113,7 +111,7 @@
     <Compile Include="UI.Controls\Throbber.cs" />
     <Compile Include="UI.Controls\Image.cs" />
     <Compile Include="UI.Controls\Label.cs" />
-    <Compile Include="UI.Controls\Button.cs" />
+    <None Include="UI.Controls\Button.cs" />
     <Compile Include="UI.Controls\ProgressBar.cs" />
     <Compile Include="UI.Overlays\DebugOverlay.cs" />
     <Compile Include="UI.Overlays\FadeOverlay.cs" />

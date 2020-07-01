@@ -1,5 +1,6 @@
 ﻿using Maquina.Entities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,11 @@ namespace Maquina.UI
         {
             Id = "UI_CANVAS";
             Children = new EntityDictionary();
-            IsScaleSupported = false;
         }
 
         public EntityDictionary Children { get; private set; }
 
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Children.Draw();
 

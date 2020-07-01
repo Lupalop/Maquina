@@ -16,21 +16,21 @@ namespace Maquina.UI
         {
             FadeImage = new Image("Background");
             FadeImage.IgnoreGlobalScale = true;
-            FadeImage.Sprite.Texture = FadeBackground;
-            FadeImage.Sprite.DestinationRectangle = Bounds;
+            FadeImage.Texture = FadeBackground;
+            FadeImage.Bounds = Bounds;
 
             Application.Display.ResolutionChanged += (sender, e) =>
             {
-                FadeImage.Sprite.DestinationRectangle = ((DisplayManager)sender).WindowBounds;
+                FadeImage.Bounds = ((DisplayManager)sender).WindowBounds;
             };
 
-            FadeInAnimation = new FadeInAnimation(FadeImage.Sprite, FadeSpeed);
+            FadeInAnimation = new FadeInAnimation(FadeImage.DrawController, FadeSpeed);
             FadeInAnimation.AnimationFinished += (sender, e) =>
             {
                 FadeOutAnimation.Start();
             };
 
-            FadeOutAnimation = new FadeOutAnimation(FadeImage.Sprite, FadeSpeed);
+            FadeOutAnimation = new FadeOutAnimation(FadeImage.DrawController, FadeSpeed);
             FadeOutAnimation.AnimationFinished += (sender, e) =>
             {
                 Application.Scenes.Overlays.Remove(this);

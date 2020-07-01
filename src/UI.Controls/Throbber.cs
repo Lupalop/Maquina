@@ -15,41 +15,42 @@ namespace Maquina.UI
         {
             Id = "UI_THROBBER";
             IsSpinning = true;
-            Sprite.Texture = (Texture2D)ContentFactory.TryGetResource("throbber-default");
-            EntityUpdated += (sender, e) =>
-            {
-                if (!IsSpinning)
-                    return;
-
-                Sprite.Rotation += .05f;
-            };
-            Changed -= Image_EntityChanged;
-            Changed += Throbber_EntityChanged;
-            Application.Display.ScaleChanged += Global_ScaleChanged;
-        }
-
-        private void Global_ScaleChanged(object sender, EventArgs e)
-        {
-            Throbber_EntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Location));
-        }
-
-        private void Throbber_EntityChanged(object sender, EntityChangedEventArgs e)
-        {
-            Sprite.Origin = new Vector2(Size.X / 2, Size.Y / 2);
-            switch (e.Property)
-            {
-                case EntityChangedProperty.Location:
-                    Point NewLocation = new Point(Location.X + (ActualSize.X / 2), Location.Y + (ActualSize.Y / 2));
-                    Sprite.Location = NewLocation;
-                    break;
-                case EntityChangedProperty.IgnoreGlobalScale:
-                    Sprite.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
-                    break;
-                default:
-                    break;
-            }
+            Texture = (Texture2D)ContentFactory.TryGetResource("throbber-default");
         }
 
         public bool IsSpinning { get; set; }
+
+        public override Point Location
+        {
+            get { return base.Location; }
+            set
+            {
+                base.Location = new Point(
+                    value.X + (ActualSize.X / 2),
+                    value.Y + (ActualSize.Y / 2));
+            }
+        }
+
+        public override Point Size
+        {
+            get { return base.Size; }
+            set
+            {
+                base.Size = value;
+                DrawController.Origin = new Vector2(base.Size.X / 2, base.Size.Y / 2);
+            }
+        }
+
+        public override void Update()
+        {
+            if (!IsSpinning)
+            {
+                return;
+            }
+
+            DrawController.Rotation += .05f;
+
+            base.Update();
+        }
     }
 }

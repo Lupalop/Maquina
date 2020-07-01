@@ -15,13 +15,11 @@ namespace Maquina.UI
         public StackPanel(string name) : base(name)
         {
             Id = "UI_STACKPANEL";
-            Background = new Sprite();
             Children = new EntityDictionary();
             Orientation = Orientation.Vertical;
             ControlMargin = new Region();
             Children.EntityChanged += Children_EntityChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
-            IsScaleSupported = false;
         }
 
         // General
@@ -47,18 +45,8 @@ namespace Maquina.UI
             }
         }
 
-        // Child sprite
-        public Sprite Background { get; set; }
-
-        // Alias
-        public Texture2D ContainerBackground
-        {
-            get { return Background.Texture; }
-            set { Background.Texture = value; }
-        }
-
         // Draw and update methods
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Children.Draw();
 

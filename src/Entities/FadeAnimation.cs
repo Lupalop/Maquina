@@ -9,7 +9,7 @@ namespace Maquina.Entities
 {
     public class FadeOutAnimation : Animation
     {
-        public FadeOutAnimation(ISprite sprite, float speed) : base(sprite, speed) { }
+        public FadeOutAnimation(DrawController drawParameters, float speed) : base(drawParameters, speed) { }
 
         private float Opacity = 1;
 
@@ -26,7 +26,7 @@ namespace Maquina.Entities
 
     public class FadeInAnimation : Animation
     {
-        public FadeInAnimation(ISprite sprite, float speed) : base(sprite, speed) { }
+        public FadeInAnimation(DrawController drawParameters, float speed) : base(drawParameters, speed) { }
 
         private float Opacity = 0;
 
