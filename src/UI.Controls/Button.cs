@@ -37,7 +37,7 @@ namespace Maquina.UI
             Label.SpriteChanged += Label_SpriteChanged;
             Icon.SpriteChanged += Icon_SpriteChanged;
             // Parent
-            EntityChanged += Button_EntityChanged;
+            Changed += Button_EntityChanged;
 
             LayerDepth = 1f;
             Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");

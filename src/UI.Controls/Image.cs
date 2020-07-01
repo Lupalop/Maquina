@@ -17,7 +17,7 @@ namespace Maquina.UI
             Id = "UI_IMAGE";
             Sprite = new Sprite();
             Sprite.SpriteChanged += Background_SpriteChanged;
-            EntityChanged += Image_EntityChanged;
+            Changed += Image_EntityChanged;
         }
 
         // Child sprite

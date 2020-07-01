@@ -69,8 +69,8 @@ namespace Maquina
             {
                 IsModified = true;
                 // Stop listening to old entity changes and listen to new entity
-                InnerDictionary[key].EntityChanged -= Child_EntityChanged;
-                value.EntityChanged += Child_EntityChanged;
+                InnerDictionary[key].Changed -= Child_EntityChanged;
+                value.Changed += Child_EntityChanged;
                 // Replace old entity reference
                 InnerDictionary[key] = value;
                 // An entity was replaced, notify handler
@@ -90,7 +90,7 @@ namespace Maquina
         {
             IsModified = true;
             InnerDictionary.Add(item);
-            item.Value.EntityChanged += Child_EntityChanged;
+            item.Value.Changed += Child_EntityChanged;
             OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
         }
 
@@ -121,7 +121,7 @@ namespace Maquina
         public bool Remove(string key)
         {
             IsModified = true;
-            InnerDictionary[key].EntityChanged -= Child_EntityChanged;
+            InnerDictionary[key].Changed -= Child_EntityChanged;
             bool result = InnerDictionary.Remove(key);
             OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
             return result;
@@ -130,7 +130,7 @@ namespace Maquina
         public bool Remove(KeyValuePair<string, Entity> item)
         {
             IsModified = true;
-            InnerDictionary[item.Key].EntityChanged -= Child_EntityChanged;
+            InnerDictionary[item.Key].Changed -= Child_EntityChanged;
             bool result = InnerDictionary.Remove(item);
             OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
             return result;
@@ -148,7 +148,7 @@ namespace Maquina
             {
                 foreach (var item in InnerDictionary.Values)
                 {
-                    item.EntityChanged -= Child_EntityChanged;
+                    item.Changed -= Child_EntityChanged;
                     if (disposeEntities)
                     {
                         item.Dispose();

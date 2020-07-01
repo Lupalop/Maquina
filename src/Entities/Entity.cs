@@ -106,13 +106,13 @@ namespace Maquina.Entities
             get { return new Rectangle(Location, ActualSize); }
         }
 
-        public event EventHandler<EntityChangedEventArgs> EntityChanged;
+        public event EventHandler<EntityChangedEventArgs> Changed;
 
         protected virtual void OnEntityChanged(EntityChangedEventArgs e)
         {
-            if (EntityChanged != null)
+            if (Changed != null)
             {
-                EntityChanged(this, e);
+                Changed(this, e);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Maquina.Entities
         {
             if (disposing)
             {
-                EntityChanged = null;
+                Changed = null;
             }
         }
 

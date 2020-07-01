@@ -23,8 +23,8 @@ namespace Maquina.UI
 
                 Sprite.Rotation += .05f;
             };
-            EntityChanged -= Image_EntityChanged;
-            EntityChanged += Throbber_EntityChanged;
+            Changed -= Image_EntityChanged;
+            Changed += Throbber_EntityChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
         }
 

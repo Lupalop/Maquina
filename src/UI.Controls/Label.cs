@@ -17,7 +17,7 @@ namespace Maquina.UI
             Id = "UI_LABEL";
             Sprite = new TextSprite();
             Sprite.SpriteChanged += Child_SpriteChanged;
-            EntityChanged += Label_EntityChanged;
+            Changed += Label_EntityChanged;
             Sprite.Text = "";
         }
 
@@ -65,7 +65,7 @@ namespace Maquina.UI
             if (disposing)
             {
                 Sprite.SpriteChanged -= Child_SpriteChanged;
-                EntityChanged -= Label_EntityChanged;
+                Changed -= Label_EntityChanged;
             }
             base.Dispose(disposing);
         }
