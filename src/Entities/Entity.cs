@@ -107,24 +107,6 @@ namespace Maquina.Entities
         }
 
         public event EventHandler<EntityChangedEventArgs> EntityChanged;
-        public event EventHandler EntityUpdated;
-        public event EventHandler EntityDrawn;
-
-        protected virtual void OnEntityUpdated()
-        {
-            if (EntityUpdated != null)
-            {
-                EntityUpdated(this, EventArgs.Empty);
-            }
-        }
-
-        protected virtual void OnEntityDrawn()
-        {
-            if (EntityDrawn != null)
-            {
-                EntityDrawn(this, EventArgs.Empty);
-            }
-        }
 
         protected virtual void OnEntityChanged(EntityChangedEventArgs e)
         {
@@ -136,12 +118,10 @@ namespace Maquina.Entities
 
         public virtual void Update()
         {
-            OnEntityUpdated();
         }
 
         public virtual void Draw()
         {
-            OnEntityDrawn();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -149,8 +129,6 @@ namespace Maquina.Entities
             if (disposing)
             {
                 EntityChanged = null;
-                EntityUpdated = null;
-                EntityDrawn = null;
             }
         }
 
