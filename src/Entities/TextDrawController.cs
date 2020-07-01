@@ -38,10 +38,18 @@ namespace Maquina.Entities
 #else
                 text = value;
 #endif
+            }
+        }
+
+        public Point Size
+        {
+            get
+            {
                 if (Font != null && Text.Trim() != null)
                 {
-                    Size = Font.MeasureString(Text).ToPoint();
+                    return Font.MeasureString(Text).ToPoint();
                 }
+                return Point.Zero;
             }
         }
     }

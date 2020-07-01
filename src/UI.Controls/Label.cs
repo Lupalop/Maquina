@@ -20,24 +20,9 @@ namespace Maquina.UI
 
         public TextDrawController DrawController { get; set; }
 
-        public override Point Location
-        {
-            get { return DrawController.Location; }
-            set
-            {
-                DrawController.Location = value;
-                base.Location = value;
-            }
-        }
-
         public override Point Size
         {
             get { return DrawController.Size; }
-            set
-            {
-                DrawController.Size = value;
-                base.Size = value;
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -45,7 +30,7 @@ namespace Maquina.UI
             spriteBatch.DrawString(
                 DrawController.Font,
                 DrawController.Text,
-                DrawController.Location.ToVector2(),
+                Location.ToVector2(),
                 DrawController.Tint * DrawController.Opacity,
                 DrawController.Rotation,
                 DrawController.Origin,

@@ -25,31 +25,11 @@ namespace Maquina.UI
             set
             {
                 _texture = value;
-                DrawController.DestinationRectangle = _texture.Bounds;
+                Bounds = _texture.Bounds;
             }
         }
 
         public DrawController DrawController { get; set; }
-
-        public override Point Location
-        {
-            get { return DrawController.Location; }
-            set
-            {
-                DrawController.Location = value;
-                base.Location = value;
-            }
-        }
-
-        public override Point Size
-        {
-            get { return DrawController.Size; }
-            set
-            {
-                DrawController.Size = value;
-                base.Size = value;
-            }
-        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
