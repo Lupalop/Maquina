@@ -95,6 +95,10 @@ namespace Maquina
             get { return scale; }
             set
             {
+                if (value == scale || value < 0)
+                {
+                    return;
+                }
                 scale = value;
                 OnScaleChanged();
             }

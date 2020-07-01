@@ -79,6 +79,10 @@ namespace Maquina.Entities
             get { return _scale; }
             set
             {
+                if (value == _scale || value < 0)
+                {
+                    return;
+                }
                 _scale = value;
                 OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Scale));
             }
