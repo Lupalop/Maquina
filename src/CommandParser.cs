@@ -247,7 +247,7 @@ namespace Maquina
             info.AppendLine(string.Format("Bounds: {0}", entity.Bounds));
             info.AppendLine(string.Format("Actual Bounds: {0}", entity.ActualBounds));
             info.AppendLine(string.Format("Scale: {0}", entity.Scale));
-            info.AppendLine(string.Format("Ignore Global Scale?: {0}", entity.IgnoreGlobalScale));
+            info.AppendLine(string.Format("Ignore Display Scale?: {0}", entity.IgnoreDisplayScale));
             if (entity is Control)
             {
                 Control control = (Control)entity;

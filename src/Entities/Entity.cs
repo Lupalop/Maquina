@@ -16,23 +16,23 @@ namespace Maquina.Entities
         private Point _location;
         private Point _size;
         private float _scale;
-        private bool _ignoreGlobalScale;
+        private bool _ignoreDisplayScale;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Entity"/> class
         /// with a specified name, drawing bounds, scale, draw controller,
-        /// and optionally ignores the global scale.
+        /// and optionally ignores the display scale.
         /// </summary>
         /// <param name="name">A name that describes the entity.</param>
         /// <param name="bounds">The drawing bounds of the entity</param>
         /// <param name="scale">The scaling of the entity.</param>
-        /// <param name="ignoreGlobalScale">The behavior of the entity when dealing with the global scale.</param>
+        /// <param name="ignoreDisplayScale">The behavior of the entity when dealing with the display scale.</param>
         /// <param name="drawController">The draw controller of the entity.</param>
         protected Entity(
             string name,
             Rectangle bounds,
             float scale,
-            bool ignoreGlobalScale,
+            bool ignoreDisplayScale,
             DrawController drawController)
         {
             Name = name;
@@ -40,7 +40,7 @@ namespace Maquina.Entities
             _size = bounds.Size;
             _scale = scale;
             DrawController = drawController;
-            _ignoreGlobalScale = ignoreGlobalScale;
+            _ignoreDisplayScale = ignoreDisplayScale;
         }
 
         /// <summary>
@@ -127,12 +127,12 @@ namespace Maquina.Entities
         }
 
         /// <summary>
-        /// Gets or sets the behavior of the entity when dealing with the global scale.
+        /// Gets or sets the behavior of the entity when dealing with the display scale.
         /// </summary>
-        public bool IgnoreGlobalScale
+        public bool IgnoreDisplayScale
         {
-            get { return _ignoreGlobalScale; }
-            set { _ignoreGlobalScale = value; }
+            get { return _ignoreDisplayScale; }
+            set { _ignoreDisplayScale = value; }
         }
 
         /// <summary>
@@ -150,13 +150,13 @@ namespace Maquina.Entities
         }
 
         /// <summary>
-        /// Gets the factor to multiply the size of the entity, taking into account the global scale.
+        /// Gets the factor to multiply the size of the entity, taking into account the display scale.
         /// </summary>
         public float ActualScale
         {
             get
             {
-                if (IgnoreGlobalScale)
+                if (IgnoreDisplayScale)
                 {
                     return Scale;
                 }
@@ -165,7 +165,7 @@ namespace Maquina.Entities
         }
 
         /// <summary>
-        /// Gets the dimensions of the entity, taking into account the global scale.
+        /// Gets the dimensions of the entity, taking into account the display scale.
         /// </summary>
         public Point ActualSize
         {
@@ -178,7 +178,7 @@ namespace Maquina.Entities
         }
 
         /// <summary>
-        /// Gets the drawing bounds of the entity, taking into account the global scale.
+        /// Gets the drawing bounds of the entity, taking into account the display scale.
         /// </summary>
         public Rectangle ActualBounds
         {

@@ -15,7 +15,7 @@ namespace Maquina.UI
         private void InitializeComponent()
         {
             FadeImage = new Image("Background");
-            FadeImage.IgnoreGlobalScale = true;
+            FadeImage.IgnoreDisplayScale = true;
             FadeImage.Texture = FadeBackground;
             FadeImage.Bounds = Bounds;
 
