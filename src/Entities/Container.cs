@@ -12,7 +12,6 @@ namespace Maquina.Entities
     {
         public Container(string name) : base(name)
         {
-            Id = "CONTAINER";
             Children = new EntityDictionary();
         }
 

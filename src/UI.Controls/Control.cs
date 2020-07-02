@@ -13,7 +13,6 @@ namespace Maquina.UI
         // Constructor
         protected Control(string name) : base (name)
         {
-            Id = "UI_CONTROL";
             HorizontalAlignment = HorizontalAlignment.Center;
             VerticalAlignment = VerticalAlignment.Center;
             AutoPosition = false;

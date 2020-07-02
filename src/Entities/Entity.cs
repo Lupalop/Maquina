@@ -22,7 +22,6 @@ namespace Maquina.Entities
         /// <param name="name">A name that describes the entity.</param>
         protected Entity(string name)
         {
-            Id = "GENERIC_BASE";
             Name = name;
             Scale = 1;
             DrawController = new DrawController();
@@ -36,7 +35,10 @@ namespace Maquina.Entities
         /// <summary>
         /// Gets the unique identifier of the entity.
         /// </summary>
-        public string Id { get; protected set; }
+        public string Id
+        {
+            get { return GetType().FullName; }
+        }
 
         /// <summary>
         /// Gets or sets the draw controller used by the entity.

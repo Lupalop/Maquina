@@ -14,7 +14,6 @@ namespace Maquina.UI
     {
         public StackPanel(string name) : base(name)
         {
-            Id = "UI_STACKPANEL";
             Children = new EntityDictionary();
             Orientation = Orientation.Vertical;
             ControlMargin = new Region();

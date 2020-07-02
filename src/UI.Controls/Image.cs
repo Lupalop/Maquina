@@ -16,7 +16,6 @@ namespace Maquina.UI
 
         public Image(string name) : base(name)
         {
-            Id = "UI_IMAGE";
         }
 
         public Texture2D Texture

@@ -13,7 +13,6 @@ namespace Maquina.UI
         // FIXME: REWRITE PROGRESS BAR ENTITY, USE BARSPRITE
         public ProgressBar(string name) : base(name)
         {
-            Id = "UI_PROGRESSBAR";
         }
 
         public override void Draw(SpriteBatch spriteBatch)

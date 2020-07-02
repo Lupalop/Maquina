@@ -15,7 +15,6 @@ namespace Maquina.UI
         //        Sprite and Entity (and their children) have to be updated to handle this.
         public Canvas(string name) : base(name)
         {
-            Id = "UI_CANVAS";
             Children = new EntityDictionary();
         }
 
