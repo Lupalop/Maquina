@@ -20,14 +20,12 @@ namespace Maquina.Entities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Children.Draw();
-            base.Draw(spriteBatch);
+            Children.Draw(spriteBatch);
         }
 
         public override void Update()
         {
             Children.Update();
-            base.Update();
         }
     }
 }

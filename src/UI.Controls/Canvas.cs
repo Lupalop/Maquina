@@ -23,16 +23,12 @@ namespace Maquina.UI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Children.Draw();
-
-            base.Draw();
+            Children.Draw(spriteBatch);
         }
 
         public override void Update()
         {
             Children.Update();
-
-            base.Update();
         }
 
         protected override void OnDisabledStateChanged()

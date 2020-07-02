@@ -1,4 +1,5 @@
 ﻿using Maquina.Entities;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -196,11 +197,11 @@ namespace Maquina
             IsModified = false;
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var item in Values)
             {
-                item.Draw();
+                item.Draw(spriteBatch);
                 if (IsModified)
                 {
                     break;

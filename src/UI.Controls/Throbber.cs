@@ -49,8 +49,6 @@ namespace Maquina.UI
             }
 
             DrawController.Rotation += .05f;
-
-            base.Update();
         }
     }
 }

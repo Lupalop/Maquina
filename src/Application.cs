@@ -70,7 +70,7 @@ namespace Maquina
             }
 
             Scenes.Draw();
-            SoftwareMouse.Draw();
+            SoftwareMouse.Draw(SpriteBatch);
         }
 
         // Platform version information

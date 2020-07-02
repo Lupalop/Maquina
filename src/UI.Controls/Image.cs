@@ -12,13 +12,16 @@ namespace Maquina.UI
 {
     public class Image : Control
     {
+        private Texture2D _texture;
+
         public Image(string name) : base(name)
         {
             Id = "UI_IMAGE";
             DrawController = new DrawController();
         }
 
-        private Texture2D _texture;
+        public DrawController DrawController { get; set; }
+
         public Texture2D Texture
         {
             get { return _texture; }
@@ -28,8 +31,6 @@ namespace Maquina.UI
                 Bounds = _texture.Bounds;
             }
         }
-
-        public DrawController DrawController { get; set; }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -42,6 +43,10 @@ namespace Maquina.UI
                 DrawController.Origin,
                 DrawController.SpriteEffects,
                 DrawController.LayerDepth);
+        }
+
+        public override void Update()
+        {
         }
     }
 }

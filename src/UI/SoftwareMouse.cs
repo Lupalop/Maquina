@@ -12,6 +12,8 @@ namespace Maquina.UI
 {
     public class SoftwareMouse : Entity
     {
+        private Texture2D _texture;
+
         public SoftwareMouse() : base("SoftwareMouse")
         {
             DrawController = new DrawController();
@@ -19,7 +21,6 @@ namespace Maquina.UI
 
         public DrawController DrawController;
 
-        private Texture2D _texture;
         public Texture2D Texture
         {
             get { return _texture; }

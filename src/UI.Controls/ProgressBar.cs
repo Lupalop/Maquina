@@ -15,5 +15,13 @@ namespace Maquina.UI
         {
             Id = "UI_PROGRESSBAR";
         }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+        }
+
+        public override void Update()
+        {
+        }
     }
 }

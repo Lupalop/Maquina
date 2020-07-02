@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace Maquina.Entities
 {
-    public abstract class Entity : IEntity
+    public abstract class Entity : IEntity, IDisposable
     {
         private Point _location;
         private Point _size;
@@ -163,25 +163,13 @@ namespace Maquina.Entities
         /// <summary>
         /// This is called when the entity should update itself.
         /// </summary>
-        public virtual void Update()
-        {
-        }
+        public abstract void Update();
 
         /// <summary>
-        /// This is called when the entity should draw itself using the specified <see cref="SpriteBatch"/>.
+        /// This is called when the entity should draw itself.
         /// </summary>
         /// <param name="spriteBatch">The <see cref="SpriteBatch"/> to be used in drawing text strings and sprites.</param>
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-        }
-
-        /// <summary>
-        /// This is called when the entity should draw itself using the default <see cref="SpriteBatch"/>.
-        /// </summary>
-        public void Draw()
-        {
-            Draw(Application.SpriteBatch);
-        }
+        public abstract void Draw(SpriteBatch spriteBatch);
 
         protected virtual void Dispose(bool disposing)
         {

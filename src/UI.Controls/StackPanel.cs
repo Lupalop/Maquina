@@ -48,16 +48,12 @@ namespace Maquina.UI
         // Draw and update methods
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Children.Draw();
-
-            base.Draw();
+            Children.Draw(spriteBatch);
         }
 
         public override void Update()
         {
             Children.Update();
-
-            base.Update();
         }
 
         // Listeners

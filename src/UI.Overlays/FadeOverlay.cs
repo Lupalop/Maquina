@@ -43,7 +43,7 @@ namespace Maquina.UI
         public override void Draw()
         {
             SpriteBatch.Begin();
-            Entities.Draw();
+            Entities.Draw(SpriteBatch);
             SpriteBatch.End();
         }
 
