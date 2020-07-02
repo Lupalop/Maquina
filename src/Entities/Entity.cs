@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace Maquina.Entities
 {
-    public abstract class Entity : IEntity, IDisposable
+    public abstract class Entity : IDisposable
     {
         private Point _location;
         private Point _size;
