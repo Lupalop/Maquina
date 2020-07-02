@@ -20,8 +20,6 @@ namespace Maquina.UI
             DrawController = new DrawController();
         }
 
-        public DrawController DrawController { get; set; }
-
         public Texture2D Texture
         {
             get { return _texture; }

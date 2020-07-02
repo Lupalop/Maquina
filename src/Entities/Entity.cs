@@ -38,6 +38,11 @@ namespace Maquina.Entities
         public string Id { get; protected set; }
 
         /// <summary>
+        /// Gets or sets the draw controller used by the entity.
+        /// </summary>
+        public DrawController DrawController { get; set; }
+
+        /// <summary>
         /// Gets or sets the drawing location of the entity on the screen.
         /// </summary>
         public virtual Point Location

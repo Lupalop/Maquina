@@ -23,8 +23,6 @@ namespace Maquina.UI
             Text = "";
         }
 
-        public DrawController DrawController { get; set; }
-
         public SpriteFont Font
         {
             get { return _font; }
