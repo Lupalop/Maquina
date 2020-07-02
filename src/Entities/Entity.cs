@@ -23,7 +23,7 @@ namespace Maquina.Entities
         protected Entity(string name)
         {
             Name = name;
-            Scale = 1;
+            _scale = 1;
             DrawController = new DrawController();
         }
 
