@@ -18,7 +18,6 @@ namespace Maquina.UI
         public Label(string name) : base (name)
         {
             Id = "UI_LABEL";
-            DrawController = new DrawController();
             Font = (SpriteFont)ContentFactory.TryGetResource("default");
             Text = "";
         }

@@ -16,7 +16,6 @@ namespace Maquina.UI
 
         public SoftwareMouse() : base("SoftwareMouse")
         {
-            DrawController = new DrawController();
         }
 
         public Texture2D Texture

@@ -17,7 +17,6 @@ namespace Maquina.UI
         public Image(string name) : base(name)
         {
             Id = "UI_IMAGE";
-            DrawController = new DrawController();
         }
 
         public Texture2D Texture

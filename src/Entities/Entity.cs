@@ -25,6 +25,7 @@ namespace Maquina.Entities
             Id = "GENERIC_BASE";
             Name = name;
             Scale = 1;
+            DrawController = new DrawController();
         }
 
         /// <summary>
