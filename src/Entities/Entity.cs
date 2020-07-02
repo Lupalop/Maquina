@@ -8,6 +8,9 @@ using System.Collections.ObjectModel;
 
 namespace Maquina.Entities
 {
+    /// <summary>
+    /// Defines the base class for entities.
+    /// </summary>
     public abstract class Entity : IDisposable
     {
         private Point _location;
@@ -17,14 +20,41 @@ namespace Maquina.Entities
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Entity"/> class
+        /// with a specified name, drawing bounds, scale, draw controller,
+        /// and optionally ignores the global scale.
+        /// </summary>
+        /// <param name="name">A name that describes the entity.</param>
+        /// <param name="bounds">The drawing bounds of the entity</param>
+        /// <param name="scale">The scaling of the entity.</param>
+        /// <param name="ignoreGlobalScale">The behavior of the entity when dealing with the global scale.</param>
+        /// <param name="drawController">The draw controller of the entity.</param>
+        protected Entity(
+            string name,
+            Rectangle bounds,
+            float scale,
+            bool ignoreGlobalScale,
+            DrawController drawController)
+        {
+            Name = name;
+            _location = bounds.Location;
+            _size = bounds.Size;
+            _scale = scale;
+            DrawController = drawController;
+            _ignoreGlobalScale = ignoreGlobalScale;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Entity"/> class
         /// with a specified name.
         /// </summary>
         /// <param name="name">A name that describes the entity.</param>
-        protected Entity(string name)
+        protected Entity(string name) : this(
+            name,
+            Rectangle.Empty,
+            1,
+            false,
+            new DrawController())
         {
-            Name = name;
-            _scale = 1;
-            DrawController = new DrawController();
         }
 
         /// <summary>
