@@ -13,8 +13,7 @@ namespace Maquina.Entities
     /// </summary>
     public abstract class Entity : IDisposable
     {
-        private Point _location;
-        private Point _size;
+        private Rectangle _bounds;
         private float _scale;
         private bool _ignoreDisplayScale;
 
@@ -36,8 +35,7 @@ namespace Maquina.Entities
             DrawController drawController)
         {
             Name = name;
-            _location = bounds.Location;
-            _size = bounds.Size;
+            _bounds = bounds;
             _scale = scale;
             DrawController = drawController;
             _ignoreDisplayScale = ignoreDisplayScale;
@@ -80,14 +78,14 @@ namespace Maquina.Entities
         /// </summary>
         public virtual Point Location
         {
-            get { return _location; }
+            get { return _bounds.Location; }
             set
             {
-                if (value == _location)
+                if (value == _bounds.Location)
                 {
                     return;
                 }
-                _location = value;
+                _bounds.Location = value;
                 OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
             }
         }
@@ -97,14 +95,14 @@ namespace Maquina.Entities
         /// </summary>
         public virtual Point Size
         {
-            get { return _size; }
+            get { return _bounds.Size; }
             set
             {
-                if (value == _size)
+                if (value == _bounds.Size)
                 {
                     return;
                 }
-                _size = value;
+                _bounds.Size = value;
                 OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Size));
             }
         }
@@ -140,12 +138,11 @@ namespace Maquina.Entities
         /// </summary>
         public virtual Rectangle Bounds
         {
-            get { return new Rectangle(Location, Size); }
+            get { return _bounds; }
             set
             {
                 Location = value.Location;
                 Size = value.Size;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
             }
         }
 
