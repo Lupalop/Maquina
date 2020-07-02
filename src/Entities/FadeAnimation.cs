@@ -9,14 +9,14 @@ namespace Maquina.Entities
 {
     public class FadeOutAnimation : Animation
     {
-        public FadeOutAnimation(DrawController drawParameters, float speed) : base(drawParameters, speed) { }
+        public FadeOutAnimation(Entity target, float speed) : base(target, speed) { }
 
         private float Opacity = 1;
 
         public override void Update()
         {
             Opacity -= Speed;
-            Target.Opacity = Opacity;
+            Target.DrawController.Opacity = Opacity;
             if (Opacity <= 0)
             {
                 OnAnimationFinished();
@@ -26,14 +26,14 @@ namespace Maquina.Entities
 
     public class FadeInAnimation : Animation
     {
-        public FadeInAnimation(DrawController drawParameters, float speed) : base(drawParameters, speed) { }
+        public FadeInAnimation(Entity target, float speed) : base(target, speed) { }
 
         private float Opacity = 0;
 
         public override void Update()
         {
             Opacity += Speed;
-            Target.Opacity = Opacity;
+            Target.DrawController.Opacity = Opacity;
             if (Opacity >= 1)
             {
                 OnAnimationFinished();

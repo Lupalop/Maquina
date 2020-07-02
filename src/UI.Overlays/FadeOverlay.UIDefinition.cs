@@ -24,13 +24,13 @@ namespace Maquina.UI
                 FadeImage.Bounds = ((DisplayManager)sender).WindowBounds;
             };
 
-            FadeInAnimation = new FadeInAnimation(FadeImage.DrawController, FadeSpeed);
+            FadeInAnimation = new FadeInAnimation(FadeImage, FadeSpeed);
             FadeInAnimation.AnimationFinished += (sender, e) =>
             {
                 FadeOutAnimation.Start();
             };
 
-            FadeOutAnimation = new FadeOutAnimation(FadeImage.DrawController, FadeSpeed);
+            FadeOutAnimation = new FadeOutAnimation(FadeImage, FadeSpeed);
             FadeOutAnimation.AnimationFinished += (sender, e) =>
             {
                 Application.Scenes.Overlays.Remove(this);

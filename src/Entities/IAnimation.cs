@@ -12,7 +12,7 @@ namespace Maquina.Entities
         float Speed { get; }
         bool IsRunning { get; }
         bool IsRepeating { get; }
-        DrawController Target { get; }
+        Entity Target { get; }
 
         void Start();
         void Stop();

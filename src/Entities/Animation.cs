@@ -9,7 +9,7 @@ namespace Maquina.Entities
 {
     public abstract class Animation : IAnimation, IDisposable
     {
-        public Animation(DrawController target, float speed)
+        public Animation(Entity target, float speed)
         {
             Target = target;
             Speed = speed;
@@ -18,7 +18,7 @@ namespace Maquina.Entities
         public float Speed { get; private set; }
         public bool IsRunning { get; private set; }
         public bool IsRepeating { get; set; }
-        public DrawController Target { get; private set; }
+        public Entity Target { get; private set; }
 
         public event EventHandler AnimationFinished;
         public event EventHandler AnimationStarted;
