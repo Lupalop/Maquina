@@ -34,6 +34,10 @@ namespace Maquina.Entities
             bool ignoreDisplayScale,
             DrawController drawController)
         {
+            if (scale < 0)
+            {
+                throw new ArgumentOutOfRangeException("scale");
+            }
             Name = name;
             _bounds = bounds;
             _scale = scale;
