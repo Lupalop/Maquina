@@ -114,7 +114,7 @@ namespace Maquina.Entities
         /// <summary>
         /// Gets or sets the scaling of the entity.
         /// </summary>
-        public float Scale
+        public virtual float Scale
         {
             get { return _scale; }
             set
@@ -131,7 +131,7 @@ namespace Maquina.Entities
         /// <summary>
         /// Gets or sets the behavior of the entity when dealing with the display scale.
         /// </summary>
-        public bool IgnoreDisplayScale
+        public virtual bool IgnoreDisplayScale
         {
             get { return _ignoreDisplayScale; }
             set { _ignoreDisplayScale = value; }
