@@ -12,39 +12,40 @@ namespace Maquina.UI
 {
     public class StackPanel : Control, IContainer
     {
+        private Orientation _orientation;
+        private Region _controlMargin;
+
         public StackPanel(string name) : base(name)
         {
             Children = new EntityDictionary();
-            Orientation = Orientation.Vertical;
-            ControlMargin = new Region();
+            _orientation = Orientation.Vertical;
+            _controlMargin = new Region();
             Children.EntityChanged += Children_EntityChanged;
             Application.Display.ScaleChanged += Global_ScaleChanged;
         }
 
-        // General
         public EntityDictionary Children { get; protected set; }
-        private Orientation orientation;
+
         public Orientation Orientation
         {
-            get { return orientation; }
+            get { return _orientation; }
             set
             {
-                orientation = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
-            }
-        }
-        private Region controlMargin;
-        public Region ControlMargin
-        {
-            get { return controlMargin; }
-            set
-            {
-                controlMargin = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.DestinationRectangle));
+                _orientation = value;
+                UpdateLayout();
             }
         }
 
-        // Draw and update methods
+        public Region ControlMargin
+        {
+            get { return _controlMargin; }
+            set
+            {
+                _controlMargin = value;
+                UpdateLayout();
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             Children.Draw(spriteBatch);
@@ -55,30 +56,25 @@ namespace Maquina.UI
             Children.Update();
         }
 
-        // Listeners
         private void Children_EntityChanged(object sender, EntityChangedEventArgs e)
         {
             if (e.Property != EntityChangedProperty.Location)
             {
-                UpdateSize();
                 UpdateLayout();
             }
         }
 
         private void Global_ScaleChanged(object sender, EventArgs e)
         {
-            UpdateSize();
             UpdateLayout();
         }
 
         protected override void OnEntityChanged(EntityChangedEventArgs e)
         {
-            if (e.Property != EntityChangedProperty.Location)
+            if (e.Property == EntityChangedProperty.Location)
             {
-                UpdateSize();
+                UpdateLayout(false);
             }
-            UpdateLayout();
-
             base.OnEntityChanged(e);
         }
 
@@ -99,146 +95,102 @@ namespace Maquina.UI
             base.OnDisabledStateChanged();
         }
 
-        public void UpdateLayout()
+        public void UpdateLayout(bool resizeContainer = true)
         {
-            if (Children == null)
+            if (Children.Count <= 0)
             {
                 return;
             }
 
-            int DistanceFromLeft = Location.X;
-            int DistanceFromTop = Location.Y;
+            if (resizeContainer)
+            {
+                int ComputedWidth = 0;
+                int ComputedHeight = 0;
+
+                foreach (var item in Children.Values)
+                {
+                    if (Orientation == Orientation.Horizontal)
+                    {
+                        ComputedWidth += ControlMargin.Left;
+                        ComputedWidth += item.ActualBounds.Width;
+                        ComputedWidth += ControlMargin.Right;
+                        if (item.ActualBounds.Height > ComputedHeight)
+                        {
+                            ComputedHeight = item.ActualBounds.Height;
+                        }
+                    }
+                    else
+                    {
+                        ComputedHeight += ControlMargin.Top;
+                        ComputedHeight += item.ActualBounds.Height;
+                        ComputedHeight += ControlMargin.Bottom;
+                        if (item.ActualBounds.Width > ComputedWidth)
+                        {
+                            ComputedWidth = item.ActualBounds.Width;
+                        }
+                    }
+                }
+
+                Size = new Point(ComputedWidth, ComputedHeight);
+            }
+
+            int CurrentX = Location.X;
+            int CurrentY = Location.Y;
 
             foreach (var item in Children.Values)
             {
                 if (Orientation == Orientation.Horizontal)
                 {
-                    if (item.Size != null)
+                    CurrentY = Location.Y;
+                    if (item is Control)
                     {
-                        item.Location = new Point(DistanceFromLeft, Location.Y);
-                        DistanceFromLeft += ControlMargin.Left;
-                        DistanceFromLeft += item.ActualBounds.Width;
-                        DistanceFromLeft += ControlMargin.Right;
-                    }
-                    else
-                    {
-                        item.Location = new Point(DistanceFromLeft, Location.Y);
-                    }
-                }
-                if (Orientation == Orientation.Vertical)
-                {
-                    if (item.Size != null)
-                    {
-                        item.Location = new Point(Location.X, DistanceFromTop);
-                        DistanceFromTop += ControlMargin.Top;
-                        DistanceFromTop += item.ActualBounds.Height;
-                        DistanceFromTop += ControlMargin.Bottom;
-                    }
-                    else
-                    {
-                        item.Location = new Point(Location.X, DistanceFromTop);
-                    }
-                }
-
-                if (!(item is Control))
-                {
-                    continue;
-                }
-
-                Control modifiedEntity = (Control)item;
-                int newX = modifiedEntity.Location.X;
-                int newY = modifiedEntity.Location.Y;
-
-                if (Orientation == Orientation.Vertical)
-                {
-                    switch (modifiedEntity.HorizontalAlignment)
-                    {
-                        case HorizontalAlignment.Left:
-                            break;
-                        case HorizontalAlignment.Center:
-                            if (modifiedEntity.Size != null)
-                            {
-                                newX = ActualBounds.Center.X - (modifiedEntity.ActualBounds.Width / 2);
+                        switch (((Control)item).VerticalAlignment)
+                        {
+                            case VerticalAlignment.Top:
+                                CurrentY = ActualBounds.Top;
                                 break;
-                            }
-                            newX = ActualBounds.Center.X;
-                            break;
-                        case HorizontalAlignment.Right:
-                            if (modifiedEntity.Size != null)
-                            {
-                                newX = ActualBounds.Right - modifiedEntity.ActualBounds.Width;
+                            case VerticalAlignment.Center:
+                                CurrentY = ActualBounds.Center.Y - (item.ActualBounds.Height / 2);
                                 break;
-                            }
-                            newX = ActualBounds.Right;
-                            break;
-                        case HorizontalAlignment.Stretch:
-                            break;
-                    }
-                }
-
-                if (Orientation == Orientation.Horizontal)
-                {
-                    switch (modifiedEntity.VerticalAlignment)
-                    {
-                        case VerticalAlignment.Top:
-                            newY = ActualBounds.Top;
-                            break;
-                        case VerticalAlignment.Center:
-                            if (modifiedEntity.Size != null)
-                            {
-                                newY = ActualBounds.Center.Y - (modifiedEntity.ActualBounds.Height / 2);
+                            case VerticalAlignment.Bottom:
+                                CurrentY = ActualBounds.Bottom - item.ActualBounds.Height;
                                 break;
-                            }
-                            newY = ActualBounds.Center.Y;
-                            break;
-                        case VerticalAlignment.Bottom:
-                            newY = ActualBounds.Bottom - modifiedEntity.ActualBounds.Height;
-                            break;
-                        case VerticalAlignment.Stretch:
-                            break;
+                            case VerticalAlignment.Stretch:
+                                break;
+                        }
                     }
+
+                    item.Location = new Point(CurrentX, CurrentY);
+                    CurrentX += ControlMargin.Left;
+                    CurrentX += item.ActualBounds.Width;
+                    CurrentX += ControlMargin.Right;
                 }
-
-                modifiedEntity.Location = new Point(newX, newY);
-            }
-        }
-
-        public void UpdateSize()
-        {
-            if (Children == null)
-            {
-                return;
-            }
-
-            int ComputedWidth = 0;
-            int ComputedHeight = 0;
-
-            foreach (var item in Children.Values)
-            {
-                if (Orientation == Orientation.Horizontal)
+                else
                 {
-                    ComputedWidth += ControlMargin.Left;
-                    ComputedWidth += item.ActualBounds.Width;
-                    ComputedWidth += ControlMargin.Right;
-                    if (item.ActualBounds.Height > ComputedHeight)
+                    CurrentX = Location.X;
+                    if (item is Control)
                     {
-                        ComputedHeight = item.ActualBounds.Height;
+                        switch (((Control)item).HorizontalAlignment)
+                        {
+                            case HorizontalAlignment.Left:
+                                break;
+                            case HorizontalAlignment.Center:
+                                CurrentX = ActualBounds.Center.X - (item.ActualBounds.Width / 2);
+                                break;
+                            case HorizontalAlignment.Right:
+                                CurrentX = ActualBounds.Right - item.ActualBounds.Width;
+                                break;
+                            case HorizontalAlignment.Stretch:
+                                break;
+                        }
                     }
-                }
 
-                if (Orientation == Orientation.Vertical)
-                {
-                    ComputedHeight += ControlMargin.Top;
-                    ComputedHeight += item.ActualBounds.Height;
-                    ComputedHeight += ControlMargin.Bottom;
-                    if (item.ActualBounds.Width > ComputedWidth)
-                    {
-                        ComputedWidth = item.ActualBounds.Width;
-                    }
+                    item.Location = new Point(CurrentX, CurrentY);
+                    CurrentY += ControlMargin.Top;
+                    CurrentY += item.ActualBounds.Height;
+                    CurrentY += ControlMargin.Bottom;
                 }
             }
-
-            Size = new Point(ComputedWidth, ComputedHeight);
         }
 
         protected override void Dispose(bool disposing)
