@@ -15,16 +15,14 @@ namespace Maquina.UI
     {
         public TextBox(string name) : base(name)
         {
-            Id = "UI_TEXTBOX";
-
             // Default TB graphic
-            Background.Texture = (Texture2D)ContentFactory.TryGetResource("textbox-default");
-            Label.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
-            Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
-            Background.SpriteType = SpriteType.None;
+            Texture = (Texture2D)ContentFactory.TryGetResource("textbox-default");
+            Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
+            //Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
+            //Background.SpriteType = SpriteType.None;
 
             Application.Game.Window.TextInput += Window_TextInput;
-            Label.Text = "";
+            //Label.Text = "";
             MaxInput = 30;
         }
 
@@ -44,18 +42,18 @@ namespace Maquina.UI
             {
                 return;
             }
-            if (InputManager.ShouldAcceptInput)
+            if (Application.Input.ShouldAcceptInput)
             {
-                if (e.Key == Keys.Back && Label.Text.Length > 0)
+                if (e.Key == Keys.Back && Text.Length > 0)
                 {
-                    Label.Text = Label.Text.Remove(MathHelper.Clamp(Label.Text.Length - 1, 0, int.MaxValue), 1);
+                    Text = Text.Remove(MathHelper.Clamp(Text.Length - 1, 0, int.MaxValue), 1);
                     return;
                 }
-                if (InputManager.ReservedKeys.Contains(e.Key) || Label.Text.Length > MaxInput)
+                if (InputManager.ReservedKeys.Contains(e.Key) || Text.Length > MaxInput)
                 {
                     return;
                 }
-                Label.Text += e.Character;
+                Text += e.Character;
             }
         }
     }

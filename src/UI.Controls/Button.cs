@@ -13,189 +13,142 @@ namespace Maquina.UI
 {
     public class Button : Control
     {
+        private Texture2D _texture;
+        private SpriteFont _font;
+        private string _text;
+
         public Button(string name) : base (name)
         {
-            Id = "UI_BUTTON";
-            InputManager = Application.Input;
+            Texture = (Texture2D)ContentFactory.TryGetResource("button-default");
+            Size = AtlasUtils.GetFrameSize(
+                _texture.Bounds.Size,
+                3,
+                1);
+            DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
+                _texture.Bounds.Size,
+                3,
+                1,
+                0);
 
-            Background = new Sprite()
-            {
-                SpriteType = SpriteType.Static,
-                Rows = 1,
-                Columns = 3
-            };
-            Icon = new Sprite();
-            Label = new TextSprite();
-            Tooltip = new TextSprite()
-            {
-                Tint = Color.Transparent,
-                IgnoreGlobalScale = true
-            };
-
-            // Child
-            Background.SpriteChanged += Background_SpriteChanged;
-            Label.SpriteChanged += Label_SpriteChanged;
-            Icon.SpriteChanged += Icon_SpriteChanged;
-            // Parent
-            Changed += Button_EntityChanged;
-
-            LayerDepth = 1f;
-            Tooltip.Font = (SpriteFont)ContentFactory.TryGetResource("o-default_m");
-            Background.Texture = (Texture2D)ContentFactory.TryGetResource("button-default");
             ClickSound = (SoundEffect)ContentFactory.TryGetResource("click_default");
-            IconAlignment = HorizontalAlignment.Center;
+            Font = (SpriteFont)ContentFactory.TryGetResource("default");
+            Text = "";
         }
 
-        // General
-        protected InputManager InputManager;
-        
-        // Child sprite
-        public Sprite Background { get; private set; }
-        public Sprite Icon { get; private set; }
-        public TextSprite Label { get; private set; }
-        public TextSprite Tooltip { get; private set; }
+        public Texture2D Texture
+        {
+            get { return _texture; }
+            set
+            {
+                _texture = value;
+                Bounds = _texture.Bounds;
+                DrawController.SourceRectangle = null;
+            }
+        }
 
-        // Entity events
+        public SpriteFont Font
+        {
+            get { return _font; }
+            set
+            {
+                _font = value;
+            }
+        }
+
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+#if MGE_LOCALE
+                _text = Application.Locale.TryGetString(value);
+#else
+                text = value;
+#endif
+            }
+        }
+
+        private void UpdateSize()
+        {
+
+        }
+
         public event EventHandler OnLeftClick;
         public event EventHandler OnRightClick;
 
-        // Properties
         public SoundEffect ClickSound { get; set; }
-        public HorizontalAlignment IconAlignment { get; set; }
         
-        // Common properties
-        private Color tint;
-        public Color Tint
-        {
-            get { return tint; }
-            set
-            {
-                tint = value;
-                Background.Tint = value;
-                Label.Tint = value;
-                Icon.Tint = value;
-            }
-        }
-        private float rotation;
-        public float Rotation
-        {
-            get { return rotation; }
-            set
-            {
-                rotation = value;
-                Background.Rotation = value;
-                Label.Rotation = value;
-                Icon.Rotation = value;
-            }
-        }
-        private Vector2 origin;
-        public Vector2 Origin
-        {
-            get { return origin; }
-            set
-            {
-                origin = value;
-                Background.Origin = value;
-                Label.Origin = value;
-                Icon.Origin = value;
-            }
-        }
-        private SpriteEffects spriteEffects;
-        public SpriteEffects SpriteEffects
-        {
-            get { return spriteEffects; }
-            set
-            {
-                spriteEffects = value;
-                Background.SpriteEffects = value;
-                Label.SpriteEffects = value;
-                Icon.SpriteEffects = value;
-            }
-        }
-        private float layerDepth;
-        public float LayerDepth
-        {
-            get { return layerDepth; }
-            set
-            {
-                layerDepth = value;
-                Background.LayerDepth = value;
-                Icon.LayerDepth = value - 0.1f;
-                Label.LayerDepth = value - 0.1f;
-                Tooltip.LayerDepth = value - 0.15f;
-            }
-        }
-        private float opacity;
-        public float Opacity
-        {
-            get { return opacity; }
-            set
-            {
-                opacity = value;
-                Background.Opacity = value;
-                Icon.Opacity = value;
-                Label.Opacity = value;
-            }
-        }
-
-        // Draw and update methods
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Background.Draw();
-            Label.Draw();
-            Icon.Draw();
-            Tooltip.Draw();
-
-            base.Draw();
+            spriteBatch.Draw(
+                Texture,
+                ActualBounds,
+                DrawController.SourceRectangle,
+                DrawController.Tint * DrawController.Opacity,
+                DrawController.Rotation,
+                DrawController.Origin,
+                DrawController.SpriteEffects,
+                DrawController.LayerDepth);
+            spriteBatch.DrawString(
+                Font,
+                Text,
+                LabelLocation.ToVector2(),
+                DrawController.Tint * DrawController.Opacity,
+                DrawController.Rotation,
+                DrawController.Origin,
+                ActualScale,
+                DrawController.SpriteEffects,
+                DrawController.LayerDepth);
         }
 
         bool LeftClickFired;
         bool RightClickFired;
         public override void Update()
         {
-            Background.CurrentFrame = 0;
+            DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
+                _texture.Bounds.Size,
+                3,
+                1,
+                0);
 
             // Don't respond to any event if button is disabled
-            if (!Disabled && InputManager.ShouldAcceptInput)
+            if (!Disabled && Application.Input.ShouldAcceptInput)
             {
                 // If mouse is on top of the button
-                if (ActualBounds.Contains(InputManager.MousePosition))
+                if (ActualBounds.Contains(Application.Input.MousePosition))
                 {
-                    Background.CurrentFrame = 1;
-                    if (Tooltip.Text != string.Empty)
-                    {
-                        Tooltip.Location = new Point(
-                            InputManager.MousePosition.X + 20,
-                            InputManager.MousePosition.Y + 5);
-                        Tooltip.Tint = Color.White;
-                    }
-                }
-                else
-                {
-                    Tooltip.Tint = Color.Transparent;
+                    DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
+                        _texture.Bounds.Size,
+                        3,
+                        1,
+                        1);
                 }
 
                 // If the button was clicked
-                if ((InputManager.MouseDown(MouseButton.Left) ||
-                     InputManager.MouseDown(MouseButton.Right) ||
-                     InputManager.MouseDown(MouseButton.Middle)))
+                if ((Application.Input.MouseDown(MouseButton.Left) ||
+                     Application.Input.MouseDown(MouseButton.Right) ||
+                     Application.Input.MouseDown(MouseButton.Middle)))
                 {
                     Focused = false;
-                    if (ActualBounds.Contains(InputManager.MousePosition))
+                    if (ActualBounds.Contains(Application.Input.MousePosition))
                     {
                         Focused = true;
-                        Background.CurrentFrame = 2;
+                        DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
+                            _texture.Bounds.Size,
+                            3,
+                            1,
+                            2);
                     }
                 }
 
                 // Left Mouse Button Click Action
                 if (OnLeftClick != null)
                 {
-                    if (InputManager.MouseDown(MouseButton.Left) && ActualBounds.Contains(InputManager.MousePosition))
+                    if (Application.Input.MouseDown(MouseButton.Left) && ActualBounds.Contains(Application.Input.MousePosition))
                         LeftClickFired = true;
-                    if (InputManager.MouseDown(MouseButton.Left) && !ActualBounds.Contains(InputManager.MousePosition))
+                    if (Application.Input.MouseDown(MouseButton.Left) && !ActualBounds.Contains(Application.Input.MousePosition))
                         LeftClickFired = false;
-                    if (InputManager.MouseUp(MouseButton.Left) && LeftClickFired)
+                    if (Application.Input.MouseUp(MouseButton.Left) && LeftClickFired)
                     {
                         OnLeftClick(this, EventArgs.Empty);
                         ClickSound.Play();
@@ -207,11 +160,11 @@ namespace Maquina.UI
                 // Right Mouse Button Click Action
                 if (OnRightClick != null)
                 {
-                    if (InputManager.MouseDown(MouseButton.Right) && ActualBounds.Contains(InputManager.MousePosition))
+                    if (Application.Input.MouseDown(MouseButton.Right) && ActualBounds.Contains(Application.Input.MousePosition))
                         RightClickFired = true;
-                    if (InputManager.MouseDown(MouseButton.Right) && !ActualBounds.Contains(InputManager.MousePosition))
+                    if (Application.Input.MouseDown(MouseButton.Right) && !ActualBounds.Contains(Application.Input.MousePosition))
                         RightClickFired = false;
-                    if (InputManager.MouseUp(MouseButton.Right) && RightClickFired)
+                    if (Application.Input.MouseUp(MouseButton.Right) && RightClickFired)
                     {
                         OnRightClick(this, EventArgs.Empty);
                         ClickSound.Play();
@@ -220,100 +173,34 @@ namespace Maquina.UI
                     }
                 }
             }
-
-            Background.Update();
-            Label.Update();
-            Icon.Update();
-            Tooltip.Update();
-
-            base.Update();
         }
-        
-        // Listeners
-        private void Button_EntityChanged(object sender, EntityChangedEventArgs e)
+
+        private Point LabelSize
         {
-            switch (e.Property)
+            get
             {
-                case EntityChangedProperty.Location:
-                    Background.Location = Location;
-                    RecalculateLabelLocation();
-                    RecalculateIconLocation();
-                    break;
-                case EntityChangedProperty.IgnoreGlobalScale:
-                    Background.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
-                    Icon.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
-                    Label.IgnoreGlobalScale = ((Entity)sender).IgnoreGlobalScale;
-                    break;
-                case EntityChangedProperty.Scale:
-                    Background.Scale = Scale;
-                    Icon.Scale = Scale;
-                    Label.Scale = Scale;
-                    break;
-                default:
-                    break;
-            }
-        }
-        private void Icon_SpriteChanged(object sender, EntityChangedEventArgs e)
-        {
-            if (e.Property != EntityChangedProperty.Size)
-                return;
-
-            RecalculateIconLocation();
-        }
-        private void Label_SpriteChanged(object sender, EntityChangedEventArgs e)
-        {
-            if (e.Property != EntityChangedProperty.Size)
-                return;
-
-            if (Background.Texture == null)
-            {
-                Size = Label.Size;
-            }
-            RecalculateLabelLocation();
-        }
-        private void Background_SpriteChanged(object sender, EntityChangedEventArgs e)
-        {
-            if (e.Property != EntityChangedProperty.Size)
-                return;
-
-            Size = Background.Size;
-        }
-
-        // Misc
-        private void RecalculateLabelLocation()
-        {
-            Label.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Label.ActualSize.X / 2),
-                Location.Y + (ActualBounds.Height / 2) - (Label.ActualSize.Y / 2));
-        }
-        private void RecalculateIconLocation()
-        {
-            switch (IconAlignment)
-            {
-                case HorizontalAlignment.Left:
-                    Icon.Location = new Point(Location.X,
-                        Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
-                    break;
-                case HorizontalAlignment.Center:
-                    Icon.Location = new Point(Location.X + (ActualBounds.Width / 2) - (Icon.ActualSize.X / 2),
-                        Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
-                    break;
-                case HorizontalAlignment.Right:
-                    Icon.Location = new Point(Location.X + ActualBounds.Width - Icon.ActualSize.X,
-                        Location.Y + (ActualBounds.Height / 2) - (Icon.ActualSize.Y / 2));
-                    break;
-                case HorizontalAlignment.Stretch:
-                    // TODO: stub
-                    return;
+                if (Font != null && Text.Trim() != null)
+                {
+                    return Font.MeasureString(Text).ToPoint();
+                }
+                return Point.Zero;
             }
         }
 
-        // IDisposable implementation
+        private Point LabelLocation
+        {
+            get
+            {
+                return new Point(
+                    ActualBounds.Center.X - (int)(LabelSize.X * ActualScale / 2),
+                    ActualBounds.Center.Y - (int)(LabelSize.Y * ActualScale / 2));
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                Background.Dispose();
-                Icon.Dispose();
             }
         }
     }
