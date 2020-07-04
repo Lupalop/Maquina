@@ -46,6 +46,11 @@ namespace Maquina.UI
             }
         }
 
+        public override bool IgnoreDisplayScale
+        {
+            get { return true; }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             Children.Draw(spriteBatch);

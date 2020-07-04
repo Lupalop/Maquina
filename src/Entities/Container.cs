@@ -17,6 +17,11 @@ namespace Maquina.Entities
 
         public EntityDictionary Children { get; protected set; }
 
+        public override bool IgnoreDisplayScale
+        {
+            get { return true; }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             Children.Draw(spriteBatch);
