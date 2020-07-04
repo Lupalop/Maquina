@@ -12,65 +12,49 @@ namespace Maquina.UI
 {
     public class SoftwareMouse : Entity
     {
-        private Texture2D _texture;
-
         public SoftwareMouse() : base("SoftwareMouse")
         {
         }
 
-        public Texture2D Texture
+        public TextureSprite Sprite { get; set; }
+
+        public override Point Size
         {
-            get { return _texture; }
-            set
+            get
             {
-                _texture = value;
-                Size = AtlasUtils.GetFrameSize(
-                    _texture.Bounds.Size,
-                    2,
-                    1);
-                DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
-                    _texture.Bounds.Size,
-                    2,
-                    1,
-                    0);
+                if (base.Size != Point.Zero)
+                {
+                    return base.Size;
+                }
+                return Sprite == null ? base.Size : Sprite.Size;
             }
         }
-
-        public BlendState BlendState { get; set; }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             Application.SpriteBatch.Begin(default(SpriteSortMode), BlendState);
-            Application.SpriteBatch.Draw(
-                Texture,
-                ActualBounds,
-                DrawController.SourceRectangle,
-                DrawController.Tint * DrawController.Opacity,
-                DrawController.Rotation,
-                DrawController.Origin,
-                DrawController.SpriteEffects,
-                DrawController.LayerDepth);
+            Sprite.Draw(spriteBatch, DrawController, ActualBounds);
             Application.SpriteBatch.End();
         }
 
+        public BlendState BlendState { get; set; }
+
         public override void Update()
         {
-            DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
-                    _texture.Bounds.Size,
-                    2,
-                    1,
-                    0);
+            if (Sprite is TextureAtlasSprite)
+            {
+                ((TextureAtlasSprite)Sprite).Frame = 0;
+            }
             Location = Application.Input.MousePosition;
 
             if (Application.Input.MouseDown(MouseButton.Left) ||
                 Application.Input.MouseDown(MouseButton.Right) ||
                 Application.Input.MouseDown(MouseButton.Middle))
             {
-                DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
-                    _texture.Bounds.Size,
-                    2,
-                    1,
-                    1);
+                if (Sprite is TextureAtlasSprite)
+                {
+                    ((TextureAtlasSprite)Sprite).Frame = 1;
+                }
             }
         }
     }

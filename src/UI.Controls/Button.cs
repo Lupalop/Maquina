@@ -13,103 +13,71 @@ namespace Maquina.UI
 {
     public class Button : Control
     {
-        private Texture2D _texture;
-        private SpriteFont _font;
-        private string _text;
-
         public Button(string name) : base (name)
         {
-            Texture = (Texture2D)ContentFactory.TryGetResource("button-default");
-            Size = AtlasUtils.GetFrameSize(
-                _texture.Bounds.Size,
-                3,
-                1);
-            DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
-                _texture.Bounds.Size,
-                3,
-                1,
-                0);
-
+            BackgroundSprite = new TextureAtlasSprite(
+                (Texture2D)ContentFactory.TryGetResource("button-default"), 3, 1);
+            TextSprite = name;
             ClickSound = (SoundEffect)ContentFactory.TryGetResource("click_default");
-            Font = (SpriteFont)ContentFactory.TryGetResource("default");
-            Text = "";
         }
 
-        public Texture2D Texture
-        {
-            get { return _texture; }
-            set
-            {
-                _texture = value;
-                Bounds = _texture.Bounds;
-                DrawController.SourceRectangle = null;
-            }
-        }
-
-        public SpriteFont Font
-        {
-            get { return _font; }
-            set
-            {
-                _font = value;
-            }
-        }
-
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-#if MGE_LOCALE
-                _text = Application.Locale.TryGetString(value);
-#else
-                text = value;
-#endif
-            }
-        }
-
-        private void UpdateSize()
-        {
-
-        }
+        public TextureSprite BackgroundSprite { get; set; }
+        public TextSprite TextSprite { get; set; }
 
         public event EventHandler OnLeftClick;
         public event EventHandler OnRightClick;
 
         public SoundEffect ClickSound { get; set; }
-        
+
+        public override Point Size
+        {
+            get
+            {
+                if (base.Size != Point.Zero)
+                {
+                    return base.Size;
+                }
+                if (BackgroundSprite != null)
+                {
+                    return BackgroundSprite.Size;
+                }
+                if (TextSprite != null)
+                {
+                    return TextSprite.Size;
+                }
+                return base.Size;
+            }
+        }
+
+        public string Text
+        {
+            get { return TextSprite?.Text; }
+            set
+            {
+                if (TextSprite == null)
+                {
+                    TextSprite = value;
+                    return;
+                }
+                TextSprite.Text = value;
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(
-                Texture,
-                ActualBounds,
-                DrawController.SourceRectangle,
-                DrawController.Tint * DrawController.Opacity,
-                DrawController.Rotation,
-                DrawController.Origin,
-                DrawController.SpriteEffects,
-                DrawController.LayerDepth);
-            spriteBatch.DrawString(
-                Font,
-                Text,
-                LabelLocation.ToVector2(),
-                DrawController.Tint * DrawController.Opacity,
-                DrawController.Rotation,
-                DrawController.Origin,
-                ActualScale,
-                DrawController.SpriteEffects,
-                DrawController.LayerDepth);
+            BackgroundSprite?.Draw(spriteBatch, DrawController, ActualBounds);
+            TextSprite?.Draw(spriteBatch, DrawController, LabelLocation, ActualScale);
         }
 
         bool LeftClickFired;
         bool RightClickFired;
+
         public override void Update()
         {
-            DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
-                _texture.Bounds.Size,
-                3,
-                1,
-                0);
+            if (BackgroundSprite is TextureAtlasSprite)
+            {
+                ((TextureAtlasSprite)BackgroundSprite).Frame = 0;
+            }
 
             // Don't respond to any event if button is disabled
             if (!Disabled && Application.Input.ShouldAcceptInput)
@@ -117,11 +85,10 @@ namespace Maquina.UI
                 // If mouse is on top of the button
                 if (ActualBounds.Contains(Application.Input.MousePosition))
                 {
-                    DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
-                        _texture.Bounds.Size,
-                        3,
-                        1,
-                        1);
+                    if (BackgroundSprite is TextureAtlasSprite)
+                    {
+                        ((TextureAtlasSprite)BackgroundSprite).Frame = 1;
+                    }
                 }
 
                 // If the button was clicked
@@ -133,11 +100,10 @@ namespace Maquina.UI
                     if (ActualBounds.Contains(Application.Input.MousePosition))
                     {
                         Focused = true;
-                        DrawController.SourceRectangle = AtlasUtils.CreateSourceFrameRectangle(
-                            _texture.Bounds.Size,
-                            3,
-                            1,
-                            2);
+                        if (BackgroundSprite is TextureAtlasSprite)
+                        {
+                            ((TextureAtlasSprite)BackgroundSprite).Frame = 2;
+                        }
                     }
                 }
 
@@ -175,25 +141,13 @@ namespace Maquina.UI
             }
         }
 
-        private Point LabelSize
-        {
-            get
-            {
-                if (Font != null && Text.Trim() != null)
-                {
-                    return Font.MeasureString(Text).ToPoint();
-                }
-                return Point.Zero;
-            }
-        }
-
         private Point LabelLocation
         {
             get
             {
                 return new Point(
-                    ActualBounds.Center.X - (int)(LabelSize.X * ActualScale / 2),
-                    ActualBounds.Center.Y - (int)(LabelSize.Y * ActualScale / 2));
+                    ActualBounds.Center.X - (int)(TextSprite.Size.X * ActualScale / 2),
+                    ActualBounds.Center.Y - (int)(TextSprite.Size.Y * ActualScale / 2));
             }
         }
 

@@ -14,7 +14,7 @@ namespace Maquina.UI
         public Throbber(string name) : base(name)
         {
             IsSpinning = true;
-            Texture = (Texture2D)ContentFactory.TryGetResource("throbber-default");
+            Sprite = (Texture2D)ContentFactory.TryGetResource("throbber-default");
         }
 
         public bool IsSpinning { get; set; }

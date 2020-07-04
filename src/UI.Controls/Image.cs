@@ -12,33 +12,27 @@ namespace Maquina.UI
 {
     public class Image : Control
     {
-        private Texture2D _texture;
-
         public Image(string name) : base(name)
         {
         }
 
-        public Texture2D Texture
+        public TextureSprite Sprite { get; set; }
+
+        public override Point Size
         {
-            get { return _texture; }
-            set
+            get
             {
-                _texture = value;
-                Bounds = _texture.Bounds;
+                if (base.Size != Point.Zero)
+                {
+                    return base.Size;
+                }
+                return Sprite == null ? base.Size : Sprite.Size;
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(
-                Texture,
-                ActualBounds,
-                DrawController.SourceRectangle,
-                DrawController.Tint * DrawController.Opacity,
-                DrawController.Rotation,
-                DrawController.Origin,
-                DrawController.SpriteEffects,
-                DrawController.LayerDepth);
+            Sprite?.Draw(spriteBatch, DrawController, ActualBounds);
         }
 
         public override void Update()
