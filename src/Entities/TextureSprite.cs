@@ -41,5 +41,19 @@ namespace Maquina.Entities
                 controller.SpriteEffects,
                 controller.LayerDepth);
         }
+
+        public virtual void Draw(SpriteBatch spriteBatch, DrawController controller, Point location, float scale)
+        {
+            spriteBatch.Draw(
+                Texture,
+                location.ToVector2(),
+                controller.SourceRectangle,
+                controller.Tint * controller.Opacity,
+                controller.Rotation,
+                controller.Origin,
+                scale,
+                controller.SpriteEffects,
+                controller.LayerDepth);
+        }
     }
 }
