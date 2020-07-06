@@ -13,6 +13,11 @@ namespace Maquina.UI
 {
     public class Button : Control
     {
+        private bool _leftClickFired;
+        private bool _rightClickFired;
+        private Point _labelLocation;
+        private Point _iconLocation;
+
         public Button(string name) : base (name)
         {
             BackgroundSprite = new TextureAtlasSprite(
@@ -22,7 +27,10 @@ namespace Maquina.UI
         }
 
         public TextureSprite BackgroundSprite { get; set; }
+        public TextureSprite IconSprite { get; set; }
         public TextSprite TextSprite { get; set; }
+
+        public HorizontalAlignment IconAlignment { get; set; }
 
         public event EventHandler OnLeftClick;
         public event EventHandler OnRightClick;
@@ -41,7 +49,15 @@ namespace Maquina.UI
                 {
                     return BackgroundSprite.Size;
                 }
-                if (TextSprite != null)
+                if (IconSprite != null && TextSprite != null)
+                {
+                    return IconSprite.Size + TextSprite.Size;
+                }
+                if (IconSprite != null && TextSprite == null)
+                {
+                    return IconSprite.Size;
+                }
+                if (IconSprite == null && TextSprite != null)
                 {
                     return TextSprite.Size;
                 }
@@ -66,11 +82,9 @@ namespace Maquina.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             BackgroundSprite?.Draw(spriteBatch, DrawController, ActualBounds);
-            TextSprite?.Draw(spriteBatch, DrawController, LabelLocation, ActualScale);
+            TextSprite?.Draw(spriteBatch, DrawController, _labelLocation, ActualScale);
+            IconSprite?.Draw(spriteBatch, DrawController, _iconLocation, ActualScale);
         }
-
-        bool LeftClickFired;
-        bool RightClickFired;
 
         public override void Update()
         {
@@ -111,15 +125,15 @@ namespace Maquina.UI
                 if (OnLeftClick != null)
                 {
                     if (Application.Input.MouseDown(MouseButton.Left) && ActualBounds.Contains(Application.Input.MousePosition))
-                        LeftClickFired = true;
+                        _leftClickFired = true;
                     if (Application.Input.MouseDown(MouseButton.Left) && !ActualBounds.Contains(Application.Input.MousePosition))
-                        LeftClickFired = false;
-                    if (Application.Input.MouseUp(MouseButton.Left) && LeftClickFired)
+                        _leftClickFired = false;
+                    if (Application.Input.MouseUp(MouseButton.Left) && _leftClickFired)
                     {
                         OnLeftClick(this, EventArgs.Empty);
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
-                        LeftClickFired = false;
+                        _leftClickFired = false;
                     }
                 }
 
@@ -127,28 +141,49 @@ namespace Maquina.UI
                 if (OnRightClick != null)
                 {
                     if (Application.Input.MouseDown(MouseButton.Right) && ActualBounds.Contains(Application.Input.MousePosition))
-                        RightClickFired = true;
+                        _rightClickFired = true;
                     if (Application.Input.MouseDown(MouseButton.Right) && !ActualBounds.Contains(Application.Input.MousePosition))
-                        RightClickFired = false;
-                    if (Application.Input.MouseUp(MouseButton.Right) && RightClickFired)
+                        _rightClickFired = false;
+                    if (Application.Input.MouseUp(MouseButton.Right) && _rightClickFired)
                     {
                         OnRightClick(this, EventArgs.Empty);
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
-                        RightClickFired = false;
+                        _rightClickFired = false;
                     }
                 }
             }
         }
 
-        private Point LabelLocation
+        protected override void OnEntityChanged(EntityChangedEventArgs e)
         {
-            get
+            if (TextSprite != null)
             {
-                return new Point(
-                    ActualBounds.Center.X - (int)(TextSprite.Size.X * ActualScale / 2),
-                    ActualBounds.Center.Y - (int)(TextSprite.Size.Y * ActualScale / 2));
+                _labelLocation = new Point(
+                        ActualBounds.Center.X - (int)(TextSprite.Size.X * ActualScale / 2),
+                        ActualBounds.Center.Y - (int)(TextSprite.Size.Y * ActualScale / 2));
             }
+
+            if (IconSprite != null)
+            {
+                switch (IconAlignment)
+                {
+                    case HorizontalAlignment.Stretch:
+                    case HorizontalAlignment.Left:
+                        _iconLocation.X = Location.X;
+                        break;
+                    case HorizontalAlignment.Center:
+                        _iconLocation.X = Location.X + (ActualBounds.Width / 2) - (int)(IconSprite.Size.X * ActualScale / 2);
+                        break;
+                    case HorizontalAlignment.Right:
+                        _iconLocation.X = Location.X + ActualBounds.Width - (int)(IconSprite.Size.X * ActualScale);
+                        break;
+                }
+
+                _iconLocation.Y = Location.Y + (ActualBounds.Height / 2) - (int)(IconSprite.Size.Y * ActualScale / 2);
+            }
+
+            base.OnEntityChanged(e);
         }
 
         protected override void Dispose(bool disposing)
