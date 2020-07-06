@@ -22,11 +22,11 @@ namespace Maquina.UI
         {
             get
             {
-                if (base.Size != Point.Zero)
+                if (base.Size != Point.Zero || Sprite == null)
                 {
                     return base.Size;
                 }
-                return Sprite == null ? base.Size : Sprite.Size;
+                return Sprite.Size;
             }
         }
 
