@@ -10,15 +10,13 @@ namespace Maquina.Entities
     {
         Left,
         Center,
-        Right,
-        Stretch
+        Right
     }
 
     public enum VerticalAlignment
     {
         Top,
         Center,
-        Bottom,
-        Stretch
+        Bottom
     }
 }

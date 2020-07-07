@@ -168,7 +168,6 @@ namespace Maquina.UI
             {
                 switch (IconAlignment)
                 {
-                    case HorizontalAlignment.Stretch:
                     case HorizontalAlignment.Left:
                         _iconLocation.X = Location.X;
                         break;

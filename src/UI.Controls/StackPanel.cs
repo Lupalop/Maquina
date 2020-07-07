@@ -160,8 +160,6 @@ namespace Maquina.UI
                             case VerticalAlignment.Bottom:
                                 CurrentY = ActualBounds.Bottom - item.ActualBounds.Height;
                                 break;
-                            case VerticalAlignment.Stretch:
-                                break;
                         }
                     }
 
@@ -184,8 +182,6 @@ namespace Maquina.UI
                                 break;
                             case HorizontalAlignment.Right:
                                 CurrentX = ActualBounds.Right - item.ActualBounds.Width;
-                                break;
-                            case HorizontalAlignment.Stretch:
                                 break;
                         }
                     }

@@ -28,6 +28,7 @@ namespace Maquina.UI
                 UpdateAutoPositionedLayout(this, EventArgs.Empty);
             }
         }
+
         private VerticalAlignment verticalAlignment;
         public VerticalAlignment VerticalAlignment
         {
@@ -50,6 +51,7 @@ namespace Maquina.UI
                 OnDisabledStateChanged();
             }
         }
+
         private bool focused;
         public bool Focused
         {
@@ -134,8 +136,6 @@ namespace Maquina.UI
                 case HorizontalAlignment.Right:
                     modifiedX = Application.Display.WindowBounds.Right - ActualBounds.Width;
                     break;
-                case HorizontalAlignment.Stretch:
-                    break;
             }
 
             switch (VerticalAlignment)
@@ -149,8 +149,6 @@ namespace Maquina.UI
                     break;
                 case VerticalAlignment.Bottom:
                     modifiedY = Application.Display.WindowBounds.Bottom - ActualBounds.Height;
-                    break;
-                case VerticalAlignment.Stretch:
                     break;
             }
 
