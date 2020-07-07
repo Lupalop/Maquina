@@ -12,7 +12,10 @@ namespace Maquina.UI
         {
             Name = sceneName;
             Entities = new EntityDictionary();
+            Application.Display.ScaleChanged += Display_ResolutionOrScaleChanged;
+            Application.Display.ResolutionChanged += Display_ResolutionOrScaleChanged;
         }
+
         public Scene() : this("Untitled Scene") { }
 
         protected Game Game { get { return Application.Game; } }
@@ -44,6 +47,65 @@ namespace Maquina.UI
 
         public abstract void Draw();
         public abstract void Update();
+
+        private void Display_ResolutionOrScaleChanged(object sender, EventArgs e)
+        {
+            foreach (Entity entity in Entities.Values)
+            {
+                if (entity is Control)
+                {
+                    Control control = (Control)entity;
+                    AutoPosition(control);
+                }
+            }
+        }
+
+        public void AutoPosition(
+            Entity entity,
+            HorizontalAlignment horizontalAlignment,
+            VerticalAlignment verticalAlignment)
+        {
+            Point newLocation = entity.Location;
+
+            switch (horizontalAlignment)
+            {
+                case HorizontalAlignment.Left:
+                    newLocation.X = Application.Display.WindowBounds.Left;
+                    break;
+                case HorizontalAlignment.Center:
+                    if (entity.ActualBounds.Width > 0)
+                    {
+                        newLocation.X = Application.Display.WindowBounds.Center.X - (entity.ActualBounds.Width / 2);
+                    }
+                    break;
+                case HorizontalAlignment.Right:
+                    newLocation.X = Application.Display.WindowBounds.Right - entity.ActualBounds.Width;
+                    break;
+            }
+
+            switch (verticalAlignment)
+            {
+                case VerticalAlignment.Top:
+                    newLocation.Y = Application.Display.WindowBounds.Top;
+                    break;
+                case VerticalAlignment.Center:
+                    if (entity.ActualBounds.Height > 0)
+                    {
+                        newLocation.Y = Application.Display.WindowBounds.Center.Y - (entity.ActualBounds.Height / 2);
+                    }
+                    break;
+                case VerticalAlignment.Bottom:
+                    newLocation.Y = Application.Display.WindowBounds.Bottom - entity.ActualBounds.Height;
+                    break;
+            }
+
+            entity.Location = newLocation;
+        }
+
+        public void AutoPosition(Control control)
+        {
+            AutoPosition(control, control.HorizontalAlignment, control.VerticalAlignment);
+        }
 
         public void Dispose()
         {

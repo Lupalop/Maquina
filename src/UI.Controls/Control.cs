@@ -25,7 +25,7 @@ namespace Maquina.UI
             set
             {
                 horizontalAlignment = value;
-                UpdateAutoPositionedLayout(this, EventArgs.Empty);
+                //TODO: event
             }
         }
 
@@ -36,7 +36,7 @@ namespace Maquina.UI
             set
             {
                 verticalAlignment = value;
-                UpdateAutoPositionedLayout(this, EventArgs.Empty);
+                //TODO: event
             }
         }
 
@@ -83,85 +83,9 @@ namespace Maquina.UI
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                AutoPosition = false;
-            }
             base.Dispose(disposing);
         }
 
-        // Control Auto Position implementation
-        private bool autoPosition;
-        public bool AutoPosition
-        {
-            get { return autoPosition; }
-            set
-            {
-                autoPosition = value;
-                // Register to events necessary to update in time
-                if (value)
-                {
-                    Application.Display.ResolutionChanged += UpdateAutoPositionedLayout;
-                    Application.Display.ScaleChanged += UpdateAutoPositionedLayout;
-                }
-                // Only unregister from these events if auto position was previously true
-                if (autoPosition && !value)
-                {
-                    Application.Display.ResolutionChanged -= UpdateAutoPositionedLayout;
-                    Application.Display.ScaleChanged -= UpdateAutoPositionedLayout;
-                }
-            }
-        }
-
-        public void UpdateAutoPositionedLayout(object sender, EventArgs e)
-        {
-            // Ignore controls that are not requesting auto position
-            if (!AutoPosition)
-            {
-                return;
-            }
-
-            int modifiedX = Location.X;
-            int modifiedY = Location.Y;
-
-            switch (HorizontalAlignment)
-            {
-                case HorizontalAlignment.Left:
-                    modifiedX = Application.Display.WindowBounds.Left;
-                    break;
-                case HorizontalAlignment.Center:
-                    if (ActualBounds.Width != 0)
-                        modifiedX = Application.Display.WindowBounds.Center.X - (ActualBounds.Width / 2);
-                    break;
-                case HorizontalAlignment.Right:
-                    modifiedX = Application.Display.WindowBounds.Right - ActualBounds.Width;
-                    break;
-            }
-
-            switch (VerticalAlignment)
-            {
-                case VerticalAlignment.Top:
-                    modifiedY = Application.Display.WindowBounds.Top;
-                    break;
-                case VerticalAlignment.Center:
-                    if (ActualBounds.Height != 0)
-                        modifiedY = Application.Display.WindowBounds.Center.Y - (ActualBounds.Height / 2);
-                    break;
-                case VerticalAlignment.Bottom:
-                    modifiedY = Application.Display.WindowBounds.Bottom - ActualBounds.Height;
-                    break;
-            }
-
-            Location = new Point(modifiedX, modifiedY);
-        }
-
-        protected override void OnEntityChanged(EntityChangedEventArgs e)
-        {
-            if (AutoPosition && e.Property != EntityChangedProperty.Location)
-            {
-                UpdateAutoPositionedLayout(this, e);
-            }
-            base.OnEntityChanged(e);
-        }
+        public bool AutoPosition { get; set; }
     }
 }
