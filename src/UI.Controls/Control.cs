@@ -27,6 +27,10 @@ namespace Maquina.UI
             get { return _horizontalAlignment; }
             set
             {
+                if (_horizontalAlignment == value)
+                {
+                    return;
+                }
                 _horizontalAlignment = value;
                 OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.HorizontalAlignment));
             }
@@ -37,6 +41,10 @@ namespace Maquina.UI
             get { return _verticalAlignment; }
             set
             {
+                if (_verticalAlignment == value)
+                {
+                    return;
+                }
                 _verticalAlignment = value;
                 OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.VerticalAlignment));
             }
@@ -47,6 +55,10 @@ namespace Maquina.UI
             get { return _disabled; }
             set
             {
+                if (_disabled == value)
+                {
+                    return;
+                }
                 _disabled = value;
                 OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Disabled));
             }
@@ -57,6 +69,10 @@ namespace Maquina.UI
             get { return _focused; }
             set
             {
+                if (_focused == value)
+                {
+                    return;
+                }
                 _focused = value;
                 OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Focused));
             }
