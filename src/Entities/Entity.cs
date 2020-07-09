@@ -90,7 +90,7 @@ namespace Maquina.Entities
                     return;
                 }
                 _bounds.Location = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Location));
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Location));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Maquina.Entities
                     return;
                 }
                 _bounds.Size = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Size));
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
             }
         }
 
@@ -124,7 +124,7 @@ namespace Maquina.Entities
                     return;
                 }
                 _scale = value;
-                OnEntityChanged(new EntityChangedEventArgs(EntityChangedProperty.Scale));
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Scale));
             }
         }
 
@@ -191,11 +191,11 @@ namespace Maquina.Entities
         /// </summary>
         public event EventHandler<EntityChangedEventArgs> Changed;
 
-        protected virtual void OnEntityChanged(EntityChangedEventArgs e)
+        protected virtual void OnEntityChanged(object sender, EntityChangedEventArgs e)
         {
             if (Changed != null)
             {
-                Changed(this, e);
+                Changed(sender, e);
             }
         }
 
