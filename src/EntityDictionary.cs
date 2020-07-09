@@ -4,78 +4,77 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Maquina
 {
-    public class EntityDictionary : IDictionary<string, Entity>
+    public class EntityDictionary : IDictionary<string, Entity>, IDisposable, INotifyCollectionChanged
     {
-        // Fields
-        private IDictionary<string, Entity> InnerDictionary;
-        public bool IsModified { get; protected set; }
+        private IDictionary<string, Entity> _innerDictionary;
 
-        // Constructors
         public EntityDictionary()
         {
-            InnerDictionary = new Dictionary<string, Entity>();
-        }
-        public EntityDictionary(IDictionary<string, Entity> dictionary)
-        {
-            InnerDictionary = dictionary;
-        }
-        public EntityDictionary(IEqualityComparer<string> comparer)
-        {
-            InnerDictionary = new Dictionary<string, Entity>(comparer);
-        }
-        public EntityDictionary(int capacity)
-        {
-            InnerDictionary = new Dictionary<string, Entity>(capacity);
-        }
-        public EntityDictionary(IDictionary<string, Entity> dictionary, IEqualityComparer<string> comparer)
-        {
-            InnerDictionary = new Dictionary<string, Entity>(dictionary, comparer);
-        }
-        public EntityDictionary(int capacity, IEqualityComparer<string> comparer)
-        {
-            InnerDictionary = new Dictionary<string, Entity>(capacity, comparer);
+            _innerDictionary = new Dictionary<string, Entity>();
         }
 
-        // Implemented methods
+        public EntityDictionary(IDictionary<string, Entity> dictionary)
+        {
+            _innerDictionary = dictionary;
+        }
+
+        public EntityDictionary(IEqualityComparer<string> comparer)
+        {
+            _innerDictionary = new Dictionary<string, Entity>(comparer);
+        }
+
+        public EntityDictionary(int capacity)
+        {
+            _innerDictionary = new Dictionary<string, Entity>(capacity);
+        }
+
+        public EntityDictionary(IDictionary<string, Entity> dictionary, IEqualityComparer<string> comparer)
+        {
+            _innerDictionary = new Dictionary<string, Entity>(dictionary, comparer);
+        }
+
+        public EntityDictionary(int capacity, IEqualityComparer<string> comparer)
+        {
+            _innerDictionary = new Dictionary<string, Entity>(capacity, comparer);
+        }
+
         public bool ContainsKey(string key)
         {
-            return InnerDictionary.ContainsKey(key);
+            return _innerDictionary.ContainsKey(key);
         }
 
         public ICollection<string> Keys
         {
-            get { return InnerDictionary.Keys; }
+            get { return _innerDictionary.Keys; }
         }
 
         public bool TryGetValue(string key, out Entity value)
         {
-            return InnerDictionary.TryGetValue(key, out value);
+            return _innerDictionary.TryGetValue(key, out value);
         }
 
         public ICollection<Entity> Values
         {
-            get { return InnerDictionary.Values; }
+            get { return _innerDictionary.Values; }
         }
+
+        public bool IsModified { get; set; }
 
         public Entity this[string key]
         {
-            get { return InnerDictionary[key]; }
+            get { return _innerDictionary[key]; }
             set
             {
                 IsModified = true;
-                // Stop listening to old entity changes and listen to new entity
-                InnerDictionary[key].Changed -= Child_EntityChanged;
-                value.Changed += Child_EntityChanged;
-                // Replace old entity reference
-                InnerDictionary[key] = value;
-                // An entity was replaced, notify handler
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
+                _innerDictionary[key].Changed -= OnEntityChanged;
+                value.Changed += OnEntityChanged;
+                _innerDictionary[key] = value;
+                OnCollectionChanged(
+                    this,
+                    new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace));
             }
         }
 
@@ -90,9 +89,12 @@ namespace Maquina
         public void Add(KeyValuePair<string, Entity> item)
         {
             IsModified = true;
-            InnerDictionary.Add(item);
-            item.Value.Changed += Child_EntityChanged;
-            OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
+            _innerDictionary.Add(item);
+            item.Value.Changed += OnEntityChanged;
+            OnCollectionChanged(
+                this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+
         }
 
         public bool Contains(string key, Entity value)
@@ -101,40 +103,64 @@ namespace Maquina
         }
         public bool Contains(KeyValuePair<string, Entity> item)
         {
-            return InnerDictionary.Contains(item);
+            return _innerDictionary.Contains(item);
         }
 
         public void CopyTo(KeyValuePair<string, Entity>[] array, int arrayIndex)
         {
-            InnerDictionary.CopyTo(array, arrayIndex);
+            _innerDictionary.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return InnerDictionary.Count; }
+            get { return _innerDictionary.Count; }
         }
 
         public bool IsReadOnly
         {
-            get { return InnerDictionary.IsReadOnly; }
+            get { return _innerDictionary.IsReadOnly; }
         }
 
         public bool Remove(string key)
         {
             IsModified = true;
-            InnerDictionary[key].Changed -= Child_EntityChanged;
-            bool result = InnerDictionary.Remove(key);
-            OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
+            _innerDictionary[key].Changed -= OnEntityChanged;
+            bool result = _innerDictionary.Remove(key);
+            OnCollectionChanged(
+                this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
             return result;
         }
 
         public bool Remove(KeyValuePair<string, Entity> item)
         {
             IsModified = true;
-            InnerDictionary[item.Key].Changed -= Child_EntityChanged;
-            bool result = InnerDictionary.Remove(item);
-            OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
+            _innerDictionary[item.Key].Changed -= OnEntityChanged;
+            bool result = _innerDictionary.Remove(item);
+            OnCollectionChanged(
+                this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
             return result;
+        }
+
+        protected void Clear(bool disposeElements)
+        {
+            IsModified = true;
+            lock (_innerDictionary)
+            {
+                foreach (var item in _innerDictionary.Values)
+                {
+                    item.Changed -= OnEntityChanged;
+                    if (disposeElements)
+                    {
+                        item.Dispose();
+                    }
+                }
+                _innerDictionary.Clear();
+            }
+            OnCollectionChanged(
+                this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public void Clear()
@@ -142,34 +168,26 @@ namespace Maquina
             Clear(false);
         }
 
-        public void Clear(bool disposeEntities)
-        {
-            IsModified = true;
-            lock (InnerDictionary)
-            {
-                foreach (var item in InnerDictionary.Values)
-                {
-                    item.Changed -= Child_EntityChanged;
-                    if (disposeEntities)
-                    {
-                        item.Dispose();
-                    }
-                }
-                InnerDictionary.Clear();
-            }
-        }
-
         public IEnumerator<KeyValuePair<string, Entity>> GetEnumerator()
         {
-            return InnerDictionary.GetEnumerator();
+            return _innerDictionary.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return InnerDictionary.GetEnumerator();
+            return _innerDictionary.GetEnumerator();
         }
 
         public event EventHandler<EntityChangedEventArgs> EntityChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(sender, e);
+            }
+        }
 
         protected virtual void OnEntityChanged(object sender, EntityChangedEventArgs e)
         {
@@ -177,11 +195,6 @@ namespace Maquina
             {
                 EntityChanged(sender, e);
             }
-        }
-
-        private void Child_EntityChanged(object sender, EntityChangedEventArgs e)
-        {
-            OnEntityChanged(sender, e);
         }
 
         public void Update()
@@ -208,6 +221,19 @@ namespace Maquina
                 }
             }
             IsModified = false;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Clear(true);
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

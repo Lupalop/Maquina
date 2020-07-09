@@ -107,17 +107,11 @@ namespace Maquina.UI
             AutoPosition(control, control.HorizontalAlignment, control.VerticalAlignment);
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
-                Entities.Clear(true);
+                Entities.Dispose();
 #if MGE_LOGGING
                 LogManager.Info(0, string.Format("Scene disposed: {0}", Name));
 #endif
@@ -126,6 +120,11 @@ namespace Maquina.UI
                     Disposed(this, EventArgs.Empty);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
