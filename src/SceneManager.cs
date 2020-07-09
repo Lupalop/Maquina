@@ -125,12 +125,6 @@ namespace Maquina
             }
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -138,6 +132,11 @@ namespace Maquina
                 CurrentScene.Dispose();
                 Overlays.Clear();
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

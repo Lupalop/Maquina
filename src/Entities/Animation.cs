@@ -59,13 +59,6 @@ namespace Maquina.Entities
 
         public abstract void Update();
 
-        // IDisposable implementation
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -74,6 +67,11 @@ namespace Maquina.Entities
                 IsRepeating = false;
                 AnimationManager.Remove(this);
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
