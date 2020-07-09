@@ -10,80 +10,56 @@ namespace Maquina.UI
 {
     public abstract class Control : Entity
     {
-        // Constructor
+        private HorizontalAlignment _horizontalAlignment;
+        private VerticalAlignment _verticalAlignment;
+        private bool _disabled;
+        private bool _focused;
+
         protected Control(string name) : base (name)
         {
-            HorizontalAlignment = HorizontalAlignment.Center;
-            VerticalAlignment = VerticalAlignment.Center;
+            _horizontalAlignment = HorizontalAlignment.Center;
+            _verticalAlignment = VerticalAlignment.Center;
             AutoPosition = false;
         }
 
-        private HorizontalAlignment horizontalAlignment;
         public HorizontalAlignment HorizontalAlignment
         {
-            get { return horizontalAlignment; }
+            get { return _horizontalAlignment; }
             set
             {
-                horizontalAlignment = value;
-                //TODO: event
+                _horizontalAlignment = value;
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.HorizontalAlignment));
             }
         }
 
-        private VerticalAlignment verticalAlignment;
         public VerticalAlignment VerticalAlignment
         {
-            get { return verticalAlignment; }
+            get { return _verticalAlignment; }
             set
             {
-                verticalAlignment = value;
-                //TODO: event
+                _verticalAlignment = value;
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.VerticalAlignment));
             }
         }
 
-
-        private bool disabled;
         public bool Disabled
         {
-            get { return disabled; }
+            get { return _disabled; }
             set
             {
-                disabled = value;
-                OnDisabledStateChanged();
+                _disabled = value;
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Disabled));
             }
         }
 
-        private bool focused;
         public bool Focused
         {
-            get { return focused; }
+            get { return _focused; }
             set
             {
-                focused = value;
-                OnFocusedStateChanged();
+                _focused = value;
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Focused));
             }
-        }
-
-        public event EventHandler DisabledStateChanged;
-        public event EventHandler FocusedStateChanged;
-
-        protected virtual void OnDisabledStateChanged()
-        {
-            if (DisabledStateChanged != null)
-            {
-                DisabledStateChanged(this, EventArgs.Empty);
-            }
-        }
-        protected virtual void OnFocusedStateChanged()
-        {
-            if (FocusedStateChanged != null)
-            {
-                FocusedStateChanged(this, EventArgs.Empty);
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
         }
 
         public bool AutoPosition { get; set; }
