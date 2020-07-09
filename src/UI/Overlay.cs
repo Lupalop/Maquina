@@ -54,10 +54,6 @@ namespace Maquina.UI
                     {
                         ((Control)(item)).Disabled = DisableParentSceneUI;
                     }
-                    if (ParentScene.Entities.IsModified)
-                    {
-                        break;
-                    }
                 }
             }
         }

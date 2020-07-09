@@ -45,10 +45,6 @@ namespace Maquina.UI
                     {
                         ((Control)(item)).Disabled = Disabled;
                     }
-                    if (Children.IsModified)
-                    {
-                        break;
-                    }
                 }
             }
             base.OnPropertyChanged(e);

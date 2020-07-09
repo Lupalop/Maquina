@@ -11,8 +11,6 @@ namespace Maquina.Entities
 {
     public class EntityCollection : ObservableCollection<Entity>, IDisposable
     {
-        public bool IsModified { get; private set; }
-
         private bool IsIndexValid(int index)
         {
             return (index >= 0 && index < Count);
@@ -87,12 +85,6 @@ namespace Maquina.Entities
             base.ClearItems();
         }
 
-        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            IsModified = true;
-            base.OnCollectionChanged(e);
-        }
-
         public bool ContainsKey(string key)
         {
             return IsIndexValid(IndexOfKey(key));
@@ -110,28 +102,18 @@ namespace Maquina.Entities
 
         public void Update()
         {
-            foreach (Entity entity in Items)
+            for (int i = 0; i < Count; i++)
             {
-                entity.Update();
-                if (IsModified)
-                {
-                    break;
-                }
+                Items[i].Update();
             }
-            IsModified = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Entity entity in Items)
+            for (int i = 0; i < Count; i++)
             {
-                entity.Draw(spriteBatch);
-                if (IsModified)
-                {
-                    break;
-                }
+                Items[i].Draw(spriteBatch);
             }
-            IsModified = false;
         }
 
         protected virtual void Dispose(bool disposing)
