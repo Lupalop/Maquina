@@ -68,29 +68,29 @@
   <ItemGroup>
     <Compile Include="AnimationManager.cs" />
     <Compile Include="Entities\Animation.cs" />
-    <Compile Include="Entities\AtlasUtils.cs" />
-    <Compile Include="Entities\Container.cs" />
+    <Compile Include="Entities\EntityContainer.cs" />
     <Compile Include="Entities\DrawController.cs" />
-    <Compile Include="Entities\EntityChangedEvent.cs" />
+    <Compile Include="Entities\PropertyChangedEvent.cs" />
+    <Compile Include="Entities\EntityCollection.cs" />
     <Compile Include="Entities\FadeAnimation.cs" />
-    <Compile Include="Entities\TextDrawController.cs" />
     <Compile Include="Entities\IAnimation.cs" />
     <Compile Include="DisplayManager.cs" />
+    <Compile Include="Entities\TextSprite.cs" />
+    <Compile Include="Entities\TextureAtlasSprite.cs" />
+    <Compile Include="Entities\TextureSprite.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="LogEntryLevel.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="ContentFactory.cs" />
-    <Compile Include="EntityDictionary.cs" />
     <Compile Include="Content\ContentGroup.cs" />
     <Compile Include="Content\IManifest.cs" />
     <Compile Include="Content\PreferencesManifest.cs" />
     <Compile Include="Content\StringManifest.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Entities\Alignment.cs" />
-    <Compile Include="Entities\IEntity.cs" />
     <Compile Include="UI.Controls\Control.cs" />
     <Compile Include="AudioManager.cs" />
-    <Compile Include="Entities\IContainer.cs" />
+    <Compile Include="Entities\IEntityContainer.cs" />
     <Compile Include="MaquinaGame.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="Region.cs" />
@@ -101,7 +101,7 @@
     <Compile Include="TimerManager.cs" />
     <Compile Include="Entities\Orientation.cs" />
     <Compile Include="UI.Controls\Canvas.cs" />
-    <None Include="UI.Controls\TextBox.cs" />
+    <Compile Include="UI.Controls\TextBox.cs" />
     <Compile Include="UI.Controls\StackPanel.cs" />
     <Compile Include="Content\XmlHelper.cs" />
     <Compile Include="Content\SpriteFontProperty.cs" />
@@ -111,7 +111,7 @@
     <Compile Include="UI.Controls\Throbber.cs" />
     <Compile Include="UI.Controls\Image.cs" />
     <Compile Include="UI.Controls\Label.cs" />
-    <None Include="UI.Controls\Button.cs" />
+    <Compile Include="UI.Controls\Button.cs" />
     <Compile Include="UI.Controls\ProgressBar.cs" />
     <Compile Include="UI.Overlays\DebugOverlay.cs" />
     <Compile Include="UI.Overlays\FadeOverlay.cs" />
@@ -124,9 +124,6 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="UI.Overlays\FadeOverlay.UIDefinition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
