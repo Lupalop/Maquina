@@ -20,8 +20,9 @@ namespace Maquina.UI
             Children = new EntityDictionary();
             _orientation = Orientation.Vertical;
             _controlMargin = new Region();
-            Children.EntityChanged += Children_EntityChanged;
-            Application.Display.ScaleChanged += Global_ScaleChanged;
+            Children.EntityChanged += OnLayoutChanged;
+            Children.CollectionChanged += OnLayoutChanged;
+            Application.Display.ScaleChanged += OnLayoutChanged;
         }
 
         public EntityDictionary Children { get; protected set; }
@@ -32,7 +33,7 @@ namespace Maquina.UI
             set
             {
                 _orientation = value;
-                UpdateLayout();
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Orientation));
             }
         }
 
@@ -42,7 +43,7 @@ namespace Maquina.UI
             set
             {
                 _controlMargin = value;
-                UpdateLayout();
+                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Margin));
             }
         }
 
@@ -61,43 +62,45 @@ namespace Maquina.UI
             Children.Update();
         }
 
-        private void Children_EntityChanged(object sender, EntityChangedEventArgs e)
+        private void OnLayoutChanged(object sender, EventArgs e)
         {
-            if (e.Property != EntityChangedProperty.Location)
+            if (e is EntityChangedEventArgs &&
+                ((EntityChangedEventArgs)e).Property == EntityChangedProperty.Location)
             {
-                UpdateLayout();
+                return;
             }
-        }
 
-        private void Global_ScaleChanged(object sender, EventArgs e)
-        {
             UpdateLayout();
         }
 
-        protected override void OnEntityChanged(EntityChangedEventArgs e)
+        protected override void OnEntityChanged(object sender, EntityChangedEventArgs e)
         {
+            if (e.Property == EntityChangedProperty.Orientation ||
+                e.Property == EntityChangedProperty.Margin)
+            {
+                UpdateLayout();
+            }
+
             if (e.Property == EntityChangedProperty.Location)
             {
                 UpdateLayout(false);
             }
-            base.OnEntityChanged(e);
-        }
 
-        protected override void OnDisabledStateChanged()
-        {
-            foreach (var item in Children.Values)
+            if (e.Property == EntityChangedProperty.Disabled)
             {
-                if (item is Control)
+                foreach (var item in Children.Values)
                 {
-                    ((Control)(item)).Disabled = Disabled;
-                }
-                if (Children.IsModified)
-                {
-                    break;
+                    if (item is Control)
+                    {
+                        ((Control)(item)).Disabled = Disabled;
+                    }
+                    if (Children.IsModified)
+                    {
+                        break;
+                    }
                 }
             }
-
-            base.OnDisabledStateChanged();
+            base.OnEntityChanged(sender, e);
         }
 
         public void UpdateLayout(bool resizeContainer = true)
@@ -198,9 +201,10 @@ namespace Maquina.UI
         {
             if (disposing)
             {
-                Children.EntityChanged -= Children_EntityChanged;
-                Children.Clear(true);
-                Application.Display.ScaleChanged -= Global_ScaleChanged;
+                Application.Display.ScaleChanged -= OnLayoutChanged;
+                Children.EntityChanged -= OnLayoutChanged;
+                Children.CollectionChanged -= OnLayoutChanged;
+                Children.Dispose();
             }
             base.Dispose(disposing);
         }

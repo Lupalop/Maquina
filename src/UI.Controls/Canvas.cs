@@ -35,29 +35,30 @@ namespace Maquina.UI
             Children.Update();
         }
 
-        protected override void OnDisabledStateChanged()
+        protected override void OnEntityChanged(object sender, EntityChangedEventArgs e)
         {
-            foreach (var item in Children.Values)
+            if (e.Property == EntityChangedProperty.Disabled)
             {
-                if (item is Control)
+                foreach (var item in Children.Values)
                 {
-                    ((Control)(item)).Disabled = Disabled;
-                }
-                if (Children.IsModified)
-                {
-                    break;
+                    if (item is Control)
+                    {
+                        ((Control)(item)).Disabled = Disabled;
+                    }
+                    if (Children.IsModified)
+                    {
+                        break;
+                    }
                 }
             }
+            base.OnEntityChanged(sender, e);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                foreach (var item in Children.Values)
-                {
-                    item.Dispose();
-                }
+                Children.Dispose();
             }
             base.Dispose(disposing);
         }
