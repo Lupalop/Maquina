@@ -100,7 +100,7 @@ namespace Maquina.UI
             // List loaded entities
             if (isCounterVisible[1])
             {
-                sceneObjectList = ListEntitiesFromDictionary(Application.Scenes.CurrentScene.Entities);
+                sceneObjectList = ListEntitiesFromCollection(Application.Scenes.CurrentScene.Entities);
             }
             // List timers
             if (isCounterVisible[4])
@@ -115,9 +115,8 @@ namespace Maquina.UI
             }
         }
 
-        public string ListEntitiesFromDictionary(IDictionary<string, Entity> entities, bool isContainer = false)
+        public string ListEntitiesFromCollection(EntityCollection entities, bool isContainer = false)
         {
-            List<string> keyList = entities.Keys.ToList();
             string list = "";
             if (isContainer)
             {
@@ -125,17 +124,17 @@ namespace Maquina.UI
             }
             for (int i = 0; i < entities.Count; i++)
             {
-                list += String.Format(
-                    "Key {0}: {1}, ID: {2}, Name: {3}, Bounds: {4} \n",
+                list += string.Format(
+                    "Index {0}: {1}, ID: {2}, Name: {3}, Bounds: {4} \n",
                     i,
-                    keyList[i],
-                    entities[keyList[i]].Id,
-                    entities[keyList[i]].Name,
-                    entities[keyList[i]].ActualBounds.ToString());
-                if (entities[keyList[i]] is IContainer)
+                    entities[i],
+                    entities[i].Id,
+                    entities[i].Name,
+                    entities[i].ActualBounds.ToString());
+                if (entities[i] is IContainer)
                 {
-                    IContainer container = (IContainer)entities[keyList[i]];
-                    list += ListEntitiesFromDictionary(container.Children, true);
+                    IContainer container = (IContainer)entities[i];
+                    list += ListEntitiesFromCollection(container.Children, true);
                 }
             }
             if (isContainer)

@@ -12,10 +12,10 @@ namespace Maquina.Entities
     {
         public Container(string name) : base(name)
         {
-            Children = new EntityDictionary();
+            Children = new EntityCollection();
         }
 
-        public EntityDictionary Children { get; protected set; }
+        public EntityCollection Children { get; protected set; }
 
         public override bool IgnoreDisplayScale
         {

@@ -48,7 +48,7 @@ namespace Maquina.UI
         {
             if (ParentScene != null)
             {
-                foreach (var item in ParentScene.Entities.Values)
+                foreach (var item in ParentScene.Entities)
                 {
                     if (item is Control)
                     {

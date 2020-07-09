@@ -9,6 +9,6 @@ namespace Maquina.Entities
 {
     public interface IContainer
     {
-        EntityDictionary Children { get; }
+        EntityCollection Children { get; }
     }
 }

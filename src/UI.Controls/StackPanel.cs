@@ -17,7 +17,7 @@ namespace Maquina.UI
 
         public StackPanel(string name) : base(name)
         {
-            Children = new EntityDictionary();
+            Children = new EntityCollection();
             _orientation = Orientation.Vertical;
             _controlMargin = new Region();
             Children.EntityChanged += OnLayoutChanged;
@@ -25,7 +25,7 @@ namespace Maquina.UI
             Application.Display.ScaleChanged += OnLayoutChanged;
         }
 
-        public EntityDictionary Children { get; protected set; }
+        public EntityCollection Children { get; protected set; }
 
         public Orientation Orientation
         {
@@ -88,7 +88,7 @@ namespace Maquina.UI
 
             if (e.Property == EntityChangedProperty.Disabled)
             {
-                foreach (var item in Children.Values)
+                foreach (var item in Children)
                 {
                     if (item is Control)
                     {
@@ -115,7 +115,7 @@ namespace Maquina.UI
                 int ComputedWidth = 0;
                 int ComputedHeight = 0;
 
-                foreach (var item in Children.Values)
+                foreach (var item in Children)
                 {
                     if (Orientation == Orientation.Horizontal)
                     {
@@ -145,7 +145,7 @@ namespace Maquina.UI
             int CurrentX = Location.X;
             int CurrentY = Location.Y;
 
-            foreach (var item in Children.Values)
+            foreach (var item in Children)
             {
                 if (Orientation == Orientation.Horizontal)
                 {

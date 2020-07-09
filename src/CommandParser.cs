@@ -61,12 +61,12 @@ namespace Maquina
                         switch (action[1])
                         {
                             case "scene":
-                                GetContainerEntitiesState(Application.Scenes.CurrentScene.Entities.Values, action[2]);
+                                GetContainerEntitiesState(Application.Scenes.CurrentScene.Entities, action[2]);
                                 break;
                             case "overlay":
                                 for (int i = 0; i < Application.Scenes.Overlays.Count; i++)
                                 {
-                                    GetContainerEntitiesState(Application.Scenes.Overlays[i].Entities.Values, action[2]);
+                                    GetContainerEntitiesState(Application.Scenes.Overlays[i].Entities, action[2]);
                                 }
                                 break;
                             default:
@@ -233,7 +233,7 @@ namespace Maquina
                 }
                 if (entity is IContainer)
                 {
-                    GetContainerEntitiesState(((IContainer)entity).Children.Values, entityName);
+                    GetContainerEntitiesState(((IContainer)entity).Children, entityName);
                 }
             }
         }

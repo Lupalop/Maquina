@@ -15,10 +15,10 @@ namespace Maquina.UI
         //        Sprite and Entity (and their children) have to be updated to handle this.
         public Canvas(string name) : base(name)
         {
-            Children = new EntityDictionary();
+            Children = new EntityCollection();
         }
 
-        public EntityDictionary Children { get; private set; }
+        public EntityCollection Children { get; private set; }
 
         public override bool IgnoreDisplayScale
         {
@@ -39,7 +39,7 @@ namespace Maquina.UI
         {
             if (e.Property == EntityChangedProperty.Disabled)
             {
-                foreach (var item in Children.Values)
+                foreach (var item in Children)
                 {
                     if (item is Control)
                     {

@@ -11,9 +11,11 @@ namespace Maquina.UI
         public Scene(string sceneName)
         {
             Name = sceneName;
-            Entities = new EntityDictionary();
-            Application.Display.ScaleChanged += Display_ResolutionOrScaleChanged;
-            Application.Display.ResolutionChanged += Display_ResolutionOrScaleChanged;
+            Entities = new EntityCollection();
+            Application.Display.ScaleChanged += OnLayoutDirty;
+            Application.Display.ResolutionChanged += OnLayoutDirty;
+            Entities.CollectionChanged += OnLayoutDirty;
+            Entities.EntityChanged += OnLayoutDirty;
         }
 
         public Scene() : this("Untitled Scene") { }
@@ -21,7 +23,7 @@ namespace Maquina.UI
         protected Game Game { get { return Application.Game; } }
         protected SpriteBatch SpriteBatch { get { return Application.SpriteBatch; } }
 
-        public EntityDictionary Entities { get; private set; }
+        public EntityCollection Entities { get; private set; }
         public string Name { get; private set; }
 
         public bool IsFrozen { get; internal set; }
@@ -48,9 +50,15 @@ namespace Maquina.UI
         public abstract void Draw();
         public abstract void Update();
 
-        private void Display_ResolutionOrScaleChanged(object sender, EventArgs e)
+        protected void OnLayoutDirty(object sender, EventArgs e)
         {
-            foreach (Entity entity in Entities.Values)
+            if (e is EntityChangedEventArgs &&
+                ((EntityChangedEventArgs)e).Property == EntityChangedProperty.Location)
+            {
+                return;
+            }
+
+            foreach (Entity entity in Entities)
             {
                 if (entity is Control)
                 {
@@ -104,7 +112,10 @@ namespace Maquina.UI
 
         public void AutoPosition(Control control)
         {
-            AutoPosition(control, control.HorizontalAlignment, control.VerticalAlignment);
+            if (control.AutoPosition)
+            {
+                AutoPosition(control, control.HorizontalAlignment, control.VerticalAlignment);
+            }
         }
 
         protected virtual void Dispose(bool disposing)
