@@ -61,20 +61,20 @@ namespace Maquina.Entities
 
         protected override void SetItem(int index, Entity item)
         {
-            Items[index].Changed -= OnEntityChanged;
-            item.Changed += OnEntityChanged;
+            Items[index].PropertyChanged -= OnEntityChanged;
+            item.PropertyChanged += OnEntityChanged;
             base.SetItem(index, item);
         }
 
         protected override void InsertItem(int index, Entity item)
         {
-            item.Changed += OnEntityChanged;
+            item.PropertyChanged += OnEntityChanged;
             base.InsertItem(index, item);
         }
 
         protected override void RemoveItem(int index)
         {
-            Items[index].Changed -= OnEntityChanged;
+            Items[index].PropertyChanged -= OnEntityChanged;
             base.RemoveItem(index);
         }
 
@@ -82,7 +82,7 @@ namespace Maquina.Entities
         {
             for (int i = 0; i < Count; i++)
             {
-                Items[i].Changed -= OnEntityChanged;
+                Items[i].PropertyChanged -= OnEntityChanged;
             }
             base.ClearItems();
         }
@@ -98,9 +98,9 @@ namespace Maquina.Entities
             return IsIndexValid(IndexOfKey(key));
         }
 
-        public event EventHandler<EntityChangedEventArgs> EntityChanged;
+        public event EventHandler<PropertyChangedEventArgs> EntityChanged;
 
-        protected virtual void OnEntityChanged(object sender, EntityChangedEventArgs e)
+        protected virtual void OnEntityChanged(object sender, PropertyChangedEventArgs e)
         {
             if (EntityChanged != null)
             {

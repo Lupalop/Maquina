@@ -52,8 +52,8 @@ namespace Maquina.UI
 
         protected void OnLayoutDirty(object sender, EventArgs e)
         {
-            if (e is EntityChangedEventArgs &&
-                ((EntityChangedEventArgs)e).Property == EntityChangedProperty.Location)
+            if (e is PropertyChangedEventArgs &&
+                ((PropertyChangedEventArgs)e).Id == PropertyId.Location)
             {
                 return;
             }

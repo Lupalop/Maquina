@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Entities
 {
-    public enum EntityChangedProperty
+    public enum PropertyId
     {
         Custom                      = 0,
         // Base properties
@@ -24,21 +24,21 @@ namespace Maquina.Entities
         Margin                      = 9,
     }
 
-    public class EntityChangedEventArgs : EventArgs
+    public class PropertyChangedEventArgs : EventArgs
     {
-        public EntityChangedEventArgs(EntityChangedProperty property)
+        public PropertyChangedEventArgs(PropertyId property)
         {
-            Property = property;
-            PropertyName = property.ToString();
+            Id = property;
+            Name = property.ToString();
         }
 
-        public EntityChangedEventArgs(string propertyName)
+        public PropertyChangedEventArgs(string propertyName)
         {
-            Property = EntityChangedProperty.Custom;
-            PropertyName = propertyName;
+            Id = PropertyId.Custom;
+            Name = propertyName;
         }
 
-        public EntityChangedProperty Property { get; protected set; }
-        public string PropertyName { get; protected set; }
+        public PropertyId Id { get; protected set; }
+        public string Name { get; protected set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Maquina.UI
             set
             {
                 _orientation = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Orientation));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Orientation));
             }
         }
 
@@ -43,7 +43,7 @@ namespace Maquina.UI
             set
             {
                 _controlMargin = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Margin));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Margin));
             }
         }
 
@@ -64,8 +64,8 @@ namespace Maquina.UI
 
         private void OnLayoutChanged(object sender, EventArgs e)
         {
-            if (e is EntityChangedEventArgs &&
-                ((EntityChangedEventArgs)e).Property == EntityChangedProperty.Location)
+            if (e is PropertyChangedEventArgs &&
+                ((PropertyChangedEventArgs)e).Id == PropertyId.Location)
             {
                 return;
             }
@@ -73,20 +73,20 @@ namespace Maquina.UI
             UpdateLayout();
         }
 
-        protected override void OnEntityChanged(object sender, EntityChangedEventArgs e)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (e.Property == EntityChangedProperty.Orientation ||
-                e.Property == EntityChangedProperty.Margin)
+            if (e.Id == PropertyId.Orientation ||
+                e.Id == PropertyId.Margin)
             {
                 UpdateLayout();
             }
 
-            if (e.Property == EntityChangedProperty.Location)
+            if (e.Id == PropertyId.Location)
             {
                 UpdateLayout(false);
             }
 
-            if (e.Property == EntityChangedProperty.Disabled)
+            if (e.Id == PropertyId.Disabled)
             {
                 foreach (var item in Children)
                 {
@@ -100,7 +100,7 @@ namespace Maquina.UI
                     }
                 }
             }
-            base.OnEntityChanged(sender, e);
+            base.OnPropertyChanged(e);
         }
 
         public void UpdateLayout(bool resizeContainer = true)

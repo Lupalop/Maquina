@@ -90,7 +90,7 @@ namespace Maquina.Entities
                     return;
                 }
                 _bounds.Location = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Location));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Location));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Maquina.Entities
                     return;
                 }
                 _bounds.Size = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Size));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Size));
             }
         }
 
@@ -124,7 +124,7 @@ namespace Maquina.Entities
                     return;
                 }
                 _scale = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Scale));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Scale));
             }
         }
 
@@ -189,13 +189,17 @@ namespace Maquina.Entities
         /// <summary>
         /// Occurs when a property of the entity has been modified.
         /// </summary>
-        public event EventHandler<EntityChangedEventArgs> Changed;
+        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
 
-        protected virtual void OnEntityChanged(object sender, EntityChangedEventArgs e)
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event with the provided arguments.
+        /// </summary>
+        /// <param name="e">Arguments of the event being raised.</param>
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (Changed != null)
+            if (PropertyChanged != null)
             {
-                Changed(sender, e);
+                PropertyChanged(this, e);
             }
         }
 
@@ -214,7 +218,7 @@ namespace Maquina.Entities
         {
             if (disposing)
             {
-                Changed = null;
+                PropertyChanged = null;
             }
         }
 

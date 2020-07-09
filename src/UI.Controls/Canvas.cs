@@ -35,9 +35,9 @@ namespace Maquina.UI
             Children.Update();
         }
 
-        protected override void OnEntityChanged(object sender, EntityChangedEventArgs e)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (e.Property == EntityChangedProperty.Disabled)
+            if (e.Id == PropertyId.Disabled)
             {
                 foreach (var item in Children)
                 {
@@ -51,7 +51,7 @@ namespace Maquina.UI
                     }
                 }
             }
-            base.OnEntityChanged(sender, e);
+            base.OnPropertyChanged(e);
         }
 
         protected override void Dispose(bool disposing)

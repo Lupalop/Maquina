@@ -155,7 +155,7 @@ namespace Maquina.UI
             }
         }
 
-        protected override void OnEntityChanged(object sender, EntityChangedEventArgs e)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (TextSprite != null)
             {
@@ -182,7 +182,7 @@ namespace Maquina.UI
                 _iconLocation.Y = Location.Y + (ActualBounds.Height / 2) - (int)(IconSprite.Size.Y * ActualScale / 2);
             }
 
-            base.OnEntityChanged(sender, e);
+            base.OnPropertyChanged(e);
         }
 
         protected override void Dispose(bool disposing)

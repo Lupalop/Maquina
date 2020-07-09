@@ -32,7 +32,7 @@ namespace Maquina.UI
                     return;
                 }
                 _horizontalAlignment = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.HorizontalAlignment));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.HorizontalAlignment));
             }
         }
 
@@ -46,7 +46,7 @@ namespace Maquina.UI
                     return;
                 }
                 _verticalAlignment = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.VerticalAlignment));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.VerticalAlignment));
             }
         }
 
@@ -60,7 +60,7 @@ namespace Maquina.UI
                     return;
                 }
                 _disabled = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Disabled));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Disabled));
             }
         }
 
@@ -74,7 +74,7 @@ namespace Maquina.UI
                     return;
                 }
                 _focused = value;
-                OnEntityChanged(this, new EntityChangedEventArgs(EntityChangedProperty.Focused));
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Focused));
             }
         }
 
