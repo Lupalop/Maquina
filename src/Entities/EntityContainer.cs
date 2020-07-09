@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Maquina.Entities
 {
-    public class Container : Entity, IContainer
+    public class EntityContainer : Entity, IEntityContainer
     {
-        public Container(string name) : base(name)
+        public EntityContainer(string name) : base(name)
         {
             Children = new EntityCollection();
         }

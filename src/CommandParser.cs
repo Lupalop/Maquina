@@ -231,9 +231,9 @@ namespace Maquina
                     //Console.WriteLine(entity.ToString());
                     GetEntityState(entity);
                 }
-                if (entity is IContainer)
+                if (entity is IEntityContainer)
                 {
-                    GetContainerEntitiesState(((IContainer)entity).Children, entityName);
+                    GetContainerEntitiesState(((IEntityContainer)entity).Children, entityName);
                 }
             }
         }

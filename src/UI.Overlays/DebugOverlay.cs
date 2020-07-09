@@ -131,9 +131,9 @@ namespace Maquina.UI
                     entities[i].Id,
                     entities[i].Name,
                     entities[i].ActualBounds.ToString());
-                if (entities[i] is IContainer)
+                if (entities[i] is IEntityContainer)
                 {
-                    IContainer container = (IContainer)entities[i];
+                    IEntityContainer container = (IEntityContainer)entities[i];
                     list += ListEntitiesFromCollection(container.Children, true);
                 }
             }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class StackPanel : Control, IContainer
+    public class StackPanel : Control, IEntityContainer
     {
         private Orientation _orientation;
         private Region _controlMargin;

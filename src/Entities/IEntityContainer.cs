@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Entities
 {
-    public interface IContainer
+    public interface IEntityContainer
     {
         EntityCollection Children { get; }
     }

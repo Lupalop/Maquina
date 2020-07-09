@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.UI
 {
-    public class Canvas : Control, IContainer
+    public class Canvas : Control, IEntityContainer
     {
         // FIXME: Entities inside a canvas entity SHOULD be relative to the container's location.
         //        Sprite and Entity (and their children) have to be updated to handle this.
