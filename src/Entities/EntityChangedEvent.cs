@@ -9,9 +9,20 @@ namespace Maquina.Entities
 {
     public enum EntityChangedProperty
     {
-        Location,
-        Size,
-        Scale,
+        Custom                      = 0,
+        // Base properties
+        Name                        = 1,
+        Location                    = 2,
+        Size                        = 3,
+        Scale                       = 4,
+        // Control properties
+        HorizontalAlignment         = 5,
+        VerticalAlignment           = 6,
+        Disabled                    = 7,
+        Focused                     = 8,
+        // Container properties
+        Orientation                 = 9,
+        Margin                      = 10,
     }
 
     public class EntityChangedEventArgs : EventArgs
@@ -19,7 +30,16 @@ namespace Maquina.Entities
         public EntityChangedEventArgs(EntityChangedProperty property)
         {
             Property = property;
+            PropertyName = property.ToString();
         }
-        public EntityChangedProperty Property { get; set; }
+
+        public EntityChangedEventArgs(string propertyName)
+        {
+            Property = EntityChangedProperty.Custom;
+            PropertyName = propertyName;
+        }
+
+        public EntityChangedProperty Property { get; protected set; }
+        public string PropertyName { get; protected set; }
     }
 }
