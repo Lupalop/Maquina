@@ -11,18 +11,17 @@ namespace Maquina.Entities
     {
         Custom                      = 0,
         // Base properties
-        Name                        = 1,
-        Location                    = 2,
-        Size                        = 3,
-        Scale                       = 4,
+        Location                    = 1,
+        Size                        = 2,
+        Scale                       = 3,
         // Control properties
-        HorizontalAlignment         = 5,
-        VerticalAlignment           = 6,
-        Disabled                    = 7,
-        Focused                     = 8,
+        HorizontalAlignment         = 4,
+        VerticalAlignment           = 5,
+        Disabled                    = 6,
+        Focused                     = 7,
         // Container properties
-        Orientation                 = 9,
-        Margin                      = 10,
+        Orientation                 = 8,
+        Margin                      = 9,
     }
 
     public class EntityChangedEventArgs : EventArgs
