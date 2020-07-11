@@ -11,19 +11,14 @@ namespace Maquina
     {
         private static bool _isInitialized;
         public static readonly Version Version;
-        public static readonly string BuildId;
-        
-        // Increment API version for breaking changes
-        public static readonly int APIVersion = 0;
+        public static readonly DateTime BuildDateTime;
 
         static Application()
         {
             Version = Assembly.GetExecutingAssembly().GetName().Version;
-            DateTime BuildDateTime = new DateTime(2000, 1, 1)
+            BuildDateTime = new DateTime(2000, 1, 1)
                 .AddDays(Version.Build)
                 .AddSeconds(Version.Revision * 2);
-            BuildId = string.Format("{0} {1}",
-                BuildDateTime.ToShortDateString(), BuildDateTime.ToShortTimeString());
         }
 
         // Game component managers
