@@ -75,6 +75,7 @@
     <Compile Include="Entities\FadeAnimation.cs" />
     <Compile Include="Entities\IAnimation.cs" />
     <Compile Include="DisplayManager.cs" />
+    <Compile Include="Entities\SpriteUtils.cs" />
     <Compile Include="Entities\TextSprite.cs" />
     <Compile Include="Entities\TextureAtlasSprite.cs" />
     <Compile Include="Entities\TextureSprite.cs" />
