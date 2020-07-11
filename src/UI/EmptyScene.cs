@@ -12,7 +12,7 @@ namespace Maquina.UI
         public EmptyScene() : base() { }
         public override void Draw()
         {
-            Game.GraphicsDevice.Clear(Color.Black);
+            Application.GraphicsDevice.Clear(Color.Black);
         }
         public override void Update() { }
     }

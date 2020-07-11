@@ -41,11 +41,11 @@ namespace Maquina.UI
         {
 #if MGE_LOGGING
             // Listen to window focus events
-            Game.Activated += delegate
+            Application.Game.Activated += delegate
             {
                 LogManager.Info(0, "Window Focus: Gained");
             };
-            Game.Deactivated += delegate
+            Application.Game.Deactivated += delegate
             {
                 LogManager.Info(0, "Window Focus: Lost");
             };

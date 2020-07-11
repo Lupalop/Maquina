@@ -68,7 +68,7 @@ namespace Maquina.UI
             private set
             {
                 _fadeColor = value;
-                _fadeBackground = new Texture2D(Game.GraphicsDevice, 1, 1);
+                _fadeBackground = new Texture2D(Application.GraphicsDevice, 1, 1);
                 _fadeBackground.SetData(new Color[] { value });
             }
         }
