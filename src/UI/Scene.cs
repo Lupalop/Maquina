@@ -9,6 +9,7 @@ namespace Maquina.UI
     public abstract class Scene : IDisposable
     {
         private EntityCollection _entities;
+        private bool _contentLoaded;
 
         public Scene(string name, SpriteBatch spriteBatch)
         {
@@ -33,6 +34,10 @@ namespace Maquina.UI
             get { return _entities; }
             set
             {
+                if (_contentLoaded)
+                {
+                    throw new InvalidOperationException("Changing the entity collection after the scene content has been loaded is not allowed.");
+                }
                 _entities.CollectionChanged -= OnLayoutDirty;
                 _entities.EntityChanged -= OnLayoutDirty;
                 _entities = value;
@@ -58,6 +63,7 @@ namespace Maquina.UI
 #if MGE_LOGGING
             LogManager.Info(0, string.Format("Content loaded from: {0}", Name));
 #endif
+            _contentLoaded = true;
             if (ContentLoaded != null)
             {
                 ContentLoaded(this, EventArgs.Empty);
