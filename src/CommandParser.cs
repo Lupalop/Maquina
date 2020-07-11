@@ -271,10 +271,10 @@ namespace Maquina
         private static void WriteHeader()
         {
             Console.Clear();
-            string consoleName = "Maquina Developer Console";
-            Console.Title = consoleName;
-            Console.WriteLine(consoleName);
-            Console.WriteLine("API Version: {0} | Build identifier: {1}", Application.APIVersion, Application.BuildId);
+            string engineName = "Maquina Game Engine";
+            Console.Title = $"{engineName} Console";
+            Console.WriteLine("{0} [Version {1}]", engineName, Application.Version);
+            Console.WriteLine("Build timestamp: {0}", Application.BuildDateTime);
             Console.WriteLine();
         }
 #else
