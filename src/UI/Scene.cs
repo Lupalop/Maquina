@@ -8,9 +8,9 @@ namespace Maquina.UI
 {
     public abstract class Scene : IDisposable
     {
-        public Scene(string sceneName)
+        public Scene(string name, SpriteBatch spriteBatch)
         {
-            Name = sceneName;
+            Name = name;
             Entities = new EntityCollection();
             Application.Display.ScaleChanged += OnLayoutDirty;
             Application.Display.ResolutionChanged += OnLayoutDirty;
@@ -18,12 +18,15 @@ namespace Maquina.UI
             Entities.EntityChanged += OnLayoutDirty;
         }
 
-        public Scene() : this("Untitled Scene") { }
+        public Scene(string name)
+            : this(name, Application.SpriteBatch)
+        { }
 
-        protected SpriteBatch SpriteBatch
-        {
-            get { return Application.SpriteBatch; }
-        }
+        public Scene()
+            : this("Untitled Scene")
+        { }
+
+        protected SpriteBatch SpriteBatch { get; set; }
 
         public EntityCollection Entities { get; private set; }
         public string Name { get; private set; }
