@@ -14,6 +14,7 @@ namespace Maquina.UI
         public Scene(string name, SpriteBatch spriteBatch)
         {
             Name = name;
+            SpriteBatch = spriteBatch;
             Entities = new EntityCollection();
             Application.Display.ScaleChanged += OnLayoutDirty;
             Application.Display.ResolutionChanged += OnLayoutDirty;
@@ -27,7 +28,7 @@ namespace Maquina.UI
             : this("Untitled Scene")
         { }
 
-        protected SpriteBatch SpriteBatch { get; set; }
+        protected SpriteBatch SpriteBatch { get; private set; }
 
         public EntityCollection Entities
         {
