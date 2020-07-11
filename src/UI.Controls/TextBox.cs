@@ -38,7 +38,7 @@ namespace Maquina.UI
             {
                 OnInput(this, EventArgs.Empty);
             }
-            if (Disabled || !Focused)
+            if (!Enabled || !Focused)
             {
                 return;
             }

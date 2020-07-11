@@ -86,13 +86,13 @@ namespace Maquina.UI
                 UpdateLayout(false);
             }
 
-            if (e.Id == PropertyId.Disabled)
+            if (e.Id == PropertyId.Enabled)
             {
                 foreach (var item in Children)
                 {
                     if (item is Control)
                     {
-                        ((Control)(item)).Disabled = Disabled;
+                        ((Control)(item)).Enabled = Enabled;
                     }
                 }
             }

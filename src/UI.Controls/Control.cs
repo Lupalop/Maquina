@@ -12,13 +12,14 @@ namespace Maquina.UI
     {
         private HorizontalAlignment _horizontalAlignment;
         private VerticalAlignment _verticalAlignment;
-        private bool _disabled;
+        private bool _enabled;
         private bool _focused;
 
         protected Control(string name) : base (name)
         {
             _horizontalAlignment = HorizontalAlignment.Center;
             _verticalAlignment = VerticalAlignment.Center;
+            _enabled = true;
             AutoPosition = false;
         }
 
@@ -50,17 +51,17 @@ namespace Maquina.UI
             }
         }
 
-        public bool Disabled
+        public bool Enabled
         {
-            get { return _disabled; }
+            get { return _enabled; }
             set
             {
-                if (_disabled == value)
+                if (_enabled == value)
                 {
                     return;
                 }
-                _disabled = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Disabled));
+                _enabled = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Enabled));
             }
         }
 

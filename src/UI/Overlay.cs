@@ -52,7 +52,7 @@ namespace Maquina.UI
                 {
                     if (item is Control)
                     {
-                        ((Control)(item)).Disabled = DisableParentSceneUI;
+                        ((Control)(item)).Enabled = !DisableParentSceneUI;
                     }
                 }
             }

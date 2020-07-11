@@ -254,7 +254,7 @@ namespace Maquina
                 info.AppendLine();
                 info.AppendLine("UI Control information:");
                 info.AppendLine(string.Format("Auto Position?: {0}", control.AutoPosition));
-                info.AppendLine(string.Format("Is Disabled?: {0}", control.Disabled));
+                info.AppendLine(string.Format("Is Enabled?: {0}", control.Enabled));
                 info.AppendLine(string.Format("Is Focused?: {0}", control.Focused));
                 info.AppendLine(string.Format("Horizontal Alignment: {0}", control.HorizontalAlignment));
                 info.AppendLine(string.Format("Vertical Alignment: {0}", control.VerticalAlignment));

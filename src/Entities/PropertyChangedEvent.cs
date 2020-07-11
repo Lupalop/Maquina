@@ -17,7 +17,7 @@ namespace Maquina.Entities
         // Control properties
         HorizontalAlignment         = 4,
         VerticalAlignment           = 5,
-        Disabled                    = 6,
+        Enabled                     = 6,
         Focused                     = 7,
         // Container properties
         Orientation                 = 8,

@@ -96,7 +96,7 @@ namespace Maquina.UI
             }
 
             // Don't respond to any event if button is disabled
-            if (!Disabled && Application.Input.ShouldAcceptInput)
+            if (Enabled && Application.Input.ShouldAcceptInput)
             {
                 // If mouse is on top of the button
                 if (ActualBounds.Contains(Application.Input.MousePosition))
