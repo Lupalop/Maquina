@@ -82,9 +82,9 @@ namespace Maquina.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             BackgroundSprite?.Draw(spriteBatch, DrawController, ActualBounds);
-            SpriteUtils.BeginScissor(ActualBounds);
+            EntityUtils.BeginScissor(ActualBounds);
             TextSprite?.Draw(spriteBatch, DrawController, _labelLocation, ActualScale);
-            SpriteUtils.EndScissor();
+            EntityUtils.EndScissor();
             IconSprite?.Draw(spriteBatch, DrawController, _iconLocation, ActualScale);
         }
 

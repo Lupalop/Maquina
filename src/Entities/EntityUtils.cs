@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Maquina.Entities
 {
-    public static class SpriteUtils
+    public static class EntityUtils
     {
         private static List<Rectangle> _scissorRectangles;
         private static int _scissorDepth;
 
-        static SpriteUtils()
+        static EntityUtils()
         {
             _scissorRectangles = new List<Rectangle>();
             _scissorDepth = -1;
