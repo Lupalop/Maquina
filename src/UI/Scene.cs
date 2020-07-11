@@ -8,14 +8,14 @@ namespace Maquina.UI
 {
     public abstract class Scene : IDisposable
     {
+        private EntityCollection _entities;
+
         public Scene(string name, SpriteBatch spriteBatch)
         {
             Name = name;
             Entities = new EntityCollection();
             Application.Display.ScaleChanged += OnLayoutDirty;
             Application.Display.ResolutionChanged += OnLayoutDirty;
-            Entities.CollectionChanged += OnLayoutDirty;
-            Entities.EntityChanged += OnLayoutDirty;
         }
 
         public Scene(string name)
@@ -28,7 +28,19 @@ namespace Maquina.UI
 
         protected SpriteBatch SpriteBatch { get; set; }
 
-        public EntityCollection Entities { get; private set; }
+        public EntityCollection Entities
+        {
+            get { return _entities; }
+            set
+            {
+                _entities.CollectionChanged -= OnLayoutDirty;
+                _entities.EntityChanged -= OnLayoutDirty;
+                _entities = value;
+                _entities.CollectionChanged += OnLayoutDirty;
+                _entities.EntityChanged += OnLayoutDirty;
+            }
+        }
+
         public string Name { get; private set; }
 
         public bool IsFrozen { get; internal set; }
