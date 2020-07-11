@@ -49,7 +49,7 @@ namespace Maquina.Entities
             IsRunning = true;
             OnAnimationStarted();
 
-            AnimationManager.Add(this);
+            Application.Animations.Add(this);
         }
 
         public void Stop()
@@ -65,7 +65,7 @@ namespace Maquina.Entities
             {
                 IsRunning = false;
                 IsRepeating = false;
-                AnimationManager.Remove(this);
+                Application.Animations.Remove(this);
             }
         }
 

@@ -203,15 +203,15 @@ namespace Maquina
                     case "freeze":
                         Application.Scenes.CurrentScene.Enabled = false;
 #if DEBUG
-                        AnimationManager.IsFrozen = true;
-                        TimerManager.IsFrozen = true;
+                        Application.AnimationsEnabled = false;
+                        Application.TimersEnabled = false;
 #endif
                         break;
                     case "unfreeze":
                         Application.Scenes.CurrentScene.Enabled = true;
 #if DEBUG
-                        AnimationManager.IsFrozen = false;
-                        TimerManager.IsFrozen = false;
+                        Application.AnimationsEnabled = true;
+                        Application.TimersEnabled = true;
 #endif
                         break;
                     default:

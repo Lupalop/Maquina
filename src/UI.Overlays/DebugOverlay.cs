@@ -106,11 +106,11 @@ namespace Maquina.UI
             if (isCounterVisible[4])
             {
                 globalTimerList = "";
-                for (int i = 0; i < TimerManager.Timers.Count; i++)
+                for (int i = 0; i < Application.Timers.Count; i++)
                 {
-                    globalTimerList += String.Format("Timer {0}: AutoReset-{1}, Enabled-{2}, Interval-{3} \n",
-                        i, TimerManager.Timers[i].AutoReset, TimerManager.Timers[i].Enabled,
-                        TimerManager.Timers[i].Interval);
+                    globalTimerList += string.Format("Timer {0}: AutoReset-{1}, Enabled-{2}, Interval-{3} \n",
+                        i, Application.Timers[i].AutoReset, Application.Timers[i].Enabled,
+                        Application.Timers[i].Interval);
                 }
             }
         }

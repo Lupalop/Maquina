@@ -17,7 +17,7 @@ namespace Maquina
             Interval = 100.0;
             Enabled = false;
             AutoReset = true;
-            TimerManager.Add(this);
+            Application.Timers.Add(this);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Maquina
         /// </summary>
         public void Close()
         {
-            TimerManager.Remove(this);
+            Application.Timers.Remove(this);
         }
     }
 }

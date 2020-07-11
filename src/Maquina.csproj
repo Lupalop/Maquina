@@ -66,7 +66,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimationManager.cs" />
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\EntityContainer.cs" />
     <Compile Include="Entities\DrawController.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="Content\ContentManifest.cs" />
     <Compile Include="Content\Property.cs" />
     <Compile Include="Timer.cs" />
-    <Compile Include="TimerManager.cs" />
     <Compile Include="Entities\Orientation.cs" />
     <Compile Include="UI.Controls\TextBox.cs" />
     <Compile Include="UI.Controls\StackPanel.cs" />
