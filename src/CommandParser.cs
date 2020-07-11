@@ -201,14 +201,14 @@ namespace Maquina
                         Application.Preferences.Reset();
                         break;
                     case "freeze":
-                        Application.Scenes.CurrentScene.IsFrozen = true;
+                        Application.Scenes.CurrentScene.Enabled = false;
 #if DEBUG
                         AnimationManager.IsFrozen = true;
                         TimerManager.IsFrozen = true;
 #endif
                         break;
                     case "unfreeze":
-                        Application.Scenes.CurrentScene.IsFrozen = false;
+                        Application.Scenes.CurrentScene.Enabled = true;
 #if DEBUG
                         AnimationManager.IsFrozen = false;
                         TimerManager.IsFrozen = false;

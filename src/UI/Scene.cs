@@ -47,8 +47,7 @@ namespace Maquina.UI
         }
 
         public string Name { get; private set; }
-
-        public bool IsFrozen { get; internal set; }
+        public bool Enabled { get; set; }
 
         public event EventHandler ContentLoaded;
         public event EventHandler Disposed;

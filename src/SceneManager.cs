@@ -80,8 +80,8 @@ namespace Maquina
 #endif
                 return;
             }
-            // Prevent current scene from drawing/updating
-            CurrentScene.IsFrozen = true;
+            // Prevent current scene from updating
+            CurrentScene.Enabled = false;
 
             FadeOverlay overlay = new FadeOverlay("fade-overlay");
             // Switch to the given scene once the fade transition is complete
@@ -115,7 +115,7 @@ namespace Maquina
 
         internal void Update()
         {
-            if (!CurrentScene.IsFrozen)
+            if (CurrentScene.Enabled)
             {
                 CurrentScene.Update();
             }
