@@ -38,11 +38,17 @@ namespace Maquina.UI
                 {
                     throw new InvalidOperationException("Changing the entity collection after the scene content has been loaded is not allowed.");
                 }
-                _entities.CollectionChanged -= OnLayoutDirty;
-                _entities.EntityChanged -= OnLayoutDirty;
+                if (_entities != null)
+                {
+                    _entities.CollectionChanged -= OnLayoutDirty;
+                    _entities.EntityChanged -= OnLayoutDirty;
+                }
                 _entities = value;
-                _entities.CollectionChanged += OnLayoutDirty;
-                _entities.EntityChanged += OnLayoutDirty;
+                if (_entities != null)
+                {
+                    _entities.CollectionChanged += OnLayoutDirty;
+                    _entities.EntityChanged += OnLayoutDirty;
+                }
             }
         }
 
