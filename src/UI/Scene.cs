@@ -20,8 +20,10 @@ namespace Maquina.UI
 
         public Scene() : this("Untitled Scene") { }
 
-        protected Game Game { get { return Application.Game; } }
-        protected SpriteBatch SpriteBatch { get { return Application.SpriteBatch; } }
+        protected SpriteBatch SpriteBatch
+        {
+            get { return Application.SpriteBatch; }
+        }
 
         public EntityCollection Entities { get; private set; }
         public string Name { get; private set; }
