@@ -159,6 +159,11 @@ namespace Maquina.UI
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
+            if (e.Id == PropertyId.Enabled || e.Id == PropertyId.Focused)
+            {
+                return;
+            }
+
             if (TextSprite != null)
             {
                 _labelLocation = new Point(
