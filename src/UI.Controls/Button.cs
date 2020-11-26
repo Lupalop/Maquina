@@ -72,10 +72,10 @@ namespace Maquina.UI
             {
                 if (TextSprite == null)
                 {
-                    TextSprite = value;
-                    return;
+                    TextSprite = new TextSprite();
                 }
                 TextSprite.Text = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Text)));
             }
         }
 
