@@ -93,7 +93,7 @@
     <Compile Include="Entities\IEntityContainer.cs" />
     <Compile Include="MaquinaGame.cs" />
     <Compile Include="MouseButton.cs" />
-    <Compile Include="Region.cs" />
+    <Compile Include="Margin.cs" />
     <Compile Include="Content\LocaleManifest.cs" />
     <Compile Include="Content\ContentManifest.cs" />
     <Compile Include="Content\Property.cs" />

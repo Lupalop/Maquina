@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace Maquina
 {
     [Serializable]
-    public struct Region : IEquatable<Region>
+    public struct Margin : IEquatable<Margin>
     {
         public int Top { get; set; }
         public int Right { get; set; }
         public int Bottom { get; set; }
         public int Left { get; set; }
 
-        public Region(int top, int right, int bottom, int left)
+        public Margin(int top, int right, int bottom, int left)
         {
             Top = top;
             Right = right;
@@ -24,7 +24,7 @@ namespace Maquina
             Left = left;
         }
 
-        public Region(Point height, Point width)
+        public Margin(Point height, Point width)
         {
             Top = height.X;
             Bottom = height.Y;
@@ -32,9 +32,9 @@ namespace Maquina
             Left = width.Y;
         }
 
-        public static Region Empty
+        public static Margin Empty
         {
-            get { return default(Region); }
+            get { return default(Margin); }
         }
 
         public bool IsEmpty
@@ -49,7 +49,7 @@ namespace Maquina
             }
         }
 
-        public bool Equals(Region other)
+        public bool Equals(Margin other)
         {
             if (Top == other.Top && Right == other.Right &&
                 Bottom == other.Bottom && Left == other.Left)
@@ -62,9 +62,9 @@ namespace Maquina
         public override bool Equals(object obj)
         {
             bool result = false;
-            if (obj is Region)
+            if (obj is Margin)
             {
-                result = Equals((Region)obj);
+                result = Equals((Margin)obj);
             }
             return result;
         }
@@ -83,7 +83,7 @@ namespace Maquina
             return Top.GetHashCode() + Right.GetHashCode() + Bottom.GetHashCode() + Left.GetHashCode();
         }
 
-        public static bool operator ==(Region a, Region b)
+        public static bool operator ==(Margin a, Margin b)
         {
             if (a.Top == b.Top && a.Bottom == b.Bottom &&
                 a.Left == b.Left && a.Right == b.Right)
@@ -93,7 +93,7 @@ namespace Maquina
             return false;
         }
 
-        public static bool operator !=(Region a, Region b)
+        public static bool operator !=(Margin a, Margin b)
         {
             if (a.Top == b.Top && a.Bottom == b.Bottom &&
                 a.Left == b.Left && a.Right == b.Right)

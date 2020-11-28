@@ -13,13 +13,13 @@ namespace Maquina.UI
     public class StackPanel : Control, IEntityContainer
     {
         private Orientation _orientation;
-        private Region _controlMargin;
+        private Margin _controlMargin;
 
         public StackPanel(string name) : base(name)
         {
             Children = new EntityCollection();
             _orientation = Orientation.Vertical;
-            _controlMargin = new Region();
+            _controlMargin = new Margin();
             Children.EntityChanged += OnLayoutChanged;
             Children.CollectionChanged += OnLayoutChanged;
             Application.Display.ScaleChanged += OnLayoutChanged;
@@ -37,7 +37,7 @@ namespace Maquina.UI
             }
         }
 
-        public Region ControlMargin
+        public Margin ControlMargin
         {
             get { return _controlMargin; }
             set
