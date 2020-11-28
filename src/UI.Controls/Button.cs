@@ -13,8 +13,6 @@ namespace Maquina.UI
 {
     public class Button : Control
     {
-        private bool _leftClickFired;
-        private bool _rightClickFired;
         private Point _labelLocation;
         private Point _iconLocation;
 
@@ -97,19 +95,17 @@ namespace Maquina.UI
 
             if (Enabled && Application.Input.Enabled)
             {
-                // If mouse is on top of the button
-                if (ActualBounds.Contains(Application.Input.MousePosition))
+                // Update frame: Cursor is on the button
+                if (ActualBounds.Contains(Application.Input.MousePosition) &&
+                    BackgroundSprite is TextureAtlasSprite)
                 {
-                    if (BackgroundSprite is TextureAtlasSprite)
-                    {
-                        ((TextureAtlasSprite)BackgroundSprite).Frame = 1;
-                    }
+                    ((TextureAtlasSprite)BackgroundSprite).Frame = 1;
                 }
 
-                // If the button was clicked
-                if ((Application.Input.MouseDown(MouseButton.Left) ||
-                     Application.Input.MouseDown(MouseButton.Right) ||
-                     Application.Input.MouseDown(MouseButton.Middle)))
+                // Update focus: Mouse button is pressed
+                if (Application.Input.MouseDown(MouseButton.Left)  ||
+                    Application.Input.MouseDown(MouseButton.Right) ||
+                    Application.Input.MouseDown(MouseButton.Middle))
                 {
                     Focused = false;
                     if (ActualBounds.Contains(Application.Input.MousePosition))
@@ -125,32 +121,22 @@ namespace Maquina.UI
                 // Left Mouse Button Click Action
                 if (LeftMouseDown != null)
                 {
-                    if (Application.Input.MouseDown(MouseButton.Left) && ActualBounds.Contains(Application.Input.MousePosition))
-                        _leftClickFired = true;
-                    if (Application.Input.MouseDown(MouseButton.Left) && !ActualBounds.Contains(Application.Input.MousePosition))
-                        _leftClickFired = false;
-                    if (Application.Input.MouseUp(MouseButton.Left) && _leftClickFired)
+                    if (Application.Input.MousePressed(MouseButton.Left) &&
+                        ActualBounds.Contains(Application.Input.MousePosition))
                     {
                         LeftMouseDown(this, EventArgs.Empty);
                         ClickSound.Play();
-                        // In order to prevent the action from being fired again
-                        _leftClickFired = false;
                     }
                 }
 
                 // Right Mouse Button Click Action
                 if (RightMouseDown != null)
                 {
-                    if (Application.Input.MouseDown(MouseButton.Right) && ActualBounds.Contains(Application.Input.MousePosition))
-                        _rightClickFired = true;
-                    if (Application.Input.MouseDown(MouseButton.Right) && !ActualBounds.Contains(Application.Input.MousePosition))
-                        _rightClickFired = false;
-                    if (Application.Input.MouseUp(MouseButton.Right) && _rightClickFired)
+                    if (Application.Input.MousePressed(MouseButton.Right) &&
+                        ActualBounds.Contains(Application.Input.MousePosition))
                     {
                         RightMouseDown(this, EventArgs.Empty);
                         ClickSound.Play();
-                        // In order to prevent the action from being fired again
-                        _rightClickFired = false;
                     }
                 }
             }
