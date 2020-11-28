@@ -32,8 +32,8 @@ namespace Maquina.UI
 
         public HorizontalAlignment IconAlignment { get; set; }
 
-        public event EventHandler OnLeftClick;
-        public event EventHandler OnRightClick;
+        public event EventHandler LeftMouseDown;
+        public event EventHandler RightMouseDown;
 
         public SoundEffect ClickSound { get; set; }
 
@@ -124,7 +124,7 @@ namespace Maquina.UI
                 }
 
                 // Left Mouse Button Click Action
-                if (OnLeftClick != null)
+                if (LeftMouseDown != null)
                 {
                     if (Application.Input.MouseDown(MouseButton.Left) && ActualBounds.Contains(Application.Input.MousePosition))
                         _leftClickFired = true;
@@ -132,7 +132,7 @@ namespace Maquina.UI
                         _leftClickFired = false;
                     if (Application.Input.MouseUp(MouseButton.Left) && _leftClickFired)
                     {
-                        OnLeftClick(this, EventArgs.Empty);
+                        LeftMouseDown(this, EventArgs.Empty);
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
                         _leftClickFired = false;
@@ -140,7 +140,7 @@ namespace Maquina.UI
                 }
 
                 // Right Mouse Button Click Action
-                if (OnRightClick != null)
+                if (RightMouseDown != null)
                 {
                     if (Application.Input.MouseDown(MouseButton.Right) && ActualBounds.Contains(Application.Input.MousePosition))
                         _rightClickFired = true;
@@ -148,7 +148,7 @@ namespace Maquina.UI
                         _rightClickFired = false;
                     if (Application.Input.MouseUp(MouseButton.Right) && _rightClickFired)
                     {
-                        OnRightClick(this, EventArgs.Empty);
+                        RightMouseDown(this, EventArgs.Empty);
                         ClickSound.Play();
                         // In order to prevent the action from being fired again
                         _rightClickFired = false;
