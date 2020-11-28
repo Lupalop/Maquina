@@ -72,30 +72,15 @@ namespace Maquina.Entities
 
         public override void Draw(SpriteBatch spriteBatch, DrawController controller, Rectangle bounds)
         {
-            if (OverrideSourceRectangle)
-            {
-                spriteBatch.Draw(
-                    Texture,
-                    bounds,
-                    controller.SourceRectangle,
-                    controller.Tint * controller.Opacity,
-                    controller.Rotation,
-                    controller.Origin,
-                    controller.SpriteEffects,
-                    controller.LayerDepth);
-            }
-            else
-            {
-                spriteBatch.Draw(
-                    Texture,
-                    bounds,
-                    _sourceRectangles[Frame],
-                    controller.Tint * controller.Opacity,
-                    controller.Rotation,
-                    controller.Origin,
-                    controller.SpriteEffects,
-                    controller.LayerDepth);
-            }
+            spriteBatch.Draw(
+                Texture,
+                bounds,
+                OverrideSourceRectangle ? controller.SourceRectangle : _sourceRectangles[Frame],
+                controller.Tint * controller.Opacity,
+                controller.Rotation,
+                controller.Origin,
+                controller.SpriteEffects,
+                controller.LayerDepth);
         }
     }
 }
