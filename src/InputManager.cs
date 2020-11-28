@@ -73,20 +73,20 @@ namespace Maquina
                 switch (mb)
                 {
                     case MouseButton.Left:
-                        return MouseState.LeftButton == ButtonState.Pressed &&
-                            PreviousMouseState.LeftButton == ButtonState.Released;
+                        return MouseState.LeftButton == ButtonState.Released &&
+                            PreviousMouseState.LeftButton == ButtonState.Pressed;
                     case MouseButton.Middle:
-                        return MouseState.MiddleButton == ButtonState.Pressed &&
-                            PreviousMouseState.MiddleButton == ButtonState.Released;
+                        return MouseState.MiddleButton == ButtonState.Released &&
+                            PreviousMouseState.MiddleButton == ButtonState.Pressed;
                     case MouseButton.Right:
-                        return MouseState.RightButton == ButtonState.Pressed &&
-                            PreviousMouseState.RightButton == ButtonState.Released;
+                        return MouseState.RightButton == ButtonState.Released &&
+                            PreviousMouseState.RightButton == ButtonState.Pressed;
                     case MouseButton.XButton1:
-                        return MouseState.XButton1 == ButtonState.Pressed &&
-                            PreviousMouseState.XButton1 == ButtonState.Released;
+                        return MouseState.XButton1 == ButtonState.Released &&
+                            PreviousMouseState.XButton1 == ButtonState.Pressed;
                     case MouseButton.XButton2:
-                        return MouseState.XButton2 == ButtonState.Pressed &&
-                            PreviousMouseState.XButton2 == ButtonState.Released;
+                        return MouseState.XButton2 == ButtonState.Released &&
+                            PreviousMouseState.XButton2 == ButtonState.Pressed;
                 }
             }
             return false;
