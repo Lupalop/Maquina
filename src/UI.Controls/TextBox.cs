@@ -46,7 +46,7 @@ namespace Maquina.UI
             {
                 if (e.Key == Keys.Back && Text.Length > 0)
                 {
-                    Text = Text.Remove(MathHelper.Clamp(Text.Length - 1, 0, int.MaxValue), 1);
+                    Text = Text.Remove(Text.Length - 1, 1);
                     return;
                 }
                 if (InputManager.ReservedKeys.Contains(e.Key) || Text.Length > MaxInput)
