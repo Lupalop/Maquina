@@ -42,7 +42,7 @@ namespace Maquina.UI
             {
                 return;
             }
-            if (Application.Input.ShouldAcceptInput)
+            if (Application.Input.Enabled)
             {
                 if (e.Key == Keys.Back && Text.Length > 0)
                 {

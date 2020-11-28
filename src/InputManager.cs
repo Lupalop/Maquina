@@ -17,13 +17,13 @@ namespace Maquina
         {
             Application.Game.Activated += delegate
             {
-                ShouldAcceptInput = true;
+                Enabled = true;
             };
             Application.Game.Deactivated += delegate
             {
-                ShouldAcceptInput = false;
+                Enabled = false;
             };
-            ShouldAcceptInput = true;
+            Enabled = true;
         }
 
         // Previous state
@@ -37,24 +37,24 @@ namespace Maquina
         public MouseState MouseState { get; private set; }
         public TouchPanelState TouchState { get; private set; }
         // Determine if input should be accepted
-        public bool ShouldAcceptInput { get; set; }
+        public bool Enabled { get; set; }
 
         // Keyboard
         public bool KeyPressed(Keys key)
         {
-            if (!ShouldAcceptInput)
+            if (!Enabled)
                 return false;
             return KeyboardState.IsKeyDown(key) && PreviousKeyboardState.IsKeyUp(key);
         }
         public bool KeyDown(Keys key)
         {
-            if (!ShouldAcceptInput)
+            if (!Enabled)
                 return false;
             return KeyboardState.IsKeyDown(key);
         }
         public bool KeyUp(Keys key)
         {
-            if (!ShouldAcceptInput)
+            if (!Enabled)
                 return false;
             return KeyboardState.IsKeyUp(key);
         }
@@ -62,7 +62,7 @@ namespace Maquina
         // Mouse
         public bool MousePressed(MouseButton mb)
         {
-            if (!ShouldAcceptInput)
+            if (!Enabled)
                 return false;
             switch (mb)
             {
@@ -86,7 +86,7 @@ namespace Maquina
         }
         public bool MouseDown(MouseButton mb)
         {
-            if (!ShouldAcceptInput)
+            if (!Enabled)
                 return false;
             switch (mb)
             {
@@ -105,7 +105,7 @@ namespace Maquina
         }
         public bool MouseUp(MouseButton mb)
         {
-            if (!ShouldAcceptInput)
+            if (!Enabled)
                 return false;
             switch (mb)
             {

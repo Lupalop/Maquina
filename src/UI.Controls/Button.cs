@@ -95,8 +95,7 @@ namespace Maquina.UI
                 ((TextureAtlasSprite)BackgroundSprite).Frame = 0;
             }
 
-            // Don't respond to any event if button is disabled
-            if (Enabled && Application.Input.ShouldAcceptInput)
+            if (Enabled && Application.Input.Enabled)
             {
                 // If mouse is on top of the button
                 if (ActualBounds.Contains(Application.Input.MousePosition))
