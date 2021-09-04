@@ -38,7 +38,7 @@ namespace Maquina.Entities
                     texture.Bounds.Size.X / columns,
                     texture.Bounds.Size.Y / rows);
 
-            PrepareFrameSourceRectangles();
+            PrepareSourceRectangles();
         }
 
         public bool OverrideSourceRectangle { get; set; }
@@ -47,26 +47,21 @@ namespace Maquina.Entities
 
         public int Frame { get; set; }
 
-        private Rectangle CreateSourceFrameRectangle(int targetFrame)
-        {
-            if (targetFrame < 0 || targetFrame > TotalFrames)
-            {
-                throw new ArgumentOutOfRangeException("targetFrame");
-            }
-
-            int row = targetFrame / _columns;
-            int column = targetFrame % _columns;
-            Point positionInTexture = new Point(Size.X * column, Size.Y * row);
-
-            return new Rectangle(positionInTexture, Size);
-        }
-
-        private void PrepareFrameSourceRectangles()
+        private void PrepareSourceRectangles()
         {
             _sourceRectangles = new Rectangle[TotalFrames];
-            for (int i = 0; i < TotalFrames; i++)
+            for (int targetFrame = 0; targetFrame < TotalFrames; targetFrame++)
             {
-                _sourceRectangles[i] = CreateSourceFrameRectangle(i);
+                if (targetFrame > TotalFrames)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                int row = targetFrame / _columns;
+                int column = targetFrame % _columns;
+                Point positionInTexture = new Point(Size.X * column, Size.Y * row);
+
+                _sourceRectangles[targetFrame] = new Rectangle(positionInTexture, Size);
             }
         }
 
