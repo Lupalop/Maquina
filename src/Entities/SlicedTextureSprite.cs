@@ -10,7 +10,6 @@ namespace Maquina.Entities
 {
     public class SlicedTextureSprite : TextureSprite
     {
-
         private Margin _margin;
         private Rectangle[] _sourceRectangles;
         private Rectangle[] _destinationRectangles;
@@ -30,8 +29,7 @@ namespace Maquina.Entities
             Texture = texture;
             Size = texture.Bounds.Size;
             _margin = margin;
-
-            _sourceRectangles = SpriteUtils.SourceFromSlicedTexture(_margin, Texture.Bounds.Size);
+            _sourceRectangles = SpriteUtils.CreateFromSlicedTexture(_margin, Texture.Bounds);
         }
 
         private void PrepareDestinationRectangles(Rectangle bounds)
@@ -40,7 +38,7 @@ namespace Maquina.Entities
             {
                 return;
             }
-            _destinationRectangles = SpriteUtils.DestinationFromSlicedTexture(_margin, bounds);
+            _destinationRectangles = SpriteUtils.CreateFromSlicedTexture(_margin, bounds);
             _cachedBounds = bounds;
         }
 
