@@ -75,6 +75,7 @@
     <Compile Include="Entities\IAnimation.cs" />
     <Compile Include="DisplayManager.cs" />
     <Compile Include="Entities\EntityUtils.cs" />
+    <Compile Include="Entities\SeamedTextureSprite.cs" />
     <Compile Include="Entities\TextSprite.cs" />
     <Compile Include="Entities\TextureAtlasSprite.cs" />
     <Compile Include="Entities\TextureSprite.cs" />
