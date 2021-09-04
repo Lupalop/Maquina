@@ -12,25 +12,25 @@ namespace Maquina.Entities
     {
         private const int RectangleCount = 9;
 
-        private Point _sideDistance;
+        private Margin _margin;
         private Rectangle[] _sourceRectangles;
         private Rectangle[] _destinationRectangles;
         private Rectangle _cachedBounds;
 
-        public FlexibleTextureSprite(Texture2D texture, Point sideDistance)
+        public FlexibleTextureSprite(Texture2D texture, Margin margin)
         {
             if (texture == null)
             {
                 throw new ArgumentNullException("texture");
             }
-            if (sideDistance == null)
+            if (margin == null)
             {
-                throw new ArgumentOutOfRangeException("size");
+                throw new ArgumentOutOfRangeException("margin");
             }
 
             Texture = texture;
             Size = texture.Bounds.Size;
-            _sideDistance = sideDistance;
+            _margin = margin;
 
             PrepareSourceRectangles();
         }
@@ -40,26 +40,32 @@ namespace Maquina.Entities
             _sourceRectangles = new Rectangle[RectangleCount];
             Point textureSize = Texture.Bounds.Size;
 
-            int horizontalEdgeWidth = _sideDistance.X * 2;
-            int verticalEdgeWidth = _sideDistance.Y * 2;
-            int middleWidth = textureSize.X - horizontalEdgeWidth;
-            int middleHeight = textureSize.Y - verticalEdgeWidth;
-
-            int distanceFromTop = textureSize.Y - _sideDistance.Y;
-            int distanceFromLeft = textureSize.X - _sideDistance.X;
+            int middleWidth = textureSize.X - _margin.Width;
+            int middleHeight = textureSize.Y - _margin.Height;
+            int distanceToBottom = textureSize.Y - _margin.Bottom;
+            int distanceToRight = textureSize.X - _margin.Right;
 
             // Section 1
-            _sourceRectangles[0] = new Rectangle(Point.Zero, _sideDistance);
-            _sourceRectangles[3] = new Rectangle(0, _sideDistance.Y, _sideDistance.X, middleHeight);
-            _sourceRectangles[6] = new Rectangle(0, distanceFromTop, _sideDistance.X, _sideDistance.Y);
+            _sourceRectangles[0] = new Rectangle(
+                0, 0, _margin.Left, _margin.Top);
+            _sourceRectangles[3] = new Rectangle(
+                0, _margin.Top, _margin.Left, middleHeight);
+            _sourceRectangles[6] = new Rectangle(
+                0, distanceToBottom, _margin.Left, _margin.Bottom);
             // Section 2
-            _sourceRectangles[1] = new Rectangle(_sideDistance.X, 0, middleWidth, _sideDistance.Y);
-            _sourceRectangles[4] = new Rectangle(_sideDistance.X, _sideDistance.Y, middleWidth, middleHeight);
-            _sourceRectangles[7] = new Rectangle(_sideDistance.X, distanceFromTop, middleWidth, _sideDistance.Y);
+            _sourceRectangles[1] = new Rectangle(
+                _margin.Left, 0, middleWidth, _margin.Top);
+            _sourceRectangles[4] = new Rectangle(
+                _margin.Left, _margin.Top, middleWidth, middleHeight);
+            _sourceRectangles[7] = new Rectangle(
+                _margin.Left, distanceToBottom, middleWidth, _margin.Bottom);
             // Section 3
-            _sourceRectangles[2] = new Rectangle(distanceFromLeft, 0, _sideDistance.X, _sideDistance.Y);
-            _sourceRectangles[5] = new Rectangle(distanceFromLeft, _sideDistance.Y, _sideDistance.X, middleHeight);
-            _sourceRectangles[8] = new Rectangle(distanceFromLeft, distanceFromTop, _sideDistance.X, _sideDistance.Y);
+            _sourceRectangles[2] = new Rectangle(
+                distanceToRight, 0, _margin.Right, _margin.Top);
+            _sourceRectangles[5] = new Rectangle(
+                distanceToRight, _margin.Top, _margin.Right, middleHeight);
+            _sourceRectangles[8] = new Rectangle(
+                distanceToRight, distanceToBottom, _margin.Right, _margin.Bottom);
         }
 
         private void PrepareDestinationRectangles(Rectangle bounds)
@@ -71,53 +77,34 @@ namespace Maquina.Entities
 
             _destinationRectangles = new Rectangle[RectangleCount];
 
+            int middleWidth = bounds.Width - _margin.Width;
+            int middleHeight = bounds.Height - _margin.Height;
+            int distanceFromTop = bounds.Location.Y + _margin.Top;
+            int distanceFromLeft = bounds.Location.X + _margin.Left;
+            int distanceToBottom = bounds.Location.Y + bounds.Height - _margin.Bottom;
+            int distanceToRight = bounds.Location.X + bounds.Width - _margin.Right;
+
             // Section 1
             _destinationRectangles[0] = new Rectangle(
-                bounds.Location,
-                _sideDistance);
+                bounds.Location.X, bounds.Location.Y, _margin.Left, _margin.Top);
             _destinationRectangles[3] = new Rectangle(
-                bounds.Location.X,
-                bounds.Location.Y + _sideDistance.Y,
-                _sideDistance.X,
-                bounds.Height - _sideDistance.Y * 2);
+                bounds.Location.X, distanceFromTop, _margin.Left, middleHeight);
             _destinationRectangles[6] = new Rectangle(
-                bounds.Location.X,
-                bounds.Location.Y + bounds.Height - _sideDistance.Y,
-                _sideDistance.X,
-                _sideDistance.Y);
+                bounds.Location.X, distanceToBottom, _margin.Left, _margin.Bottom);
             // Section 2
             _destinationRectangles[1] = new Rectangle(
-                bounds.Location.X + _sideDistance.X,
-                bounds.Location.Y,
-                bounds.Width - _sideDistance.X * 2,
-                _sideDistance.Y);
+                distanceFromLeft, bounds.Location.Y, middleWidth, _margin.Top);
             _destinationRectangles[4] = new Rectangle(
-                bounds.Location.X + _sideDistance.X,
-                bounds.Location.Y + _sideDistance.Y,
-                bounds.Width - _sideDistance.X * 2,
-                bounds.Height - _sideDistance.Y * 2);
+                distanceFromLeft, distanceFromTop, middleWidth, middleHeight);
             _destinationRectangles[7] = new Rectangle(
-                bounds.Location.X + _sideDistance.X,
-                bounds.Location.Y + bounds.Height - _sideDistance.Y,
-                bounds.Width - _sideDistance.X * 2,
-                _sideDistance.Y);
+                distanceFromLeft, distanceToBottom, middleWidth, _margin.Bottom);
             // Section 3
             _destinationRectangles[2] = new Rectangle(
-                bounds.Location.X + bounds.Width - _sideDistance.X,
-                bounds.Location.Y,
-                _sideDistance.X,
-                _sideDistance.Y);
+                distanceToRight, bounds.Location.Y, _margin.Right, _margin.Top);
             _destinationRectangles[5] = new Rectangle(
-                bounds.Location.X + bounds.Width - _sideDistance.X,
-                bounds.Location.Y + _sideDistance.Y,
-                _sideDistance.X,
-                bounds.Height - _sideDistance.Y * 2);
-
+                distanceToRight, distanceFromTop, _margin.Right, middleHeight);
             _destinationRectangles[8] = new Rectangle(
-                bounds.Location.X + bounds.Width - _sideDistance.X,
-                bounds.Location.Y + bounds.Height - _sideDistance.Y,
-                _sideDistance.X,
-                _sideDistance.Y);
+                distanceToRight, distanceToBottom, _margin.Right, _margin.Bottom);
 
             _cachedBounds = bounds;
         }
