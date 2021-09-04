@@ -87,6 +87,7 @@
     <Compile Include="Content\IManifest.cs" />
     <Compile Include="Content\PreferencesManifest.cs" />
     <Compile Include="Content\StringManifest.cs" />
+    <Compile Include="Entities\SpriteUtils.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Entities\Alignment.cs" />
     <Compile Include="UI.Controls\Control.cs" />

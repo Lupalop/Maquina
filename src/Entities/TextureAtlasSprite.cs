@@ -49,20 +49,7 @@ namespace Maquina.Entities
 
         private void PrepareSourceRectangles()
         {
-            _sourceRectangles = new Rectangle[TotalFrames];
-            for (int targetFrame = 0; targetFrame < TotalFrames; targetFrame++)
-            {
-                if (targetFrame > TotalFrames)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                int row = targetFrame / _columns;
-                int column = targetFrame % _columns;
-                Point positionInTexture = new Point(Size.X * column, Size.Y * row);
-
-                _sourceRectangles[targetFrame] = new Rectangle(positionInTexture, Size);
-            }
+            _sourceRectangles = SpriteUtils.SourceFromTextureAtlas(TotalFrames, _columns, Size);
         }
 
         public override void Draw(SpriteBatch spriteBatch, DrawController controller, Rectangle bounds)
