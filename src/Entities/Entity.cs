@@ -16,6 +16,7 @@ namespace Maquina.Entities
         private Rectangle _bounds;
         private float _scale;
         private bool _ignoreDisplayScale;
+        private Entity _parent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Entity"/> class
@@ -43,6 +44,7 @@ namespace Maquina.Entities
             _scale = scale;
             DrawController = drawController;
             _ignoreDisplayScale = ignoreDisplayScale;
+            _parent = null;
         }
 
         /// <summary>
@@ -135,6 +137,23 @@ namespace Maquina.Entities
         {
             get { return _ignoreDisplayScale; }
             set { _ignoreDisplayScale = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the parent entity of this entity.
+        /// </summary>
+        public Entity Parent
+        {
+            get { return _parent; }
+            set
+            {
+                if (_parent == value)
+                {
+                    return;
+                }
+                _parent = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(PropertyId.Parent));
+            }
         }
 
         /// <summary>

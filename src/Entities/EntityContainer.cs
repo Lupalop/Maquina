@@ -12,7 +12,7 @@ namespace Maquina.Entities
     {
         public EntityContainer(string name) : base(name)
         {
-            Children = new EntityCollection();
+            Children = new EntityCollection(this);
         }
 
         public EntityCollection Children { get; protected set; }

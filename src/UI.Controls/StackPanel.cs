@@ -17,7 +17,7 @@ namespace Maquina.UI
 
         public StackPanel(string name) : base(name)
         {
-            Children = new EntityCollection();
+            Children = new EntityCollection(this);
             _orientation = Orientation.Vertical;
             _controlMargin = new Margin();
             Children.EntityChanged += OnLayoutChanged;
@@ -75,8 +75,7 @@ namespace Maquina.UI
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (e.Id == PropertyId.Orientation ||
-                e.Id == PropertyId.Margin)
+            if (e.Id == PropertyId.Orientation || e.Id == PropertyId.Margin)
             {
                 UpdateLayout();
             }
@@ -86,16 +85,6 @@ namespace Maquina.UI
                 UpdateLayout(false);
             }
 
-            if (e.Id == PropertyId.Enabled)
-            {
-                foreach (var item in Children)
-                {
-                    if (item is Control)
-                    {
-                        ((Control)(item)).Enabled = Enabled;
-                    }
-                }
-            }
             base.OnPropertyChanged(e);
         }
 

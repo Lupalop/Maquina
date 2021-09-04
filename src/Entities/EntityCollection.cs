@@ -11,6 +11,13 @@ namespace Maquina.Entities
 {
     public class EntityCollection : ObservableCollection<Entity>, IDisposable
     {
+        private Entity _parent;
+
+        public EntityCollection(Entity parent)
+        {
+            _parent = parent;
+        }
+
         private bool IsIndexValid(int index)
         {
             return (index >= 0 && index < Count);
@@ -59,20 +66,26 @@ namespace Maquina.Entities
 
         protected override void SetItem(int index, Entity item)
         {
-            Items[index].PropertyChanged -= OnEntityChanged;
+            Entity oldItem = Items[index];
+            oldItem.PropertyChanged -= OnEntityChanged;
+            oldItem.Parent = null;
             item.PropertyChanged += OnEntityChanged;
+            item.Parent = _parent;
             base.SetItem(index, item);
         }
 
         protected override void InsertItem(int index, Entity item)
         {
             item.PropertyChanged += OnEntityChanged;
+            item.Parent = _parent;
             base.InsertItem(index, item);
         }
 
         protected override void RemoveItem(int index)
         {
-            Items[index].PropertyChanged -= OnEntityChanged;
+            Entity item = Items[index];
+            item.PropertyChanged -= OnEntityChanged;
+            item.Parent = null;
             base.RemoveItem(index);
         }
 
@@ -80,7 +93,9 @@ namespace Maquina.Entities
         {
             for (int i = 0; i < Count; i++)
             {
-                Items[i].PropertyChanged -= OnEntityChanged;
+                Entity item = Items[i];
+                item.PropertyChanged -= OnEntityChanged;
+                item.Parent = null;
             }
             base.ClearItems();
         }

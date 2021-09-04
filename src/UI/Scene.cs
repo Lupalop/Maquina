@@ -16,7 +16,7 @@ namespace Maquina.UI
             Name = name;
             SpriteBatch = spriteBatch;
             Enabled = true;
-            Entities = new EntityCollection();
+            Entities = new EntityCollection(null);
             Application.Display.ScaleChanged += OnLayoutDirty;
             Application.Display.ResolutionChanged += OnLayoutDirty;
         }

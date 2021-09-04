@@ -22,6 +22,7 @@ namespace Maquina.Entities
         // Container properties
         Orientation                 = 8,
         Margin                      = 9,
+        Parent                      = 10,
     }
 
     public class PropertyChangedEventArgs : EventArgs

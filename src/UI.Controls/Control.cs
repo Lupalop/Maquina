@@ -53,7 +53,15 @@ namespace Maquina.UI
 
         public bool Enabled
         {
-            get { return _enabled; }
+            get
+            {
+                Control parent = Parent as Control;
+                if (parent != null && !parent.Enabled)
+                {
+                    return parent.Enabled;
+                }
+                return _enabled;
+            }
             set
             {
                 if (_enabled == value)
