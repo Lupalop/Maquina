@@ -11,25 +11,82 @@ namespace Maquina
     [Serializable]
     public struct Margin : IEquatable<Margin>
     {
-        public int Top { get; set; }
-        public int Right { get; set; }
-        public int Bottom { get; set; }
-        public int Left { get; set; }
+        private int _top;
+        private int _right;
+        private int _bottom;
+        private int _left;
+
+        private int _width;
+        private int _height;
+
+        public int Top
+        {
+            get { return _top; }
+            set
+            {
+                _top = value;
+                _height = _top + _bottom;
+            }
+        }
+
+        public int Right
+        {
+            get { return _right; }
+            set
+            {
+                _right = value;
+                _width = _left + _right;
+            }
+        }
+
+        public int Bottom
+        {
+            get { return _bottom; }
+            set
+            {
+                _bottom = value;
+                _height = _top + _bottom;
+            }
+        }
+
+        public int Left
+        {
+            get { return _left; }
+            set
+            {
+                _left = value;
+                _width = _left + _right;
+            }
+        }
+
+        public int Width
+        {
+            get { return _width; }
+        }
+
+        public int Height
+        {
+            get { return _height; }
+        }
 
         public Margin(int top, int right, int bottom, int left)
         {
-            Top = top;
-            Right = right;
-            Bottom = bottom;
-            Left = left;
+            _top = top;
+            _right = right;
+            _bottom = bottom;
+            _left = left;
+            _width = left + right;
+            _height = top + bottom;
+        }
+
+        public Margin(int value)
+            : this(value, value, value, value)
+        {
         }
 
         public Margin(Point height, Point width)
+            : this(height.X, width.X, height.Y, width.Y)
         {
-            Top = height.X;
-            Bottom = height.Y;
-            Right = width.X;
-            Left = width.Y;
         }
 
         public static Margin Empty
