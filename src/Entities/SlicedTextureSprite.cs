@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Maquina.Entities
 {
-    public class FlexibleTextureSprite : TextureSprite
+    public class SlicedTextureSprite : TextureSprite
     {
 
         private Margin _margin;
@@ -16,7 +16,7 @@ namespace Maquina.Entities
         private Rectangle[] _destinationRectangles;
         private Rectangle _cachedBounds;
 
-        public FlexibleTextureSprite(Texture2D texture, Margin margin)
+        public SlicedTextureSprite(Texture2D texture, Margin margin)
         {
             if (texture == null)
             {
