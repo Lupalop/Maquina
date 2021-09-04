@@ -42,7 +42,7 @@ namespace Maquina.Entities
             _cachedBounds = bounds;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Rectangle bounds)
+        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Rectangle bounds, Rectangle? sourceRectangle)
         {
             PrepareDestinationRectangles(bounds);
 
@@ -60,7 +60,7 @@ namespace Maquina.Entities
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Point location, float scale)
+        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Point location, float scale, Rectangle? sourceRectangle)
         {
             throw new NotSupportedException();
         }

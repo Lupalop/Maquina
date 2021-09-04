@@ -14,7 +14,6 @@ namespace Maquina.Entities
             Rotation = 0;
             Origin = Vector2.Zero;
             SpriteEffects = SpriteEffects.None;
-            SourceRectangle = null;
             LayerDepth = 1;
             Opacity = 1;
         }
@@ -23,7 +22,6 @@ namespace Maquina.Entities
         public float Rotation { get; set; }
         public Vector2 Origin { get; set; }
         public SpriteEffects SpriteEffects { get; set; }
-        public virtual Rectangle? SourceRectangle { get; set; }
         public float LayerDepth { get; set; }
         public float Opacity { get; set; }
     }

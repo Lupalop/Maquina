@@ -41,8 +41,6 @@ namespace Maquina.Entities
             PrepareSourceRectangles();
         }
 
-        public bool OverrideSourceRectangle { get; set; }
-
         public int TotalFrames { get; protected set; }
 
         public int Frame { get; set; }
@@ -52,12 +50,12 @@ namespace Maquina.Entities
             _sourceRectangles = SpriteUtils.SourceFromTextureAtlas(TotalFrames, _columns, Size);
         }
 
-        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Rectangle bounds)
+        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Rectangle bounds, Rectangle? sourceRectangle)
         {
             spriteBatch.Draw(
                 Texture,
                 bounds,
-                OverrideSourceRectangle ? controller.SourceRectangle : _sourceRectangles[Frame],
+                (sourceRectangle != null) ? sourceRectangle : _sourceRectangles[Frame],
                 controller.Tint * controller.Opacity,
                 controller.Rotation,
                 controller.Origin,
@@ -65,12 +63,12 @@ namespace Maquina.Entities
                 controller.LayerDepth);
         }
 
-        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Point location, float scale)
+        public override void Draw(SpriteBatch spriteBatch, DrawController controller, Point location, float scale, Rectangle? sourceRectangle)
         {
             spriteBatch.Draw(
                 Texture,
                 location.ToVector2(),
-                OverrideSourceRectangle ? controller.SourceRectangle : _sourceRectangles[Frame],
+                (sourceRectangle != null) ? sourceRectangle : _sourceRectangles[Frame],
                 controller.Tint * controller.Opacity,
                 controller.Rotation,
                 controller.Origin,
