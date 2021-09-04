@@ -70,6 +70,7 @@ namespace Maquina.UI
                 return;
             }
 
+            ResizeContainer();
             UpdateLayout();
         }
 
@@ -77,54 +78,55 @@ namespace Maquina.UI
         {
             if (e.Id == PropertyId.Orientation || e.Id == PropertyId.Margin)
             {
+                ResizeContainer();
                 UpdateLayout();
             }
 
             if (e.Id == PropertyId.Location)
             {
-                UpdateLayout(false);
+                UpdateLayout();
             }
 
             base.OnPropertyChanged(e);
         }
 
-        public void UpdateLayout(bool resizeContainer = true)
+        public void ResizeContainer()
+        {
+            int ComputedWidth = 0;
+            int ComputedHeight = 0;
+
+            foreach (var item in Children)
+            {
+                if (Orientation == Orientation.Horizontal)
+                {
+                    ComputedWidth += ControlMargin.Left;
+                    ComputedWidth += item.ActualBounds.Width;
+                    ComputedWidth += ControlMargin.Right;
+                    if (item.ActualBounds.Height > ComputedHeight)
+                    {
+                        ComputedHeight = item.ActualBounds.Height;
+                    }
+                }
+                else
+                {
+                    ComputedHeight += ControlMargin.Top;
+                    ComputedHeight += item.ActualBounds.Height;
+                    ComputedHeight += ControlMargin.Bottom;
+                    if (item.ActualBounds.Width > ComputedWidth)
+                    {
+                        ComputedWidth = item.ActualBounds.Width;
+                    }
+                }
+            }
+
+            Size = new Point(ComputedWidth, ComputedHeight);
+        }
+
+        public void UpdateLayout()
         {
             if (Children.Count <= 0)
             {
                 return;
-            }
-
-            if (resizeContainer)
-            {
-                int ComputedWidth = 0;
-                int ComputedHeight = 0;
-
-                foreach (var item in Children)
-                {
-                    if (Orientation == Orientation.Horizontal)
-                    {
-                        ComputedWidth += ControlMargin.Left;
-                        ComputedWidth += item.ActualBounds.Width;
-                        ComputedWidth += ControlMargin.Right;
-                        if (item.ActualBounds.Height > ComputedHeight)
-                        {
-                            ComputedHeight = item.ActualBounds.Height;
-                        }
-                    }
-                    else
-                    {
-                        ComputedHeight += ControlMargin.Top;
-                        ComputedHeight += item.ActualBounds.Height;
-                        ComputedHeight += ControlMargin.Bottom;
-                        if (item.ActualBounds.Width > ComputedWidth)
-                        {
-                            ComputedWidth = item.ActualBounds.Width;
-                        }
-                    }
-                }
-
-                Size = new Point(ComputedWidth, ComputedHeight);
             }
 
             int CurrentX = Location.X;
