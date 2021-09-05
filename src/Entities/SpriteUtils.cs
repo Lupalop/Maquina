@@ -9,8 +9,6 @@ namespace Maquina.Entities
 {
     public class SpriteUtils
     {
-        public const int SliceCount = 9;
-
         public static Rectangle[] SourceFromTextureAtlas(int columns, int rows, Point cellSize)
         {
             int totalCells = columns * rows;
@@ -31,7 +29,7 @@ namespace Maquina.Entities
 
         public static Rectangle[] CreateFromSlicedTexture(Margin offset, Rectangle bounds)
         {
-            Rectangle[] cells = new Rectangle[SliceCount];
+            Rectangle[] cells = new Rectangle[9];
 
             int middleWidth = bounds.Width - offset.Width;
             int middleHeight = bounds.Height - offset.Height;

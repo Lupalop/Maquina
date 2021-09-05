@@ -46,7 +46,7 @@ namespace Maquina.Entities
         {
             PrepareDestinationRectangles(bounds);
 
-            for (int i = 0; i < SpriteUtils.SliceCount; i++)
+            for (int i = 0; i < _sourceRectangles.Length; i++)
             {
                 spriteBatch.Draw(
                     Texture,
