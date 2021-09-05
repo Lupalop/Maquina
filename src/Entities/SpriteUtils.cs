@@ -11,24 +11,22 @@ namespace Maquina.Entities
     {
         public const int SliceCount = 9;
 
-        public static Rectangle[] SourceFromTextureAtlas(int totalFrames, int columnCount, Point destinationSize)
+        public static Rectangle[] SourceFromTextureAtlas(int columns, int rows, Point cellSize)
         {
-            Rectangle[] sourceRectangles = new Rectangle[totalFrames];
-            for (int targetFrame = 0; targetFrame < totalFrames; targetFrame++)
+            int totalCells = columns * rows;
+            Rectangle[] cells = new Rectangle[totalCells];
+
+            for (int currentCell = 0; currentCell < totalCells; currentCell++)
             {
-                if (targetFrame > totalFrames)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                int row = targetFrame / columnCount;
-                int column = targetFrame % columnCount;
+                int row = currentCell / columns;
+                int column = currentCell % columns;
                 Point positionInTexture = new Point(
-                    destinationSize.X * column, destinationSize.Y * row);
+                    cellSize.X * column, cellSize.Y * row);
 
-                sourceRectangles[targetFrame] = new Rectangle(positionInTexture, destinationSize);
+                cells[currentCell] = new Rectangle(positionInTexture, cellSize);
             }
-            return sourceRectangles;
+
+            return cells;
         }
 
         public static Rectangle[] CreateFromSlicedTexture(Margin offset, Rectangle bounds)

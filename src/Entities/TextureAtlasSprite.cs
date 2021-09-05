@@ -38,17 +38,12 @@ namespace Maquina.Entities
                     texture.Bounds.Size.X / columns,
                     texture.Bounds.Size.Y / rows);
 
-            PrepareSourceRectangles();
+            _sourceRectangles = SpriteUtils.SourceFromTextureAtlas(_columns, _rows, Size);
         }
 
         public int TotalFrames { get; protected set; }
 
         public int Frame { get; set; }
-
-        private void PrepareSourceRectangles()
-        {
-            _sourceRectangles = SpriteUtils.SourceFromTextureAtlas(TotalFrames, _columns, Size);
-        }
 
         public override void Draw(SpriteBatch spriteBatch, DrawController controller, Rectangle bounds, Rectangle? sourceRectangle)
         {
